@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="V3_Board">
+
+	<select id="selectBoardList"  resultType="com.kte.mvc.vo.V3_Board">
+		SELECT 
+		no, title, content, writer, hit, TO_CHAR(date1, 'YYYY-MM-DD') date1
+		FROM V3_BOARD 
+		ORDER BY no DESC
+	</select>
+
+</mapper>
