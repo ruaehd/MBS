@@ -10,7 +10,7 @@
 <body>
 	<form:form action="test.do" method="post" modelAttribute="vo"><br />
 		<form:input type="text" path="title" placeholder="title"/><br />
-
+		<p>브랜치 테스트</p>
 		<input type="submit" class="btn btn-success" value="가입"/>
 	</form:form>
 </body>
