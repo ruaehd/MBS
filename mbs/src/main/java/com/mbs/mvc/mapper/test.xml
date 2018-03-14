@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Test">
+	<insert id="insertTest" parameterType="com.mbs.mvc.vo.TestVO">
+		INSERT INTO `TABLE`(no, title, date)
+		VALUES(#{no}, #{title}, NOW())
+	</insert>
+
+</mapper>
