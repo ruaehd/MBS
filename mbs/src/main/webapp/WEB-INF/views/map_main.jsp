@@ -32,17 +32,17 @@
 				<p>종류</p>
 			</div>
 			<div class="form-group " style="width:30%;">
-				<input type="button" class="w3-button w3-border w3-white w3-hover-white w3-round select_category" value="관광지"/>
+				<input type="button" id="category_travel" class="w3-button w3-border w3-white w3-hover-white w3-round select_category" value="관광지"/>
 			</div>
 			<div class="form-group" style="width:30%;">
-				<input type="button" class="w3-button w3-border w3-white w3-hover-white w3-round select_category" value="음식점"/>
+				<input type="button" id="category_food" class="w3-button w3-border w3-white w3-hover-white w3-round select_category" value="음식점"/>
 			</div>
 		</div>
 		<div class="form-inline" style="margin-bottom: 10px;">
 			<div class="form-group" style="width:20%">주소</div>
 			<div class="form-group" style="width:75%">
 				<input type="text" class="w3-border w3-input w3-round" style="width:100%"
-					placeholder="주소를 입력해주세요" />
+					placeholder="주소를 입력해주세요" id="addr"/>
 			</div>
 		</div>
 		<div class="form-inline" style="margin-bottom: 10px">
@@ -54,7 +54,7 @@
 		<div class="form-inline" style="margin-bottom:20px">
 			<div class="form-group" style="width:20%">가격</div>
 			<div class="form-group" style="width:75%">
-			<input type="text" id="amount" readonly class="w3-border w3-input w3-round">
+			<input type="text" id="amount" readonly class="w3-border w3-input w3-round" id="price">
 			</div>
 			</div>
 		
@@ -100,10 +100,10 @@
 				max: 500000,
 				values: [ 0, 200000 ],
 				slide: function( event, ui ) {
-					$( "#amount" ).val(  ui.values[ 0 ] + "원  ~ " + ui.values[ 1 ] + "원");
+					$( "#amount" ).val(  ui.values[ 0 ] + "원 ~ " + ui.values[ 1 ] + "원");
 				}
 			});
-			jQuery( "#amount" ).val($( "#slider-range" ).slider( "values", 0 ) + "원  - "
+			jQuery( "#amount" ).val($( "#slider-range" ).slider( "values", 0 ) + "원 ~ "
 					 + $( "#slider-range" ).slider( "values", 1 )+"원");
 			
 		});
@@ -145,6 +145,35 @@
 					$(this).val('검색옵션 닫기')
 				}
 			})
+			
+			$('#search_panel_button').click(function(){
+				if(true == $('#category-travel').hasClass('w3-blue')){
+					var cate_travel = $('#category-travel').val();
+				}
+				if(true == $('#category-food').hasClass('w3-blue')){
+					var cate_food = $('#category-food').val();
+				}
+				var addr = $('#search-addr').val();
+				var date = $('#datepicker').val();
+				
+				//price[0] -> 시작가격
+				//price[1] -> 끝가격
+				var price = $('#price').split(" ~ ");
+				$.ajax({
+					type:'POST', 
+					url:'/ajax_map_main_search',
+					dataType:'json', 
+					data:{
+						"category_food" : cate-food,
+						"category_travel" : cate-travel,
+						"addr" : addr, 
+						"date" : date, 
+						"price_start" : price[0],
+						"price_end" : price[1]
+					}
+				});
+				
+			});
 		});
 		</script>
 		<jsp:include page="footer.jsp"></jsp:include>
