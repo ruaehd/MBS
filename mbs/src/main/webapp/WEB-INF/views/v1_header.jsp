@@ -1,41 +1,6 @@
-<%@page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%>
 <!DOCTYPE html>
-<html lang="en" class="no-js">
-	<head>
-		<meta charset="UTF-8" />
-		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
-		<meta name="viewport" content="width=device-width, initial-scale=1"> 
-		<title>Google Nexus Website Menu</title>
-		<meta name="description" content="A sidebar menu as seen on the Google Nexus 7 website" />
-		<meta name="keywords" content="google nexus 7 menu, css transitions, sidebar, side menu, slide out menu" />
-		<meta name="author" content="Codrops" />
-		<link rel="shortcut icon" href="../favicon.ico">
-		<link rel="stylesheet" type="text/css" href="resources/css/bootstrap.min.css"/>
-		<link rel="stylesheet" type="text/css" href="resources/css/w3.css"/>
-		<link rel="stylesheet" type="text/css" href="resources/css/normalize.css" />
-		<link rel="stylesheet" type="text/css" href="resources/css/demo.css" />
-		<link rel="stylesheet" type="text/css" href="resources/css/component.css" />	
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-		<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-		<script src="//code.jquery.com/jquery-1.9.1.min.js"></script>
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    
-		<style>
-		.map{
-		z-index:2;
-		}
-		.gn-menu-main{
-			z-index:3;
-		}
-		.z-i2{
-			z-index:4;
-		}
-		</style>
-	</head>
-	<body>
-		<div class="container">
+		<div id="header">
 			<ul id="gn-menu" class="gn-menu-main">
 				<li class="gn-trigger">
 					<a class="gn-icon gn-icon-menu"><span>Menu</span></a>
@@ -69,9 +34,39 @@
 						</div><!-- /gn-scroller -->
 					</nav>
 				</li>
-					<li><input type="search" class="gn-search" placeholder="주소로 검색하기"/></li>
+				<li><input type="search" class="gn-search" placeholder="주소로 검색하기"/></li>
 				<li><a href="map_main.do">지도로 보기</a></li>
 				<li><a href="web_main.do">자세히 보기</a></li>
 				<li><a href="#">로그인</a></li>
 			</ul>
-		</div><!-- /여기부터 container -->
+		
+		
+			<script src="resources/js/jquery-1.11.1.js"></script>
+			<script src="resources/js/bootstrap.min.js"></script>
+			<script src="resources/js/classie.js"></script>
+			<script src="resources/js/gnmenu.js"></script>
+			<script>
+				new gnMenu(document.getElementById('gn-menu'));
+			</script>
+			<script>
+				$(function() {
+					$('.sub_1').hide();
+					$('.sub_2').hide();
+					$('.sub_3').hide();
+					$('.sub_4').hide();
+				
+					$('.sub_main1').click(function() {
+						$('.sub_1').toggle(500);
+					});
+					$('.sub_main2').click(function() {
+						$('.sub_2').toggle(500);
+					});
+					$('.sub_main3').click(function() {
+						$('.sub_3').toggle(500);
+					});
+					$('.sub_main4').click(function() {
+						$('.sub_4').toggle(500);
+					});
+				});
+			</script>
+		</div>

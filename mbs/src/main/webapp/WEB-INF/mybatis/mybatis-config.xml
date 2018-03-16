@@ -16,6 +16,10 @@
 		<setting name="defaultStatementTimeout" value="5000" />
 	</settings>
 
-
+	<typeAliases>
+		<typeAlias alias="V1_Store" type="com.mbs.mvc.vo.V1_Store" />
+		<typeAlias alias="V1_Menu" type="com.mbs.mvc.vo.V1_Menu" />
+		<typeAlias alias="V1_StrImg" type="com.mbs.mvc.vo.V1_StrImg" />
+	</typeAliases>
 
 </configuration>

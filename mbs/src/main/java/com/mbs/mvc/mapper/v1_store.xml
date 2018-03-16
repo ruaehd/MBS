@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="V1_Store">
+	<select id="selectStoreOne" parameterType="int" resultType="V1_Store">
+		SELECT * FROM `store` WHERE str_number=#{str_number}
+	</select>
+	
+	
+	<select id="selectMenuList" parameterType="int" resultType="V1_Menu">
+		SELECT * FROM `str_menu` WHERE str_number=#{str_number}
+	</select>
+	
+	<resultMap type="V1_StrImg" id="resultImg" >
+		<result column="str_image" property="str_image" jdbcType="BLOB"/>
+	</resultMap>
+	<select id="selectBlobImg" parameterType="int" resultMap="resultImg">
+		SELECT * FROM `str_image` WHERE str_number=#{str_number}
+	</select>
+	
+</mapper>

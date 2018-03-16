@@ -7,15 +7,13 @@
 	<meta charset="UTF-8" />
 	<title>Google Nexus Website Menu</title>
 	<link rel="shortcut icon" href="../favicon.ico">
-	<link rel="stylesheet" type="text/css" href="resources/css/w3.css"/>
-	<link rel="stylesheet" type="text/css" href="resources/css/bootstrap.css" />
 	<link rel="stylesheet" type="text/css" href="resources/css/normalize.css" />
 	<link rel="stylesheet" type="text/css" href="resources/css/demo.css" />
 	<link rel="stylesheet" type="text/css" href="resources/css/component.css" />
+	<link rel="stylesheet" type="text/css" href="resources/css/bootstrap.css" />
+	<link rel="stylesheet" type="text/css" href="resources/css/w3.css"/>
 	<link rel="stylesheet" type="text/css" href="resources/css/footer.css" />
-	<script src="resources/js/jquery-1.11.1.js"></script>
-	<script src="resources/js/bootstrap.min.js"></script>
-	<script src="resources/js/circle-progress.js"></script>
+	
 	<style>
 		.container{
 			z-index:2;
@@ -23,15 +21,41 @@
 		.gn-menu-main{
 			z-index:10;
 		}
+		#carousel{
+			width: 100%; 
+			height: 500px; 
+			margin-bottom:10px;
+		}
+		#store_name{
+			border:solid 1px #ccc;
+			margin-bottom:10px;
+		}
+		#store_info{
+			margin-bottom:10px;
+		}
+		#store_info .form-inline{
+			margin-bottom:5px
+		}
+		#review{
+			margin-bottom:10px;
+		}
+		.menu_detail{
+			display: inline-block;
+			width: auto;
+			vertical-align: middle;
+		}
+		.form-inline > label{
+			width:100px;
+		}
 	</style>
 </head>
 <body>
-	<div class="wrapper">
-		<jsp:include page="header.jsp"></jsp:include>
-		<div class="main">
+	<div id="wrapper">
+		<jsp:include page="v1_header.jsp"></jsp:include>
+		<div id="main">
 			<div class="container" style="margin-top:100px ">
 				
-				<div id="carousel" class="carousel slide" data-ride="carousel" data-interval="3000" style="width: 100%; height: 500px; margin-bottom:10px">
+				<div id="carousel" class="carousel slide" data-ride="carousel" data-interval="3000">
 					<!-- Indicators -->
 					<ol class="carousel-indicators">
 						<li data-target="#carousel" data-slide-to="0" class="active"></li>
@@ -63,61 +87,55 @@
 					</div>
 				</div>
 				
-				<div class="store_name" style="border:solid 1px #ccc; margin-bottom:10px">
+				<div id="store_name">
 					<div align="center" style="padding:0 300px 15px">
-						<h1>상호명</h1>
+						<h1>${vo.str_name}</h1>
 						<hr/>
 						<div>
-							<a href="user_content_pay.do" class="btn btn-info">예약</a>
-							<a href="#" class="btn btn-success">지도보기</a>
+							<a href="usr_content_pay.do" class="btn btn-info">예약</a>
 							<a href="#review" class="btn btn-primary">후기보기</a>
+							<a href="#map" class="btn btn-success">지도보기</a>
 							<a href="#" class="btn btn-danger">뒤로가기</a>
 						</div>
 					</div>
 				</div>
 				<hr />
 			
-				<div class="store_info" style="margin-bottom:10px">
-					<div class="form-inline" style="margin-bottom:5px">
-						<label style="width:100px">전화번호</label>
-						<div>123-456-7890</div>
+				<div id="store_info">
+					<div class="form-inline">
+						<label>전화번호</label>
+						<div>${vo.str_tel}</div>
 					</div>
-					<div class="form-inline" style="margin-bottom:5px">
-						<label style="width:100px">주소</label>
-						<div>부산 광역시 ㅁㅁㅁ</div>
+					<div class="form-inline">
+						<label>주소</label>
+						<div>${vo.str_address}</div>
 					</div>
-					<div class="form-inline" style="margin-bottom:5px">
-						<label style="width:100px">운영시간</label>
-						<div>08:00</div>
+					<div class="form-inline">
+						<label>운영시간</label>
+						<div>${vo.str_begintime}</div>
 						<div> ~ </div>
-						<div>22:00</div>
+						<div>${vo.str_endtime}</div>
 					</div>
-					<div class="form-inline" style="margin-bottom:5px">
-						<label style="width:100px">메뉴</label>
+					<div class="form-inline">
+						<label>메뉴</label>
 						<div>
-							<div class="form-inline">
-								<label>aaa</label>
-								<div>123원</div>
-							</div>
-							<div class="form-inline">
-								<label>bbb</label>
-								<div>456원</div>
-							</div>
-							<div class="form-inline">
-								<label>ccc</label>
-								<div>789원</div>
-							</div>				
+							<c:forEach var="vo1" items="${list}" varStatus="i">
+								<div class="menu_detail">
+									<label>${vo1.mn_name}</label>
+									<div>${vo1.mn_price}</div>
+								</div>
+							</c:forEach>
 						</div>
 					</div>
-					<div class="form-inline" style="margin-bottom:5px">
-						<label style="width:100px">소개</label>
+					<div class="form-inline">
+						<label>소개</label>
 						<div>소개글</div>
 					</div>
 				</div>
 		
 				<hr />
 		
-				<div id="review" class="review" style="margin-bottom:10px">
+				<div id="review">
 					<div  class="w3-display-container" style="height: 100px;vertical-align:middle">
 						<div class="w3-display-left form-inline" style="vertical-align:middle">
 							<h3>
@@ -171,14 +189,20 @@
 						<input type="button" class="form-control w3-border w3-round w3-button" value="n개의 댓글 더 보기" />
 					</div>
 				</div>
+				
+				<div id="map" style="width:100%;height:350px;"></div>
 			</div>
 		</div>
 		
-		<jsp:include page="footer.jsp"></jsp:include>
+		<jsp:include page="v1_footer.jsp"></jsp:include>
 	</div>
 	
-	
+	<script src="resources/js/jquery-1.11.1.js"></script>
+	<script src="resources/js/bootstrap.min.js"></script>
+	<script src="resources/js/circle-progress.js"></script>
+	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=66e7156b3899e012effaa62fd20217d4&libraries=services"></script>
 	<script>
+	
 	$(function() {
 		$('.carousel').carousel({
 			interval : 2000
@@ -199,6 +223,38 @@
 		  }).on('circle-animation-progress', function(event, progress) {
 		    $(this).find('strong').html(Math.round(100 * progress) + '<i>%</i>');
 		  });
+	
+	
+	
+		var mapContainer = document.getElementById('map'),
+		    mapOption = {
+		        center: new daum.maps.LatLng(33.450701, 126.570667),
+		        level: 3
+		    };  
+	
+		var map = new daum.maps.Map(mapContainer, mapOption); 
+		var geocoder = new daum.maps.services.Geocoder();
+		
+		geocoder.addressSearch('${vo.str_address}', function(result, status) {
+		
+		     if (status === daum.maps.services.Status.OK) {
+		
+		        var coords = new daum.maps.LatLng(result[0].y, result[0].x);
+		
+		        var marker = new daum.maps.Marker({
+		            map: map,
+		            position: coords
+		        });
+		
+		        var infowindow = new daum.maps.InfoWindow({
+		            content: '<div style="text-align:center;padding:6px 0;">${vo.str_name}</div>'
+		        });
+		        infowindow.open(map, marker);
+		
+		        map.setCenter(coords);
+		    } 
+		});
+	
 	});
 	</script>
 </body>
