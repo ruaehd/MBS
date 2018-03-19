@@ -3,6 +3,7 @@ package com.mbs.mvc.vo;
 public class V1_StrImg {
 	private int str_img_no=0;
 	private byte[] str_image = null;
+	private String str_image_l = null;
 	private int str_delete=1;
 	private String str_date=null;
 	private int str_number=0;
@@ -10,6 +11,12 @@ public class V1_StrImg {
 	
 	public int getStr_img_no() {
 		return str_img_no;
+	}
+	public String getStr_image_l() {
+		return str_image_l;
+	}
+	public void setStr_image_l(String str_image_l) {
+		this.str_image_l = str_image_l;
 	}
 	public void setStr_img_no(int str_img_no) {
 		this.str_img_no = str_img_no;

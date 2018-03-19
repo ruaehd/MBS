@@ -68,12 +68,18 @@
 						<div class="item active">
 							<img src="resources/imgs/12.JPG" style="width: 100%; height: 500px">
 						</div>
-						<div class="item">
+						<c:forEach var="vo1" items="${list}">
+							<div class="item">
+								<%-- <img src="data:image/jpg;base64,<c:out value='${vo1.str_image_l}'/>" style="width: 100%; height: 500px"/> --%>
+								<img src="get_blob_img.do?str_number=1234567890" />
+							</div>
+						</c:forEach>
+						<!-- <div class="item">
 							<img src="resources/imgs/12.JPG" style="width: 100%; height: 500px">
 						</div>
 						<div class="item">
 							<img src="resources/imgs/12.JPG" style="width: 100%; height: 500px">
-						</div>
+						</div> -->
 					</div>
 					
 					<!-- Controls -->
@@ -119,7 +125,7 @@
 					<div class="form-inline">
 						<label>메뉴</label>
 						<div>
-							<c:forEach var="vo1" items="${list}" varStatus="i">
+							<c:forEach var="vo1" items="${mlist}" varStatus="i">
 								<div class="menu_detail">
 									<label>${vo1.mn_name}</label>
 									<div>${vo1.mn_price}</div>
