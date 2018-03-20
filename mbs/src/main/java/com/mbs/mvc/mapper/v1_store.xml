@@ -15,7 +15,15 @@
 		<result column="str_image" property="str_image" jdbcType="BLOB"/>
 	</resultMap>
 	<select id="selectBlobImg" parameterType="int" resultMap="resultImg">
-		SELECT * FROM `str_image` WHERE str_number=#{str_number}
+		SELECT str_image FROM `str_image` WHERE str_number=#{str_number}
+	</select>
+	
+	
+	<resultMap type="V1_StrImg" id="resultImg1" >
+		<result column="str_image" property="str_image" jdbcType="BLOB"/>
+	</resultMap>
+	<select id="selectBlobImg1" parameterType="V1_StrImg" resultMap="resultImg1">
+		SELECT str_number, ${img_table_name} str_image FROM `str_image` WHERE str_number=#{str_number}
 	</select>
 	
 </mapper>

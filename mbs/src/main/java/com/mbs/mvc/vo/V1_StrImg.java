@@ -8,7 +8,16 @@ public class V1_StrImg {
 	private String str_date=null;
 	private int str_number=0;
 	
+	private String img_table_name = null;
 	
+	
+	
+	public String getImg_table_name() {
+		return img_table_name;
+	}
+	public void setImg_table_name(String img_table_name) {
+		this.img_table_name = img_table_name;
+	}
 	public int getStr_img_no() {
 		return str_img_no;
 	}

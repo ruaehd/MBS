@@ -68,18 +68,13 @@
 						<div class="item active">
 							<img src="resources/imgs/12.JPG" style="width: 100%; height: 500px">
 						</div>
-						<c:forEach var="vo1" items="${list}">
+						<c:forEach var="vo1" items="${ilist}">
 							<div class="item">
-								<%-- <img src="data:image/jpg;base64,<c:out value='${vo1.str_image_l}'/>" style="width: 100%; height: 500px"/> --%>
-								<img src="get_blob_img.do?str_number=1234567890" />
+								<img src="data:image/jpg;base64,<c:out value='${vo1.str_image_l}'/>" style="width: 100%; height: 500px"/>
+								<!-- <img src="get_blob_img.do?str_number=1234567890" /> -->
+								<!-- <img src="get_blob_img1.do?str_number=1234567890&idx=str_image" /> -->
 							</div>
 						</c:forEach>
-						<!-- <div class="item">
-							<img src="resources/imgs/12.JPG" style="width: 100%; height: 500px">
-						</div>
-						<div class="item">
-							<img src="resources/imgs/12.JPG" style="width: 100%; height: 500px">
-						</div> -->
 					</div>
 					
 					<!-- Controls -->

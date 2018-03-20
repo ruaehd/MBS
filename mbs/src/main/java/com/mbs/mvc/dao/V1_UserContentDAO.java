@@ -29,4 +29,8 @@ public class V1_UserContentDAO {
 	public List<V1_StrImg> selectBlobImg(int str_no){
 		return sqlsession.selectList("V1_Store.selectBlobImg", str_no);
 	}
+	
+	public V1_StrImg selectBlobImg1(V1_StrImg obj) {
+		return sqlsession.selectOne("V1_Store.selectBlobImg1", obj);
+	}
 }
