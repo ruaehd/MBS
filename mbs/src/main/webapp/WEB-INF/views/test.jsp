@@ -17,7 +17,7 @@
 			<div class="col-sm-5">
 				<div class="buttons">
 					<div class="form-inline" style="margin-bottom: 5px">
-						<input type="file" class="form-control" name="aaa[]"> 
+						<input type="file" class="form-control" name="imgs"> 
 						<input type="button" class="btnAdd btn btn-success" value="추가">
 					</div>
 				</div>
@@ -37,7 +37,7 @@
 	        	if(aaa.length<5){
 	        		$('.buttons').append (                        
 	                        '<div class="form-inline del" style="margin-bottom:5px">' +
-	                        	'<input type="file" class="form-control" name="aaa[]"> ' +
+	                        	'<input type="file" class="form-control" name="imgs"> ' +
 	                        	'<input type="button" class="btnRemove btn btn-danger" value="삭제"> ' +
 	                        '</div>'
 	                    );

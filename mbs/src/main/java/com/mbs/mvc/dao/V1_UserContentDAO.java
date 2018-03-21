@@ -26,11 +26,19 @@ public class V1_UserContentDAO {
 		return sqlsession.selectList("V1_Store.selectMenuList", str_no);
 	}
 	
-	public List<V1_StrImg> selectBlobImg(int str_no){
-		return sqlsession.selectList("V1_Store.selectBlobImg", str_no);
+	public V1_StrImg selectBlobImg(V1_StrImg obj){
+		return sqlsession.selectOne("V1_Store.selectBlobImg", obj);
 	}
 	
 	public V1_StrImg selectBlobImg1(V1_StrImg obj) {
 		return sqlsession.selectOne("V1_Store.selectBlobImg1", obj);
+	}
+	
+	public int insertImgs(V1_StrImg vo) {
+		return sqlsession.insert("V1_Store.insertImgs", vo);
+	}
+	
+	public int selectImgCount(int str_no) {
+		return sqlsession.selectOne("V1_Store.selectImgCount", str_no);		
 	}
 }

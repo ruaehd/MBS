@@ -14,8 +14,8 @@
 	<resultMap type="V1_StrImg" id="resultImg" >
 		<result column="str_image" property="str_image" jdbcType="BLOB"/>
 	</resultMap>
-	<select id="selectBlobImg" parameterType="int" resultMap="resultImg">
-		SELECT str_image FROM `str_image` WHERE str_number=#{str_number}
+	<select id="selectBlobImg" parameterType="V1_StrImg" resultMap="resultImg">
+		SELECT str_image FROM `str_image` WHERE str_number=#{str_number} AND str_image_idx=#{str_image_idx}
 	</select>
 	
 	
@@ -24,6 +24,15 @@
 	</resultMap>
 	<select id="selectBlobImg1" parameterType="V1_StrImg" resultMap="resultImg1">
 		SELECT str_number, ${img_table_name} str_image FROM `str_image` WHERE str_number=#{str_number}
+	</select>
+	
+	<insert id="insertImgs" parameterType="V1_StrImg">
+		INSERT INTO `str_image` (str_image, str_number, str_image_idx, str_img_date)
+		VALUES(#{str_image, jdbcType=BLOB}, #{str_number}, #{str_image_idx}, NOW()) 
+	</insert>
+	
+	<select id="selectImgCount" parameterType="int" resultType="int">
+		SELECT COUNT(*) AS cnt FROM `str_image` WHERE str_number=#{str_number}
 	</select>
 	
 </mapper>

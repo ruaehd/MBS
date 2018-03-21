@@ -7,11 +7,18 @@ public class V1_StrImg {
 	private int str_delete=1;
 	private String str_date=null;
 	private int str_number=0;
+	private int str_image_idx=1;
 	
 	private String img_table_name = null;
 	
 	
 	
+	public int getStr_image_idx() {
+		return str_image_idx;
+	}
+	public void setStr_image_idx(int str_image_idx) {
+		this.str_image_idx = str_image_idx;
+	}
 	public String getImg_table_name() {
 		return img_table_name;
 	}
