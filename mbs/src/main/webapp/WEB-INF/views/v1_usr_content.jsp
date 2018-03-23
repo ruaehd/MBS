@@ -66,9 +66,9 @@
 					<!-- Wrapper for slides -->
 					<div class="carousel-inner" id="back_imgs">
 						<div class="item active">
-							<img src="resources/imgs/12.JPG" style="width: 100%; height: 500px">
+							<img src="get_blob_img.do?idx=1" style="width: 100%; height: 500px"/>
 						</div>
-						<c:forEach var="i" begin="1" end="${cnt}">
+						<c:forEach var="i" begin="2" end="${cnt}">
 							<div class="item">
 								<img src="get_blob_img.do?idx=${i}" style="width: 100%; height: 500px"/>
 							</div>
@@ -103,32 +103,32 @@
 				<div id="store_info">
 					<div class="form-inline">
 						<label>전화번호</label>
-						<div>${vo.str_tel}</div>
+						${vo.str_tel}
 					</div>
 					<div class="form-inline">
 						<label>주소</label>
-						<div>${vo.str_address}</div>
+						${vo.str_address}
 					</div>
 					<div class="form-inline">
 						<label>운영시간</label>
-						<div>${vo.str_begintime}</div>
-						<div> ~ </div>
-						<div>${vo.str_endtime}</div>
+						${vo.str_begintime}
+						 ~ 
+						${vo.str_endtime}
 					</div>
 					<div class="form-inline">
 						<label>메뉴</label>
-						<div>
+						<div class="form-group">
 							<c:forEach var="vo1" items="${mlist}" varStatus="i">
-								<div class="menu_detail">
+								<div id="menu_detail" class="form-inline">
 									<label>${vo1.mn_name}</label>
-									<div>${vo1.mn_price}</div>
+									${vo1.mn_price}
 								</div>
 							</c:forEach>
 						</div>
 					</div>
 					<div class="form-inline">
 						<label>소개</label>
-						<div>소개글</div>
+						소개글
 					</div>
 				</div>
 		

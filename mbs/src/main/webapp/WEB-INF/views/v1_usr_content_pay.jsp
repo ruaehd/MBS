@@ -41,14 +41,13 @@
 						<!-- Wrapper for slides -->
 						<div class="carousel-inner" id="back_imgs">
 							<div class="item active">
-								<img src="resources/imgs/12.JPG">
+								<img src="get_blob_img.do?idx=1" style="width: 100%; height: 350px"/>
 							</div>
-							<div class="item">
-								<img src="resources/imgs/12.JPG">
-							</div>
-							<div class="item">
-								<img src="resources/imgs/12.JPG">
-							</div>
+							<c:forEach var="i" begin="2" end="${cnt}">
+								<div class="item">
+									<img src="get_blob_img.do?idx=${i}" style="width: 100%; height: 350px"/>
+								</div>
+							</c:forEach>
 						</div>
 						
 						<!-- Controls -->
@@ -63,6 +62,8 @@
 					</div>
 					
 					<div id="select" style="margin-bottom:20px">
+						<h3>예약 정보</h3>
+						<hr />
 						<div class="form-inline" style="margin-bottom:10px">
 							<label style="width:100px">날짜</label>
 							<input type="text" class="form-control" name="date" id="date1"/>
@@ -78,6 +79,30 @@
 							<select class="form-control" name="" id="">
 								<option>1</option>
 							</select>
+						</div>
+					</div>
+					
+					<div id="menu" style="margin-bottom:20px">
+						<h3>메뉴선택</h3>
+						<hr />
+						<div id="menu_detail" class="form-inline" style="margin-bottom:10px">
+							<div>
+								<c:forEach var="vo1" items="${mlist}" varStatus="i">
+									<div class="form-inline">
+										<label style="width:100px">${vo1.mn_name}</label>
+										<label id="price_${i.index}">${vo1.mn_price}</label>
+										<input type="button" class="btn btn-default menu_m" value="-" />
+										<input type="text" class="form-control menu_cnt" style="width:50px; text-align:right" value="0" />
+										<input type="button" class="btn btn-default menu_p" value="+" />
+										<label id="sum_${i.index}" class="sum"></label>
+									</div>
+								</c:forEach>
+							</div>
+							<hr />
+							<div style="text-align:right"class="form-inline">
+								<label>합계</label>
+								<label id="total">0원</label>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -159,28 +184,73 @@
 		        level: 3
 		    };  
 	
-		var map = new daum.maps.Map(mapContainer, mapOption); 
-		var geocoder = new daum.maps.services.Geocoder();
-		
-		geocoder.addressSearch('${vo.str_address}', function(result, status) {
-		
-		     if (status === daum.maps.services.Status.OK) {
-		
-		        var coords = new daum.maps.LatLng(result[0].y, result[0].x);
-		
-		        var marker = new daum.maps.Marker({
-		            map: map,
-		            position: coords
-		        });
-		
-		        var infowindow = new daum.maps.InfoWindow({
-		            content: '<div style="text-align:center;padding:6px 0;">${vo.str_name}</div>'
-		        });
-		        infowindow.open(map, marker);
-		
-		        map.setCenter(coords);
-		    } 
-		});
+			var map = new daum.maps.Map(mapContainer, mapOption); 
+			var geocoder = new daum.maps.services.Geocoder();
+			
+			geocoder.addressSearch('${vo.str_address}', function(result, status) {
+			
+			     if (status === daum.maps.services.Status.OK) {
+			
+			        var coords = new daum.maps.LatLng(result[0].y, result[0].x);
+			
+			        var marker = new daum.maps.Marker({
+			            map: map,
+			            position: coords
+			        });
+			
+			        var infowindow = new daum.maps.InfoWindow({
+			            content: '<div style="text-align:center;padding:6px 0;">${vo.str_name}</div>'
+			        });
+			        infowindow.open(map, marker);
+			
+			        map.setCenter(coords);
+			    } 
+			});
+			
+			$('.menu_p').click(function(){
+				var idx = $(this).index('.menu_p');
+				var cnt = $(this).prev().val();
+				cnt++;
+				$(this).prev().val(cnt);
+				
+				var price = $('#price_'+idx).text();
+				var sum = cnt * price;
+				
+				$('#sum_'+idx).text(sum);
+			
+				var len = $('.sum').length;
+				var tot = 0;								
+				for(var i=0; i<len; i++){
+					tot += Number($('#sum_'+i).text());
+				}
+
+				$('#total').text(tot+'원');
+			});
+			
+			$('.menu_m').click(function(){
+				var idx = $(this).index('.menu_m');
+				var cnt = $(this).next().val();
+				cnt--;
+				if(cnt<=0){
+					cnt =0;
+				}
+				$(this).next().val(cnt);
+				
+				var price = $('#price_'+idx).text();
+				var sum = cnt * price;
+				console.log(sum);
+				
+				$('#sum_'+idx).text(sum);
+				
+				var len = $('.sum').length;
+				var tot = 0;								
+				for(var i=0; i<len; i++){
+					tot += Number($('#sum_'+i).text());
+				}
+
+				$('#total').text(tot+'원');
+				
+			});
 		});
 	</script>
 

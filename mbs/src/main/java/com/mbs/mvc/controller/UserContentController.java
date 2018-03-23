@@ -38,7 +38,6 @@ public class UserContentController {
 		
 		V1_Store vo = ucDAO.selectStoreOne(1234567890);
 		List<V1_Menu> mlist = ucDAO.selectMenuList(1234567890);
-		
 		int cnt = ucDAO.selectImgCount(1234567890);
 		
 		model.addAttribute("cnt", cnt);
@@ -51,14 +50,15 @@ public class UserContentController {
 	@RequestMapping(value="/usr_content_pay.do", method = RequestMethod.GET)
 	public String userContentPay(Model model) {
 		
+		int cnt = ucDAO.selectImgCount(1234567890);
 		V1_Store vo = ucDAO.selectStoreOne(1234567890);
+		List<V1_Menu> mlist = ucDAO.selectMenuList(1234567890);
+		
+		model.addAttribute("mlist", mlist);
+		model.addAttribute("cnt", cnt);
 		model.addAttribute("vo", vo);
 		return "v1_usr_content_pay";
 	}
-	
-	
-	
-	
 	
 	@SuppressWarnings("finally")
 	@RequestMapping(value = "/get_blob_img.do", method = RequestMethod.GET)
