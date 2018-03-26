@@ -1,4 +1,5 @@
 <%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page session="false"%>
 <!DOCTYPE html>
@@ -29,138 +30,142 @@
 		
 		<div class="container" style="margin-top:100px; padding:10px">
 			<div class="row">
-				<div class="col-md-6" style="padding:20px">
-					<div id="carousel" class="carousel slide" data-ride="carousel" data-interval="3000" style="margin-bottom:20px">
-						<!-- Indicators -->
-						<ol class="carousel-indicators">
-							<li data-target="#carousel" data-slide-to="0" class="active"></li>
-							<li data-target="#carousel" data-slide-to="1"></li>
-							<li data-target="#carousel" data-slide-to="2"></li>
-						</ol>
-						
-						<!-- Wrapper for slides -->
-						<div class="carousel-inner" id="back_imgs">
-							<div class="item active">
-								<img src="get_blob_img.do?idx=1" style="width: 100%; height: 350px"/>
-							</div>
-							<c:forEach var="i" begin="2" end="${cnt}">
-								<div class="item">
-									<img src="get_blob_img.do?idx=${i}" style="width: 100%; height: 350px"/>
+				<form:form action="usr_content_pay.do" method="post" modelAttribute="rvo">
+					<div class="col-md-6" style="padding:20px">
+						<div id="carousel" class="carousel slide" data-ride="carousel" data-interval="3000" style="margin-bottom:20px">
+							<!-- Indicators -->
+							<ol class="carousel-indicators">
+								<li data-target="#carousel" data-slide-to="0" class="active"></li>
+								<li data-target="#carousel" data-slide-to="1"></li>
+								<li data-target="#carousel" data-slide-to="2"></li>
+							</ol>
+							
+							<!-- Wrapper for slides -->
+							<div class="carousel-inner" id="back_imgs">
+								<div class="item active">
+									<img src="get_blob_img.do?idx=1" style="width: 100%; height: 350px"/>
 								</div>
-							</c:forEach>
-						</div>
-						
-						<!-- Controls -->
-						<div id="mouseup">
-							<a class="left carousel-control" href="#carousel" role="button" data-slide="prev"> 
-								<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-							</a> 
-							<a class="right carousel-control" href="#carousel" role="button" data-slide="next"> 
-								<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-							</a>
-						</div>
-					</div>
-					
-					<div id="select" style="margin-bottom:20px">
-						<h3>예약 정보</h3>
-						<hr />
-						<div class="form-inline" style="margin-bottom:10px">
-							<label style="width:100px">날짜</label>
-							<input type="text" class="form-control" name="date" id="date1"/>
-						</div>
-						<div class="form-inline" style="margin-bottom:10px">
-							<label style="width:100px">시간</label>
-							<select class="form-control" name="" id="">
-								<option>1</option>
-							</select>
-						</div>
-						<div class="form-inline" style="margin-bottom:10px">
-							<label style="width:100px">인원</label>
-							<select class="form-control" name="" id="">
-								<option>1</option>
-							</select>
-						</div>
-					</div>
-					
-					<div id="menu" style="margin-bottom:20px">
-						<h3>메뉴선택</h3>
-						<hr />
-						<div id="menu_detail" class="form-inline" style="margin-bottom:10px">
-							<div>
-								<c:forEach var="vo1" items="${mlist}" varStatus="i">
-									<div class="form-inline">
-										<label style="width:100px">${vo1.mn_name}</label>
-										<label id="price_${i.index}">${vo1.mn_price}</label>
-										<input type="button" class="btn btn-default menu_m" value="-" />
-										<input type="text" class="form-control menu_cnt" style="width:50px; text-align:right" value="0" />
-										<input type="button" class="btn btn-default menu_p" value="+" />
-										<label id="sum_${i.index}" class="sum"></label>
+								<c:forEach var="i" begin="2" end="${cnt}">
+									<div class="item">
+										<img src="get_blob_img.do?idx=${i}" style="width: 100%; height: 350px"/>
 									</div>
 								</c:forEach>
 							</div>
+							
+							<!-- Controls -->
+							<div id="mouseup">
+								<a class="left carousel-control" href="#carousel" role="button" data-slide="prev"> 
+									<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+								</a> 
+								<a class="right carousel-control" href="#carousel" role="button" data-slide="next"> 
+									<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+								</a>
+							</div>
+						</div>
+						
+						<div id="select" style="margin-bottom:20px">
+							<h3>예약 정보</h3>
 							<hr />
-							<div style="text-align:right"class="form-inline">
-								<label>합계</label>
-								<label id="total">0원</label>
+							<div class="form-inline" style="margin-bottom:10px">
+								<label style="width:100px">날짜</label>
+								<form:input type="text" class="form-control" path="rsv_day" id="date1"/>
+							</div>
+							<div class="form-inline" style="margin-bottom:10px">
+								<label style="width:100px">시간</label>
+								<form:select class="form-control" path="rsv_time" id="">
+									<option>1</option>
+								</form:select>
+							</div>
+							<div class="form-inline" style="margin-bottom:10px">
+								<label style="width:100px">인원</label>
+								<form:select class="form-control" path="rsv_personnel" id="">
+									<option>1</option>
+									<option>2</option>
+								</form:select>
 							</div>
 						</div>
-					</div>
-				</div>
-				
-				<div class="col-md-6" style="padding:20px">
-					<div id="map" style="width:100%;height:350px;margin-bottom:20px"></div>
-					
-					<div id="info" style="margin-bottom:20px">
-						<h3>예약자 정보</h3>
-						<hr />
-						<div>
-							<div class="form-inline" style="margin-bottom:10px">
-								<label style="width:100px">이름</label>
-								<input type="text" class="form-control" name="" id="" />
-							</div>
-							<div class="form-inline" style="margin-bottom:10px">
-								<label style="width:100px">연락처</label>
-								<input type="text" class="form-control" name="" id="" />
-							</div>
-							<div class="form-inline" style="margin-bottom:10px">
-								<label style="width:100px">이메일</label>
-								<input type="text" class="form-control" name="" id="" />
-							</div>
-							<div class="form-inline" style="margin-bottom:10px">
-								<label style="width:100px">요청사항</label>
-								<textarea class="form-control" rows="2" name="" id="" style="resize:none"></textarea>
-							</div>
-						</div>
-					</div>
-					
-					<div id="stroe_info" style="margin-bottom:20px">
-						<h3>판매자 정보</h3>
-						<hr />
-						<div>
-							<div class="form-inline" style="margin-bottom:10px">
-								<label style="width:100px">상호</label>
-								${vo.str_name}
-							</div>
-							<div class="form-inline" style="margin-bottom:10px">
-								<label style="width:100px">대표자명</label>
-								<input type="text" class="form-control" name="" id="" />
-							</div>
-							<div class="form-inline" style="margin-bottom:10px">
-								<label style="width:100px">소재지</label>
-								${vo.str_address}
-							</div>
-							<div class="form-inline" style="margin-bottom:10px">
-								<label style="width:100px">연락처</label>
-								${vo.str_tel}
+						
+						<div id="menu" style="margin-bottom:20px">
+							<h3>메뉴선택</h3>
+							<hr />
+							<div id="menu_detail" class="form-inline" style="margin-bottom:10px">
+								<div>
+									<c:forEach var="vo1" items="${mlist}" varStatus="i">
+										<div class="form-inline">
+											<label style="width:100px">${vo1.mn_name}</label>
+											<label id="price_${i.index}">${vo1.mn_price}</label>
+											<input type="button" class="btn btn-default menu_m" value="-" />
+											<input type="text" class="form-control menu_cnt" style="width:50px; text-align:right" value="0" />
+											<input type="button" class="btn btn-default menu_p" value="+" />
+											<label id="sum_${i.index}" class="sum"></label>
+										</div>
+									</c:forEach>
+								</div>
+								<hr />
+								<div style="text-align:right"class="form-inline">
+									<label>합계</label>
+									<label id="total">0원</label>
+								</div>
 							</div>
 						</div>
 					</div>
 					
-					<div style="margin-bottom:10px">
-						<input type="submit" class="btn btn-success" value="예약하기"	/>
-						<a href="usr_content.do" class="btn btn-info">뒤로가기</a>
-					</div>	
-				</div>
+					<div class="col-md-6" style="padding:20px">
+						<div id="map" style="width:100%;height:350px;margin-bottom:20px"></div>
+						
+						<div id="info" style="margin-bottom:20px">
+							<h3>예약자 정보</h3>
+							<hr />
+							<div>
+								<div class="form-inline" style="margin-bottom:10px">
+									<label style="width:100px">이름</label>
+									<form:input type="text" class="form-control" path="rsv_sub_name" id="" value="${mvo.mb_name}"/>
+								</div>
+								<div class="form-inline" style="margin-bottom:10px">
+									<label style="width:100px">전화번호</label>
+									<form:input type="text" class="form-control" path="rsv_sub_tel" id="" value="${mvo.mb_tel}"/>
+								</div>
+								<div class="form-inline" style="margin-bottom:10px">
+									<label style="width:100px">이메일주소</label>
+									<form:input type="text" class="form-control" path="rsv_sub_email" id="" value="${mvo.mb_email}"/>
+								</div>
+								<div class="form-inline" style="margin-bottom:10px">
+									<label style="width:100px">요청사항</label>
+									<form:textarea class="form-control" rows="2" path="rsv_sub_request" id="" style="resize:none"></form:textarea>
+								</div>
+							</div>
+						</div>
+						
+						<div id="stroe_info" style="margin-bottom:20px">
+							<h3>판매자 정보</h3>
+							<hr />
+							<div>
+								<div class="form-inline" style="margin-bottom:10px">
+									<label style="width:100px">상호</label>
+									${vo.str_name}
+								</div>
+								<div class="form-inline" style="margin-bottom:10px">
+									<label style="width:100px">대표자명</label>
+									<input type="text" class="form-control" name="" id="" />
+								</div>
+								<div class="form-inline" style="margin-bottom:10px">
+									<label style="width:100px">소재지</label>
+									${vo.str_address}
+								</div>
+								<div class="form-inline" style="margin-bottom:10px">
+									<label style="width:100px">연락처</label>
+									${vo.str_tel}
+								</div>
+							</div>
+						</div>
+						
+						<div style="margin-bottom:10px">
+							<input type="submit" class="btn btn-success" value="예약하기"	/>
+							<a href="usr_content.do" class="btn btn-info">뒤로가기</a>
+						</div>
+						
+					</div>
+				</form:form>
 			</div>
 		</div>
 		

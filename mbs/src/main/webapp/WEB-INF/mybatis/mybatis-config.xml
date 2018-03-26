@@ -20,6 +20,8 @@
 		<typeAlias alias="V1_Store" type="com.mbs.mvc.vo.V1_Store" />
 		<typeAlias alias="V1_Menu" type="com.mbs.mvc.vo.V1_Menu" />
 		<typeAlias alias="V1_StrImg" type="com.mbs.mvc.vo.V1_StrImg" />
+		<typeAlias alias="V1_Member" type="com.mbs.mvc.vo.V1_Member" />
+		<typeAlias alias="V1_Reservation" type="com.mbs.mvc.vo.V1_Reservation" />
 	</typeAliases>
 
 </configuration>

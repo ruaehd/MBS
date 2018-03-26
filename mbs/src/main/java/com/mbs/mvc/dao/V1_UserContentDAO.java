@@ -8,7 +8,9 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.mbs.mvc.vo.V1_Member;
 import com.mbs.mvc.vo.V1_Menu;
+import com.mbs.mvc.vo.V1_Reservation;
 import com.mbs.mvc.vo.V1_Store;
 import com.mbs.mvc.vo.V1_StrImg;
 
@@ -30,15 +32,19 @@ public class V1_UserContentDAO {
 		return sqlsession.selectOne("V1_Store.selectBlobImg", obj);
 	}
 	
-	public V1_StrImg selectBlobImg1(V1_StrImg obj) {
-		return sqlsession.selectOne("V1_Store.selectBlobImg1", obj);
-	}
-	
 	public int insertImgs(V1_StrImg vo) {
 		return sqlsession.insert("V1_Store.insertImgs", vo);
 	}
 	
 	public int selectImgCount(int str_no) {
 		return sqlsession.selectOne("V1_Store.selectImgCount", str_no);		
+	}
+	
+	public V1_Member selectMemberOne(String mb_id) {
+		return sqlsession.selectOne("V1_Store.selectMemberOne", mb_id);
+	}
+	
+	public int insertReservation(V1_Reservation vo) {
+		return sqlsession.insert("V1_Store.insertReservation", vo);
 	}
 }

@@ -6,7 +6,6 @@
 		SELECT * FROM `store` WHERE str_number=#{str_number}
 	</select>
 	
-	
 	<select id="selectMenuList" parameterType="int" resultType="V1_Menu">
 		SELECT * FROM `str_menu` WHERE str_number=#{str_number}
 	</select>
@@ -18,14 +17,6 @@
 		SELECT str_image FROM `str_image` WHERE str_number=#{str_number} AND str_image_idx=#{str_image_idx}
 	</select>
 	
-	
-	<resultMap type="V1_StrImg" id="resultImg1" >
-		<result column="str_image" property="str_image" jdbcType="BLOB"/>
-	</resultMap>
-	<select id="selectBlobImg1" parameterType="V1_StrImg" resultMap="resultImg1">
-		SELECT str_number, ${img_table_name} str_image FROM `str_image` WHERE str_number=#{str_number}
-	</select>
-	
 	<insert id="insertImgs" parameterType="V1_StrImg">
 		INSERT INTO `str_image` (str_image, str_number, str_image_idx, str_img_date)
 		VALUES(#{str_image, jdbcType=BLOB}, #{str_number}, #{str_image_idx}, NOW()) 
@@ -34,5 +25,14 @@
 	<select id="selectImgCount" parameterType="int" resultType="int">
 		SELECT COUNT(*) AS cnt FROM `str_image` WHERE str_number=#{str_number}
 	</select>
+	
+	<select id="selectMemberOne" parameterType="String" resultType="V1_Member">
+		SELECT * FROM `member` WHERE mb_id=#{mb_id}
+	</select>
+	
+	<insert id="insertReservation" parameterType="V1_Reservation">
+		INSERT INTO `reservation` (rsv_day, rsv_time, rsv_personnel, rsv_sub_id, rsv_sub_name, rsv_sub_tel, rsv_sub_email, rsv_sub_request, str_number, rsv_date)
+		VALUES(#{rsv_day}, #{rsv_time}, #{rsv_personnel}, #{rsv_sub_id}, #{rsv_sub_name}, #{rsv_sub_tel}, #{rsv_sub_email}, #{rsv_sub_request}, #{str_number}, NOW())
+	</insert>
 	
 </mapper>
