@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Main">
+	<select id="selectContentList" parameterType="com.mbs.mvc.vo.Main_SearchVO" resultType="com.mbs.mvc.vo.Map_ListVO">
+	SELECT 
+      distinct ssi.str_number number, ssi.str_name name, ssi.str_address address, ssi.str_lng lng, ssi.str_lat lat, 
+      ssi.str_image img,ssi.str_category category
+    FROM 
+	(SELECT 
+  	  s.str_number, s.str_name, s.str_address, si.str_img_no,si.str_image,s.str_category,s.str_lat, s.str_lng
+     FROM 
+      store s 
+     INNER JOIN 
+      str_image si 
+     ON 
+       s.str_number = si.str_number
+      WHERE 
+       si.str_img_no = (select MIN(si.str_img_no) from str_image)) ssi 
+   	 INNER JOIN 
+      str_menu sm
+     ON
+       ssi.str_number = sm.str_number 
+     WHERE 
+      ssi.str_category <![CDATA[<=]]> #{category} AND
+      ssi.str_address LIKE concat('%', #{addr}, '%') AND 
+      (SELECT MIN(sm.mn_price))	<![CDATA[>]]> #{price_start} AND
+      (SELECT MAX(sm.mn_price)) <![CDATA[<]]> #{price_end}
+	</select>
+
+</mapper>

@@ -5,23 +5,18 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 @JsonInclude(Include.NON_NULL)
 public class Main_SearchVO {
-	private String category_food = null;
-	private String category_travel = null;
+	private int category = 0;
 	private String addr = null;
 	private String date = null;
 	private int price_start = 0;
 	private int price_end = 0;
-	public String getCategory_food() {
-		return category_food;
+	
+	
+	public int getCategory() {
+		return category;
 	}
-	public void setCategory_food(String category_food) {
-		this.category_food = category_food;
-	}
-	public String getCategory_travel() {
-		return category_travel;
-	}
-	public void setCategory_travel(String category_travel) {
-		this.category_travel = category_travel;
+	public void setCategory(int category) {
+		this.category = category;
 	}
 	public String getAddr() {
 		return addr;
