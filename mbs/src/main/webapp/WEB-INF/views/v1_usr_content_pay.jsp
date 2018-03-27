@@ -131,7 +131,7 @@
 								</div>
 								<div class="form-inline" style="margin-bottom:10px">
 									<label style="width:100px">요청사항</label>
-									<form:textarea class="form-control" rows="2" path="rsv_sub_request" id="" style="resize:none"></form:textarea>
+									<form:textarea class="form-control" rows="2" path="rsv_sub_request" style="resize:none"></form:textarea>
 								</div>
 							</div>
 						</div>

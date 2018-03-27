@@ -47,4 +47,12 @@ public class V1_UserContentDAO {
 	public int insertReservation(V1_Reservation vo) {
 		return sqlsession.insert("V1_Store.insertReservation", vo);
 	}
+	
+	public List<V1_Reservation> selectRsvList(String mb_id){
+		return sqlsession.selectList("V1_Store.selectRsvList", mb_id);
+	}
+	
+	public V1_Reservation selectRsvOne(int rsv_no) {
+		return sqlsession.selectOne("V1_Store.selectRsvOne", rsv_no);
+	}
 }

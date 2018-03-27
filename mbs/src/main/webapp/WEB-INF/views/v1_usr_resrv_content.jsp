@@ -28,44 +28,45 @@
 		<jsp:include page="v1_header.jsp"></jsp:include>
 		
 		<div class="container" style="margin-top:100px; padding:10px">
-			<div id="summary" class="form-inline" style="margin-bottom:10px; height:136px">
-				<div id="usr_info" class="form-group" style="width:30%">
-					사용자 aaa님
-				</div>
-				<div id="summary_board" class="form-group" style="width:60%">
-					<div id="total" class="form-group" style="width:20%">
-						전체
-					</div>
-					<div id="expect" class="form-group" style="width:20%">
-						이용예정
-					</div>
-					<div id="complite" class="form-group" style="width:20%">
-						이용완료
-					</div>
-					<div id="cancel" class="form-group" style="width:20%">
-						취소환불
-					</div>
-				</div>
-			</div>
-			
-			<div id="resrv_list" style="margin-bottom:10px; height:430px">
-				<h3>예약 리스트</h3>
-				<hr />
-				<table class="table">
-					<tr>
-						<th>상태</th>
-						<th>상호명</th>
-						<th>예약일</th>
-					</tr>
-					<c:forEach var="tmp" items="${rlist}">
-						<tr>
-							<td>상태</td>
-							<td><a href="usr_resrv_content.do?rsv_no=${tmp.rsv_no}">${tmp.str_number}</a></td>
-							<td>예약일</td>
-						</tr>
-					</c:forEach>
-				</table>
-			</div>
+			<h3>예약 정보</h3>
+			<hr />
+			<table class="table">
+				<tr>
+					<th>예약번호</th>
+					<td>${vo.rsv_no}</td>
+					<th>업체명</th>
+					<td>${vo.str_name}</td>
+				</tr>
+				<tr>
+					<th>업체 번호</th>
+					<td>${vo.str_tel}</td>
+					<th>업체 주소</th>
+					<td>${vo.str_address}</td>
+				</tr>
+				<tr>
+					<th>예약 일자</th>
+					<td>${vo.rsv_day}</td>
+					<th>예약 인원</th>
+					<td>${vo.rsv_personnel}</td>
+				</tr>
+				<tr>
+					<th>예약자 이름</th>
+					<td>${vo.rsv_sub_name}</td>
+					<th>예약자 번호</th>
+					<td>${vo.rsv_sub_tel}</td>
+				</tr>
+				<tr>
+					<th>예약자 이메일</th>
+					<td>${vo.rsv_sub_email}</td>
+					<th>예약자 요청사항</th>
+					<td>${vo.rsv_sub_request}</td>
+				</tr>
+				<tr>
+					<th>예약 시간</th>
+					<td>${vo.rsv_time}</td>
+				</tr>
+			</table>
+			<hr />
 		</div>
 		
 		<jsp:include page="v1_footer.jsp"></jsp:include>

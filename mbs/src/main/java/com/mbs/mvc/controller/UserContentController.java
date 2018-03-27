@@ -36,6 +36,7 @@ public class UserContentController {
 	@RequestMapping(value="/usr_content.do", method = RequestMethod.GET)
 	public String userContent(Model model) {
 		
+		//파람
 		V1_Store vo = ucDAO.selectStoreOne(1234567890);
 		List<V1_Menu> mlist = ucDAO.selectMenuList(1234567890);
 		int cnt = ucDAO.selectImgCount(1234567890);
@@ -54,7 +55,8 @@ public class UserContentController {
 	public String userContentPay(Model model) {
 		
 		V1_Reservation rvo = new V1_Reservation();
-		
+		//파람
+		//세션 아이디
 		int cnt = ucDAO.selectImgCount(1234567890);
 		V1_Store vo = ucDAO.selectStoreOne(1234567890);
 		V1_Member mvo = ucDAO.selectMemberOne("user");
@@ -68,10 +70,15 @@ public class UserContentController {
 		return "v1_usr_content_pay";
 	}
 	
+	/*
+	 * 예약하기
+	 */
 	@RequestMapping(value="/usr_content_pay.do", method = RequestMethod.POST)
 	public String userContentPay(@ModelAttribute("rvo") V1_Reservation vo) {
 		
+		//세션아이디
 		vo.setRsv_sub_id("user");
+		//param
 		vo.setStr_number(1234567890);
 		int ret = ucDAO.insertReservation(vo);
 		if(ret!=0) {
@@ -120,6 +127,21 @@ public class UserContentController {
 	 */
 	@RequestMapping(value="/usr_resrv_list.do", method = RequestMethod.GET)
 	public String userReservationList(Model model) {
+		
+		//세션 아이디
+		List<V1_Reservation> rlist = ucDAO.selectRsvList("user");
+		
+		model.addAttribute("rlist", rlist);
 		return "v1_usr_resrv_list";
+	}
+	
+	@RequestMapping(value="/usr_resrv_content.do", method = RequestMethod.GET)
+	public String userReservationContent(Model model, @RequestParam("rsv_no") int rsv_no) {
+		
+		V1_Reservation vo = ucDAO.selectRsvOne(rsv_no);
+		
+		model.addAttribute("vo", vo);
+		return "v1_usr_resrv_content";
+	
 	}
 }
