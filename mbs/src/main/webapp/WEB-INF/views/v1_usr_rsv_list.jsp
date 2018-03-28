@@ -1,5 +1,6 @@
 <%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> 
 <%@ page session="false"%>
 <!DOCTYPE html>
 <html>
@@ -34,16 +35,16 @@
 				</div>
 				<div id="summary_board" class="form-group" style="width:60%">
 					<div id="total" class="form-group" style="width:20%">
-						전체
+						<a href="usr_rsv_list.do">전체</a>
 					</div>
 					<div id="expect" class="form-group" style="width:20%">
-						이용예정
+						<a href="usr_rsv_list.do?rsv_code=1">이용예정</a>
 					</div>
 					<div id="complite" class="form-group" style="width:20%">
-						이용완료
+						<a href="usr_rsv_list.do?rsv_code=2">이용완료</a>
 					</div>
 					<div id="cancel" class="form-group" style="width:20%">
-						취소환불
+						<a href="usr_rsv_list.do?rsv_code=3">취소환불</a>
 					</div>
 				</div>
 			</div>
@@ -51,20 +52,27 @@
 			<div id="resrv_list" style="margin-bottom:10px; height:430px">
 				<h3>예약 리스트</h3>
 				<hr />
-				<table class="table">
-					<tr>
-						<th>상태</th>
-						<th>상호명</th>
-						<th>예약일</th>
-					</tr>
-					<c:forEach var="tmp" items="${rlist}">
+				<c:if test="${fn:length(rlist) eq 0 }">
+					<div style="padding:100px">
+						<h3>예약정보가 없습니다</h3>
+					</div>
+				</c:if>
+				<c:if test="${fn:length(rlist) ne 0 }">
+					<table class="table">
 						<tr>
-							<td>상태</td>
-							<td><a href="usr_resrv_content.do?rsv_no=${tmp.rsv_no}">${tmp.str_number}</a></td>
-							<td>예약일</td>
+							<th>상태</th>
+							<th>상호명</th>
+							<th>예약일</th>
 						</tr>
-					</c:forEach>
-				</table>
+						<c:forEach var="tmp" items="${rlist}">
+							<tr>
+								<td>${tmp.rsv_code_chk}</td>
+								<td><a href="usr_rsv_content.do?rsv_no=${tmp.rsv_no}">${tmp.str_name}</a></td>
+								<td>예약일</td>
+							</tr>
+						</c:forEach>
+					</table>
+				</c:if>
 			</div>
 		</div>
 		

@@ -13,7 +13,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -70,22 +69,6 @@ public class UserContentController {
 		return "v1_usr_content_pay";
 	}
 	
-	/*
-	 * 예약하기
-	 */
-	@RequestMapping(value="/usr_content_pay.do", method = RequestMethod.POST)
-	public String userContentPay(@ModelAttribute("rvo") V1_Reservation vo) {
-		
-		//세션아이디
-		vo.setRsv_sub_id("user");
-		//param
-		vo.setStr_number(1234567890);
-		int ret = ucDAO.insertReservation(vo);
-		if(ret!=0) {
-			return "redirect:usr_resrv_list.do";
-		}
-		return "redirect:usr_content_pay.do";
-	}
 	
 	/*
 	 * 이미지 로딩
@@ -122,26 +105,5 @@ public class UserContentController {
 		}
 	}
 	
-	/*
-	 * 예약 리스트
-	 */
-	@RequestMapping(value="/usr_resrv_list.do", method = RequestMethod.GET)
-	public String userReservationList(Model model) {
-		
-		//세션 아이디
-		List<V1_Reservation> rlist = ucDAO.selectRsvList("user");
-		
-		model.addAttribute("rlist", rlist);
-		return "v1_usr_resrv_list";
-	}
 	
-	@RequestMapping(value="/usr_resrv_content.do", method = RequestMethod.GET)
-	public String userReservationContent(Model model, @RequestParam("rsv_no") int rsv_no) {
-		
-		V1_Reservation vo = ucDAO.selectRsvOne(rsv_no);
-		
-		model.addAttribute("vo", vo);
-		return "v1_usr_resrv_content";
-	
-	}
 }

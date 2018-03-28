@@ -35,17 +35,26 @@
 		VALUES(#{rsv_day}, #{rsv_time}, #{rsv_personnel}, #{rsv_sub_id}, #{rsv_sub_name}, #{rsv_sub_tel}, #{rsv_sub_email}, #{rsv_sub_request}, #{str_number}, NOW())
 	</insert>
 	
-	<select id="selectRsvList" parameterType="String" resultType="V1_Reservation">
-		SELECT * FROM `reservation` WHERE rsv_sub_id=#{rsv_sub_id} ORDER BY rsv_no DESC
+	<select id="selectRsvList" parameterType="V1_Reservation" resultType="V1_Reservation">
+		SELECT * FROM `reservation` r 
+			INNER JOIN `rsv_code` c
+			ON r.rsv_code = c.rsv_code
+		WHERE r.rsv_sub_id=#{rsv_sub_id} AND c.rsv_code=#{rsv_code} ORDER BY rsv_no DESC
 	</select>
 	
-	<select id="selectRsvOne" parameterType="int" resultType="V1_Reservation">
-		SELECT s.str_name, s.str_tel, s.str_address, r.rsv_no, r.rsv_day, r.rsv_time, r.rsv_personnel, r.rsv_sub_id, r.rsv_sub_name, r.rsv_sub_tel, r.rsv_sub_email, r.rsv_sub_request, r.str_number
+	<select id="selectRsvListTot" parameterType="V1_Reservation" resultType="V1_Reservation">
+		SELECT * FROM `reservation` r 
+			INNER JOIN `rsv_code` c
+			ON r.rsv_code = c.rsv_code
+		WHERE r.rsv_sub_id=#{rsv_sub_id} ORDER BY rsv_no DESC
+	</select>
+	
+	<select id="selectRsvOne" parameterType="V1_Reservation" resultType="V1_Reservation">
+		SELECT s.str_name, s.str_tel, s.str_address, r.rsv_no, r.rsv_day, r.rsv_time, r.rsv_personnel, r.rsv_sub_id, r.rsv_sub_name, r.rsv_sub_tel, r.rsv_sub_email, r.rsv_sub_request, r.str_number, r.rsv_delete, r.rsv_code
 		FROM `reservation` r 
 			INNER JOIN `store` s
 			ON r.str_number = s.str_number
 		WHERE r.rsv_no=#{rsv_no}
 	</select>
-	
 	
 </mapper>
