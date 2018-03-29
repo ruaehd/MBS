@@ -34,17 +34,21 @@
 					사용자 aaa님
 				</div>
 				<div id="summary_board" class="form-group" style="width:60%">
-					<div id="total" class="form-group" style="width:20%">
-						<a href="usr_rsv_list.do">전체</a>
+					<div id="total" class="form-group" style="width:20%; text-align:center">
+						<a href="usr_rsv_list.do">전체</a><br />
+						<h3>${tot}</h3>
 					</div>
-					<div id="expect" class="form-group" style="width:20%">
-						<a href="usr_rsv_list.do?rsv_code=1">이용예정</a>
+					<div id="expect" class="form-group" style="width:20%; text-align:center">
+						<a href="usr_rsv_list.do?rsv_code=1">이용예정</a><br />
+						<h3>${exp}</h3>
 					</div>
-					<div id="complite" class="form-group" style="width:20%">
-						<a href="usr_rsv_list.do?rsv_code=2">이용완료</a>
+					<div id="complite" class="form-group" style="width:20%; text-align:center">
+						<a href="usr_rsv_list.do?rsv_code=2">이용완료</a><br />
+						<h3>${com}</h3>
 					</div>
-					<div id="cancel" class="form-group" style="width:20%">
-						<a href="usr_rsv_list.do?rsv_code=3">취소환불</a>
+					<div id="cancel" class="form-group" style="width:20%; text-align:center">
+						<a href="usr_rsv_list.do?rsv_code=3">취소환불</a><br />
+						<h3>${can}</h3>
 					</div>
 				</div>
 			</div>

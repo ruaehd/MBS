@@ -48,6 +48,16 @@ public class ReservationController {
 		V1_Reservation vo = new V1_Reservation();
 		vo.setRsv_sub_id("user");
 		
+		int tot = rDAO.countRsvTot();
+		int exp = rDAO.countRsvExp(rsv_code);
+		int com = rDAO.countRsvCom(rsv_code);
+		int can = rDAO.countRsvCan(rsv_code);
+		
+		model.addAttribute("tot", tot);
+		model.addAttribute("exp", exp);
+		model.addAttribute("com", com);
+		model.addAttribute("can", can);
+		
 		if(rsv_code==0) {
 			List<V1_Reservation> rlist = rDAO.selectRsvListTot(vo);
 			model.addAttribute("rlist", rlist);
@@ -96,5 +106,24 @@ public class ReservationController {
 		model.addAttribute("vo", rvo);
 		
 		return "v1_usr_rsv_edit";
+	}
+	
+	@RequestMapping(value="/usr_rsv_edit.do", method = RequestMethod.POST)
+	public String userReservationEdit(@ModelAttribute("vo") V1_Reservation vo) {
+		System.out.println("AAAAAAAAA"+vo.getRsv_no());
+		int ret = rDAO.updateRsv(vo);
+		if(ret>0) {
+			return "redirect:usr_rsv_content.do?rsv_no="+vo.getRsv_no();
+		}
+		return "redirect:usr_rsv_edit.do";
+	}
+	
+	@RequestMapping(value="/usr_rsv_cancel.do", method = RequestMethod.GET)
+	public String userRsvCancel(@RequestParam("rsv_no") int rsv_no) {
+		System.out.println(rsv_no);
+		
+		rDAO.cancelRsv(rsv_no);
+		
+		return "redirect:usr_rsv_list.do";
 	}
 }

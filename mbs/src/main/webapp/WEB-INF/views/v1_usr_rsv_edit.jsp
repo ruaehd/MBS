@@ -65,6 +65,7 @@
 						
 						<div id="select" style="margin-bottom:20px">
 							<h3>예약 정보</h3>
+							<form:input type="hidden" path="rsv_no" value="${vo.rsv_no}" />
 							<hr />
 							<div class="form-inline" style="margin-bottom:10px">
 								<label style="width:100px">날짜</label>
@@ -119,15 +120,15 @@
 							<div>
 								<div class="form-inline" style="margin-bottom:10px">
 									<label style="width:100px">이름</label>
-									<form:input type="text" class="form-control" path="rsv_sub_name" id="" value="${vo.rsv_sub_name}"/>
+									<form:input type="text" class="form-control" path="rsv_sub_name" value="${vo.rsv_sub_name}"/>
 								</div>
 								<div class="form-inline" style="margin-bottom:10px">
 									<label style="width:100px">전화번호</label>
-									<form:input type="text" class="form-control" path="rsv_sub_tel" id="" value="${vo.rsv_sub_tel}"/>
+									<form:input type="text" class="form-control" path="rsv_sub_tel" value="${vo.rsv_sub_tel}"/>
 								</div>
 								<div class="form-inline" style="margin-bottom:10px">
 									<label style="width:100px">이메일주소</label>
-									<form:input type="text" class="form-control" path="rsv_sub_email" id="" value="${vo.rsv_sub_email}"/>
+									<form:input type="text" class="form-control" path="rsv_sub_email" value="${vo.rsv_sub_email}"/>
 								</div>
 								<div class="form-inline" style="margin-bottom:10px">
 									<label style="width:100px">요청사항</label>
@@ -161,7 +162,7 @@
 						
 						<div style="margin-bottom:10px">
 							<input type="submit" class="btn btn-success" value="예약변경"	/>
-							<a href="usr_rsv_content.do?rsv_no=${vo.rsv_no}" class="btn btn-info">취소</a>
+							<a href="usr_rsv_content.do?rsv_no=${param.rsv_no}" class="btn btn-info">취소</a>
 						</div>
 						
 					</div>

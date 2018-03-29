@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="V1_Comment">
+	<select id="selectRsvInfo" parameterType="int" resultType="V1_Reservation">
+		SELECT s.str_name, r.rsv_no, r.rsv_day
+		FROM `reservation` r 
+			INNER JOIN `store` s
+			ON r.str_number = s.str_number
+		WHERE r.rsv_no=#{rsv_no}
+	</select>
+	
+</mapper>

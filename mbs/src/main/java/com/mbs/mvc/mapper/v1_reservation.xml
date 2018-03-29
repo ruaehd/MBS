@@ -9,17 +9,23 @@
 	</insert>
 	
 	<select id="selectRsvList" parameterType="V1_Reservation" resultType="V1_Reservation">
-		SELECT * FROM `reservation` r 
-			INNER JOIN `rsv_code` c
-			ON r.rsv_code = c.rsv_code
-		WHERE r.rsv_sub_id=#{rsv_sub_id} AND c.rsv_code=#{rsv_code} ORDER BY rsv_no DESC
+		SELECT s.str_name, rc.rsv_day, rc.rsv_code, rc.rsv_code_chk, rc.rsv_no FROM `store` s
+		INNER JOIN
+			(SELECT r.rsv_day, r.rsv_code, c.rsv_code_chk, r.str_number, r.rsv_no FROM `reservation` r 
+				INNER JOIN `rsv_code` c
+				ON r.rsv_code = c.rsv_code
+			WHERE r.rsv_sub_id=#{rsv_sub_id} AND c.rsv_code=#{rsv_code}) rc
+		ON s.str_number = rc.str_number
 	</select>
 	
 	<select id="selectRsvListTot" parameterType="V1_Reservation" resultType="V1_Reservation">
-		SELECT * FROM `reservation` r 
-			INNER JOIN `rsv_code` c
-			ON r.rsv_code = c.rsv_code
-		WHERE r.rsv_sub_id=#{rsv_sub_id} ORDER BY rsv_no DESC
+		SELECT s.str_name, rc.rsv_day, rc.rsv_code, rc.rsv_code_chk, rc.rsv_no FROM `store` s
+		INNER JOIN
+			(SELECT r.rsv_day, r.rsv_code, c.rsv_code_chk, r.str_number, r.rsv_no FROM `reservation` r 
+				INNER JOIN `rsv_code` c
+				ON r.rsv_code = c.rsv_code
+			WHERE r.rsv_sub_id=#{rsv_sub_id}) rc
+		ON s.str_number = rc.str_number
 	</select>
 	
 	<select id="selectRsvOne" parameterType="V1_Reservation" resultType="V1_Reservation">
@@ -30,4 +36,24 @@
 		WHERE r.rsv_no=#{rsv_no}
 	</select>
 	
+	<select id="countRsvTot" resultType="int">
+		SELECT COUNT(*) AS cnt FROM `reservation`
+	</select>
+	<select id="countRsvExp" parameterType="int" resultType="int">
+		SELECT COUNT(*) AS cnt FROM `reservation` WHERE rsv_code=1
+	</select>
+	<select id="countRsvCom" parameterType="int" resultType="int">
+		SELECT COUNT(*) AS cnt FROM `reservation` WHERE rsv_code=2
+	</select>
+	<select id="countRsvCan" parameterType="int" resultType="int">
+		SELECT COUNT(*) AS cnt FROM `reservation` WHERE rsv_code=3
+	</select>
+	
+	<update id="updateRsv" parameterType="V1_Reservation">
+		UPDATE `reservation` SET rsv_day=#{rsv_day}, rsv_time=#{rsv_time}, rsv_personnel=#{rsv_personnel}, rsv_sub_name=#{rsv_sub_name}, rsv_sub_tel=#{rsv_sub_tel}, rsv_sub_email=#{rsv_sub_email}, rsv_sub_request=#{rsv_sub_request}, rsv_code=1 WHERE rsv_no=#{rsv_no}
+	</update>
+	
+	<update id="cancelRsv" parameterType="int">
+		UPDATE `reservation` SET rsv_code=3 WHERE rsv_no=#{rsv_no}
+	</update>
 </mapper>

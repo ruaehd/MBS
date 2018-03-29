@@ -156,10 +156,13 @@
 						<c:choose>
 							<c:when test="${vo.rsv_code == 1}">
 								<a href="usr_rsv_edit.do?rsv_no=${vo.rsv_no}&str_num=${vo.str_number}" class="btn btn-success">예약 변경</a>
-								<a href="#" class="btn btn-danger">예약 취소</a>
+								<a href="usr_rsv_cancel.do?rsv_no=${vo.rsv_no}" class="btn btn-danger">예약 취소</a>
 							</c:when>
 							<c:when test="${vo.rsv_code == 2}">
-								<a href="#" class="btn btn-info">후기 작성</a>
+								<input type="button" class="btn btn-info" value="후기 작성" onClick="writeReview()" />
+							</c:when>
+							<c:when test="${vo.rsv_code == 3}">
+								<a href="usr_rsv_edit.do?rsv_no=${vo.rsv_no}&str_num=${vo.str_number}" class="btn btn-info">다시 예약 하기</a>
 							</c:when>
 						</c:choose>
 						<a href="usr_rsv_list.do" class="btn btn-primary">목록</a>
@@ -178,6 +181,10 @@
 	<script src="resources/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=66e7156b3899e012effaa62fd20217d4&libraries=services"></script>
 	<script>
+		function writeReview() {
+			window.open('usr_rsv_comment.do?rsv_no='+${vo.rsv_no} ,'후기작성','width=600, height=800');
+		}
+		
 		$(function() {
 			var mapContainer = document.getElementById('map'),
 		    mapOption = {

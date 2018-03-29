@@ -22,6 +22,7 @@
 		<typeAlias alias="V1_StrImg" type="com.mbs.mvc.vo.V1_StrImg" />
 		<typeAlias alias="V1_Member" type="com.mbs.mvc.vo.V1_Member" />
 		<typeAlias alias="V1_Reservation" type="com.mbs.mvc.vo.V1_Reservation" />
+		<typeAlias alias="V1_Comment" type="com.mbs.mvc.vo.V1_Comment" />
 	</typeAliases>
 
 </configuration>
