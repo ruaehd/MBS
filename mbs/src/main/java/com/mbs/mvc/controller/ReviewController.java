@@ -16,19 +16,31 @@ import com.mbs.mvc.vo.V1_Reservation;
 public class ReviewController {
 	@Autowired private V1_ReviewDAO reDAO = null;
 	
-	@RequestMapping(value="/usr_rsv_comment.do", method = RequestMethod.GET)
-	public String usrRsvComment(Model model, @RequestParam("rsv_no") int rsv_no) {
+	@RequestMapping(value="/usr_rsv_review.do", method = RequestMethod.GET)
+	public String usrRsvReview(Model model, @RequestParam("rsv_no") int rsv_no) {
 		
-		V1_Reservation vo = reDAO.selectRsvInfo(rsv_no);
-		V1_Comment cvo = new V1_Comment();
+		return "v1_usr_rsv_review";
+	}
+	
+	@RequestMapping(value="/usr_rsv_review.do", method = RequestMethod.POST)
+	public String usrRsvReview(@ModelAttribute("cvo") V1_Comment vo) {
+		
+		return "";
+	}
+	
+	@RequestMapping(value="/usr_rsv_comment.do", method = RequestMethod.GET)
+	public String usrRsvComment(Model model) {
+		
+		V1_Comment vo = new V1_Comment();
 		
 		model.addAttribute("vo", vo);
-		model.addAttribute("cvo", cvo);
 		return "v1_usr_rsv_comment";
 	}
 	
 	@RequestMapping(value="/usr_rsv_comment.do", method = RequestMethod.POST)
-	public String usrRsvComment(@ModelAttribute("cvo") V1_Comment vo) {
+	public String usrRsvComment(@ModelAttribute("vo") V1_Comment vo) {
+		
+		reDAO.insertComment(vo);
 		
 		return "";
 	}

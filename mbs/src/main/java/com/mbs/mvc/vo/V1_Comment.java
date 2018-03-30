@@ -2,14 +2,19 @@ package com.mbs.mvc.vo;
 
 public class V1_Comment {
 	private int rsv_cmt_no = 0;
-	private String rsv_cmt_title = null;
 	private String rsv_cmt_content = null;
 	private int rsv_cmt_point = 0;
 	private int rsv_cmt_delete = 0;
-	private String rsv_cmt_fate = null;
+	private String rsv_cmt_date = null;
 	private int rsv_no = 0;
 	
 	
+	public String getRsv_cmt_date() {
+		return rsv_cmt_date;
+	}
+	public void setRsv_cmt_date(String rsv_cmt_date) {
+		this.rsv_cmt_date = rsv_cmt_date;
+	}
 	private String str_name = null;
 	
 	
@@ -24,12 +29,6 @@ public class V1_Comment {
 	}
 	public void setRsv_cmt_no(int rsv_cmt_no) {
 		this.rsv_cmt_no = rsv_cmt_no;
-	}
-	public String getRsv_cmt_title() {
-		return rsv_cmt_title;
-	}
-	public void setRsv_cmt_title(String rsv_cmt_title) {
-		this.rsv_cmt_title = rsv_cmt_title;
 	}
 	public String getRsv_cmt_content() {
 		return rsv_cmt_content;
@@ -48,12 +47,6 @@ public class V1_Comment {
 	}
 	public void setRsv_cmt_delete(int rsv_cmt_delete) {
 		this.rsv_cmt_delete = rsv_cmt_delete;
-	}
-	public String getRsv_cmt_fate() {
-		return rsv_cmt_fate;
-	}
-	public void setRsv_cmt_fate(String rsv_cmt_fate) {
-		this.rsv_cmt_fate = rsv_cmt_fate;
 	}
 	public int getRsv_no() {
 		return rsv_no;

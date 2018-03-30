@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="V1_Comment">
+<mapper namespace="V1_Review">
 	<select id="selectRsvInfo" parameterType="int" resultType="V1_Reservation">
 		SELECT s.str_name, r.rsv_no, r.rsv_day
 		FROM `reservation` r 
@@ -9,5 +9,9 @@
 			ON r.str_number = s.str_number
 		WHERE r.rsv_no=#{rsv_no}
 	</select>
+	
+	<insert id="insertComment">
+		INSERT INTO `rsv_comment` (rsv_cmt_content, rsv_cmt_point, rsv_cmt_date, rsv_no) VALUES(#{rsv_cmt_content}, #{rsv_cmt_point}, NOW(), #{rsv_no})
+	</insert>
 	
 </mapper>

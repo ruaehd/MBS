@@ -76,6 +76,10 @@
 							</tr>
 						</c:forEach>
 					</table>
+					<!-- <hr />
+					<div align="center">
+						<ul id="pagination" class="pagination"></ul>
+					</div> -->
 				</c:if>
 			</div>
 		</div>
@@ -87,9 +91,14 @@
 	
 	<script src="resources/js/jquery-1.11.1.js"></script>
 	<script src="resources/js/bootstrap.min.js"></script>
+	<script src="resources/js/jquery.twbsPagination.min.js"></script>
 	<script>
 		$(function() {
-			
+		/* 	$('#pagination').twbsPagination({
+				totalPages:10,
+				visiblePage:10,
+				href:'?rsv_code=${param.rsv_code}&page={{number}}'
+			}) */
 		});
 	</script>
 
