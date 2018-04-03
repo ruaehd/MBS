@@ -53,25 +53,33 @@
 				<input type="button" id="search_button" class="form-control" value="검색옵션 열기"/>
 				<div id="search_panel">
 					<div class="form-inline" align="center" >
-						<input type="button" style="width:50%"
+						<input type="button" style="width:50%;height:30px"
 							class="select_category w3-button w3-round w3-white w3-border"
 							value="관광지" id="travel"/> 
-							<input type="button" style="width:50%"
+							<input type="button" style="width:50%;height:30px"
 							class="select_category w3-button w3-round w3-white w3-border"
 							value="음식점" id="food"/>
 					</div>
 					주소 <input type="text" class="form-control" placeholder="주소를 입력하세요" size="15" id="addr"/>
+					<div class="row">
+						<div class="col-md-6">
 					예약일 <input type="text" class="form-control w3-white" placeholder="예약일을 선택해주세요" readonly size="15" id="datepicker"/>
+					</div>
 					<!-- 키워드 : <input type="text" value="이태원 맛집" id="keyword" size="15"> -->
+					<div class="col-md-6">
 						<div align="center">가격</div>
 							<div align="center">
 								<input type="text" id="amount" readonly class="w3-border-bottom w3-round form-control">
 							</div>
+						</div>
+					</div>
 					
 					<div id="slider-range" style="margin:10px 0px; width: 100%;"></div>
 					<input type="button" class="form-control" id="search_submit" value="검색하기"/>
+					
 					</div>
 				</form>
+				<div id="content"></div>
 				</div>
 			</div>
 		</div>
@@ -80,6 +88,7 @@
         <div id="pagination"></div>
     </div>
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=66e7156b3899e012effaa62fd20217d4&libraries=services"></script>
+    <script type="text/javascript" src="resources/js/jquery.form.min.js"></script>
     <script>
 		/* 가격 슬라이드  */
 		jQuery(function($) {
@@ -136,12 +145,15 @@
 			});
 			//search ajax * 진행중
 			$('#search_submit').click(function(){
+				  $('#content').empty();
+				var tr = 0;
+				var fo = 0;
 				if($('#travel').hasClass('w3-blue')){
-					var tr = 1;
+					tr = 1;
 					
 				}
 				if($('#food').hasClass('w3-blue')){
-					var fo = 2;
+					fo = 2;
 					
 				}
 				var addr = $('#addr').val();
@@ -167,28 +179,55 @@
 				}
 				// 지도에 표시되고 있는 마커를 제거합니다
 			    removeMarker();
-				
+				console.log(tr);
+				console.log(fo);
 				$.ajaxSettings.traditional = true;
-				
-				$.post("ajax_main_search.do",	{"tr":tr,"fo":fo,"addr":addr,"date":date,"ps":ps,"pe":pe},function(data){
-					
-						    for ( var i=0; i<data.length; i++ ) {
-						        // 마커를 생성하고 지도에 표시합니다
-						        var placePosition = new daum.maps.LatLng(data[i].lat, data[i].lng),
-						            marker = addMarker(placePosition, i)
-						            
-						            var infowindow = new daum.maps.InfoWindow({
-						                position: placePosition,
-						                content: '<div><h5>'+ data[i].name +'</h5>' +
-						                		'</div>',
-						                removable : true
-						            });
-						        
-						        daum.maps.event.addListener(marker, 'click',function(){
-						        	infowindow.open(map,marker);
-						        });
-						    }
+				$.post("ajax_main_search.do",	{"tr":tr,"fo":fo,"addr":addr,"date":date,"ps":ps,"pe":pe},function(datalist){
+						for(i=0;i<datalist.length;i++){
+					        var placePosition = new daum.maps.LatLng(datalist[i].lat,datalist[i].lng),
+					            marker = addMarker(placePosition, i);
+					        	marker.setClickable(true);
+					            var infowindow = new daum.maps.InfoWindow({
+					                position: placePosition,
+					                content: '<div align="center" style="width:150px"><h4 style="margin:10px 0px"><b>'+ datalist[i].name +'</b></h4>' +
+					                		 '<a href="user_content.do?no='+datalist[i].number+'"><img class="'+datalist[i].number+'" src="getBlobImg.do?no='+ datalist[i].number + '" align="left" style="width:148px;height:100px;z-index:1;"/></a>' + 
+					                		 '</div>',
+					                removable : false
+					            });
+					            //해당 리스트에 마우스 over , leave 시 해당 정보에 대한 마커의 infowindow.open(); 과 클릭시 user_content.do?no=# 으로 이동
+					            $('#content').append(
+					            	'<div class="w3-border w3-white list'+i+'" style="width:100%; height:70px;margin-top:10px">'+
+					            		'<div class="w3-row">'+
+					            			'<div class="w3-quarter">'+
+					            					'<img class="'+datalist[i].number+'" src="getBlobImg.do?no='+ datalist[i].number +'" align="left" style="width:100%;height:70px;z-index:1;"/>'+
+					            			'</div>'+
+					            			'<div class="w3-rest" style="padding:10px" align="left">'+
+					            						'<div style="font-size:15px">'+datalist[i].name+'</div>'+
+					            						'<div style="color:gray">'+datalist[i].address+'</div>'+
+					            			'</div>'+
+					            		'</div>'+
+					            	'</div>'	
+					            				
+					            );
+
+					        daum.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker, infowindow));
+					        daum.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow));
+					        
+					        function makeOutListener(infowindow) {
+						        return function() {
+						            infowindow.close();
+						        };
+						    };
+						}
+						
+						function makeOverListener(map, marker, infowindow) {
+					        return function() {
+					            infowindow.open(map, marker);
+					        };
+					    }
 				},'json');
+				
+				    // 인포윈도우를 닫는 클로저를 만드는 함수입니다 
 			});
 
 			// 마커를 담을 배열입니다
@@ -209,31 +248,6 @@
 			// 검색 결과 목록이나 마커를 클릭했을 때 장소명을 표출할 인포윈도우를 생성합니다
 			var infowindow = new daum.maps.InfoWindow({zIndex:1});
 
-			// 장소검색이 완료됐을 때 호출되는 콜백함수 입니다
-			function placesSearchCB(data, status, pagination) {
-			    if (status === daum.maps.services.Status.OK) {
-
-			        // 정상적으로 검색이 완료됐으면
-			        // 검색 목록과 마커를 표출합니다
-			        displayPlaces(data);
-
-			        // 페이지 번호를 표출합니다
-			        displayPagination(pagination);
-
-			    } else if (status === daum.maps.services.Status.ZERO_RESULT) {
-
-			        alert('검색 결과가 존재하지 않습니다.');
-			        return;
-
-			    } else if (status === daum.maps.services.Status.ERROR) {
-
-			        alert('검색 결과 중 오류가 발생했습니다.');
-			        return;
-
-			    }
-			}
-
-			
 
 			// 검색결과 항목을 Element로 반환하는 함수입니다
 			

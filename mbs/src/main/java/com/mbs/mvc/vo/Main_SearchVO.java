@@ -10,8 +10,28 @@ public class Main_SearchVO {
 	private String date = null;
 	private int price_start = 0;
 	private int price_end = 0;
+	private int range = 0;
+	private String lat = null;
+	private String lng = null;
 	
-	
+	public String getLat() {
+		return lat;
+	}
+	public void setLat(String lat) {
+		this.lat = lat;
+	}
+	public String getLng() {
+		return lng;
+	}
+	public void setLng(String lng) {
+		this.lng = lng;
+	}
+	public int getRange() {
+		return range;
+	}
+	public void setRange(int range) {
+		this.range = range;
+	}
 	public int getCategory() {
 		return category;
 	}

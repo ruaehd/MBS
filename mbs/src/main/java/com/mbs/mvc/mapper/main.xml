@@ -2,30 +2,71 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="Main">
+
 	<select id="selectContentList" parameterType="com.mbs.mvc.vo.Main_SearchVO" resultType="com.mbs.mvc.vo.Map_ListVO">
 	SELECT 
-      distinct ssi.str_number number, ssi.str_name name, ssi.str_address address, ssi.str_lng lng, ssi.str_lat lat, 
-      ssi.str_image img,ssi.str_category category
+      distinct s.str_number number, s.str_name name, s.str_address address, s.str_lng lng, s.str_lat lat, 
+		s.str_category category
     FROM 
-	(SELECT 
-  	  s.str_number, s.str_name, s.str_address, si.str_img_no,si.str_image,s.str_category,s.str_lat, s.str_lng
-     FROM 
       store s 
-     INNER JOIN 
-      str_image si 
-     ON 
-       s.str_number = si.str_number
-      WHERE 
-       si.str_img_no = (select MIN(si.str_img_no) from str_image)) ssi 
-   	 INNER JOIN 
+   	INNER JOIN 
       str_menu sm
      ON
-       ssi.str_number = sm.str_number 
+       s.str_number = sm.str_number 
      WHERE 
-      ssi.str_category <![CDATA[<=]]> #{category} AND
-      ssi.str_address LIKE concat('%', #{addr}, '%') AND 
+     
+      s.str_address LIKE concat('%', #{addr}, '%') AND 
       (SELECT MIN(sm.mn_price))	<![CDATA[>]]> #{price_start} AND
-      (SELECT MAX(sm.mn_price)) <![CDATA[<]]> #{price_end}
+      (SELECT MAX(sm.mn_price)) <![CDATA[<]]> #{price_end} AND 
+      CASE
+    	WHEN #{category} =1 
+    	THEN s.str_category = 1
+    	WHEN #{category} =2 
+    	THEN s.str_category = 2 
+    	WHEN #{category} =3 
+    	THEN s.str_category <![CDATA[>]]> 3
+    	ELSE  
+    	s.str_category = 0 
+    	END
+	</select>
+	
+	<select id="selectImgOne" parameterType="int" resultMap="imgBlob">
+		SELECT str_image FROM str_image WHERE str_number = #{no} AND str_image_idx = 1 
+	</select>
+	
+	<resultMap id="imgBlob" type="java.util.Map">
+		<result column="str_image" property="str_image" jdbcType="BLOB" />		
+	</resultMap>
+	
+	<select id="selectWebContentList" parameterType="com.mbs.mvc.vo.Main_SearchVO" resultType="com.mbs.mvc.vo.Web_ListVO">
+	 SELECT 
+      distinct s.str_number number, s.str_name name, s.str_address address, s.str_lng lng, s.str_lat lat, 
+      s.str_begintime starttime, s.str_endtime endtime,s.str_category category, 
+      sm.mn_name menu, sm.mn_price menu_price, sm.mn_no , s.str_tel tel 
+    FROM 
+      store s 
+   	INNER JOIN 
+      str_menu sm
+     ON
+       s.str_number = sm.str_number 
+     WHERE 
+         (SELECT MIN(sm.mn_price)) 	<![CDATA[>]]> #{price_start} AND 
+         (SELECT MAX(sm.mn_price)) 	<![CDATA[<]]> #{price_end} AND 
+		s.str_number IN (SELECT str_number FROM (SELECT str_number,
+		 (6371*acos(cos(radians(#{lng}))*cos(radians(str_lat))*cos(radians(str_lng) -radians(#{lat}))+ 
+   		 sin(radians(#{lng}))*sin(radians(str_lat)))) AS distance
+    	 FROM store HAVING distance <![CDATA[<=]]> #{range} ORDER BY distance  LIMIT 0,30)A) AND
+    	 sm.mn_no = (select MIN(sm.mn_no) from str_menu) AND
+    CASE 
+    	WHEN #{category} = 1 
+    	THEN s.str_category = 1 
+    	WHEN #{category} = 2 
+    	THEN s.str_category = 2 
+    	WHEN #{category} = 3 
+    	THEN s.str_category <![CDATA[>]]> 3
+    	ELSE  
+    	s.str_category = 0 
+    	END
 	</select>
 
 </mapper>
