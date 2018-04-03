@@ -57,13 +57,13 @@ public class UserContentController {
 		//파람
 		//세션 아이디
 		int cnt = ucDAO.selectImgCount(1234567890);
-		V1_Store vo = ucDAO.selectStoreOne(1234567890);
+		V1_Store svo = ucDAO.selectStoreOne(1234567890);
 		V1_Member mvo = ucDAO.selectMemberOne("user");
 		List<V1_Menu> mlist = ucDAO.selectMenuList(1234567890);
 		
 		model.addAttribute("mlist", mlist);
 		model.addAttribute("cnt", cnt);
-		model.addAttribute("vo", vo);
+		model.addAttribute("svo", svo);
 		model.addAttribute("mvo", mvo);
 		model.addAttribute("rvo", rvo);
 		return "v1_usr_content_pay";

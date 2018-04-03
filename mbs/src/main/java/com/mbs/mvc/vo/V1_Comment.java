@@ -4,11 +4,18 @@ public class V1_Comment {
 	private int rsv_cmt_no = 0;
 	private String rsv_cmt_content = null;
 	private int rsv_cmt_point = 0;
+	private String rsv_cmt_writer = null;
 	private int rsv_cmt_delete = 0;
 	private String rsv_cmt_date = null;
 	private int rsv_no = 0;
 	
 	
+	public String getRsv_cmt_writer() {
+		return rsv_cmt_writer;
+	}
+	public void setRsv_cmt_writer(String rsv_cmt_writer) {
+		this.rsv_cmt_writer = rsv_cmt_writer;
+	}
 	public String getRsv_cmt_date() {
 		return rsv_cmt_date;
 	}

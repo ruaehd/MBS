@@ -159,8 +159,15 @@
 								<a href="usr_rsv_cancel.do?rsv_no=${vo.rsv_no}" class="btn btn-danger">예약 취소</a>
 							</c:when>
 							<c:when test="${vo.rsv_code == 2}">
-								<input type="button" class="btn btn-info" value="후기 작성" onClick="writeReview()" />
-								<input type="button" class="btn btn-indgo" value="한줄평 작성" onClick="writeComment()" />
+								<c:if test="${chk != 0}">
+									<input type="button" class="btn btn-info" value="후기 수정" onClick="editReview()" />
+									<input type="button" class="btn btn-indgo" value="한줄평 수정" onClick="editComment()" />
+								</c:if>
+								<c:if test="${chk == 0}">
+									<input type="button" class="btn btn-info" value="후기 작성" onClick="writeReview()" />
+									<input type="button" class="btn btn-indgo" value="한줄평 작성" onClick="writeComment()" />	
+								</c:if>
+								
 							</c:when>
 							<c:when test="${vo.rsv_code == 3}">
 								<a href="usr_rsv_edit.do?rsv_no=${vo.rsv_no}&str_num=${vo.str_number}" class="btn btn-info">다시 예약 하기</a>
@@ -183,10 +190,16 @@
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=66e7156b3899e012effaa62fd20217d4&libraries=services"></script>
 	<script>
 		function writeReview() {
-			window.open('usr_rsv_review.do?rsv_no='+${vo.rsv_no},'후기작성','width=600, height=800, left=650, top=100');
+			window.open('usr_rsv_review.do?rsv_no=${param.rsv_no}','후기작성','width=600, height=800, left=650, top=100');
 		}
 		function writeComment() {
-			window.open('usr_rsv_comment.do?rsv_no='+${vo.rsv_no},'한줄평 작성','width=600, height=400, left=650, top=300');
+			window.open('usr_rsv_comment.do?rsv_no=${param.rsv_no}','한줄평 작성','width=600, height=400, left=650, top=300');
+		}
+		function editReview() {
+			window.open('usr_rsv_review_edit.do?rsv_no=${param.rsv_no}','후기수정','width=600, height=800, left=650, top=100');
+		}
+		function editComment() {
+			window.open('usr_rsv_comment_edit.do?rsv_no=${param.rsv_no}','한줄평 수정','width=600, height=400, left=650, top=300');
 		}
 		
 		$(function() {

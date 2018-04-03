@@ -90,10 +90,10 @@
 							<hr />
 							<div id="menu_detail" class="form-inline" style="margin-bottom:10px">
 								<div>
-									<c:forEach var="vo1" items="${mlist}" varStatus="i">
+									<c:forEach var="tmp" items="${mlist}" varStatus="i">
 										<div class="form-inline">
-											<label style="width:100px">${vo1.mn_name}</label>
-											<label id="price_${i.index}">${vo1.mn_price}</label>
+											<label style="width:100px">${tmp.mn_name}</label>
+											<label id="price_${i.index}">${tmp.mn_price}</label>
 											<input type="button" class="btn btn-default menu_m" value="-" />
 											<input type="text" class="form-control menu_cnt" style="width:50px; text-align:right" value="0" />
 											<input type="button" class="btn btn-default menu_p" value="+" />
@@ -142,7 +142,7 @@
 							<div>
 								<div class="form-inline" style="margin-bottom:10px">
 									<label style="width:100px">상호</label>
-									${vo.str_name}
+									${svo.str_name}
 								</div>
 								<div class="form-inline" style="margin-bottom:10px">
 									<label style="width:100px">대표자명</label>
@@ -150,11 +150,11 @@
 								</div>
 								<div class="form-inline" style="margin-bottom:10px">
 									<label style="width:100px">소재지</label>
-									${vo.str_address}
+									${svo.str_address}
 								</div>
 								<div class="form-inline" style="margin-bottom:10px">
 									<label style="width:100px">연락처</label>
-									${vo.str_tel}
+									${svo.str_tel}
 								</div>
 							</div>
 						</div>

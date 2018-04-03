@@ -44,7 +44,7 @@
 </head>
 <body>
 	<div id="wrapper">
-		<form:form action="usr_rsv_comment.do?rsv_no=${param.rsv_no}" modelAttribute="vo" method="post">
+		<form:form action="usr_rsv_comment_edit.do?cmt_no=${vo.rsv_cmt_no}" modelAttribute="vo" method="post">
 		<div style="padding:20px; width:600px">
 			<h3>한줄평 작성</h3>
 			<hr />
@@ -52,25 +52,26 @@
 				<div class="form-group">
 					<label style="width:100px">예약 평가</label>
 			        <p style="display:inline-block" class="star_rating">
-					    <a href="#" class="on">★</a>
-					    <a href="#">★</a>
-					    <a href="#">★</a>
-					    <a href="#">★</a>
-					    <a href="#">★</a>
+					    <c:forEach begin="1" end="${vo.rsv_cmt_point}">
+					    	<a href="#" class="on">★</a>
+					    </c:forEach>
+					    <c:forEach begin="1" end="${5-vo.rsv_cmt_point}">
+					    	<a href="#">★</a>
+					    </c:forEach>
 					</p>
-					<form:input type="hidden" id="rating" path="rsv_cmt_point" value="1"/>
+					<form:input type="hidden" id="rating" path="rsv_cmt_point" value="${vo.rsv_cmt_point}"/>
 				</div>
 			</div>
 			<div class="form-inline">
 				<div class="form-group">
 					<label style="width:100px">한줄평</label>
-					<form:textarea rows="3" path="rsv_cmt_content" style="resize:none; width:400px"></form:textarea>
+					<form:textarea rows="3" path="rsv_cmt_content" style="resize:none; width:400px" value="${vo.rsv_cmt_content}"></form:textarea>
 				</div>
 			</div>
 			<hr />
 			<div class="form-inline" align="center">
-				<input type="submit" class="btn btn-success" value="한줄평 작성" />
-				<input type="button" class="btn btn-danger" value="작성 취소"/>
+				<input type="submit" class="btn btn-success" value="한줄평 수정"/>
+				<input type="button" class="btn btn-danger" value="수정 취소"/>
 			</div>
 		</div>
 		</form:form>
@@ -82,7 +83,9 @@
 	<script src="resources/js/bootstrap.min.js"></script>
 	<script src="resources/js/jquery.raty.js"></script>
 	<script>
-
+		$(function() {
+	      
+	    });
 		$( ".star_rating a" ).click(function() {
 		     $(this).parent().children("a").removeClass("on");
 		     $(this).addClass("on").prevAll("a").addClass("on");

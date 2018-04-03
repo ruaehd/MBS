@@ -1,5 +1,7 @@
 package com.mbs.mvc.vo;
 
+import java.util.List;
+
 public class V1_Store {
 	private int str_number = 0;
 	private String str_name = null;
@@ -20,7 +22,6 @@ public class V1_Store {
 	private int rsv_cmt_point = 0;
 	private int rsv_cmt_delete = 0;
 	private String rsv_cmt_date = null;
-	
 	
 	
 	public int getRsv_cmt_no() {

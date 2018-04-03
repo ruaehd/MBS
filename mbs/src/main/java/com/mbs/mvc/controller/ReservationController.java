@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.mbs.mvc.dao.V1_ReservationDAO;
+import com.mbs.mvc.dao.V1_ReviewDAO;
 import com.mbs.mvc.dao.V1_UserContentDAO;
+import com.mbs.mvc.vo.V1_Comment;
 import com.mbs.mvc.vo.V1_Menu;
 import com.mbs.mvc.vo.V1_Reservation;
 
@@ -20,6 +22,7 @@ public class ReservationController {
 	
 	@Autowired private V1_UserContentDAO ucDAO = null;
 	@Autowired private V1_ReservationDAO rDAO = null;
+	@Autowired private V1_ReviewDAO reDAO = null;
 	
 	/*
 	 * 예약하기
@@ -31,6 +34,7 @@ public class ReservationController {
 		vo.setRsv_sub_id("user");
 		//param
 		vo.setStr_number(1234567890);
+				
 		int ret = rDAO.insertReservation(vo);
 		if(ret!=0) {
 			return "redirect:usr_rsv_list.do";
@@ -80,10 +84,18 @@ public class ReservationController {
 		V1_Reservation vo = new V1_Reservation();
 		vo.setRsv_no(rsv_no);
 		
+		V1_Comment revo = new V1_Comment();
+		revo.setRsv_cmt_writer("user");
+		revo.setRsv_no(rsv_no);
+		
 		V1_Reservation rvo = rDAO.selectRsvOne(vo);
 		List<V1_Menu> mlist = ucDAO.selectMenuList(1234567890);
 		int cnt = ucDAO.selectImgCount(1234567890);
+		int chk = reDAO.selectReviewChk(revo);
 		
+		System.out.println("AAAAAA:"+chk);
+		
+		model.addAttribute("chk", chk);
 		model.addAttribute("cnt", cnt);
 		model.addAttribute("mlist", mlist);
 		model.addAttribute("vo", rvo);

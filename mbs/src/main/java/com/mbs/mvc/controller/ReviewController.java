@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.mbs.mvc.dao.V1_ReviewDAO;
 import com.mbs.mvc.vo.V1_Comment;
-import com.mbs.mvc.vo.V1_Reservation;
 
 @Controller
 public class ReviewController {
@@ -38,10 +37,39 @@ public class ReviewController {
 	}
 	
 	@RequestMapping(value="/usr_rsv_comment.do", method = RequestMethod.POST)
-	public String usrRsvComment(@ModelAttribute("vo") V1_Comment vo) {
-		
+	public String usrRsvComment(@RequestParam("rsv_no") int rsv_no, @ModelAttribute("vo") V1_Comment vo) {
+		vo.setRsv_no(rsv_no);
+		vo.setRsv_cmt_writer("user");
 		reDAO.insertComment(vo);
 		
-		return "";
+		return "alert";
+	}
+	
+	@RequestMapping(value="/usr_rsv_review_edit.do", method = RequestMethod.GET)
+	public String usrRsvReviewEdit(Model model, @RequestParam("rsv_no") int rsv_no) {
+		
+		
+		return "v1_usr_rsv_review_edit";
+	}
+	
+	@RequestMapping(value="/usr_rsv_comment_edit.do", method = RequestMethod.GET)
+	public String usrRsvCommentEdit(Model model, @RequestParam("rsv_no") int rsv_no) {
+		
+		V1_Comment vo = new V1_Comment();
+		
+		vo.setRsv_no(rsv_no);
+		vo.setRsv_cmt_writer("user");
+		
+		V1_Comment rvo = reDAO.selectReviewOne(vo);
+		
+		model.addAttribute("vo", rvo);
+		return "v1_usr_rsv_comment_edit";
+	}
+	
+	@RequestMapping(value="/usr_rsv_comment_edit.do", method = RequestMethod.POST)
+	public String usrRsvCommentEdit(@ModelAttribute("vo") V1_Comment vo, @RequestParam("cmt_no") int cmt_no) {
+		vo.setRsv_cmt_no(cmt_no);		
+		reDAO.updateComment(vo);
+		return "alert";
 	}
 }

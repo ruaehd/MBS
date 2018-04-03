@@ -1,5 +1,7 @@
 package com.mbs.mvc.vo;
 
+import java.util.List;
+
 public class V1_Reservation {
 	private int rsv_no = 0;
 	private String rsv_day = null;
@@ -23,6 +25,16 @@ public class V1_Reservation {
 	
 	private String rsv_code_chk = null;
 	private String rsv_code_date = null;
+	
+	private List<V1_RsvMenu> rmlist = null;
+	
+	public List<V1_RsvMenu> getRmlist() {
+		return rmlist;
+	}
+
+	public void setRmlist(List<V1_RsvMenu> rmlist) {
+		this.rmlist = rmlist;
+	}
 
 	public int getRsv_no() {
 		return rsv_no;

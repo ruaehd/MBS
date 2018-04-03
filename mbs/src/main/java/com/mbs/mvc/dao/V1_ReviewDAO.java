@@ -19,7 +19,19 @@ public class V1_ReviewDAO {
 		return sqlsession.selectOne("V1_Comment.selectRsvInfo", rsv_no);
 	}
 	
+	public int selectReviewChk(V1_Comment vo) {
+		return sqlsession.selectOne("V1_Review.selectReviewChk", vo);
+	}
+	
 	public int insertComment(V1_Comment vo) {
 		return sqlsession.insert("V1_Review.insertComment", vo);
+	}
+	
+	public V1_Comment selectReviewOne(V1_Comment vo) {
+		return sqlsession.selectOne("V1_Review.selectReviewOne", vo);
+	}
+	
+	public int updateComment(V1_Comment vo) {
+		return sqlsession.update("V1_Review.updateComment", vo);
 	}
 }
