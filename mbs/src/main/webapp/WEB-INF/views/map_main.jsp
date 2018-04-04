@@ -116,22 +116,26 @@
 				showMonthAfterYear:true
 			});
 			
-			$('.select_category').click(function(){
-				var sci = $(this).index('.select_category');
-				
-				if($('.select_category').eq(sci).hasClass('w3-white')){
-				$('.select_category').eq(sci).removeClass('w3-white');
-				$('.select_category').eq(sci).removeClass('w3-hover-white');
-				$('.select_category').eq(sci).addClass('w3-blue');
-				$('.select_category').eq(sci).addClass('w3-hover-blue');
-				}
-				else if($('.select_category').eq(sci).hasClass('w3-blue')){
-					$('.select_category').eq(sci).removeClass('w3-blue');
-					$('.select_category').eq(sci).removeClass('w3-hover-blue');
-					$('.select_category').eq(sci).addClass('w3-white');
-					$('.select_category').eq(sci).addClass('w3-hover-white');
-				}
-			});
+			 $('#travel').click(function(){
+					if($(this).hasClass('w3-white')){
+						$(this).removeClass('w3-white w3-hover-white');
+						$(this).addClass('w3-green w3-hover-green');
+					}
+					else if($(this).hasClass('w3-green')){
+						$(this).removeClass('w3-green w3-hover-green');
+						$(this).addClass('w3-white w3-hover-white w3-border');
+					}
+				 });
+				 $('#food').click(function(){
+						if($(this).hasClass('w3-white')){
+							$(this).removeClass('w3-white w3-hover-white');
+							$(this).addClass('w3-blue w3-hover-blue');
+						}
+						else if($(this).hasClass('w3-blue')){
+							$(this).removeClass('w3-blue w3-hover-blue');
+							$(this).addClass('w3-white w3-hover-white w3-border');
+						}
+					 });
 			$('#search_panel').hide();
 			$('#search_button').click(function(){
 				$('#search_panel').slideToggle(300);

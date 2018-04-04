@@ -31,30 +31,35 @@
 </script>
 <script>
  $(function(){
-	 $('.select_category').click(function() {
-			var sci = $(this).index('.select_category');
-
-			if ($('.select_category').eq(sci).hasClass('w3-white')) {
-				$('.select_category').eq(sci).removeClass('w3-white');
-				$('.select_category').eq(sci).removeClass('w3-hover-white');
-				$('.select_category').eq(sci).addClass('w3-blue');
-				$('.select_category').eq(sci).addClass('w3-hover-blue');
-			} else if ($('.select_category').eq(sci).hasClass('w3-blue')) {
-				$('.select_category').eq(sci).removeClass('w3-blue');
-				$('.select_category').eq(sci).removeClass('w3-hover-blue');
-				$('.select_category').eq(sci).addClass('w3-white');
-				$('.select_category').eq(sci).addClass('w3-hover-white');
+	 $('#travel').click(function(){
+		if($(this).hasClass('w3-white')){
+			$(this).removeClass('w3-white w3-hover-white w3-border');
+			$(this).addClass('w3-pale-green w3-hover-green');
+		}
+		else if($(this).hasClass('w3-pale-green')){
+			$(this).removeClass('w3-pale-green w3-hover-green');
+			$(this).addClass('w3-white w3-hover-white w3-border');
+		}
+	 });
+	 $('#food').click(function(){
+			if($(this).hasClass('w3-white')){
+				$(this).removeClass('w3-white w3-hover-white w3-border');
+				$(this).addClass('w3-pale-blue w3-hover-blue');
 			}
-		});
+			else if($(this).hasClass('w3-pale-blue')){
+				$(this).removeClass('w3-pale-blue w3-hover-blue');
+				$(this).addClass('w3-white w3-hover-white w3-border');
+			}
+		 });
 		$('#search_panel_button').click(function(){
 			$('#joincontent').empty();
 			$('#contentlist').empty();
 				var tr = 0;
 				var fo = 0;
-			if($('#travel').hasClass('w3-blue')){
+			if($('#travel').hasClass('w3-pale-green')){
 				tr = 1;
 			}
-			if($('#food').hasClass('w3-blue')){
+			if($('#food').hasClass('w3-pale-blue')){
 				fo = 2;
 			}
 			var addr = $('#sample4_roadAddress').val();
@@ -74,7 +79,6 @@
 			var addr = $('#sample4_roadAddress').val();
 			var ra = $('#range').val();
 			ra = ra.substring(0,ra.length-2);
-			var lng = 0;
 			// 주소-좌표 변환 객체를 생성합니다
 			var geocoder = new daum.maps.services.Geocoder();
 			// 주소로 좌표를 검색합니다
@@ -83,51 +87,79 @@
 			     if (status === daum.maps.services.Status.OK) {
 			        var lat = result[0].x;
 					var lng = result[0].y;
-					console.log(lng);
-					console.log(lat);
-					console.log(tr);
-					console.log(fo);
 					$.ajaxSettings.traditional = true;
 					$.post("ajax_web_main_search.do",	{"tr":tr,"fo":fo,"addr":addr,"date":date,"ps":ps,"pe":pe,"lat":lat,"lng":lng,"ra":ra},function(datalist){
-							
+							if(datalist.length == 0 || datalist.length == null){
+							$('#contentlist').append(
+									'<div class="w3-white " align="center" style="height:22vh;padding:10px">'+
+									'<h3>검색 결과가 존재하지 않습니다<br/><br/>검색 옵션을 확인해주세요</h3>'+
+									'</div>'
+									);
+							}
 							for(var i=0;i<datalist.length;i++){
 								var cate = 0;
 								if(datalist[i].category == 1){
 									cate = '관광지';
 								}
-								else if(datalist[i].category == 2){
+								if(datalist[i].category == 2){
 									cate = '음식점';
 								}
-								console.log(cate);
+								
+								
+								var st1 = datalist[i].starttime.substring(0,2);
+								var st2 = datalist[i].starttime.substring(2,4);
+								var et1 = datalist[i].endtime.substring(0,2);
+								var et2 = datalist[i].endtime.substring(2,4);
+								if(datalist[i].tel.length == 10){
+									var tel1 = datalist[i].tel.substring(0,3);
+									var tel2 = datalist[i].tel.substring(3,6);
+									var tel3 = datalist[i].tel.substring(6,10);	
+								}
+								if(datalist[i].tel.length == 11){
+									var tel1 = datalist[i].tel.substring(0,3);
+									var tel2 = datalist[i].tel.substring(3,7);
+									var tel3 = datalist[i].tel.substring(7,11);	
+								}
+								
 								//============================리스트 내용 수정 중 ============================
 								$('#contentlist').append(
-									'<div class="w3-round w3-white">' +
-										'<h4>'+datalist[i].name+'</h4>'+
-										'<span color="gray">'+datalist[i].address+'</span>'+
-										'<div class="row"  style="padding:10px">'+
+									'<div class="w3-white" style="padding:10px;margin-bottom:20px">' +
+										'<h4><b>'+datalist[i].name+'</b></h4>'+
+										'<span color="gray" style="margin-bottom:10px">'+datalist[i].address+'</span>'+
+										'<div class="row" >'+
 											'<div class="col-md-4">'+
 												'<img class="'+datalist[i].number+'"src="getBlobImg.do?no='+ datalist[i].number +'" align="left" style="width:100%;height:150px;z-index:1;"/>'+
-											'</div>'+
+												'<input type="button" class="w3-button btn_con" value="바로 예약하기" style="width:100%"/>'+											
+												'</div>'+
 											'<div class="col-md-8">'+
-												'<div class="w3-green w3-round" style="margin-bottom:10px">'+cate+'</div>'+
-												'<div><h4><b><span style="width:200px">대표메뉴 :</span>'+datalist[i].menu+''+datalist[i].menu_price+'원</b></h4></div>'+
-												'<div><span style="width:200px">예약가능시간 :</span><p>'+datalist[i].starttime+' ~ '+datalist[i].endtime+'</p></div>'+
-												'<div><span style="width:200px">전화번호 :</span><p>'+datalist[i].tel+'</p></div>'+
-												
+												'<div class="w3-round bar_con" style="margin-bottom:20px">'+cate+'</div>'+
+												'<div style="width:100px;float:left">대표메뉴 :</div>'+datalist[i].menu+' - '+datalist[i].menu_price+'<hr/>'+
+												'<div style="width:100px;float:left">예약가능시간 :</div>'+st1+':'+st2+' ~ '+et1+':'+et2+'<hr/>'+
+												'<div style="width:100px;float:left">전화번호 :</div>'+tel1+'-'+tel2+'-'+tel3+
 											'</div>'+
 										'</div>'+
 									'</div>'
 									);
+								if(datalist[i].category == 1){
+									$('.btn_con').addClass('w3-green');
+									$('.bar_con').addClass('w3-green');
 								}
-					},'json');
-			        // 결과값으로 받은 위치를 마커로 표시합니다
+								else if(datalist[i].category == 2){
+									$('.btn_con').addClass('w3-blue');
+									$('.bar_con').addClass('w3-blue');
+								}
+								}
+					},'json')
+					.error(function() {
+				    	   $('#contentlist').append(
+				    			   '<div class="w3-white " align="center" style="height:22vh;padding:10px">'+
+									'<h3>검색에 실패하셨습니다. 다시 시도해주세요</h3>'+
+									'</div>'
+				    			   );
+				       });
+			       
 			     }
-			});
-			if(lng != 0){
-				console.log(lng);
-				
-			};
-			
+			});		
 		}); 
  });
 </script>
@@ -138,7 +170,7 @@ body{
 </style>
 <div style="margin: 68px auto; width: 80%" class="row">
 	<div class="col-md-4">
-		<div class="w3-round w3-white" style="padding:10px">
+		<div class="w3-dark-gray w3-white w3-border-black	" style="padding:10px">
 		<div align="center">
 			<h4 style="margin-top:20px">검색</h4>
 			<hr />
@@ -146,38 +178,37 @@ body{
 		<div class="container">
 			<div class="form-inline" style="margin-bottom: 20px">
 				<div class="form-group"
-					style="width: 100px; vertical-align: middle;" align="center">
+					style="width: 70px; vertical-align: middle;" align="center">
 					카테고리</div>
-				<div class="form-inline" align="center">
-					<input type="button" style="width: 50%; height: 30px;"
+				<div class="form-inline" align="center" style="width:200px"> 
+					<input type="button" style="width: 80px; height: 30px;margin-right:20px;padding:5px"
 						class="select_category w3-button w3-round w3-white w3-border"
 						value="관광지" id="travel" /> <input type="button"
-						style="width: 50%; height: 30px"
+						style="width: 80px; height: 30px;padding:5px"
 						class="select_category w3-button w3-round w3-white w3-border"
 						value="음식점" id="food" />
 				</div>
 			</div>
 			<div class="form-inline" style="margin-bottom: 20px">
-				<div class="form-group" style="width: 100px;" align="center">주소</div>
+				<div class="form-group" style="width: 70px;" align="center" >주소</div>
 				<div class="form-group" style="width: 80%">
-					<input type="text" id="sample4_roadAddress"
+					<input type="text" id="sample4_roadAddress" class="w3-dark-gray"
 						onclick="sample4_execDaumPostcode()" style="width: 20%; border: 0"
-						value="" placeholder="주소를 입력해주세요" readonly />
+						value="부산시 강서구 가달1로 7" placeholder="주소를 입력해주세요" readonly/>
 				</div>
 			</div>
 			<div class="form-inline" style="margin-bottom: 20px">
-				<div class="form-group" style="width: 100px" align="center">예약일</div>
+				<div class="form-group" style="width: 70px" align="center">예약일</div>
 				<div class="form-group" style="width:80%">
-					<input type="text" style="width: 20%; border: 0;" id="datepicker"
-						placeholder="예약일을 정해주세요" />
+					<input type="text" style="width: 20%; border: 0;" id="datepicker" class="w3-dark-gray"
+						placeholder="예약일을 정해주세요" readonly/>
 				</div>
 			</div>
 			<div class="form-inline" style="margin-bottom: 20px">
 				<!-- if(주소가 web_main 일때만 표시) -->
-				<div class="form-group" style="width: 100px" align="center">검색범위</div>
+				<div class="form-group" style="width: 70px" align="center">검색범위</div>
 				<div class="form-group">
-					<select style="border: 0;" id="range">
-						<option>1km</option>
+					<select style="border: 0;" id="range" class="w3-dark-gray">
 						<option>5km</option>
 						<option>10km</option>
 						<option>20km</option>
@@ -188,10 +219,10 @@ body{
 			</div>
 			<div class="form-inline" style="margin-bottom: 20px">
 				<div class="form-group">
-					<div class="form-group" style="width: 100px" align="center">가격</div>
+					<div class="form-group" style="width: 70px" align="center">가격</div>
 				</div>
 				<div class="form-group">
-					<input type="text" id="amount" readonly
+					<input type="text" id="amount" readonly class="w3-dark-gray"
 						style="border: 0; width: 150px">
 				</div>
 				</div>
@@ -208,7 +239,7 @@ body{
 	<div class="col-md-offset-1 col-md-7">
 	<div id="contentlist"></div>
 	<div id="joincontent">
-		<div  class="w3-round w3-white " align="center" style="height:22vh;padding:10px">
+		<div  class="w3-white " align="center" style="height:22vh;padding:10px">
 		<h3>입력하신 주소를 기준으로<br/><br/>검색범위만큼 검색합니다</h3>
 		</div>
 	</div>

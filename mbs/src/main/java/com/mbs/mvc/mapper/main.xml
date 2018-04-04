@@ -24,7 +24,7 @@
     	WHEN #{category} =2 
     	THEN s.str_category = 2 
     	WHEN #{category} =3 
-    	THEN s.str_category <![CDATA[>]]> 3
+    	THEN s.str_category <![CDATA[<]]> 3
     	ELSE  
     	s.str_category = 0 
     	END
@@ -40,32 +40,49 @@
 	
 	<select id="selectWebContentList" parameterType="com.mbs.mvc.vo.Main_SearchVO" resultType="com.mbs.mvc.vo.Web_ListVO">
 	 SELECT 
-      distinct s.str_number number, s.str_name name, s.str_address address, s.str_lng lng, s.str_lat lat, 
-      s.str_begintime starttime, s.str_endtime endtime,s.str_category category, 
-      sm.mn_name menu, sm.mn_price menu_price, sm.mn_no , s.str_tel tel 
+	      DISTINCT s.str_number number, s.str_name name, s.str_address address, s.str_lng lng, s.str_lat lat, 
+	      s.str_begintime starttime, s.str_endtime endtime,s.str_category category,distance
+	      sm.mn_name menu, sm.mn_price menu_price, sm.mn_no, s.str_tel tel 
     FROM 
-      store s 
+    	(SELECT 
+    		str_number,str_name, str_address, str_lng, str_lat, str_begintime, str_endtime,str_category ,s.str_tel,distance
+    	FROM (
+				SELECT 
+					str_number,str_name, str_address, str_lng, str_lat, str_begintime, str_endtime,str_category ,s.str_tel,
+					(6371*acos(cos(radians(#{lng}))*cos(radians(str_lat))*cos(radians(str_lng) -radians(#{lat}))+ sin(radians(#{lng}))*sin(radians(str_lat)))) distance
+		    	 FROM 
+		    	 	store 
+		    	 HAVING 
+		    	 	distance <![CDATA[<=]]> #{range} 
+		    	 ORDER BY 
+		    	 	distance LIMIT 0,30
+    		)A
+    	) s 
    	INNER JOIN 
-      str_menu sm
-     ON
-       s.str_number = sm.str_number 
-     WHERE 
-         (SELECT MIN(sm.mn_price)) 	<![CDATA[>]]> #{price_start} AND 
-         (SELECT MAX(sm.mn_price)) 	<![CDATA[<]]> #{price_end} AND 
-		s.str_number IN (SELECT str_number FROM (SELECT str_number,
-		 (6371*acos(cos(radians(#{lng}))*cos(radians(str_lat))*cos(radians(str_lng) -radians(#{lat}))+ 
-   		 sin(radians(#{lng}))*sin(radians(str_lat)))) AS distance
-    	 FROM store HAVING distance <![CDATA[<=]]> #{range} ORDER BY distance  LIMIT 0,30)A) AND
-    	 sm.mn_no = (select MIN(sm.mn_no) from str_menu) AND
-    CASE 
-    	WHEN #{category} = 1 
-    	THEN s.str_category = 1 
-    	WHEN #{category} = 2 
-    	THEN s.str_category = 2 
-    	WHEN #{category} = 3 
-    	THEN s.str_category <![CDATA[>]]> 3
+    	str_menu sm
+    ON
+    	s.str_number = sm.str_number 
+    WHERE 
+        (SELECT MIN(sm.mn_price)) 	<![CDATA[>]]> #{price_start} AND 
+        (SELECT MAX(sm.mn_price)) 	<![CDATA[<]]> #{price_end} AND 
+		<!-- s.str_number IN (
+				SELECT str_number FROM (
+					SELECT str_number,
+						 (6371*acos(cos(radians(#{lng}))*cos(radians(str_lat))*cos(radians(str_lng) -radians(#{lat}))+ sin(radians(#{lng}))*sin(radians(str_lat)))) distance
+		    	 	FROM 
+		    	 		store 
+		    	 	HAVING distance <![CDATA[<=]]> #{range} ORDER BY distance LIMIT 0,30
+		    	) A) AND -->
+    	sm.mn_no = (select  distinct MIN(sm.mn_no) from str_menu where sm.mn_idx = 1) AND
+	    CASE 
+	    	WHEN #{category} = 1 
+	    	THEN s.str_category = 1 
+	    	WHEN #{category} = 2 
+	    	THEN s.str_category = 2 
+	    	WHEN #{category} = 3 
+	    	THEN s.str_category <![CDATA[<]]> 3
     	ELSE  
-    	s.str_category = 0 
+    		s.str_category = 0 
     	END
 	</select>
 
