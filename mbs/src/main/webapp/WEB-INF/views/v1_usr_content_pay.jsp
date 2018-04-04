@@ -93,9 +93,12 @@
 									<c:forEach var="tmp" items="${mlist}" varStatus="i">
 										<div class="form-inline">
 											<label style="width:100px">${tmp.mn_name}</label>
+											<input type="hidden" name="mn_name[]" value="${tmp.mn_name}" />
 											<label id="price_${i.index}">${tmp.mn_price}</label>
+											<input type="hidden" name="mn_price[]" value="${tmp.mn_price}" />
 											<input type="button" class="btn btn-default menu_m" value="-" />
 											<input type="text" class="form-control menu_cnt" style="width:50px; text-align:right" value="0" />
+											<input type="hidden" name="mn_cnt[]" class="menu_cnt" value="0" />
 											<input type="button" class="btn btn-default menu_p" value="+" />
 											<label id="sum_${i.index}" class="sum"></label>
 										</div>

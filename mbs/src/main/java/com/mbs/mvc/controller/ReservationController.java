@@ -1,5 +1,6 @@
 package com.mbs.mvc.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ import com.mbs.mvc.dao.V1_UserContentDAO;
 import com.mbs.mvc.vo.V1_Comment;
 import com.mbs.mvc.vo.V1_Menu;
 import com.mbs.mvc.vo.V1_Reservation;
+import com.mbs.mvc.vo.V1_RsvMenu;
 
 @Controller
 public class ReservationController {
@@ -28,13 +30,37 @@ public class ReservationController {
 	 * 예약하기
 	 */
 	@RequestMapping(value="/usr_content_pay.do", method = RequestMethod.POST)
-	public String userContentPay(@ModelAttribute("rvo") V1_Reservation vo) {
+	public String userContentPay(@ModelAttribute("rvo") V1_Reservation vo, @RequestParam("mn_name[]") String[] name, @RequestParam("mn_price[]") int[] price, @RequestParam("mn_cnt[]") int[] cnt) {
 		
 		//세션아이디
 		vo.setRsv_sub_id("user");
 		//param
 		vo.setStr_number(1234567890);
-				
+		
+		List<V1_RsvMenu> list = new ArrayList<V1_RsvMenu>();
+		
+		for(String tmp : name) {
+			//체크박스 한개당 vo 생성
+			V1_RsvMenu vo1 = new V1_RsvMenu();
+			vo1.setRsv_mn_name(tmp);
+			list.add(vo1);
+		}
+		for(int tmp : price) {
+			V1_RsvMenu vo1 = new V1_RsvMenu();
+			vo1.setRsv_mn_price(tmp);
+			list.add(vo1);
+		}
+		for(int tmp : cnt) {
+			V1_RsvMenu vo1 = new V1_RsvMenu();
+			vo1.setRsv_mn_cnt(tmp);
+			list.add(vo1);
+		}
+		
+		vo.setRmlist(list);
+		System.out.println("SSSSSSS"+list.size());
+		System.out.println("LLLLLLLLLLLL"+vo.getRmlist());
+		System.out.println("CCCCCCCCCC"+list);
+		
 		int ret = rDAO.insertReservation(vo);
 		if(ret!=0) {
 			return "redirect:usr_rsv_list.do";
