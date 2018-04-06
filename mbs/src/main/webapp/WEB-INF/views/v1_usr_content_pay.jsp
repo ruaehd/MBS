@@ -97,8 +97,8 @@
 											<label id="price_${i.index}">${tmp.mn_price}</label>
 											<input type="hidden" name="mn_price[]" value="${tmp.mn_price}" />
 											<input type="button" class="btn btn-default menu_m" value="-" />
-											<input type="text" class="form-control menu_cnt" style="width:50px; text-align:right" value="0" />
-											<input type="hidden" name="mn_cnt[]" class="menu_cnt" value="0" />
+											<input type="text" id="cnt_${i.index}" class="form-control menu_cnt" style="width:50px; text-align:right" value="0" />
+											<input type="hidden" name="mn_cnt[]" id="cnt1_${i.index}" class="menu_cnt" value="0" />
 											<input type="button" class="btn btn-default menu_p" value="+" />
 											<label id="sum_${i.index}" class="sum"></label>
 										</div>
@@ -219,7 +219,8 @@
 				var idx = $(this).index('.menu_p');
 				var cnt = $(this).prev().val();
 				cnt++;
-				$(this).prev().val(cnt);
+				$('#cnt_'+idx).val(cnt);
+				$('#cnt1_'+idx).val(cnt);
 				
 				var price = $('#price_'+idx).text();
 				var sum = cnt * price;

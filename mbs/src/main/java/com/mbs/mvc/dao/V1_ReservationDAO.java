@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.mbs.mvc.vo.V1_Reservation;
+import com.mbs.mvc.vo.V1_RsvMenu;
 
 @Service
 public class V1_ReservationDAO {
