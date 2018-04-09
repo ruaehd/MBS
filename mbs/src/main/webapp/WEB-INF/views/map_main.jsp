@@ -42,9 +42,10 @@
 #pagination {margin:10px auto;text-align: center;}
 #pagination a {display:inline-block;margin-right:10px;}
 #pagination .on {font-weight: bold; cursor: default;color:#777;}
+li{list-style-type:none;}
 </style>
 	<div class="map_wrap" style="margin-top:58px">
-    <div id="map" style="width:100%;height:100%;position:relative;overflow:hidden;"></div>
+    <div id="map" style="width:100%;height:90vh;position:relative;overflow:hidden;"></div>
 	
     <div id="menu_wrap" class="bg_white">
         <div class="option">
@@ -54,28 +55,28 @@
 				<div id="search_panel">
 					<div class="form-inline" align="center" >
 						<input type="button" style="width:50%;height:30px"
-							class="select_category w3-button w3-round w3-white w3-border"
+							class="select_category w3-button w3-round w3-border w3-pale-green w3-hover-green"
 							value="관광지" id="travel"/> 
 							<input type="button" style="width:50%;height:30px"
-							class="select_category w3-button w3-round w3-white w3-border"
+							class="select_category w3-button w3-round w3-border w3-pale-blue w3-hover-blue"
 							value="음식점" id="food"/>
 					</div>
-					주소 <input type="text" class="form-control" placeholder="주소를 입력하세요" size="15" id="addr"/>
+					
 					<div class="row">
 						<div class="col-md-6">
-					예약일 <input type="text" class="form-control w3-white" placeholder="예약일을 선택해주세요" readonly size="15" id="datepicker"/>
+					예약일 <input type="text" class="form-control w3-white" value="" placeholder="예약일을 선택해주세요" readonly size="15" id="datepicker"/>
 					</div>
 					<!-- 키워드 : <input type="text" value="이태원 맛집" id="keyword" size="15"> -->
 					<div class="col-md-6">
 						<div align="center">가격</div>
 							<div align="center">
-								<input type="text" id="amount" readonly class="w3-border-bottom w3-round form-control">
+								<input type="text" id="amount" readonly class="w3-border-bottom w3-round form-control w3-white">
 							</div>
 						</div>
 					</div>
 					
 					<div id="slider-range" style="margin:10px 0px; width: 100%;"></div>
-					<input type="button" class="form-control" id="search_submit" value="검색하기"/>
+					<input type="button" class="form-control" id="search_submit" value="이 조건으로 검색하기"/>
 					
 					</div>
 				</form>
@@ -84,7 +85,7 @@
 			</div>
 		</div>
         <hr>
-        <ul id="placesList"></ul>
+        <ul id="placesList" ></ul>
         <div id="pagination"></div>
     </div>
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=66e7156b3899e012effaa62fd20217d4&libraries=services"></script>
@@ -95,7 +96,7 @@
 			$ ("#slider-range").slider({
 				range: true,
 				min: 0,
-				max: 500000,
+				max: 200000,
 				values: [ 0, 200000 ],
 				slide: function( event, ui ) {
 					$( "#amount" ).val(  ui.values[ 0 ] + "원  ~ " + ui.values[ 1 ] + "원");
@@ -108,6 +109,69 @@
 		</script>
 		<script>
 		$(function(){
+			// 처음 접속시 모든 정보들을 화면에 맞춰 불러옴
+			$.post("ajax_main_join.do",	{"so":35.20484801698,"we":129.06638522570043,"no":35.20998700540691,"ea":129.07414659996573},function(datalist){
+				
+				var listEl = document.getElementById('content'),
+				fragment = document.createDocumentFragment(),
+				bounds = new daum.maps.LatLngBounds();
+				for(i=0;i<datalist.length;i++){
+			        var placePosition = new daum.maps.LatLng(datalist[i].lat,datalist[i].lng),
+			            marker = addMarker(placePosition, i);
+			        	itemEl = getListItem(i,datalist[i]);//검색 결과 항목 Element생성
+			        	
+			            (function(marker, datalist) {
+			                daum.maps.event.addListener(marker, 'mouseover', function() {
+			                    displayInfowindow(marker, datalist);
+			                });
+
+			                daum.maps.event.addListener(marker, 'mouseout', function() {
+			                    infowindow.close();
+			                });
+
+			                itemEl.onmouseover =  function () {
+			                    displayInfowindow(marker, datalist);
+			                };
+
+			                itemEl.onmouseout =  function () {
+			                    infowindow.close();
+			                };
+			            })(marker, datalist[i]);
+			            fragment.appendChild(itemEl);
+					};
+					listEl.appendChild(fragment);
+			
+			 function getListItem(index,datalist){
+				 var el = document.createElement('li'),
+				    itemStr =
+				    	'<div class="w3-border w3-white" style="width:100%; height:100px;padding:5px;margin-top:10px">'+
+		            		'<div class="row">'+
+		            			'<div class="col-md-4">'+
+		            					'<img class="'+datalist.number+'" src="getBlobImg.do?no='+ datalist.number +'" align="left" style="width:100%;height:90px;z-index:1;"/>'+
+		            			'</div>'+
+		            			'<div class="col-md-8" style="padding:10px">'+
+		            			'<div style="font-size:15px"><a href="user_content.do?no='+datalist.number+'"><font style="font-size:15px;font-family:"Malgun Gothic","dotum","돋움"">'+datalist.name+'</font></a></div>'+
+		            						'<div style="color:gray">'+datalist.address+'</div>'+
+		            			'</div>'+
+		            		'</div>'+
+		            	'</div>';
+		            				
+		            el.innerHTML = itemStr;
+		            el.className = 'item';
+		            return el;
+			}
+			function displayInfowindow(marker, datalist){
+				var content = '<div align="center" style="width:150px">'+
+       		 '<a href="user_content.do?no='+datalist.number+'"><img class="'+datalist.number+'" src="getBlobImg.do?no='+ datalist.number + '" align="left" style="width:148px;height:100px;z-index:1;margin-top:0;margin-bottom:10px"/></a>' +
+    		 '<h4 style="margin-bottom:10px"><b>'+ datalist.name +'</b></h4>' +
+    		 '</div>';
+    		 infowindow.setContent(content);
+    		 infowindow.open(map,marker);
+			}
+			});
+			
+			
+			
 			$('#datepicker').datepicker({
 				dateFormat:"yy-mm-dd",
 				changeMonth: true,
@@ -119,21 +183,21 @@
 			 $('#travel').click(function(){
 					if($(this).hasClass('w3-white')){
 						$(this).removeClass('w3-white w3-hover-white');
-						$(this).addClass('w3-green w3-hover-green');
+						$(this).addClass('w3-pale-green w3-hover-green');
 					}
-					else if($(this).hasClass('w3-green')){
-						$(this).removeClass('w3-green w3-hover-green');
-						$(this).addClass('w3-white w3-hover-white w3-border');
+					else if($(this).hasClass('w3-pale-green')){
+						$(this).removeClass('w3-pale-green w3-hover-green');
+						$(this).addClass('w3-white w3-hover-white');
 					}
 				 });
 				 $('#food').click(function(){
 						if($(this).hasClass('w3-white')){
 							$(this).removeClass('w3-white w3-hover-white');
-							$(this).addClass('w3-blue w3-hover-blue');
+							$(this).addClass('w3-pale-blue w3-hover-blue');
 						}
-						else if($(this).hasClass('w3-blue')){
-							$(this).removeClass('w3-blue w3-hover-blue');
-							$(this).addClass('w3-white w3-hover-white w3-border');
+						else if($(this).hasClass('w3-pale-blue')){
+							$(this).removeClass('w3-pale-blue w3-hover-blue');
+							$(this).addClass('w3-white w3-hover-whiter');
 						}
 					 });
 			$('#search_panel').hide();
@@ -147,21 +211,22 @@
 					$(this).val('검색옵션 닫기')
 				}
 			});
-			//search ajax * 진행중
+			var of = 0;
+			
+			//"해당 조건으로 검색하기" 버튼 클릭시 해당 조건에 따라 한번 불러옴
 			$('#search_submit').click(function(){
-				  $('#content').empty();
+				$('#search_panel').slideToggle(300);
+				$('#search_button').val('검색옵션 열기');
+				of = 1
+				
 				var tr = 0;
 				var fo = 0;
-				if($('#travel').hasClass('w3-blue')){
+				if($('#travel').hasClass('w3-pale-green')){
 					tr = 1;
-					
 				}
-				if($('#food').hasClass('w3-blue')){
+				if($('#food').hasClass('w3-pale-blue')){
 					fo = 2;
-					
 				}
-				var addr = $('#addr').val();
-				
 				var date = $('#datepicker').val();
 				var pr = $('#amount').val();
 				var price = pr.split('원  ~ ',2);
@@ -174,6 +239,17 @@
 						pe = pe.substring(0,pe.length-1);
 					}
 				}
+				 if ($('#travel').hasClass('w3-white') &&  $('#food').hasClass('w3-white') && date == "" && ps == "0" && pe == "200000"){
+						of = 0
+						alert("검색옵션을 설정해주세요 !");
+					}
+				 else if ($('#travel').hasClass('w3-pale-green') &&  $('#food').hasClass('w3-pale-blue') && date == ""  && ps == "0" && pe == "200000"){
+					 of = 0
+						
+				 }
+				 else{
+					 $('#content').empty();
+				
 				// 지도 위에 표시되고 있는 마커를 모두 제거합니다
 				function removeMarker() {
 				    for ( var i = 0; i < markers.length; i++ ) {
@@ -183,57 +259,76 @@
 				}
 				// 지도에 표시되고 있는 마커를 제거합니다
 			    removeMarker();
-				console.log(tr);
-				console.log(fo);
-				$.ajaxSettings.traditional = true;
-				$.post("ajax_main_search.do",	{"tr":tr,"fo":fo,"addr":addr,"date":date,"ps":ps,"pe":pe},function(datalist){
-						for(i=0;i<datalist.length;i++){
-					        var placePosition = new daum.maps.LatLng(datalist[i].lat,datalist[i].lng),
-					            marker = addMarker(placePosition, i);
-					        	marker.setClickable(true);
-					            var infowindow = new daum.maps.InfoWindow({
-					                position: placePosition,
-					                content: '<div align="center" style="width:150px"><h4 style="margin:10px 0px"><b>'+ datalist[i].name +'</b></h4>' +
-					                		 '<a href="user_content.do?no='+datalist[i].number+'"><img class="'+datalist[i].number+'" src="getBlobImg.do?no='+ datalist[i].number + '" align="left" style="width:148px;height:100px;z-index:1;"/></a>' + 
-					                		 '</div>',
-					                removable : false
-					            });
-					            //해당 리스트에 마우스 over , leave 시 해당 정보에 대한 마커의 infowindow.open(); 과 클릭시 user_content.do?no=# 으로 이동
-					            $('#content').append(
-					            	'<div class="w3-border w3-white list'+i+'" style="width:100%; height:70px;margin-top:10px">'+
-					            		'<div class="w3-row">'+
-					            			'<div class="w3-quarter">'+
-					            					'<img class="'+datalist[i].number+'" src="getBlobImg.do?no='+ datalist[i].number +'" align="left" style="width:100%;height:70px;z-index:1;"/>'+
-					            			'</div>'+
-					            			'<div class="w3-rest" style="padding:10px" align="left">'+
-					            						'<div style="font-size:15px">'+datalist[i].name+'</div>'+
-					            						'<div style="color:gray">'+datalist[i].address+'</div>'+
-					            			'</div>'+
-					            		'</div>'+
-					            	'</div>'	
-					            				
-					            );
-
-					        daum.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker, infowindow));
-					        daum.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow));
-					        
-					        function makeOutListener(infowindow) {
-						        return function() {
-						            infowindow.close();
-						        };
-						    };
-						}
-						
-						function makeOverListener(map, marker, infowindow) {
-					        return function() {
-					            infowindow.open(map, marker);
-					        };
-					    }
-				},'json');
+			   
 				
-				    // 인포윈도우를 닫는 클로저를 만드는 함수입니다 
-			});
+			    $('#content').append('<div align="center">'+
+						 '<font color="red">검색옵션이 설정되어있습니다.</font>'+
+						 '</div>');
+				$.ajaxSettings.traditional = true;
+				$.post("ajax_main_search.do",	{"tr":tr,"fo":fo,"date":date,"ps":ps,"pe":pe},function(datalist){
+					var listEl = document.getElementById('content'),
+					fragment = document.createDocumentFragment(),
+					bounds = new daum.maps.LatLngBounds();
+					for(i=0;i<datalist.length;i++){
+				        var placePosition = new daum.maps.LatLng(datalist[i].lat,datalist[i].lng),
+				            marker = addMarker(placePosition, i);
+				        	itemEl = getListItem(i,datalist[i]);//검색 결과 항목 Element생성
+				        	
+				            (function(marker, datalist) {
+				                daum.maps.event.addListener(marker, 'mouseover', function() {
+				                    displayInfowindow(marker, datalist);
+				                });
 
+				                daum.maps.event.addListener(marker, 'mouseout', function() {
+				                    infowindow.close();
+				                });
+
+				                itemEl.onmouseover =  function () {
+				                    displayInfowindow(marker, datalist);
+				                };
+
+				                itemEl.onmouseout =  function () {
+				                    infowindow.close();
+				                };
+				            })(marker, datalist[i]);
+				            fragment.appendChild(itemEl);
+						};
+						listEl.appendChild(fragment);
+				
+				 function getListItem(index,datalist){
+					 var el = document.createElement('li'),
+					    itemStr =
+					    	'<div class="w3-border w3-white" style="width:100%; height:100px;padding:5px;margin-top:10px">'+
+			            		'<div class="row">'+
+			            			'<div class="col-md-4">'+
+			            					'<img class="'+datalist.number+'" src="getBlobImg.do?no='+ datalist.number +'" align="left" style="width:100%;height:90px;z-index:1;"/>'+
+			            			'</div>'+
+			            			'<div class="col-md-8" style="padding:10px">'+
+			            			'<div style="font-size:15px"><a href="user_content.do?no='+datalist.number+'"><font style="font-size:15px;font-family:"Malgun Gothic","dotum","돋움"">'+datalist.name+'</font></a></div>'+
+			            						'<div style="color:gray">'+datalist.address+'</div>'+
+			            			'</div>'+
+			            		'</div>'+
+			            	'</div>';
+			            				
+			            el.innerHTML = itemStr;
+			            el.className = 'item';
+			            return el;
+				}
+				function displayInfowindow(marker, datalist){
+					var content = '<div align="center" style="width:150px">'+
+	       		 '<a href="user_content.do?no='+datalist.number+'"><img class="'+datalist.number+'" src="getBlobImg.do?no='+ datalist.number + '" align="left" style="width:148px;height:100px;z-index:1;margin-top:0;margin-bottom:10px"/></a>' +
+	    		 '<h4 style="margin-bottom:10px"><b>'+ datalist.name +'</b></h4>' +
+	    		 '</div>';
+	    		 infowindow.setContent(content);
+	    		 infowindow.open(map,marker);
+				}
+				},'json');
+				};
+			});
+			
+			
+			
+			
 			// 마커를 담을 배열입니다
 			var markers = [];
 
@@ -252,7 +347,187 @@
 			// 검색 결과 목록이나 마커를 클릭했을 때 장소명을 표출할 인포윈도우를 생성합니다
 			var infowindow = new daum.maps.InfoWindow({zIndex:1});
 
+			
+			
+			// 지도가 이동, 확대, 축소로 인해 지도영역이 변경되면 마지막 파라미터로 넘어온 함수를 호출하도록 이벤트를 등록합니다
+			daum.maps.event.addListener(map, 'dragend', function() { 
+				infowindow.close();
+				$('#content').empty();
+			    // 지도 영역정보를 얻어옵니다 
+			    var bounds = map.getBounds();
+			    
+			    // 영역정보의 남서쪽 정보를 얻어옵니다 
+			    var swLatlng = bounds.getSouthWest();
+			    var swlalg = swLatlng.toString().substring(1,swLatlng.toString().length-1);
+			    var sw = swlalg.toString().split(", ");
+			    var so = sw[0];
+			    var we = sw[1];
+			    // 영역정보의 북동쪽 정보를 얻어옵니다 
+			    var neLatlng = bounds.getNorthEast();
+			    var nelalg = neLatlng.toString().substring(1,neLatlng.toString().length-1);
+			    var ne = nelalg.toString().split(", ");
+			    var no = ne[0];
+			    var ea = ne[1];
+			    function removeMarker() {
+				    for ( var i = 0; i < markers.length; i++ ) {
+				        markers[i].setMap(null);
+				    }   
+				    markers = [];
+				}
+			    removeMarker();
+			    
+			    //검색조건이 명시되어 있을경우 검색 옵션을 읽어 조건검색
+			    if(of == 1){
+					$('#content').empty();
+					
+					 $('#content').append('<div align="center">'+
+							 '<font color="red">검색옵션이 설정되어있습니다.</font>'+
+							 '</div>');
+					var tr = 0;
+					var fo = 0;
+					if($('#travel').hasClass('w3-pale-green')){
+						tr = 1;
+					}
+					if($('#food').hasClass('w3-pale-blue')){
+						fo = 2;
+					}
+					var date = $('#datepicker').val();
+					var pr = $('#amount').val();
+					var price = pr.split('원  ~ ',2);
+					for(var i=0;i<=1;i++){
+						if(i == 0){
+							var ps = price[0];
+						}
+						if(i == 1){
+							var pe = price[1];
+							pe = pe.substring(0,pe.length-1);
+						}
+					}
+					$.ajaxSettings.traditional = true;
+					$.post("ajax_main_dragsearch.do",	{"tr":tr,"fo":fo,"date":date,"ps":ps,"pe":pe,"so":so,"we":we,"no":no,"ea":ea},function(datalist){
+						var listEl = document.getElementById('content'),
+						fragment = document.createDocumentFragment(),
+						bounds = new daum.maps.LatLngBounds();
+						for(i=0;i<datalist.length;i++){
+					        var placePosition = new daum.maps.LatLng(datalist[i].lat,datalist[i].lng),
+					            marker = addMarker(placePosition, i);
+					        	itemEl = getListItem(i,datalist[i]);//검색 결과 항목 Element생성
+					        	
+					            (function(marker, datalist) {
+					                daum.maps.event.addListener(marker, 'mouseover', function() {
+					                    displayInfowindow(marker, datalist);
+					                });
 
+					                daum.maps.event.addListener(marker, 'mouseout', function() {
+					                    infowindow.close();
+					                });
+
+					                itemEl.onmouseover =  function () {
+					                    displayInfowindow(marker, datalist);
+					                };
+
+					                itemEl.onmouseout =  function () {
+					                    infowindow.close();
+					                };
+					            })(marker, datalist[i]);
+					            fragment.appendChild(itemEl);
+							};
+							listEl.appendChild(fragment);
+					
+					 function getListItem(index,datalist){
+						 var el = document.createElement('li'),
+						    itemStr =
+						    	'<div class="w3-border w3-white" style="width:100%; height:100px;padding:5px;margin-top:10px">'+
+				            		'<div class="row">'+
+				            			'<div class="col-md-4">'+
+				            					'<img class="'+datalist.number+'" src="getBlobImg.do?no='+ datalist.number +'" align="left" style="width:100%;height:90px;z-index:1;"/>'+
+				            			'</div>'+
+				            			'<div class="col-md-8" style="padding:10px">'+
+				            			'<div style="font-size:15px"><a href="user_content.do?no='+datalist.number+'"><font style="font-size:15px;font-family:"Malgun Gothic","dotum","돋움"">'+datalist.name+'</font></a></div>'+
+				            						'<div style="color:gray">'+datalist.address+'</div>'+
+				            			'</div>'+
+				            		'</div>'+
+				            	'</div>';
+				            				
+				            el.innerHTML = itemStr;
+				            el.className = 'item';
+				            return el;
+					}
+					function displayInfowindow(marker, datalist){
+						var content = '<div align="center" style="width:150px">'+
+		       		 '<a href="user_content.do?no='+datalist.number+'"><img class="'+datalist.number+'" src="getBlobImg.do?no='+ datalist.number + '" align="left" style="width:148px;height:100px;z-index:1;margin-top:0;margin-bottom:10px"/></a>' +
+		    		 '<h4 style="margin-bottom:10px"><b>'+ datalist.name +'</b></h4>' +
+		    		 '</div>';
+		    		 infowindow.setContent(content);
+		    		 infowindow.open(map,marker);
+					}
+					},'json');
+			    }
+			    
+			    //검색조건이 명시되어 있지 않을경우 모든 정보들을 화면에 맞춰 표시함
+			    else{
+			    	 
+				    $.post("ajax_main_join.do",	{"so":so,"we":we,"no":no,"ea":ea},function(datalist){
+				    	var listEl = document.getElementById('content'),
+						fragment = document.createDocumentFragment(),
+						bounds = new daum.maps.LatLngBounds();
+						for(i=0;i<datalist.length;i++){
+					        var placePosition = new daum.maps.LatLng(datalist[i].lat,datalist[i].lng),
+					            marker = addMarker(placePosition, i);
+					        	itemEl = getListItem(i,datalist[i]);//검색 결과 항목 Element생성
+					        	
+					            (function(marker, datalist) {
+					                daum.maps.event.addListener(marker, 'mouseover', function() {
+					                    displayInfowindow(marker, datalist);
+					                });
+
+					                daum.maps.event.addListener(marker, 'mouseout', function() {
+					                    infowindow.close();
+					                });
+
+					                itemEl.onmouseover =  function () {
+					                    displayInfowindow(marker, datalist);
+					                };
+
+					                itemEl.onmouseout =  function () {
+					                    infowindow.close();
+					                };
+					            })(marker, datalist[i]);
+					            fragment.appendChild(itemEl);
+							};
+							listEl.appendChild(fragment);
+					
+					 function getListItem(index,datalist){
+						 var el = document.createElement('li'),
+						    itemStr =
+						    	'<div class="w3-border w3-white" style="width:100%; height:100px;padding:5px;margin-top:10px">'+
+				            		'<div class="row">'+
+				            			'<div class="col-md-4">'+
+				            					'<img class="'+datalist.number+'" src="getBlobImg.do?no='+ datalist.number +'" align="left" style="width:100%;height:90px;z-index:1;"/>'+
+				            			'</div>'+
+				            			'<div class="col-md-8" style="padding:10px">'+
+				            			'<div style="font-size:15px"><a href="user_content.do?no='+datalist.number+'"><font style="font-size:15px;font-family:"Malgun Gothic","dotum","돋움"">'+datalist.name+'</font></a></div>'+
+				            						'<div style="color:gray">'+datalist.address+'</div>'+
+				            			'</div>'+
+				            		'</div>'+
+				            	'</div>';
+				            				
+				            el.innerHTML = itemStr;
+				            el.className = 'item';
+				            return el;
+					}
+					function displayInfowindow(marker, datalist){
+						var content = '<div align="center" style="width:150px">'+
+		       		 '<a href="user_content.do?no='+datalist.number+'"><img class="'+datalist.number+'" src="getBlobImg.do?no='+ datalist.number + '" align="left" style="width:148px;height:100px;z-index:1;margin-top:0;margin-bottom:10px"/></a>' +
+		    		 '<h4 style="margin-bottom:10px"><b>'+ datalist.name +'</b></h4>' +
+		    		 '</div>';
+		    		 infowindow.setContent(content);
+		    		 infowindow.open(map,marker);
+					}
+					});
+			    }
+			   
+			});
 			// 검색결과 항목을 Element로 반환하는 함수입니다
 			
 
@@ -283,46 +558,6 @@
 			        markers[i].setMap(null);
 			    }   
 			    markers = [];
-			}
-
-			// 검색결과 목록 하단에 페이지번호를 표시는 함수입니다
-			function displayPagination(pagination) {
-			    var paginationEl = document.getElementById('pagination'),
-			        fragment = document.createDocumentFragment(),
-			        i; 
-
-			    // 기존에 추가된 페이지번호를 삭제합니다
-			    while (paginationEl.hasChildNodes()) {
-			        paginationEl.removeChild (paginationEl.lastChild);
-			    }
-
-			    for (i=1; i<=pagination.last; i++) {
-			        var el = document.createElement('a');
-			        el.href = "#";
-			        el.innerHTML = i;
-
-			        if (i===pagination.current) {
-			            el.className = 'on';
-			        } else {
-			            el.onclick = (function(i) {
-			                return function() {
-			                    pagination.gotoPage(i);
-			                }
-			            })(i);
-			        }
-
-			        fragment.appendChild(el);
-			    }
-			    paginationEl.appendChild(fragment);
-			}
-
-			// 검색결과 목록 또는 마커를 클릭했을 때 호출되는 함수입니다
-			// 인포윈도우에 장소명을 표시합니다
-			function displayInfowindow(marker, title) {
-			    var content = '<div style="padding:5px;z-index:1;">' + title + '</div>';
-
-			    infowindow.setContent(content);
-			    infowindow.open(map, marker);
 			}
 
 			 // 검색결과 목록의 자식 Element를 제거하는 함수입니다

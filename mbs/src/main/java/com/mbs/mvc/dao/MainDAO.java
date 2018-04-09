@@ -19,9 +19,17 @@ public class MainDAO {
 	@Resource(name="sqlSession")
 	private SqlSession sqlsession = null;
 	
+	public List<Map_ListVO> selectJoinContentList(Main_SearchVO vo){
+		return sqlsession.selectList("Main.selectJoinContentList",vo);
+	}
+	
 	public List<Map_ListVO> selectContentList(Main_SearchVO vo) {
 		return sqlsession.selectList("Main.selectContentList", vo);
 	}
+	public List<Map_ListVO> selectMainDragSearch(Main_SearchVO vo){
+		return sqlsession.selectList("Main.selectMainDragSearch",vo);
+	}
+	
 	
 	public Map<String,Object> selectImgOne(int no) {
 		return sqlsession.selectOne("Main.selectImgOne",no);
@@ -30,4 +38,5 @@ public class MainDAO {
 	public List<Web_ListVO> selectWebContentList(Main_SearchVO vo){
 		return sqlsession.selectList("Main.selectWebContentList",vo);
 	}
+	
 }

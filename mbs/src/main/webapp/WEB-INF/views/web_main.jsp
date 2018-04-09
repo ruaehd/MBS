@@ -12,7 +12,7 @@
 			$ ("#slider-range").slider({
 				range: true,
 				min: 0,
-				max: 500000,
+				max: 200000,
 				values: [ 0, 200000 ],
 				slide: function( event, ui ) {
 					$( "#amount" ).val(  ui.values[ 0 ] + "원  ~ " + ui.values[ 1 ] + "원");
@@ -96,6 +96,12 @@
 									'</div>'
 									);
 							}
+							else{
+							$('#contentlist').append(
+									'<div class="w3-white" style="padding:10px;margin-bottom:20px;width:100%" align="center">' +
+									'<font style="font-size:20px">'+addr+'</font>기준<br/><font style="font-size:20px">'+ra+'km</font> 내에 <br/>'+datalist.length+'개의 정보가 있습니다.</h4>'+
+									'</div>'
+									);
 							for(var i=0;i<datalist.length;i++){
 								var cate = 0;
 								if(datalist[i].category == 1){
@@ -110,6 +116,7 @@
 								var st2 = datalist[i].starttime.substring(2,4);
 								var et1 = datalist[i].endtime.substring(0,2);
 								var et2 = datalist[i].endtime.substring(2,4);
+								var dis = datalist[i].distance.substring(0,4);
 								if(datalist[i].tel.length == 10){
 									var tel1 = datalist[i].tel.substring(0,3);
 									var tel2 = datalist[i].tel.substring(3,6);
@@ -123,16 +130,19 @@
 								
 								//============================리스트 내용 수정 중 ============================
 								$('#contentlist').append(
-									'<div class="w3-white" style="padding:10px;margin-bottom:20px">' +
+									'<div class="w3-white" style="padding:10px;margin-bottom:20px;width:100%">' +
 										'<h4><b>'+datalist[i].name+'</b></h4>'+
-										'<span color="gray" style="margin-bottom:10px">'+datalist[i].address+'</span>'+
+									'<div class="row" style="width:100%">'+
+										'<div class="col-md-10"><span color="gray" style="margin-bottom:10px">'+datalist[i].address+'</span></div>'+
+										'<div class="col-md-2"><font color="gray" style="font-size:10px">약'+dis+'km</font></div>'+
+									'</div>'+
 										'<div class="row" >'+
 											'<div class="col-md-4">'+
 												'<img class="'+datalist[i].number+'"src="getBlobImg.do?no='+ datalist[i].number +'" align="left" style="width:100%;height:150px;z-index:1;"/>'+
-												'<input type="button" class="w3-button btn_con" value="바로 예약하기" style="width:100%"/>'+											
+												'<a href="user_content.do?no='+datalist[i].number+'" style="width:100%"><button class="w3-button btn_con" style="width:100%">예약하기</button></a>'+								
 												'</div>'+
 											'<div class="col-md-8">'+
-												'<div class="w3-round bar_con" style="margin-bottom:20px">'+cate+'</div>'+
+												'<div class="w3-round bar_con" style="margin-bottom:20px;padding:5px">'+cate+'</div>'+
 												'<div style="width:100px;float:left">대표메뉴 :</div>'+datalist[i].menu+' - '+datalist[i].menu_price+'<hr/>'+
 												'<div style="width:100px;float:left">예약가능시간 :</div>'+st1+':'+st2+' ~ '+et1+':'+et2+'<hr/>'+
 												'<div style="width:100px;float:left">전화번호 :</div>'+tel1+'-'+tel2+'-'+tel3+
@@ -141,14 +151,16 @@
 									'</div>'
 									);
 								if(datalist[i].category == 1){
-									$('.btn_con').addClass('w3-green');
+									$('.btn_con').addClass('w3-green w3-hover-green');
 									$('.bar_con').addClass('w3-green');
 								}
 								else if(datalist[i].category == 2){
-									$('.btn_con').addClass('w3-blue');
+									$('.btn_con').addClass('w3-blue w3-hover-blue');
 									$('.bar_con').addClass('w3-blue');
 								}
 								}
+							
+							}
 					},'json')
 					.error(function() {
 				    	   $('#contentlist').append(
@@ -182,10 +194,10 @@ body{
 					카테고리</div>
 				<div class="form-inline" align="center" style="width:200px"> 
 					<input type="button" style="width: 80px; height: 30px;margin-right:20px;padding:5px"
-						class="select_category w3-button w3-round w3-white w3-border"
+						class="select_category w3-button w3-round w3-pale-green w3-hover-green"
 						value="관광지" id="travel" /> <input type="button"
 						style="width: 80px; height: 30px;padding:5px"
-						class="select_category w3-button w3-round w3-white w3-border"
+						class="select_category w3-button w3-round w3-pale-blue w3-hover-blue"
 						value="음식점" id="food" />
 				</div>
 			</div>
@@ -194,7 +206,7 @@ body{
 				<div class="form-group" style="width: 80%">
 					<input type="text" id="sample4_roadAddress" class="w3-dark-gray"
 						onclick="sample4_execDaumPostcode()" style="width: 20%; border: 0"
-						value="부산시 강서구 가달1로 7" placeholder="주소를 입력해주세요" readonly/>
+						value="부산시 강서구 가달1로 7 (생곡동)" placeholder="주소를 입력해주세요" readonly/>
 				</div>
 			</div>
 			<div class="form-inline" style="margin-bottom: 20px">
@@ -227,19 +239,20 @@ body{
 				</div>
 				</div>
 			
-			<div id="slider-range" style="margin-bottom: 10px; width: 25%"></div>
+			<div id="slider-range" style="margin-bottom: 10px; width: 23%"></div>
 		</div>
 		<div align="center">
 			<input type="button" id="search_panel_button"
 				style="width: 80%; margin: 10px 0;" class="btn btn-default"
-				value="검색" />
+				value="검색" /> 
 		</div>
 		</div>
 		</div>
 	<div class="col-md-offset-1 col-md-7">
 	<div id="contentlist"></div>
 	<div id="joincontent">
-		<div  class="w3-white " align="center" style="height:22vh;padding:10px">
+		<div  class="w3-white " align="center" style="height:50vh;padding:30px">
+		<img src="resources/imgs/glass.png" style="width:25%; height:20vh;margin-bottom:10px"/>
 		<h3>입력하신 주소를 기준으로<br/><br/>검색범위만큼 검색합니다</h3>
 		</div>
 	</div>

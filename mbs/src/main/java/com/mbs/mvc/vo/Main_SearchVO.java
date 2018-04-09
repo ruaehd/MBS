@@ -13,7 +13,37 @@ public class Main_SearchVO {
 	private int range = 0;
 	private String lat = null;
 	private String lng = null;
+	private String so = null;
+	private String we = null;
+	private String no = null;
+	private String ea = null;
 	
+	
+	
+	public String getSo() {
+		return so;
+	}
+	public void setSo(String so) {
+		this.so = so;
+	}
+	public String getWe() {
+		return we;
+	}
+	public void setWe(String we) {
+		this.we = we;
+	}
+	public String getNo() {
+		return no;
+	}
+	public void setNo(String no) {
+		this.no = no;
+	}
+	public String getEa() {
+		return ea;
+	}
+	public void setEa(String ea) {
+		this.ea = ea;
+	}
 	public String getLat() {
 		return lat;
 	}
