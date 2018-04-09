@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="V1_Review">
+	<select id="selectRsvInfo" parameterType="int" resultType="V1_Reservation">
+		SELECT s.str_name, r.rsv_no, r.rsv_day
+		FROM `reservation` r 
+			INNER JOIN `store` s
+			ON r.str_number = s.str_number
+		WHERE r.rsv_no=#{rsv_no}
+	</select>
+	
+	<insert id="insertComment">
+		INSERT INTO `rsv_comment` (rsv_cmt_content, rsv_cmt_point, rsv_cmt_writer, rsv_cmt_date, rsv_no) VALUES(#{rsv_cmt_content}, #{rsv_cmt_point}, #{rsv_cmt_writer}, NOW(), #{rsv_no})
+	</insert>
+	
+	<select id="selectReviewChk" parameterType="V1_Comment" resultType="int">
+		SELECT COUNT(*) AS cnt FROM `rsv_comment` WHERE rsv_cmt_writer=#{rsv_cmt_writer} AND rsv_no=#{rsv_no} 
+	</select>
+	
+	<select id="selectReviewOne" parameterType="V1_Comment" resultType="V1_Comment">
+		SELECT * FROM `rsv_comment` WHERE rsv_cmt_writer=#{rsv_cmt_writer} AND rsv_no=#{rsv_no}
+	</select>
+	
+	<update id="updateComment" parameterType="V1_Comment">
+		UPDATE `rsv_comment` SET rsv_cmt_content=#{rsv_cmt_content}, rsv_cmt_point=#{rsv_cmt_point} WHERE rsv_cmt_no=#{rsv_cmt_no}
+	</update>
+	
+</mapper>

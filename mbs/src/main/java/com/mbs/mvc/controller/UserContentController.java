@@ -1,11 +1,7 @@
 package com.mbs.mvc.controller;
 
 import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -17,14 +13,14 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.Base64Utils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.mbs.mvc.dao.V1_UserContentDAO;
+import com.mbs.mvc.vo.V1_Member;
 import com.mbs.mvc.vo.V1_Menu;
+import com.mbs.mvc.vo.V1_Reservation;
 import com.mbs.mvc.vo.V1_Store;
 import com.mbs.mvc.vo.V1_StrImg;
 
@@ -33,33 +29,50 @@ public class UserContentController {
 	
 	@Autowired private V1_UserContentDAO ucDAO = null;
 	
+	/*
+	 * 점포 정보
+	 */
 	@RequestMapping(value="/usr_content.do", method = RequestMethod.GET)
-	public String userContent(Model model) throws UnsupportedEncodingException {
+	public String userContent(Model model) {
 		
+		//파람
 		V1_Store vo = ucDAO.selectStoreOne(1234567890);
 		List<V1_Menu> mlist = ucDAO.selectMenuList(1234567890);
 		int cnt = ucDAO.selectImgCount(1234567890);
 		
 		model.addAttribute("cnt", cnt);
+		
 		model.addAttribute("vo", vo);
 		model.addAttribute("mlist", mlist);
 		return "v1_usr_content";
 	}
 	
-	
+	/*
+	 * 예약하기
+	 */
 	@RequestMapping(value="/usr_content_pay.do", method = RequestMethod.GET)
 	public String userContentPay(Model model) {
 		
+		V1_Reservation rvo = new V1_Reservation();
+		//파람
+		//세션 아이디
 		int cnt = ucDAO.selectImgCount(1234567890);
-		V1_Store vo = ucDAO.selectStoreOne(1234567890);
+		V1_Store svo = ucDAO.selectStoreOne(1234567890);
+		V1_Member mvo = ucDAO.selectMemberOne("user");
 		List<V1_Menu> mlist = ucDAO.selectMenuList(1234567890);
 		
 		model.addAttribute("mlist", mlist);
 		model.addAttribute("cnt", cnt);
-		model.addAttribute("vo", vo);
+		model.addAttribute("svo", svo);
+		model.addAttribute("mvo", mvo);
+		model.addAttribute("rvo", rvo);
 		return "v1_usr_content_pay";
 	}
 	
+	
+	/*
+	 * 이미지 로딩
+	 */
 	@SuppressWarnings("finally")
 	@RequestMapping(value = "/get_blob_img.do", method = RequestMethod.GET)
 	public ResponseEntity<byte[]> getBlobImg(@RequestParam("idx") int idx, HttpServletRequest request) {

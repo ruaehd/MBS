@@ -91,7 +91,7 @@
 						<h1>${vo.str_name}</h1>
 						<hr/>
 						<div>
-							<a href="usr_content_pay.do" class="btn btn-info">예약</a>
+							<a href="usr_content_pay.do" class="btn btn-info">예약하기</a>
 							<a href="#review" class="btn btn-primary">후기보기</a>
 							<a href="#map" class="btn btn-success">지도보기</a>
 							<a href="#" class="btn btn-danger">뒤로가기</a>
@@ -163,7 +163,11 @@
 					
 					<hr />
 					<div class="row ">
-						<c:forEach var="i" begin="1" end="6">
+						<div class="form-inline">
+							<label>${vo.rsv_cmt_point}</label>
+							<label>${vo.rsv_cmt_content}</label>
+						</div>
+						<%-- <c:forEach var="i" begin="1" end="6">
 							<div class="col-md-6">
 								<div class="thumbnail" style="padding:10px">
 									<div class="row">
@@ -184,7 +188,7 @@
 									<p>사용자 후기 내용 ,row는 4줄 = 4줄이상은 ...<a href="#">더보기</a></p>
 								</div>
 							</div>
-						</c:forEach>
+						</c:forEach> --%>
 						<input type="button" class="form-control w3-border w3-round w3-button" value="n개의 댓글 더 보기" />
 					</div>
 				</div>
