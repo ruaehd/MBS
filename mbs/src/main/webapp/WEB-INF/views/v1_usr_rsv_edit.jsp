@@ -251,12 +251,13 @@
 			
 			$('.menu_m').click(function(){
 				var idx = $(this).index('.menu_m');
-				var cnt = $(this).next().val();
+				var cnt = $('#cnt_'+idx).val();
 				cnt--;
 				if(cnt<=0){
 					cnt =0;
 				}
-				$(this).next().val(cnt);
+				$('#cnt_'+idx).val(cnt);
+				$('#cnt1_'+idx).val(cnt);
 				
 				var price = $('#price_'+idx).text();
 				var sum = cnt * price;
