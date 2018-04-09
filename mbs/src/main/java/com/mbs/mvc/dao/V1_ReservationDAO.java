@@ -55,4 +55,8 @@ public class V1_ReservationDAO {
 	public int cancelRsv(int rsv_no) {
 		return sqlsession.update("V1_Reservation.cancelRsv", rsv_no);
 	}
+	
+	public List<V1_RsvMenu> selectRsvMenuList(int rsv_no){
+		return sqlsession.selectList("V1_Reservation.selectRsvMenuList", rsv_no);
+	}
 }

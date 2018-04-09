@@ -33,8 +33,6 @@ public class ReservationController {
 	 */
 	@RequestMapping(value="/usr_content_pay.do", method = RequestMethod.POST)
 	public String userContentPay(@ModelAttribute("rvo") V1_Reservation vo, @RequestParam("mn_name[]") String[] name, @RequestParam("mn_price[]") int[] price, @RequestParam("mn_cnt[]") int[] cnt) {
-		
-		// @RequestParam("mn_name[]") String[] name, @RequestParam("mn_price[]") int[] price, @RequestParam("mn_cnt[]") int[] cnt
 		//세션아이디
 		vo.setRsv_sub_id("user");
 		//param
@@ -111,15 +109,13 @@ public class ReservationController {
 		revo.setRsv_no(rsv_no);
 		
 		V1_Reservation rvo = rDAO.selectRsvOne(vo);
-		List<V1_Menu> mlist = ucDAO.selectMenuList(1234567890);
+		List<V1_RsvMenu> rmlist = rDAO.selectRsvMenuList(rsv_no);
 		int cnt = ucDAO.selectImgCount(1234567890);
 		int chk = reDAO.selectReviewChk(revo);
 		
-		System.out.println("AAAAAA:"+chk);
-		
 		model.addAttribute("chk", chk);
 		model.addAttribute("cnt", cnt);
-		model.addAttribute("mlist", mlist);
+		model.addAttribute("rmlist", rmlist);
 		model.addAttribute("vo", rvo);
 		return "v1_usr_rsv_content";
 	
@@ -132,19 +128,34 @@ public class ReservationController {
 		vo.setRsv_no(rsv_no);
 		vo.setStr_number(str_num);
 		V1_Reservation rvo = rDAO.selectRsvOne(vo);
-		List<V1_Menu> mlist = ucDAO.selectMenuList(str_num);
+		List<V1_RsvMenu> rmlist = rDAO.selectRsvMenuList(rsv_no);
 		int cnt = ucDAO.selectImgCount(str_num);
 		
 		model.addAttribute("cnt", cnt);
-		model.addAttribute("mlist", mlist);
+		model.addAttribute("rmlist", rmlist);
 		model.addAttribute("vo", rvo);
 		
 		return "v1_usr_rsv_edit";
 	}
 	
 	@RequestMapping(value="/usr_rsv_edit.do", method = RequestMethod.POST)
-	public String userReservationEdit(@ModelAttribute("vo") V1_Reservation vo) {
-		System.out.println("AAAAAAAAA"+vo.getRsv_no());
+	public String userReservationEdit(@ModelAttribute("vo") V1_Reservation vo, @RequestParam("mn_name[]") String[] name, @RequestParam("mn_price[]") int[] price, @RequestParam("mn_cnt[]") int[] cnt) {
+		
+		List<V1_RsvMenu> list = new ArrayList<V1_RsvMenu>();
+		for(int i=0; i<name.length; i++) {
+			V1_RsvMenu vo1 = new V1_RsvMenu();
+			vo1.setRsv_mn_name(name[i]);
+			vo1.setRsv_mn_price(price[i]);
+			vo1.setRsv_mn_cnt(cnt[i]);
+			
+			list.add(vo1);
+			
+			System.out.println(list.get(i).getRsv_mn_cnt());
+		}
+		vo.setRmlist(list);
+		
+		
+		
 		int ret = rDAO.updateRsv(vo);
 		if(ret>0) {
 			return "redirect:usr_rsv_content.do?rsv_no="+vo.getRsv_no();

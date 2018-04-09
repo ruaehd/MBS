@@ -91,14 +91,17 @@
 							<hr />
 							<div id="menu_detail" class="form-inline" style="margin-bottom:10px">
 								<div>
-									<c:forEach var="vo1" items="${mlist}" varStatus="i">
+									<c:forEach var="tmp" items="${rmlist}" varStatus="i">
 										<div class="form-inline">
-											<label style="width:100px">${vo1.mn_name}</label>
-											<label id="price_${i.index}">${vo1.mn_price}</label>
+											<label style="width:100px">${tmp.rsv_mn_name}</label>
+											<input type="hidden" name="mn_name[]" value="${tmp.rsv_mn_name}" />
+											<label id="price_${i.index}">${tmp.rsv_mn_price}</label>
+											<input type="hidden" name="mn_price[]" value="${tmp.rsv_mn_price}" />
 											<input type="button" class="btn btn-default menu_m" value="-" />
-											<input type="text" class="form-control menu_cnt" style="width:50px; text-align:right" value="0" />
+											<input type="text" id="cnt_${i.index}" class="form-control menu_cnt" style="width:50px; text-align:right" value="${tmp.rsv_mn_cnt}" />
+											<input type="hidden" name="mn_cnt[]" id="cnt1_${i.index}" class="menu_cnt" value="${tmp.rsv_mn_cnt}" />
 											<input type="button" class="btn btn-default menu_p" value="+" />
-											<label id="sum_${i.index}" class="sum"></label>
+											<label id="sum_${i.index}" class="sum">${tmp.rsv_mn_price*tmp.rsv_mn_cnt}</label>
 										</div>
 									</c:forEach>
 								</div>
@@ -182,6 +185,18 @@
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=66e7156b3899e012effaa62fd20217d4&libraries=services"></script>
 	<script>
 		$(function() {
+			
+			var len = $('.sum').length;
+			var tot = 0;								
+			for(var i=0; i<len; i++){
+				tot += Number($('#sum_'+i).text());
+			}
+
+			$('#total').text(tot+'원');
+			
+			
+			
+			
 			$("#date1").datepicker();
 			
 			var mapContainer = document.getElementById('map'),
@@ -215,9 +230,10 @@
 			
 			$('.menu_p').click(function(){
 				var idx = $(this).index('.menu_p');
-				var cnt = $(this).prev().val();
+				var cnt = $('#cnt_'+idx).val();
 				cnt++;
-				$(this).prev().val(cnt);
+				$('#cnt_'+idx).val(cnt);
+				$('#cnt1_'+idx).val(cnt);
 				
 				var price = $('#price_'+idx).text();
 				var sum = cnt * price;

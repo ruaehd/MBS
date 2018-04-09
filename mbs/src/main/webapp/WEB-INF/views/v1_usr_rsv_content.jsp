@@ -78,19 +78,19 @@
 						</div>
 					</div>
 					
-					<%-- <div id="menu" style="margin-bottom:20px">
+					<div id="menu" style="margin-bottom:20px">
 						<h3>메뉴선택</h3>
 						<hr />
 						<div id="menu_detail" class="form-inline" style="margin-bottom:10px">
 							<div>
-								<c:forEach var="vo1" items="${mlist}" varStatus="i">
+								<c:forEach var="tmp" items="${rmlist}" varStatus="i">
 									<div class="form-inline">
-										<label style="width:100px">${vo1.mn_name}</label>
-										<label id="price_${i.index}">${vo1.mn_price}</label>
-										<input type="button" class="btn btn-default menu_m" value="-" />
-										<input type="text" class="form-control menu_cnt" style="width:50px; text-align:right" value="0" />
-										<input type="button" class="btn btn-default menu_p" value="+" />
-										<label id="sum_${i.index}" class="sum"></label>
+										<label style="width:100px">${tmp.rsv_mn_name}</label>
+										<label class="menu_cnt">${tmp.rsv_mn_cnt} 인분</label>
+										<div style="display:inline-block; margin-left:200px" >	
+											<label id="price_${i.index}">${tmp.rsv_mn_price}*${tmp.rsv_mn_cnt}</label> = 
+											<label id="sum_${i.index}" class="sum"> ${tmp.rsv_mn_price*tmp.rsv_mn_cnt} </label>
+										</div>
 									</div>
 								</c:forEach>
 							</div>
@@ -100,7 +100,7 @@
 								<label id="total">0원</label>
 							</div>
 						</div>
-					</div> --%>
+					</div>
 				</div>
 				
 				<div class="col-md-6" style="padding:20px">
@@ -124,7 +124,7 @@
 							</div>
 							<div class="form-inline" style="margin-bottom:10px">
 								<label style="width:100px">요청사항</label>
-								<textarea class="form-control" rows="2" style="resize:none">${vo.rsv_sub_request}</textarea>
+								<textarea class="form-control" rows="2" style="resize:none" readonly>${vo.rsv_sub_request}</textarea>
 							</div>
 						</div>
 					</div>
@@ -231,6 +231,17 @@
 			        map.setCenter(coords);
 			    } 
 			});
+			
+			
+			
+			var len = $('.sum').length;
+			var tot = 0;								
+			for(var i=0; i<len; i++){
+				tot += Number($('#sum_'+i).text());
+			}
+
+			$('#total').text(tot+'원');
+			
 		});
 	</script>
 
