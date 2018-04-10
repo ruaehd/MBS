@@ -11,7 +11,7 @@
 	</select>
 	
 	<insert id="insertComment">
-		INSERT INTO `rsv_comment` (rsv_cmt_content, rsv_cmt_point, rsv_cmt_writer, rsv_cmt_date, rsv_no) VALUES(#{rsv_cmt_content}, #{rsv_cmt_point}, #{rsv_cmt_writer}, NOW(), #{rsv_no})
+		INSERT INTO `rsv_comment` (rsv_cmt_content, rsv_cmt_point, rsv_cmt_writer, rsv_cmt_date, rsv_no, rsv_cmt_taste, rsv_cmt_service, rsv_cmt_price) VALUES(#{rsv_cmt_content}, #{rsv_cmt_point}, #{rsv_cmt_writer}, NOW(), #{rsv_no}, #{rsv_cmt_taste}, #{rsv_cmt_service}, #{rsv_cmt_price})
 	</insert>
 	
 	<select id="selectReviewChk" parameterType="V1_Comment" resultType="int">
@@ -23,7 +23,29 @@
 	</select>
 	
 	<update id="updateComment" parameterType="V1_Comment">
-		UPDATE `rsv_comment` SET rsv_cmt_content=#{rsv_cmt_content}, rsv_cmt_point=#{rsv_cmt_point} WHERE rsv_cmt_no=#{rsv_cmt_no}
+		UPDATE `rsv_comment` SET rsv_cmt_content=#{rsv_cmt_content}, rsv_cmt_point=#{rsv_cmt_point}, rsv_cmt_taste=#{rsv_cmt_taste}, rsv_cmt_service=#{rsv_cmt_service}, rsv_cmt_price=#{rsv_cmt_price} WHERE rsv_cmt_no=#{rsv_cmt_no}
 	</update>
+	
+	<select id="selectCmtList" parameterType="int" resultType="V1_Comment">
+		SELECT c.*, sr.str_number 
+		FROM
+			(SELECT s.str_number, r.rsv_no
+			FROM `store` s
+			INNER JOIN `reservation` r
+			ON s.str_number=r.str_number)sr
+		INNER JOIN `rsv_comment` c
+		ON sr.rsv_no = c.rsv_no
+		WHERE sr.str_number=#{str_number}
+	</select>
+	
+	<select id="selectPreReview" parameterType="int" resultType="V1_Comment">
+	
+		SELECT r.rsv_day, s.str_name, s.str_number, r.rsv_no
+		FROM `store` s
+		INNER JOIN `reservation` r
+		ON s.str_number=r.str_number
+		
+		WHERE r.rsv_no=#{rsv_no}
+	</select>
 	
 </mapper>

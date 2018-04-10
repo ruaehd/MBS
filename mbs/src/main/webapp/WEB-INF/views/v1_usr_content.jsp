@@ -1,5 +1,6 @@
 <%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page session="false"%>
 <!DOCTYPE html>
 <html>
@@ -46,6 +47,23 @@
 		}
 		.form-inline > label{
 			width:100px;
+		}
+		.star_rating {
+			font-size:0; letter-spacing:-4px;
+		}
+		.star_rating p {
+		    font-size:20px;
+		    letter-spacing:0;
+		    display:inline-block;
+		    margin-left:5px;
+		    color:#ccc;
+		    text-decoration:none;
+		}
+		.star_rating p:first-child {
+			margin-left:0;
+		}
+		.star_rating p.on {
+			color:#EDD200;
 		}
 	</style>
 </head>
@@ -140,7 +158,14 @@
 							<h3>
 								<b>후기 n개</b>
 							</h3>
-							<img src="resources/imgs/star-5.PNG" style="width: 80px; height: 20px" />
+								<div style="display:inline-block" class="star_rating">
+									<c:forEach begin="1" end="${avg}">
+								    	<p class="on">★</p>
+								    </c:forEach>
+								    <c:forEach begin="1" end="${5-avg}">
+									    <p>★</p>
+								    </c:forEach>
+								</div>
 						</div>
 						<div class="w3-display-right">
 							<input type="text" class="w3-border w3-round w3-input" style="width: 300px" placeholder="사용자로 후기 검색" />
@@ -148,48 +173,46 @@
 					</div>
 					<div class="row">
 						<div class="col-md-4" align="center">
-						<h4>가격</h4>
-							<div id="circle1">40%</div>
+							<h4>맛</h4>
+							<div id="circle1"><fmt:formatNumber value="${taste*100}" pattern=""/>%</div>
 							</div>
 						<div class="col-md-4" align="center">
 						<h4>서비스</h4>
-							<div id="circle2">80%</div>
+							<div id="circle2"><fmt:formatNumber value="${service*100}" pattern=""/>%</div>
 							</div>
 						<div class="col-md-4" align="center">
-						<h4>시설</h4>
-							<div id="circle3">90%</div>
+						<h4>가격</h4>
+							<div id="circle3"><fmt:formatNumber value="${price*100}" pattern=""/>%</div>
 						</div>
 					</div>
 					
 					<hr />
 					<div class="row ">
 						<div class="form-inline">
-							<label>${vo.rsv_cmt_point}</label>
-							<label>${vo.rsv_cmt_content}</label>
-						</div>
-						<%-- <c:forEach var="i" begin="1" end="6">
-							<div class="col-md-6">
-								<div class="thumbnail" style="padding:10px">
-									<div class="row">
-										<div class="col-md-8">
-											<b>사용자 이름 <img src="resources/imgs/star-5.PNG"style="width: 100px; height: 25px" /></b><br /> 
-											<font style="font-size: 12px">2018.01.01</font><br />
-										</div>
-										<div class="col-md-1" style="margin-left:28px" align="right">
-											<img src="resources/imgs/best.png" style="height:40px;width:40px;margin-top:10px"/><br/>
-										</div>
-										<div class="col-md-2" align="right">
-											<button class="w3-button w3-hover-white w3-white">
-												<img src="resources/imgs/good.png" style="height:40px;width:40px"/><br/>
-												<font style="font-size:12px">326</font>
-											</button>
-										</div>
+							<c:forEach var="tmp" items="${clist}" varStatus="i">
+								<div class="review" style="margin-bottom:10px; border:1px solid #ccc">
+									<div style="display:inline-block" class="star_rating">
+									<input type="hidden" class="pnt_${i.index}" value="${tmp.rsv_cmt_point}"/>
+										<c:forEach begin="1" end="${tmp.rsv_cmt_point}">
+									    	<p class="on">★</p>
+									    </c:forEach>
+									    <c:forEach begin="1" end="${5-tmp.rsv_cmt_point}">
+										    <p>★</p>
+									    </c:forEach>
 									</div>
-									<p>사용자 후기 내용 ,row는 4줄 = 4줄이상은 ...<a href="#">더보기</a></p>
+									
+									<label>${tmp.rsv_cmt_taste}</label>
+									<label>${tmp.rsv_cmt_service}</label>
+									<label>${tmp.rsv_cmt_price}</label>
+									
+									<label>작성자</label>${tmp.rsv_cmt_writer}
+									<div>
+									${tmp.rsv_cmt_content}
+									</div>
 								</div>
-							</div>
-						</c:forEach> --%>
-						<input type="button" class="form-control w3-border w3-round w3-button" value="n개의 댓글 더 보기" />
+							</c:forEach>
+						</div>
+						<!-- <input type="button" class="form-control w3-border w3-round w3-button" value="n개의 댓글 더 보기" /> -->
 					</div>
 				</div>
 				
@@ -210,19 +233,20 @@
 		$('.carousel').carousel({
 			interval : 2000
 		});
+		
 	
 		$('#circle1').circleProgress({
-		    value: 0.4
+		    value: '${taste}'
 		  }).on('circle-animation-progress', function(event, progress) {
 		    $(this).find('strong').html(Math.round(100 * progress) + '<i>%</i>');
 		  });
 		$('#circle2').circleProgress({
-		    value: 0.8
+		    value: '${service}'
 		  }).on('circle-animation-progress', function(event, progress) {
 		    $(this).find('strong').html(Math.round(100 * progress) + '<i>%</i>');
 		  });
 		$('#circle3').circleProgress({
-		    value: 0.9
+		    value: '${price}'
 		  }).on('circle-animation-progress', function(event, progress) {
 		    $(this).find('strong').html(Math.round(100 * progress) + '<i>%</i>');
 		  });

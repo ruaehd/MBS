@@ -193,13 +193,13 @@
 			window.open('usr_rsv_review.do?rsv_no=${param.rsv_no}','후기작성','width=600, height=800, left=650, top=100');
 		}
 		function writeComment() {
-			window.open('usr_rsv_comment.do?rsv_no=${param.rsv_no}','한줄평 작성','width=600, height=400, left=650, top=300');
+			window.open('usr_rsv_comment.do?rsv_no=${param.rsv_no}','한줄평 작성','width=600, height=800, left=650, top=100');
 		}
 		function editReview() {
 			window.open('usr_rsv_review_edit.do?rsv_no=${param.rsv_no}','후기수정','width=600, height=800, left=650, top=100');
 		}
 		function editComment() {
-			window.open('usr_rsv_comment_edit.do?rsv_no=${param.rsv_no}','한줄평 수정','width=600, height=400, left=650, top=300');
+			window.open('usr_rsv_comment_edit.do?rsv_no=${param.rsv_no}','한줄평 수정','width=600, height=800, left=650, top=100');
 		}
 		
 		$(function() {

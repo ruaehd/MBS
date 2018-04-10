@@ -12,8 +12,8 @@
    		</selectKey>
 
 		<foreach item="tmp" collection="rmlist" separator=" ">
-			INSERT INTO `rsv_menu` (rsv_mn_name, rsv_mn_cnt, rsv_mn_price, rsv_mn_date, rsv_no)
-			VALUES(#{tmp.rsv_mn_name}, #{tmp.rsv_mn_cnt}, #{tmp.rsv_mn_price}, NOW(), #{rsv_no});
+			INSERT INTO `rsv_menu` (rsv_mn_name, rsv_mn_cnt, rsv_mn_price, rsv_mn_date, rsv_mn_idx, rsv_no)
+			VALUES(#{tmp.rsv_mn_name}, #{tmp.rsv_mn_cnt}, #{tmp.rsv_mn_price}, NOW(), #{tmp.rsv_mn_idx}, #{rsv_no});
 		</foreach>
 		 
 	</insert>
@@ -72,7 +72,7 @@
 		UPDATE `reservation` SET rsv_day=#{rsv_day}, rsv_time=#{rsv_time}, rsv_personnel=#{rsv_personnel}, rsv_sub_name=#{rsv_sub_name}, rsv_sub_tel=#{rsv_sub_tel}, rsv_sub_email=#{rsv_sub_email}, rsv_sub_request=#{rsv_sub_request}, rsv_code=1 WHERE rsv_no=#{rsv_no};
 		
 		<foreach item="tmp" collection="rmlist" separator=" ">
-			UPDATE `rsv_menu` SET rsv_mn_name=#{tmp.rsv_mn_name}, rsv_mn_cnt=#{tmp.rsv_mn_cnt}, rsv_mn_price=#{tmp.rsv_mn_price} WHERE rsv_mn_no IN (SELECT * FROM(SELECT r.rsv_mn_no FROM `rsv_menu` as r WHERE r.rsv_no=#{rsv_no}) a);
+			UPDATE `rsv_menu` SET rsv_mn_name=#{tmp.rsv_mn_name}, rsv_mn_cnt=#{tmp.rsv_mn_cnt}, rsv_mn_price=#{tmp.rsv_mn_price} WHERE rsv_mn_idx=#{tmp.rsv_mn_idx} AND rsv_no=#{rsv_no};
 		</foreach>
 		
 		<!-- UPDATE `reservation` r INNER JOIN `rsv_menu` m

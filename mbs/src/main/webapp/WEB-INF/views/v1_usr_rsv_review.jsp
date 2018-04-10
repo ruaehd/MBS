@@ -1,5 +1,6 @@
 <%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@ page session="false"%>
 <!DOCTYPE html>
 <html>
@@ -43,7 +44,7 @@
 </head>
 <body>
 	<div id="wrapper">
-			
+		<form:form action="usr_rsv_comment.do?rsv_no=${param.rsv_no}" modelAttribute="vo" method="post">	
 		<div style="padding:20px; width:600px">
 			<h3>후기 작성</h3>
 			<hr />
@@ -69,7 +70,7 @@
 					    <a href="#">★</a>
 					    <a href="#">★</a>
 					</p>
-					<input type="hidden" id="rating" value="1"/>
+					<form:input type="hidden" id="rating" path="rsv_cmt_point" value="1"/>
 				</div>
 			</div>
 			<div class="form-inline">
@@ -80,21 +81,21 @@
 					<div style="display:inline-block">
 						<div class="form-group">
 							<label style="width:70px">맛</label>
-							<div style="display:inline-block; width:120px"><input type="radio" name="taste" value="별로" />별로에요</div>
-							<div style="display:inline-block; width:120px"><input type="radio" name="taste" value="보통" checked/>보통이에요</div>
-							<div style="display:inline-block; width:120px"><input type="radio" name="taste" value="맛있" />맛있어요</div>
+							<div style="display:inline-block; width:120px"><form:radiobutton path="rsv_cmt_taste" value="별로에요" />별로에요</div>
+							<div style="display:inline-block; width:120px"><form:radiobutton path="rsv_cmt_taste" value="보통이에요" checked="checked"/>보통이에요</div>
+							<div style="display:inline-block; width:120px"><form:radiobutton path="rsv_cmt_taste" value="맛있어요" />맛있어요</div>
 						</div>
 						<div class="form-group">
 							<label style="width:70px">서비스</label>
-							<div style="display:inline-block; width:120px"><input type="radio" name="service" value="별로"/>불친절해요</div>
-							<div style="display:inline-block; width:120px"><input type="radio" name="service" value="보통" checked/>보통이에요</div>
-							<div style="display:inline-block; width:120px"><input type="radio" name="service" value="맛있"/>친절해요</div>
+							<div style="display:inline-block; width:120px"><form:radiobutton path="rsv_cmt_service" value="불친절해요"/>불친절해요</div>
+							<div style="display:inline-block; width:120px"><form:radiobutton path="rsv_cmt_service" value="보통이에요" checked="checked"/>보통이에요</div>
+							<div style="display:inline-block; width:120px"><form:radiobutton path="rsv_cmt_service" value="친절해요"/>친절해요</div>
 						</div>
 						<div class="form-group">
 							<label style="width:70px">가격</label>
-							<div style="display:inline-block; width:120px"><input type="radio" name="price" value="별로"/>비싸요</div>
-							<div style="display:inline-block; width:120px"><input type="radio" name="price" value="보통" checked/>보통이에요</div>
-							<div style="display:inline-block; width:120px"><input type="radio" name="price" value="맛있"/>저렴해요</div>
+							<div style="display:inline-block; width:120px"><form:radiobutton path="rsv_cmt_price" value="비싸요"/>비싸요</div>
+							<div style="display:inline-block; width:120px"><form:radiobutton path="rsv_cmt_price" value="적절해요" checked="checked"/>적절해요</div>
+							<div style="display:inline-block; width:120px"><form:radiobutton path="rsv_cmt_price" value="저렴해요"/>저렴해요</div>
 						</div>
 					</div>
 				</div>
@@ -102,7 +103,7 @@
 			<div class="form-inline">
 				<div class="form-group">
 					<label style="width:100px">예약 후기</label>
-					<textarea rows="6" style="resize:none; width:400px"></textarea>
+					<form:textarea rows="6" path="rsv_cmt_content" style="resize:none; width:400px"></form:textarea>
 				</div>
 			</div>
 			<hr />
@@ -111,7 +112,7 @@
 				<input type="button" class="btn btn-danger" value="작성 취소"/>
 			</div>
 		</div>
-		
+		</form:form>
 	
 	</div>
 	

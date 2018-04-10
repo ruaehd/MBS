@@ -29,11 +29,11 @@ public class ReservationController {
 	@Autowired private V1_ReviewDAO reDAO = null;
 	
 	/*
-	 * �삁�빟�븯湲�
+	 * 예약
 	 */
 	@RequestMapping(value="/usr_content_pay.do", method = RequestMethod.POST)
 	public String userContentPay(@ModelAttribute("rvo") V1_Reservation vo, @RequestParam("mn_name[]") String[] name, @RequestParam("mn_price[]") int[] price, @RequestParam("mn_cnt[]") int[] cnt) {
-		//�꽭�뀡�븘�씠�뵒
+		//세션아이디
 		vo.setRsv_sub_id("user");
 		//param
 		vo.setStr_number(1234567890);
@@ -45,7 +45,7 @@ public class ReservationController {
 			vo1.setRsv_mn_name(name[i]);
 			vo1.setRsv_mn_price(price[i]);
 			vo1.setRsv_mn_cnt(cnt[i]);
-			
+			vo1.setRsv_mn_idx(i);
 			list.add(vo1);
 		}
 		vo.setRmlist(list);
@@ -63,12 +63,12 @@ public class ReservationController {
 	}
 	
 	/*
-	 * �삁�빟 由ъ뒪�듃
+	 * 예약목록
 	 */
 	@RequestMapping(value="/usr_rsv_list.do", method = RequestMethod.GET)
 	public String userReservationList(Model model,  @RequestParam(value="rsv_code", defaultValue="0") int rsv_code) {
 		
-		//�꽭�뀡 �븘�씠�뵒
+		//세션아이디
 		V1_Reservation vo = new V1_Reservation();
 		vo.setRsv_sub_id("user");
 		
@@ -96,7 +96,7 @@ public class ReservationController {
 	}
 	
 	/*
-	 * �삁�빟 �궡�슜
+	 * 예약내용
 	 */
 	@RequestMapping(value="/usr_rsv_content.do", method = RequestMethod.GET)
 	public String userReservationContent(Model model, @RequestParam("rsv_no") int rsv_no) {
@@ -148,6 +148,7 @@ public class ReservationController {
 			vo1.setRsv_mn_price(price[i]);
 			vo1.setRsv_mn_cnt(cnt[i]);
 			vo1.setRsv_no(vo.getRsv_no());
+			vo1.setRsv_mn_idx(i);
 			list.add(vo1);
 			
 			System.out.println(list.get(i).getRsv_mn_cnt());

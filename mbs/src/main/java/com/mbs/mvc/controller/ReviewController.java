@@ -27,13 +27,18 @@ public class ReviewController {
 		return "";
 	}
 	
+	
 	@RequestMapping(value="/usr_rsv_comment.do", method = RequestMethod.GET)
-	public String usrRsvComment(Model model) {
+	public String usrRsvComment(Model model, @RequestParam("rsv_no") int rsv_no) {
+		
+		V1_Comment vo1 = reDAO.selectPreReview(rsv_no); 
 		
 		V1_Comment vo = new V1_Comment();
+		vo.setStr_name(vo1.getStr_name());
+		vo.setRsv_day(vo1.getRsv_day());
 		
 		model.addAttribute("vo", vo);
-		return "v1_usr_rsv_comment";
+		return "v1_usr_rsv_review";
 	}
 	
 	@RequestMapping(value="/usr_rsv_comment.do", method = RequestMethod.POST)
@@ -52,18 +57,22 @@ public class ReviewController {
 		return "v1_usr_rsv_review_edit";
 	}
 	
+	
 	@RequestMapping(value="/usr_rsv_comment_edit.do", method = RequestMethod.GET)
 	public String usrRsvCommentEdit(Model model, @RequestParam("rsv_no") int rsv_no) {
 		
+		V1_Comment vo1 = reDAO.selectPreReview(rsv_no); 
 		V1_Comment vo = new V1_Comment();
 		
 		vo.setRsv_no(rsv_no);
 		vo.setRsv_cmt_writer("user");
 		
 		V1_Comment rvo = reDAO.selectReviewOne(vo);
+		rvo.setStr_name(vo1.getStr_name());
+		rvo.setRsv_day(vo1.getRsv_day());
 		
 		model.addAttribute("vo", rvo);
-		return "v1_usr_rsv_comment_edit";
+		return "v1_usr_rsv_review_edit";
 	}
 	
 	@RequestMapping(value="/usr_rsv_comment_edit.do", method = RequestMethod.POST)

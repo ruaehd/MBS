@@ -1,5 +1,7 @@
 package com.mbs.mvc.dao;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.apache.ibatis.session.SqlSession;
@@ -33,5 +35,13 @@ public class V1_ReviewDAO {
 	
 	public int updateComment(V1_Comment vo) {
 		return sqlsession.update("V1_Review.updateComment", vo);
+	}
+	
+	public List<V1_Comment> selectCmtList(int str_no){
+		return sqlsession.selectList("V1_Review.selectCmtList", str_no);
+	}
+	
+	public V1_Comment selectPreReview(int rsv_no) {
+		return sqlsession.selectOne("V1_Review.selectPreReview", rsv_no);
 	}
 }

@@ -17,7 +17,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.mbs.mvc.dao.V1_ReviewDAO;
 import com.mbs.mvc.dao.V1_UserContentDAO;
+import com.mbs.mvc.vo.V1_Comment;
 import com.mbs.mvc.vo.V1_Member;
 import com.mbs.mvc.vo.V1_Menu;
 import com.mbs.mvc.vo.V1_Reservation;
@@ -28,7 +30,7 @@ import com.mbs.mvc.vo.V1_StrImg;
 public class UserContentController {
 	
 	@Autowired private V1_UserContentDAO ucDAO = null;
-	
+	@Autowired private V1_ReviewDAO reDAO = null;
 	/*
 	 * 점포 정보
 	 */
@@ -37,13 +39,71 @@ public class UserContentController {
 		
 		//파람
 		V1_Store vo = ucDAO.selectStoreOne(1234567890);
-		List<V1_Menu> mlist = ucDAO.selectMenuList(1234567890);
 		int cnt = ucDAO.selectImgCount(1234567890);
+		List<V1_Menu> mlist = ucDAO.selectMenuList(1234567890);
+		List<V1_Comment> clist = reDAO.selectCmtList(1234567890);
 		
+		double sum = 0;
+		double a = 0;
+		double b = 0;
+		double c = 0;
+		for(V1_Comment tmp : clist) {
+			sum += tmp.getRsv_cmt_point();
+			
+			if(tmp.getRsv_cmt_taste().equals("별로에요")) {
+				a = 1/(double)3;
+			}
+			else if(tmp.getRsv_cmt_taste().equals("보통이에요")) {
+				a = 2/(double)3;
+			}
+			else if(tmp.getRsv_cmt_taste().equals("맛있어요")) {
+				a = 3/(double)3;
+			}
+			
+			if(tmp.getRsv_cmt_service().equals("불친절해요")) {
+				b = 1/(double)3;
+			}
+			else if(tmp.getRsv_cmt_service().equals("보통이에요")) {
+				b = 2/(double)3;
+			}
+			else if(tmp.getRsv_cmt_service().equals("친절해요")) {
+				b = 3/(double)3;
+			}
+			
+			if(tmp.getRsv_cmt_price().equals("비싸요")) {
+				c = 1/(double)3;
+			}
+			else if(tmp.getRsv_cmt_price().equals("적절해요")) {
+				c = 2/(double)3;
+			}
+			else if(tmp.getRsv_cmt_price().equals("저렴해요")) {
+				c = 3/(double)3;
+			}
+			a += a;
+			b += b;
+			c += c;
+			System.out.println(a);
+			System.out.println(b);
+			System.out.println(c);
+		}
+		double avg = Math.round(sum/clist.size());
+		
+		a = Math.round(a/clist.size()*100d)/100d;
+		b = Math.round(b/clist.size()*100d)/100d;
+		c = Math.round(c/clist.size()*100d)/100d;
+		
+		System.out.println(a);
+		System.out.println(b);
+		System.out.println(c);
+		
+		model.addAttribute("vo", vo);		
 		model.addAttribute("cnt", cnt);
-		
-		model.addAttribute("vo", vo);
 		model.addAttribute("mlist", mlist);
+		model.addAttribute("clist", clist);
+		model.addAttribute("avg", avg);
+		model.addAttribute("taste", a);
+		model.addAttribute("service", b);
+		model.addAttribute("price", c);
 		return "v1_usr_content";
 	}
 	

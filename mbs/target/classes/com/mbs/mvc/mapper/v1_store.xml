@@ -3,25 +3,25 @@
 
 <mapper namespace="V1_Store">
 	<select id="selectStoreOne" parameterType="int" resultType="V1_Store">
-		<!-- SELECT * FROM `store` WHERE str_number=#{str_number} -->
+		SELECT * FROM `store` WHERE str_number=#{str_number}
 		
-		SELECT * FROM `store` s
+		<!-- SELECT * FROM `store` s
 		INNER JOIN
 			(SELECT c.*, r.str_number FROM `rsv_comment` c
 				INNER JOIN `reservation` r
 				ON c.rsv_no = r.rsv_no) cr
 		ON s.str_number = cr.str_number
-		WHERE s.str_number=#{str_number}
+		WHERE s.str_number=#{str_number} -->
 		
-		<!-- 
-		SELECT s.str_name, rc.rsv_day, rc.rsv_code, rc.rsv_code_chk, rc.rsv_no FROM `store` s
+		
+		<!-- SELECT s.str_name, rc.rsv_day, rc.rsv_code, rc.rsv_code_chk, rc.rsv_no FROM `store` s
 		INNER JOIN
 			(SELECT r.rsv_day, r.rsv_code, c.rsv_code_chk, r.str_number, r.rsv_no FROM `reservation` r 
 				INNER JOIN `rsv_code` c
 				ON r.rsv_code = c.rsv_code
 			WHERE r.rsv_sub_id=#{rsv_sub_id}) rc
-		ON s.str_number = rc.str_number
-		 -->
+		ON s.str_number = rc.str_number -->
+		
 	</select>
 	
 	<select id="selectMenuList" parameterType="int" resultType="V1_Menu">
@@ -47,4 +47,5 @@
 	<select id="selectMemberOne" parameterType="String" resultType="V1_Member">
 		SELECT * FROM `member` WHERE mb_id=#{mb_id}
 	</select>
+	
 </mapper>

@@ -7,9 +7,16 @@ public class V1_RsvMenu {
 	private int rsv_mn_price = 0;
 	private String rsv_mn_date = null;
 	private int rsv_mn_delete = 0;
+	private int rsv_mn_idx = 0;
 	private int rsv_no = 0;
 	
 	
+	public int getRsv_mn_idx() {
+		return rsv_mn_idx;
+	}
+	public void setRsv_mn_idx(int rsv_mn_idx) {
+		this.rsv_mn_idx = rsv_mn_idx;
+	}
 	public int getRsv_mn_no() {
 		return rsv_mn_no;
 	}
