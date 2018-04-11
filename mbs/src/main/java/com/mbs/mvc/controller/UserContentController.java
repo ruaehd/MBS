@@ -43,67 +43,64 @@ public class UserContentController {
 		List<V1_Menu> mlist = ucDAO.selectMenuList(1234567890);
 		List<V1_Comment> clist = reDAO.selectCmtList(1234567890);
 		
+		int totPage = (clist.size()-1)/5+1;
+		
+		/*List<V7_Board> list = bDAO.selectBoardList2((page-1)*10+1);*/
 		double sum = 0;
-		double a = 0;
-		double b = 0;
-		double c = 0;
+		double taste = 0;
+		double service = 0;
+		double price = 0;
+		
 		for(V1_Comment tmp : clist) {
 			sum += tmp.getRsv_cmt_point();
 			
-			if(tmp.getRsv_cmt_taste().equals("별로에요")) {
-				a = 1/(double)3;
+			if(tmp.getRsv_cmt_taste().equals("맛은 별로에요")) {
+				taste = taste + 1/(double)3;
 			}
-			else if(tmp.getRsv_cmt_taste().equals("보통이에요")) {
-				a = 2/(double)3;
+			else if(tmp.getRsv_cmt_taste().equals("맛은 보통이에요")) {
+				taste = taste + 2/(double)3;
 			}
 			else if(tmp.getRsv_cmt_taste().equals("맛있어요")) {
-				a = 3/(double)3;
+				taste = taste + 3/(double)3;
 			}
 			
-			if(tmp.getRsv_cmt_service().equals("불친절해요")) {
-				b = 1/(double)3;
+			if(tmp.getRsv_cmt_service().equals("서비스는 불친절해요")) {
+				service = service + 1/(double)3;
 			}
-			else if(tmp.getRsv_cmt_service().equals("보통이에요")) {
-				b = 2/(double)3;
+			else if(tmp.getRsv_cmt_service().equals("서비스는 보통이에요")) {
+				service = service + 2/(double)3;
 			}
-			else if(tmp.getRsv_cmt_service().equals("친절해요")) {
-				b = 3/(double)3;
+			else if(tmp.getRsv_cmt_service().equals("서비스는 친절해요")) {
+				service = service + 3/(double)3;
 			}
 			
-			if(tmp.getRsv_cmt_price().equals("비싸요")) {
-				c = 1/(double)3;
+			if(tmp.getRsv_cmt_price().equals("가격은 비싸요")) {
+				price = price + 1/(double)3;
 			}
-			else if(tmp.getRsv_cmt_price().equals("적절해요")) {
-				c = 2/(double)3;
+			else if(tmp.getRsv_cmt_price().equals("가격은 적절해요")) {
+				price = price + 2/(double)3;
 			}
-			else if(tmp.getRsv_cmt_price().equals("저렴해요")) {
-				c = 3/(double)3;
+			else if(tmp.getRsv_cmt_price().equals("가격은 저렴해요")) {
+				price = price + 3/(double)3;
 			}
-			a += a;
-			b += b;
-			c += c;
-			System.out.println(a);
-			System.out.println(b);
-			System.out.println(c);
+			
 		}
+		
 		double avg = Math.round(sum/clist.size());
-		
-		a = Math.round(a/clist.size()*100d)/100d;
-		b = Math.round(b/clist.size()*100d)/100d;
-		c = Math.round(c/clist.size()*100d)/100d;
-		
-		System.out.println(a);
-		System.out.println(b);
-		System.out.println(c);
+		taste = Math.round(taste/clist.size()*100d)/100d;
+		service = Math.round(service/clist.size()*100d)/100d;
+		price = Math.round(price/clist.size()*100d)/100d;
 		
 		model.addAttribute("vo", vo);		
 		model.addAttribute("cnt", cnt);
 		model.addAttribute("mlist", mlist);
 		model.addAttribute("clist", clist);
 		model.addAttribute("avg", avg);
-		model.addAttribute("taste", a);
-		model.addAttribute("service", b);
-		model.addAttribute("price", c);
+		model.addAttribute("taste", taste);
+		model.addAttribute("service", service);
+		model.addAttribute("price", price);
+		model.addAttribute("recnt", clist.size());
+		model.addAttribute("totPage", totPage);
 		return "v1_usr_content";
 	}
 	

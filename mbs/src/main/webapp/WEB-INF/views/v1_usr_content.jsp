@@ -156,7 +156,7 @@
 					<div  class="w3-display-container" style="height: 100px;vertical-align:middle">
 						<div class="w3-display-left form-inline" style="vertical-align:middle">
 							<h3>
-								<b>후기 n개</b>
+								<b>후기 ${recnt}개</b>
 							</h3>
 								<div style="display:inline-block" class="star_rating">
 									<c:forEach begin="1" end="${avg}">
@@ -201,9 +201,9 @@
 									    </c:forEach>
 									</div>
 									
-									<label>${tmp.rsv_cmt_taste}</label>
-									<label>${tmp.rsv_cmt_service}</label>
-									<label>${tmp.rsv_cmt_price}</label>
+									<code style="color:#353535; background-color:#EAEAEA;">${tmp.rsv_cmt_taste}</code>
+									<code style="color:#353535; background-color:#EAEAEA;">${tmp.rsv_cmt_service}</code>
+									<code style="color:#353535; background-color:#EAEAEA;">${tmp.rsv_cmt_price}</code>
 									
 									<label>작성자</label>${tmp.rsv_cmt_writer}
 									<div>
@@ -211,6 +211,9 @@
 									</div>
 								</div>
 							</c:forEach>
+						</div>
+						<div align="center">
+							<ul id="pagination" class="pagination"></ul>
 						</div>
 						<!-- <input type="button" class="form-control w3-border w3-round w3-button" value="n개의 댓글 더 보기" /> -->
 					</div>
@@ -226,6 +229,7 @@
 	<script src="resources/js/jquery-1.11.1.js"></script>
 	<script src="resources/js/bootstrap.min.js"></script>
 	<script src="resources/js/circle-progress.js"></script>
+	<script type="text/javascript" src="resources/js/jquery.twbsPagination.min.js"></script>
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=66e7156b3899e012effaa62fd20217d4&libraries=services"></script>
 	<script>
 	
@@ -252,7 +256,14 @@
 		  });
 	
 	
-	
+		$('#pagination').twbsPagination({
+			totalPages:${totPage},
+			visiblePage:10,
+			href:''
+			/* href:'?code=${param.code}&page={{number}}&type=${param.type}&text=${param.text}' */
+		})
+		
+		
 		var mapContainer = document.getElementById('map'),
 		    mapOption = {
 		        center: new daum.maps.LatLng(33.450701, 126.570667),
@@ -282,6 +293,7 @@
 		    } 
 		});
 	
+		
 	});
 	</script>
 </body>

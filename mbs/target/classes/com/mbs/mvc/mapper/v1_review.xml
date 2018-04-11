@@ -39,7 +39,6 @@
 	</select>
 	
 	<select id="selectPreReview" parameterType="int" resultType="V1_Comment">
-	
 		SELECT r.rsv_day, s.str_name, s.str_number, r.rsv_no
 		FROM `store` s
 		INNER JOIN `reservation` r

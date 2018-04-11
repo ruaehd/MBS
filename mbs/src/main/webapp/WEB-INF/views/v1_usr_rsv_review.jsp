@@ -74,32 +74,31 @@
 				</div>
 			</div>
 			<div class="form-inline">
+				<label style="width:100px">만족도 평가</label>
 				<div class="form-group">
-					<div style="vertical-align:middle; display:inline-block">
-					<label style="width:100px">만족도 평가</label>
+					<div class="form-inline">
+						<label style="width:70px">맛</label>
+						<div style="display:inline-block; width:120px"><form:radiobutton path="rsv_cmt_taste" value="맛은 별로에요" />별로에요</div>
+						<div style="display:inline-block; width:120px"><form:radiobutton path="rsv_cmt_taste" value="맛은 보통이에요" checked="checked"/>보통이에요</div>
+						<div style="display:inline-block; width:120px"><form:radiobutton path="rsv_cmt_taste" value="맛있어요" />맛있어요</div>
 					</div>
-					<div style="display:inline-block">
-						<div class="form-group">
-							<label style="width:70px">맛</label>
-							<div style="display:inline-block; width:120px"><form:radiobutton path="rsv_cmt_taste" value="별로에요" />별로에요</div>
-							<div style="display:inline-block; width:120px"><form:radiobutton path="rsv_cmt_taste" value="보통이에요" checked="checked"/>보통이에요</div>
-							<div style="display:inline-block; width:120px"><form:radiobutton path="rsv_cmt_taste" value="맛있어요" />맛있어요</div>
-						</div>
-						<div class="form-group">
-							<label style="width:70px">서비스</label>
-							<div style="display:inline-block; width:120px"><form:radiobutton path="rsv_cmt_service" value="불친절해요"/>불친절해요</div>
-							<div style="display:inline-block; width:120px"><form:radiobutton path="rsv_cmt_service" value="보통이에요" checked="checked"/>보통이에요</div>
-							<div style="display:inline-block; width:120px"><form:radiobutton path="rsv_cmt_service" value="친절해요"/>친절해요</div>
-						</div>
-						<div class="form-group">
-							<label style="width:70px">가격</label>
-							<div style="display:inline-block; width:120px"><form:radiobutton path="rsv_cmt_price" value="비싸요"/>비싸요</div>
-							<div style="display:inline-block; width:120px"><form:radiobutton path="rsv_cmt_price" value="적절해요" checked="checked"/>적절해요</div>
-							<div style="display:inline-block; width:120px"><form:radiobutton path="rsv_cmt_price" value="저렴해요"/>저렴해요</div>
-						</div>
+					<div class="form-inline">
+						<label style="width:70px">서비스</label>
+						<div style="display:inline-block; width:120px"><form:radiobutton path="rsv_cmt_service" value="서비스는 불친절해요"/>불친절해요</div>
+						<div style="display:inline-block; width:120px"><form:radiobutton path="rsv_cmt_service" value="서비스는 보통이에요" checked="checked"/>보통이에요</div>
+						<div style="display:inline-block; width:120px"><form:radiobutton path="rsv_cmt_service" value="서비스는 친절해요"/>친절해요</div>
+					</div>
+					<div class="form-inline">
+						<label style="width:70px">가격</label>
+						<div style="display:inline-block; width:120px"><form:radiobutton path="rsv_cmt_price" value="가격은 비싸요"/>비싸요</div>
+						<div style="display:inline-block; width:120px"><form:radiobutton path="rsv_cmt_price" value="가격은 적절해요" checked="checked"/>적절해요</div>
+						<div style="display:inline-block; width:120px"><form:radiobutton path="rsv_cmt_price" value="가격은 저렴해요"/>저렴해요</div>
 					</div>
 				</div>
 			</div>
+			
+			
+			
 			<div class="form-inline">
 				<div class="form-group">
 					<label style="width:100px">예약 후기</label>
