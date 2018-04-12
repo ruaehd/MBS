@@ -110,7 +110,7 @@
 						<hr/>
 						<div>
 							<a href="usr_content_pay.do" class="btn btn-info">예약하기</a>
-							<a href="#review" class="btn btn-primary">후기보기</a>
+							<a href="#commnet" class="btn btn-primary">후기보기</a>
 							<a href="#map" class="btn btn-success">지도보기</a>
 							<a href="#" class="btn btn-danger">뒤로가기</a>
 						</div>
@@ -152,7 +152,7 @@
 		
 				<hr />
 		
-				<div id="review">
+				<div id="commnet">
 					<div  class="w3-display-container" style="height: 100px;vertical-align:middle">
 						<div class="w3-display-left form-inline" style="vertical-align:middle">
 							<h3>
@@ -166,9 +166,6 @@
 									    <p>★</p>
 								    </c:forEach>
 								</div>
-						</div>
-						<div class="w3-display-right">
-							<input type="text" class="w3-border w3-round w3-input" style="width: 300px" placeholder="사용자로 후기 검색" />
 						</div>
 					</div>
 					<div class="row">
@@ -188,35 +185,12 @@
 					
 					<hr />
 					<div class="row ">
-						<div class="form-inline">
-							<c:forEach var="tmp" items="${clist}" varStatus="i">
-								<div class="review" style="margin-bottom:10px; border:1px solid #ccc">
-									<div style="display:inline-block" class="star_rating">
-									<input type="hidden" class="pnt_${i.index}" value="${tmp.rsv_cmt_point}"/>
-										<c:forEach begin="1" end="${tmp.rsv_cmt_point}">
-									    	<p class="on">★</p>
-									    </c:forEach>
-									    <c:forEach begin="1" end="${5-tmp.rsv_cmt_point}">
-										    <p>★</p>
-									    </c:forEach>
-									</div>
-									
-									<code style="color:#353535; background-color:#EAEAEA;">${tmp.rsv_cmt_taste}</code>
-									<code style="color:#353535; background-color:#EAEAEA;">${tmp.rsv_cmt_service}</code>
-									<code style="color:#353535; background-color:#EAEAEA;">${tmp.rsv_cmt_price}</code>
-									
-									<label>작성자</label>${tmp.rsv_cmt_writer}
-									<div>
-									${tmp.rsv_cmt_content}
-									</div>
-								</div>
-							</c:forEach>
-						</div>
+						<div id="review" class="form-inline"></div>
 						<div align="center">
 							<ul id="pagination" class="pagination"></ul>
 						</div>
-						<!-- <input type="button" class="form-control w3-border w3-round w3-button" value="n개의 댓글 더 보기" /> -->
 					</div>
+					
 				</div>
 				
 				<div id="map" style="width:100%;height:350px;"></div>
@@ -256,13 +230,46 @@
 		  });
 	
 	
+	
+		
 		$('#pagination').twbsPagination({
 			totalPages:${totPage},
 			visiblePage:10,
-			href:''
-			/* href:'?code=${param.code}&page={{number}}&type=${param.type}&text=${param.text}' */
-		})
-		
+			onPageClick: function (event, page) {
+				$.get('ajax_reviewlist.do?page='+page, function(data){
+					$('#review').empty();
+					
+					var len = data.length;
+					for(var i=0; i<len; i++){
+						
+						var str = '';
+						var str1 = '';
+						
+						for(var j=0; j<data[i].rsv_cmt_point; j++){
+							str = str+'<p class="on">★</p>';
+						}
+						for(var k=0; k<5-data[i].rsv_cmt_point; k++){
+							str1 = str1+'<p>★</p>';
+						}
+						
+						$('#review').append(
+							'<div class="review" style="margin-bottom:10px; border:1px solid #ccc">'
+								+ '<div style="display:inline-block; margin-right:10px" class="star_rating">'
+									+ str
+									+ str1
+								+ '</div>'
+								+ '<code style="color:#353535; background-color:#EAEAEA; margin-right:5px">'+data[i].rsv_cmt_taste+'</code>'
+								+ '<code style="color:#353535; background-color:#EAEAEA; margin-right:5px">'+data[i].rsv_cmt_service+'</code>'
+								+ '<code style="color:#353535; background-color:#EAEAEA; margin-right:5px">'+data[i].rsv_cmt_price+'</code>'
+								
+								+ '<label>작성자</label>'+data[i].rsv_cmt_writer+''
+							+ '<div>'+data[i].rsv_cmt_content+'</div>'
+						+ '</div>'
+						);
+					}
+				}, 'json');
+			}
+		});
 		
 		var mapContainer = document.getElementById('map'),
 		    mapOption = {
@@ -296,5 +303,6 @@
 		
 	});
 	</script>
+	
 </body>
 </html>

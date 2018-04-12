@@ -23,7 +23,14 @@ public class V1_Store {
 	private int rsv_cmt_delete = 0;
 	private String rsv_cmt_date = null;
 	
+	private int page = 0;
 	
+	public int getPage() {
+		return page;
+	}
+	public void setPage(int page) {
+		this.page = page;
+	}
 	public int getRsv_cmt_no() {
 		return rsv_cmt_no;
 	}

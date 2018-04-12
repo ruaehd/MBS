@@ -160,11 +160,9 @@
 							</c:when>
 							<c:when test="${vo.rsv_code == 2}">
 								<c:if test="${chk != 0}">
-									<input type="button" class="btn btn-info" value="후기 수정" onClick="editReview()" />
 									<input type="button" class="btn btn-indgo" value="한줄평 수정" onClick="editComment()" />
 								</c:if>
 								<c:if test="${chk == 0}">
-									<input type="button" class="btn btn-info" value="후기 작성" onClick="writeReview()" />
 									<input type="button" class="btn btn-indgo" value="한줄평 작성" onClick="writeComment()" />	
 								</c:if>
 								

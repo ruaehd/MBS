@@ -26,8 +26,8 @@
 		UPDATE `rsv_comment` SET rsv_cmt_content=#{rsv_cmt_content}, rsv_cmt_point=#{rsv_cmt_point}, rsv_cmt_taste=#{rsv_cmt_taste}, rsv_cmt_service=#{rsv_cmt_service}, rsv_cmt_price=#{rsv_cmt_price} WHERE rsv_cmt_no=#{rsv_cmt_no}
 	</update>
 	
-	<select id="selectCmtList" parameterType="int" resultType="V1_Comment">
-		SELECT c.*, sr.str_number 
+	<select id="selectCmtList" parameterType="V1_Store" resultType="V1_Comment">
+		SELECT c.*, sr.str_number
 		FROM
 			(SELECT s.str_number, r.rsv_no
 			FROM `store` s
@@ -36,6 +36,20 @@
 		INNER JOIN `rsv_comment` c
 		ON sr.rsv_no = c.rsv_no
 		WHERE sr.str_number=#{str_number}
+		ORDER BY c.rsv_cmt_no DESC LIMIT #{page} , 5
+	</select>
+	
+	<select id="selectCmtTotList" parameterType="int" resultType="V1_Comment">
+		SELECT c.*, sr.str_number
+		FROM
+			(SELECT s.str_number, r.rsv_no
+			FROM `store` s
+			INNER JOIN `reservation` r
+			ON s.str_number=r.str_number)sr
+		INNER JOIN `rsv_comment` c
+		ON sr.rsv_no = c.rsv_no
+		WHERE sr.str_number=#{str_number}
+		ORDER BY c.rsv_cmt_no DESC
 	</select>
 	
 	<select id="selectPreReview" parameterType="int" resultType="V1_Comment">
@@ -45,6 +59,15 @@
 		ON s.str_number=r.str_number
 		
 		WHERE r.rsv_no=#{rsv_no}
+	</select>
+	
+	<select id="selectReviewcCnt" parameterType="int" resultType="int">
+		SELECT COUNT(*) 
+		FROM `rsv_comment` c
+		INNER JOIN `reservation` r
+		ON c.rsv_no=r.rsv_no
+
+		WHERE r.str_number=#{str_no}	
 	</select>
 	
 </mapper>

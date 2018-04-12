@@ -35,23 +35,21 @@ public class UserContentController {
 	 * 점포 정보
 	 */
 	@RequestMapping(value="/usr_content.do", method = RequestMethod.GET)
-	public String userContent(Model model) {
+	public String userContent(Model model, @RequestParam(value="page", defaultValue="1") int page) {
 		
 		//파람
 		V1_Store vo = ucDAO.selectStoreOne(1234567890);
 		int cnt = ucDAO.selectImgCount(1234567890);
 		List<V1_Menu> mlist = ucDAO.selectMenuList(1234567890);
-		List<V1_Comment> clist = reDAO.selectCmtList(1234567890);
+		int totPage = reDAO.selectReviewcCnt(1234567890);
+		List<V1_Comment> ctlist = reDAO.selectCmtTotList(1234567890);
 		
-		int totPage = (clist.size()-1)/5+1;
-		
-		/*List<V7_Board> list = bDAO.selectBoardList2((page-1)*10+1);*/
 		double sum = 0;
 		double taste = 0;
 		double service = 0;
 		double price = 0;
 		
-		for(V1_Comment tmp : clist) {
+		for(V1_Comment tmp : ctlist) {
 			sum += tmp.getRsv_cmt_point();
 			
 			if(tmp.getRsv_cmt_taste().equals("맛은 별로에요")) {
@@ -86,21 +84,20 @@ public class UserContentController {
 			
 		}
 		
-		double avg = Math.round(sum/clist.size());
-		taste = Math.round(taste/clist.size()*100d)/100d;
-		service = Math.round(service/clist.size()*100d)/100d;
-		price = Math.round(price/clist.size()*100d)/100d;
+		double avg = Math.round(sum/totPage);
+		taste = Math.round(taste/totPage*100d)/100d;
+		service = Math.round(service/totPage*100d)/100d;
+		price = Math.round(price/totPage*100d)/100d;
 		
 		model.addAttribute("vo", vo);		
 		model.addAttribute("cnt", cnt);
 		model.addAttribute("mlist", mlist);
-		model.addAttribute("clist", clist);
 		model.addAttribute("avg", avg);
 		model.addAttribute("taste", taste);
 		model.addAttribute("service", service);
 		model.addAttribute("price", price);
-		model.addAttribute("recnt", clist.size());
-		model.addAttribute("totPage", totPage);
+		model.addAttribute("recnt", totPage);
+		model.addAttribute("totPage", (totPage-1)/5+1);
 		return "v1_usr_content";
 	}
 	
