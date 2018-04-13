@@ -51,13 +51,9 @@ public class ReservationController {
 		vo.setRmlist(list);
 		int ret = rDAO.insertReservation(vo);
 		
-		
-		
 		if(ret!=0) {
-			return "redirect:usr_rsv_list.do";
+			return "redirect:usr_rsv_list.do?rsv_code=0";
 		}
-		
-		
 		
 		return "redirect:usr_content_pay.do";
 	}
@@ -66,12 +62,12 @@ public class ReservationController {
 	 * 예약목록
 	 */
 	@RequestMapping(value="/usr_rsv_list.do", method = RequestMethod.GET)
-	public String userReservationList(Model model,  @RequestParam(value="rsv_code", defaultValue="0") int rsv_code) {
+	public String userReservationList(Model model,  @RequestParam(value="rsv_code", defaultValue="0") int rsv_code, @RequestParam(value="page", defaultValue="1") int page) {
 		
 		//세션아이디
 		V1_Reservation vo = new V1_Reservation();
 		vo.setRsv_sub_id("user");
-		
+		vo.setPage((page-1)*10);
 		int tot = rDAO.countRsvTot();
 		int exp = rDAO.countRsvExp(rsv_code);
 		int com = rDAO.countRsvCom(rsv_code);
@@ -82,15 +78,15 @@ public class ReservationController {
 		model.addAttribute("com", com);
 		model.addAttribute("can", can);
 		
-		if(rsv_code==0) {
+		/*if(rsv_code==0) {
 			List<V1_Reservation> rlist = rDAO.selectRsvListTot(vo);
 			model.addAttribute("rlist", rlist);
 		}
-		else {
+		else {*/
 			vo.setRsv_code(rsv_code);
 			List<V1_Reservation> rlist = rDAO.selectRsvList(vo);
 			model.addAttribute("rlist", rlist);
-		}
+		/*}*/
 		
 		return "v1_usr_rsv_list";
 	}

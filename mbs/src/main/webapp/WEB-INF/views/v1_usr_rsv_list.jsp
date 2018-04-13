@@ -24,7 +24,7 @@
 		}
 	</style>
 </head>
-<body>
+<body >
 	<div class="wrapper">
 		<jsp:include page="v1_header.jsp"></jsp:include>
 		
@@ -35,7 +35,7 @@
 				</div>
 				<div id="summary_board" class="form-group" style="width:60%">
 					<div id="total" class="form-group" style="width:20%; text-align:center">
-						<a href="usr_rsv_list.do">전체</a><br />
+						<a href="usr_rsv_list.do?rsv_code=0">전체</a><br />
 						<h3>${tot}</h3>
 					</div>
 					<div id="expect" class="form-group" style="width:20%; text-align:center">
@@ -53,7 +53,7 @@
 				</div>
 			</div>
 			
-			<div id="resrv_list" style="margin-bottom:10px; height:430px">
+			<div id="resrv_list" style="margin-bottom:10px; min-height:100%">
 				<h3>예약 리스트</h3>
 				<hr />
 				<c:if test="${fn:length(rlist) eq 0 }">
@@ -76,10 +76,10 @@
 							</tr>
 						</c:forEach>
 					</table>
-					<!-- <hr />
+					<hr />
 					<div align="center">
 						<ul id="pagination" class="pagination"></ul>
-					</div> -->
+					</div>
 				</c:if>
 			</div>
 		</div>
@@ -88,17 +88,32 @@
 	
 	</div>
 	
-	
 	<script src="resources/js/jquery-1.11.1.js"></script>
 	<script src="resources/js/bootstrap.min.js"></script>
 	<script src="resources/js/jquery.twbsPagination.min.js"></script>
 	<script>
-		$(function() {
-		/* 	$('#pagination').twbsPagination({
-				totalPages:10,
+		$(function(){
+
+			var totpage = 0;
+			
+			if(${param.rsv_code} == 0){
+				totpage = (${tot}-1)/10+1
+			}
+			else if(${param.rsv_code} == 1){
+				totpage = (${exp}-1)/10+1
+			}
+			else if (${param.rsv_code} == 2){
+				totpage = (${com}-1)/10+1
+			}
+			else if (${param.rsv_code} == 3){
+				totpage = (${com}-1)/10+1
+			}
+			
+			$('#pagination').twbsPagination({
+				totalPages: totpage,
 				visiblePage:10,
 				href:'?rsv_code=${param.rsv_code}&page={{number}}'
-			}) */
+			})
 		});
 	</script>
 

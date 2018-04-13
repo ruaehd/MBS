@@ -28,6 +28,7 @@
 				ON r.rsv_code = c.rsv_code
 			WHERE r.rsv_sub_id=#{rsv_sub_id} AND c.rsv_code=#{rsv_code}) rc
 		ON s.str_number = rc.str_number
+		ORDER BY rc.rsv_no DESC LIMIT #{page} , 10
 	</select>
 	
 	<select id="selectRsvListTot" parameterType="V1_Reservation" resultType="V1_Reservation">
@@ -39,8 +40,8 @@
 				INNER JOIN `rsv_code` c
 				ON r.rsv_code = c.rsv_code
 			WHERE r.rsv_sub_id=#{rsv_sub_id}) rc
-		ON s.str_number = rc.str_number;
-		
+		ON s.str_number = rc.str_number
+		ORDER BY rc.rsv_no DESC LIMIT #{page} , 10
 	</select>
 	
 	<select id="selectRsvOne" parameterType="V1_Reservation" resultType="V1_Reservation">
