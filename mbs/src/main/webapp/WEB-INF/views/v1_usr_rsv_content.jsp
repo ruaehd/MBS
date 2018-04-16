@@ -171,7 +171,7 @@
 								<a href="usr_rsv_edit.do?rsv_no=${vo.rsv_no}&str_num=${vo.str_number}" class="btn btn-info">다시 예약 하기</a>
 							</c:when>
 						</c:choose>
-						<a href="usr_rsv_list.do" class="btn btn-primary">목록</a>
+						<a href="usr_rsv_list.do?rsv_code=0" class="btn btn-primary">목록</a>
 					</div>
 					
 				</div>

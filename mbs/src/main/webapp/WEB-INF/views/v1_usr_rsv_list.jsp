@@ -40,15 +40,15 @@
 					</div>
 					<div id="expect" class="form-group" style="width:20%; text-align:center">
 						<a href="usr_rsv_list.do?rsv_code=1">이용예정</a><br />
-						<h3>${exp}</h3>
+						<h3>${map.get("exp")}</h3>
 					</div>
 					<div id="complite" class="form-group" style="width:20%; text-align:center">
 						<a href="usr_rsv_list.do?rsv_code=2">이용완료</a><br />
-						<h3>${com}</h3>
+						<h3>${map.get("com")}</h3>
 					</div>
 					<div id="cancel" class="form-group" style="width:20%; text-align:center">
 						<a href="usr_rsv_list.do?rsv_code=3">취소환불</a><br />
-						<h3>${can}</h3>
+						<h3>${map.get("can")}</h3>
 					</div>
 				</div>
 			</div>
@@ -100,13 +100,13 @@
 				totpage = (${tot}-1)/10+1
 			}
 			else if(${param.rsv_code} == 1){
-				totpage = (${exp}-1)/10+1
+				totpage = (${map.get("exp")}-1)/10+1
 			}
 			else if (${param.rsv_code} == 2){
-				totpage = (${com}-1)/10+1
+				totpage = (${map.get("com")}-1)/10+1
 			}
 			else if (${param.rsv_code} == 3){
-				totpage = (${com}-1)/10+1
+				totpage = (${map.get("can")}-1)/10+1
 			}
 			
 			$('#pagination').twbsPagination({

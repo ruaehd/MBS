@@ -68,25 +68,21 @@ public class ReservationController {
 		V1_Reservation vo = new V1_Reservation();
 		vo.setRsv_sub_id("user");
 		vo.setPage((page-1)*10);
-		int tot = rDAO.countRsvTot();
-		int exp = rDAO.countRsvExp(rsv_code);
-		int com = rDAO.countRsvCom(rsv_code);
-		int can = rDAO.countRsvCan(rsv_code);
+		vo.setRsv_code(rsv_code);
+		Map<String, Integer> map = rDAO.countRsvTot(vo);
 		
+		System.out.println(map.get("exp"));
+		System.out.println(map.get("com"));
+		System.out.println(map.get("can"));
+		int tot = Integer.parseInt(String.valueOf(map.get("exp")))
+				+Integer.parseInt(String.valueOf(map.get("com")))
+				+Integer.parseInt(String.valueOf(map.get("can")));
 		model.addAttribute("tot", tot);
-		model.addAttribute("exp", exp);
-		model.addAttribute("com", com);
-		model.addAttribute("can", can);
+		model.addAttribute("map", map);
 		
-		/*if(rsv_code==0) {
-			List<V1_Reservation> rlist = rDAO.selectRsvListTot(vo);
-			model.addAttribute("rlist", rlist);
-		}
-		else {*/
-			vo.setRsv_code(rsv_code);
-			List<V1_Reservation> rlist = rDAO.selectRsvList(vo);
-			model.addAttribute("rlist", rlist);
-		/*}*/
+		List<V1_Reservation> rlist = rDAO.selectRsvList(vo);
+		model.addAttribute("rlist", rlist);
+		
 		
 		return "v1_usr_rsv_list";
 	}

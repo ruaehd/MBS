@@ -69,6 +69,7 @@
 							<div class="form-inline" style="margin-bottom:10px">
 								<label style="width:100px">날짜</label>
 								<form:input type="text" class="form-control" path="rsv_day" id="date1"/>
+								
 							</div>
 							<div class="form-inline" style="margin-bottom:10px">
 								<label style="width:100px">시간</label>
@@ -180,11 +181,20 @@
 	<script src="resources/js/jquery-1.11.1.js"></script>
 	<script src="resources/js/bootstrap.min.js"></script>
 	<script src="resources/js/jquery-ui.min.js"></script>
-	<script src="resources/js/datepicker-ko.js"></script>
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=66e7156b3899e012effaa62fd20217d4&libraries=services"></script>
 	<script>
 		$(function() {
-			$("#date1").datepicker();
+			
+			var minDate = new Date();
+		    var maxDate = new Date();
+		    var dd = maxDate.getDate() + 30;
+		    maxDate.setDate(dd);
+			
+			$("#date1").datepicker({
+				dateFormat:'yy-mm-dd',
+				minDate : minDate,
+		        maxDate : maxDate
+			});
 			
 			var mapContainer = document.getElementById('map'),
 		    mapOption = {

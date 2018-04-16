@@ -1,6 +1,7 @@
 package com.mbs.mvc.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -21,9 +22,6 @@ public class V1_ReservationDAO {
 		return sqlsession.insert("V1_Reservation.insertReservation", vo);
 	}
 	
-	public List<V1_Reservation> selectRsvListTot(V1_Reservation vo){
-		return sqlsession.selectList("V1_Reservation.selectRsvListTot", vo);
-	}
 	public List<V1_Reservation> selectRsvList(V1_Reservation vo){
 		return sqlsession.selectList("V1_Reservation.selectRsvList", vo);
 	}
@@ -32,22 +30,10 @@ public class V1_ReservationDAO {
 		return sqlsession.selectOne("V1_Reservation.selectRsvOne", vo);
 	}
 	
-	public int countRsvTot() {
-		return sqlsession.selectOne("V1_Reservation.countRsvTot");
+	public Map<String, Integer> countRsvTot(V1_Reservation vo) {
+		return sqlsession.selectOne("V1_Reservation.countRsvTot", vo);
 	}
 	
-	public int countRsvExp(int rsv_code) {
-		return sqlsession.selectOne("V1_Reservation.countRsvExp", rsv_code);	
-	}
-	
-	public int countRsvCom(int rsv_code) {
-		return sqlsession.selectOne("V1_Reservation.countRsvCom", rsv_code);
-	}
-	
-	public int countRsvCan(int rsv_code) {
-		return sqlsession.selectOne("V1_Reservation.countRsvCan", rsv_code);
-	}
-
 	public int updateRsv(V1_Reservation vo) {
 		return sqlsession.update("V1_Reservation.updateRsv", vo);
 	}

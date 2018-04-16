@@ -26,20 +26,13 @@
 			(SELECT r.rsv_day, r.rsv_code, c.rsv_code_chk, r.str_number, r.rsv_no FROM `reservation` r 
 				INNER JOIN `rsv_code` c
 				ON r.rsv_code = c.rsv_code
-			WHERE r.rsv_sub_id=#{rsv_sub_id} AND c.rsv_code=#{rsv_code}) rc
-		ON s.str_number = rc.str_number
-		ORDER BY rc.rsv_no DESC LIMIT #{page} , 10
-	</select>
-	
-	<select id="selectRsvListTot" parameterType="V1_Reservation" resultType="V1_Reservation">
-		UPDATE `reservation` SET rsv_code=2 WHERE rsv_day <![CDATA[<]]> NOW() AND rsv_no IN (SELECT * FROM(SELECT r.rsv_no FROM `reservation` as r) a);
-		
-		SELECT s.str_name, rc.rsv_day, rc.rsv_code, rc.rsv_code_chk, rc.rsv_no FROM `store` s
-		INNER JOIN
-			(SELECT r.rsv_day, r.rsv_code, c.rsv_code_chk, r.str_number, r.rsv_no FROM `reservation` r 
-				INNER JOIN `rsv_code` c
-				ON r.rsv_code = c.rsv_code
-			WHERE r.rsv_sub_id=#{rsv_sub_id}) rc
+				<if test="rsv_code == 0">
+    				WHERE r.rsv_sub_id=#{rsv_sub_id}
+  				</if>
+  				<if test="rsv_code != 0 ">
+    				WHERE r.rsv_sub_id=#{rsv_sub_id} AND c.rsv_code=#{rsv_code}
+  				</if>
+			) rc
 		ON s.str_number = rc.str_number
 		ORDER BY rc.rsv_no DESC LIMIT #{page} , 10
 	</select>
@@ -55,18 +48,12 @@
 		SELECT * FROM `rsv_menu` WHERE rsv_no=#{rsv_no}
 	</select>
 	
-	
-	<select id="countRsvTot" resultType="int">
-		SELECT COUNT(*) AS cnt FROM `reservation`
-	</select>
-	<select id="countRsvExp" parameterType="int" resultType="int">
-		SELECT COUNT(*) AS cnt FROM `reservation` WHERE rsv_code=1
-	</select>
-	<select id="countRsvCom" parameterType="int" resultType="int">
-		SELECT COUNT(*) AS cnt FROM `reservation` WHERE rsv_code=2
-	</select>
-	<select id="countRsvCan" parameterType="int" resultType="int">
-		SELECT COUNT(*) AS cnt FROM `reservation` WHERE rsv_code=3
+	<select id="countRsvTot" parameterType="V1_Reservation" resultType="hashmap">
+		SELECT 
+			SUM(CASE WHEN rsv_code=1 THEN 1 ELSE 0 END) AS exp,
+			SUM(CASE WHEN rsv_code=2 THEN 1 ELSE 0 END) AS com,
+            SUM(CASE WHEN rsv_code=3 THEN 1 ELSE 0 END) AS can 
+		FROM `reservation` WHERE rsv_sub_id=#{rsv_sub_id}
 	</select>
 	
 	<update id="updateRsv" parameterType="V1_Reservation">
