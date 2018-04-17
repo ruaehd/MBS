@@ -15,6 +15,7 @@
 	<link rel="stylesheet" type="text/css" href="resources/css/w3.css"/>
 	<link rel="stylesheet" type="text/css" href="resources/css/footer.css" />
 	<link rel="stylesheet" type="text/css" href="resources/css/jquery-ui.min.css" />
+	<link rel="stylesheet" type="text/css" href="resources/css/jquery-ui-timepicker-addon.css" />
 	<style>
 		.container{
 			z-index:2;
@@ -69,19 +70,15 @@
 							<hr />
 							<div class="form-inline" style="margin-bottom:10px">
 								<label style="width:100px">날짜</label>
-								<form:input type="text" class="form-control" path="rsv_day" value="${vo.rsv_day}"/>
-							</div>
-							<div class="form-inline" style="margin-bottom:10px">
-								<label style="width:100px">시간</label>
-								<form:select class="form-control" path="rsv_time" value="${vo.rsv_time}">
-									<option>1</option>
-								</form:select>
+								<form:input type="text" class="form-control" path="rsv_day" value="${vo.rsv_day}" id="date1"/>
 							</div>
 							<div class="form-inline" style="margin-bottom:10px">
 								<label style="width:100px">인원</label>
-								<form:select class="form-control" path="rsv_personnel" value="${vo.rsv_personnel}">
-									<option>1</option>
-									<option>2</option>
+								<form:select class="form-control" path="rsv_personnel"  value="${vo.rsv_personnel}">
+									<option value="" selected disabled>==인원을 선택하세요==</option>
+									<c:forEach var="i" begin="1" end="${vo.str_personnel}">
+										<option>${i}</option>
+									</c:forEach>
 								</form:select>
 							</div>
 						</div>
@@ -181,10 +178,32 @@
 	<script src="resources/js/jquery-1.11.1.js"></script>
 	<script src="resources/js/bootstrap.min.js"></script>
 	<script src="resources/js/jquery-ui.min.js"></script>
-	<script src="resources/js/datepicker-ko.js"></script>
+	<script src="resources/js/jquery-ui-timepicker-addon.js"></script>
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=66e7156b3899e012effaa62fd20217d4&libraries=services"></script>
 	<script>
 		$(function() {
+			
+			var minDate = new Date();
+		    var maxDate = new Date();
+		    var dd = maxDate.getDate() + 30;
+		    maxDate.setDate(dd);
+			
+			$("#date1").datetimepicker({
+				dateFormat:'yy-mm-dd',
+				monthNamesShort:[ '1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월' ],
+		        dayNamesMin:[ '일', '월', '화', '수', '목', '금', '토' ],
+				minDate : minDate,
+		        maxDate : maxDate,
+		        
+		        timeFormat:'HH:mm',
+		        controlType:'select',
+		        stepMinute: 10,
+		        
+		        hourMin:${vo.str_begintime},
+		        hourMax:${vo.str_endtime},
+		        oneLine:true
+			});
+			
 			
 			var len = $('.sum').length;
 			var tot = 0;								
@@ -197,7 +216,6 @@
 			
 			
 			
-			$("#date1").datepicker();
 			
 			var mapContainer = document.getElementById('map'),
 		    mapOption = {

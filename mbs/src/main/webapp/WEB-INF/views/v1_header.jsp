@@ -32,7 +32,7 @@
 								</li>
 								<li><a class="gn-icon gn-icon-cog sub_main3" >예약관리</a>
 									<ul class="gn-submenu sub_3"  >
-										<li><a class="gn-icon gn-icon-illustrator" href="usr_rsv_list.do?rsv_code=0">예약목록</a></li>
+										<li><a class="gn-icon gn-icon-illustrator" href="usr_rsv_list.do">예약목록</a></li>
 										<li><a class="gn-icon gn-icon-illustrator" href="usr_content.do">업소정보</a></li>
 									</ul>
 								</li>

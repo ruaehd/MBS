@@ -2,8 +2,12 @@ package com.mbs.mvc.controller;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -37,6 +41,7 @@ public class ReservationController {
 		vo.setRsv_sub_id("user");
 		//param
 		vo.setStr_number(1234567890);
+		System.out.println(vo.getRsv_day());
 		
 		List<V1_RsvMenu> list = new ArrayList<V1_RsvMenu>();
 		
@@ -52,7 +57,7 @@ public class ReservationController {
 		int ret = rDAO.insertReservation(vo);
 		
 		if(ret!=0) {
-			return "redirect:usr_rsv_list.do?rsv_code=0";
+			return "redirect:usr_rsv_list.do";
 		}
 		
 		return "redirect:usr_content_pay.do";
@@ -62,7 +67,11 @@ public class ReservationController {
 	 * 예약목록
 	 */
 	@RequestMapping(value="/usr_rsv_list.do", method = RequestMethod.GET)
-	public String userReservationList(Model model,  @RequestParam(value="rsv_code", defaultValue="0") int rsv_code, @RequestParam(value="page", defaultValue="1") int page) {
+	public String userReservationList(Model model,  @RequestParam(value="rsv_code", defaultValue="-1") int rsv_code, @RequestParam(value="page", defaultValue="1") int page) {
+		
+		if(rsv_code == -1) {	//menu값이 없을 경우
+			return "redirect:usr_rsv_list.do?rsv_code=0";
+		}
 		
 		//세션아이디
 		V1_Reservation vo = new V1_Reservation();
@@ -70,15 +79,19 @@ public class ReservationController {
 		vo.setPage((page-1)*10);
 		vo.setRsv_code(rsv_code);
 		Map<String, Integer> map = rDAO.countRsvTot(vo);
+		Map<String, Integer> map1 = new LinkedHashMap<String, Integer>();
 		
-		System.out.println(map.get("exp"));
-		System.out.println(map.get("com"));
-		System.out.println(map.get("can"));
 		int tot = Integer.parseInt(String.valueOf(map.get("exp")))
 				+Integer.parseInt(String.valueOf(map.get("com")))
 				+Integer.parseInt(String.valueOf(map.get("can")));
-		model.addAttribute("tot", tot);
-		model.addAttribute("map", map);
+		
+		map1.put("전체", tot);
+		map1.put("이용예정", Integer.parseInt(String.valueOf(map.get("exp"))));
+		map1.put("이용완료", Integer.parseInt(String.valueOf(map.get("com"))));
+		map1.put("취소환불", Integer.parseInt(String.valueOf(map.get("can"))));
+		
+		
+		model.addAttribute("map", map1);
 		
 		List<V1_Reservation> rlist = rDAO.selectRsvList(vo);
 		model.addAttribute("rlist", rlist);

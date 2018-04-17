@@ -3,7 +3,7 @@
 
 <mapper namespace="V1_Review">
 	<select id="selectRsvInfo" parameterType="int" resultType="V1_Reservation">
-		SELECT s.str_name, r.rsv_no, r.rsv_day
+		SELECT s.str_name, r.rsv_no, DATE_FORMAT(r.rsv_day, '%Y-%m-%d %H:%i') AS rsv_day
 		FROM `reservation` r 
 			INNER JOIN `store` s
 			ON r.str_number = s.str_number
@@ -27,9 +27,9 @@
 	</update>
 	
 	<select id="selectCmtList" parameterType="V1_Store" resultType="V1_Comment">
-		SELECT c.*, sr.str_number
+		SELECT c.*, sr.str_number, DATE_FORMAT(sr.rsv_day, '%Y-%m-%d') AS rsv_day
 		FROM
-			(SELECT s.str_number, r.rsv_no
+			(SELECT s.str_number, r.rsv_no, r.rsv_day
 			FROM `store` s
 			INNER JOIN `reservation` r
 			ON s.str_number=r.str_number)sr
@@ -53,7 +53,7 @@
 	</select>
 	
 	<select id="selectPreReview" parameterType="int" resultType="V1_Comment">
-		SELECT r.rsv_day, s.str_name, s.str_number, r.rsv_no
+		SELECT  DATE_FORMAT(r.rsv_day, '%Y-%m-%d %H:%i') AS rsv_day, s.str_name, s.str_number, r.rsv_no
 		FROM `store` s
 		INNER JOIN `reservation` r
 		ON s.str_number=r.str_number

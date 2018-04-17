@@ -43,9 +43,9 @@
 	</style>
 </head>
 <body>
-	<div id="wrapper">
+	<div id="wrapper" >
 		<form:form action="usr_rsv_comment.do?rsv_no=${param.rsv_no}" modelAttribute="vo" method="post">
-		<div style="padding:20px; width:600px">
+		<div class="container" style="padding:20px">
 			<h3>한줄평 작성</h3>
 			<hr />
 			<div class="form-inline">

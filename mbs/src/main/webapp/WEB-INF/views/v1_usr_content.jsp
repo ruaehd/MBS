@@ -129,9 +129,9 @@
 					</div>
 					<div class="form-inline">
 						<label>운영시간</label>
-						${vo.str_begintime}
+						${vo.str_begintime}시
 						 ~ 
-						${vo.str_endtime}
+						${vo.str_endtime}시
 					</div>
 					<div class="form-inline">
 						<label>메뉴</label>
@@ -263,6 +263,7 @@
 								+ '<code style="color:#353535; background-color:#EAEAEA; margin-right:5px">'+data[i].rsv_cmt_price+'</code>'
 								
 								+ '<label>작성자</label>'+data[i].rsv_cmt_writer+''
+								+ '<label>사용일</label>'+data[i].rsv_day+''
 							+ '<div>'+data[i].rsv_cmt_content+'</div>'
 						+ '</div>'
 						);

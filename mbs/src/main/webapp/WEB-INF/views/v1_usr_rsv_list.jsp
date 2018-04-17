@@ -22,6 +22,17 @@
 		.gn-menu-main{
 			z-index:10;
 		}
+		#rsv_cnt {
+		    list-style:none;
+		    margin:0;
+		    padding:0;
+		}
+		.rsv_cnt {
+		    margin: 0 0 0 0;
+		    padding: 0 0 0 0;
+		    border : 0;
+		    float: left;
+		}
 	</style>
 </head>
 <body >
@@ -34,22 +45,22 @@
 					사용자 aaa님
 				</div>
 				<div id="summary_board" class="form-group" style="width:60%">
-					<div id="total" class="form-group" style="width:20%; text-align:center">
-						<a href="usr_rsv_list.do?rsv_code=0">전체</a><br />
-						<h3>${tot}</h3>
-					</div>
-					<div id="expect" class="form-group" style="width:20%; text-align:center">
-						<a href="usr_rsv_list.do?rsv_code=1">이용예정</a><br />
-						<h3>${map.get("exp")}</h3>
-					</div>
-					<div id="complite" class="form-group" style="width:20%; text-align:center">
-						<a href="usr_rsv_list.do?rsv_code=2">이용완료</a><br />
-						<h3>${map.get("com")}</h3>
-					</div>
-					<div id="cancel" class="form-group" style="width:20%; text-align:center">
-						<a href="usr_rsv_list.do?rsv_code=3">취소환불</a><br />
-						<h3>${map.get("can")}</h3>
-					</div>
+					<ul id="rsv_cnt" class="list-group">
+						<c:forEach var="tmp" items="${map}" varStatus="i">
+							<li class="rsv_cnt">
+								<c:if test="${param.rsv_code == i.index}">
+									<a style="width:150px; text-align:center" class="list-group-item active" href="usr_rsv_list.do?rsv_code=${i.index}">
+										${tmp.key}<br /><h3>${tmp.value}</h3>
+									</a>
+								</c:if>
+								<c:if test="${param.rsv_code != i.index}">
+									<a style="width:150px; text-align:center" class="list-group-item" href="usr_rsv_list.do?rsv_code=${i.index}">
+										${tmp.key}<br /><h3>${tmp.value}</h3>
+									</a>
+								</c:if>
+							</li>
+						</c:forEach>
+					</ul>
 				</div>
 			</div>
 			
@@ -97,16 +108,16 @@
 			var totpage = 0;
 			
 			if(${param.rsv_code} == 0){
-				totpage = (${tot}-1)/10+1
+				totpage = (${map.get("전체")}-1)/10+1
 			}
 			else if(${param.rsv_code} == 1){
-				totpage = (${map.get("exp")}-1)/10+1
+				totpage = (${map.get("이용예정")}-1)/10+1
 			}
 			else if (${param.rsv_code} == 2){
-				totpage = (${map.get("com")}-1)/10+1
+				totpage = (${map.get("이용완료")}-1)/10+1
 			}
 			else if (${param.rsv_code} == 3){
-				totpage = (${map.get("can")}-1)/10+1
+				totpage = (${map.get("취소환불")}-1)/10+1
 			}
 			
 			$('#pagination').twbsPagination({

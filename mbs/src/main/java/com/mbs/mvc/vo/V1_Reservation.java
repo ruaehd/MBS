@@ -16,15 +16,20 @@ public class V1_Reservation {
 	private int rsv_delete = 0;
 	private String rsv_date = null;
 	private int rsv_code = 1;
+	private String rsv_day1 = null;
 	
 	private String str_name = null;
 	private String str_tel = null;
 	private String str_address = null;
 	private int str_table = 0;
 	private String mb_id = null;
+	private String str_begintime = null;
+	private String str_endtime = null;
 	
 	private String rsv_code_chk = null;
 	private String rsv_code_date = null;
+	
+	private int str_personnel = 0;
 	
 	private List<V1_RsvMenu> rmlist = null;
 	
@@ -32,6 +37,38 @@ public class V1_Reservation {
 	
 	
 	
+	public int getStr_personnel() {
+		return str_personnel;
+	}
+
+	public void setStr_personnel(int str_personnel) {
+		this.str_personnel = str_personnel;
+	}
+
+	public String getRsv_day1() {
+		return rsv_day1;
+	}
+
+	public void setRsv_day1(String rsv_day1) {
+		this.rsv_day1 = rsv_day1;
+	}
+
+	public String getStr_begintime() {
+		return str_begintime;
+	}
+
+	public void setStr_begintime(String str_begintime) {
+		this.str_begintime = str_begintime;
+	}
+
+	public String getStr_endtime() {
+		return str_endtime;
+	}
+
+	public void setStr_endtime(String str_endtime) {
+		this.str_endtime = str_endtime;
+	}
+
 	public int getPage() {
 		return page;
 	}

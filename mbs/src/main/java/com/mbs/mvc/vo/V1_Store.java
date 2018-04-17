@@ -23,8 +23,18 @@ public class V1_Store {
 	private int rsv_cmt_delete = 0;
 	private String rsv_cmt_date = null;
 	
+	private int str_personnel = 0;
+	
 	private int page = 0;
 	
+	
+	
+	public int getStr_personnel() {
+		return str_personnel;
+	}
+	public void setStr_personnel(int str_personnel) {
+		this.str_personnel = str_personnel;
+	}
 	public int getPage() {
 		return page;
 	}

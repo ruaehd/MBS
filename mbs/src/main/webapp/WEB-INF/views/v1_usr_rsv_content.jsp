@@ -69,10 +69,6 @@
 							${vo.rsv_day}
 						</div>
 						<div class="form-inline" style="margin-bottom:10px">
-							<label style="width:100px">시간</label>
-							${vo.rsv_time}
-						</div>
-						<div class="form-inline" style="margin-bottom:10px">
 							<label style="width:100px">인원</label>
 							${vo.rsv_personnel}
 						</div>
@@ -160,10 +156,10 @@
 							</c:when>
 							<c:when test="${vo.rsv_code == 2}">
 								<c:if test="${chk != 0}">
-									<input type="button" class="btn btn-indgo" value="한줄평 수정" onClick="editComment()" />
+									<input type="button" class="btn btn-success" value="후기 수정" onClick="editComment()" />
 								</c:if>
 								<c:if test="${chk == 0}">
-									<input type="button" class="btn btn-indgo" value="한줄평 작성" onClick="writeComment()" />	
+									<input type="button" class="btn btn-success" value="후기 작성" onClick="writeComment()" />	
 								</c:if>
 								
 							</c:when>
@@ -187,17 +183,11 @@
 	<script src="resources/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=66e7156b3899e012effaa62fd20217d4&libraries=services"></script>
 	<script>
-		function writeReview() {
-			window.open('usr_rsv_review.do?rsv_no=${param.rsv_no}','후기작성','width=600, height=800, left=650, top=100');
-		}
 		function writeComment() {
-			window.open('usr_rsv_comment.do?rsv_no=${param.rsv_no}','한줄평 작성','width=750, height=800, left=650, top=100');
-		}
-		function editReview() {
-			window.open('usr_rsv_review_edit.do?rsv_no=${param.rsv_no}','후기수정','width=600, height=800, left=650, top=100');
+			window.open('usr_rsv_comment.do?rsv_no=${param.rsv_no}','한줄평 작성','width=800, height=700, left=650, top=100');
 		}
 		function editComment() {
-			window.open('usr_rsv_comment_edit.do?rsv_no=${param.rsv_no}','한줄평 수정','width=600, height=800, left=650, top=100');
+			window.open('usr_rsv_comment_edit.do?rsv_no=${param.rsv_no}','한줄평 수정','width=800, height=700, left=650, top=100');
 		}
 		
 		$(function() {
