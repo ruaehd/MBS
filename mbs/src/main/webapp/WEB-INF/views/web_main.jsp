@@ -1,8 +1,7 @@
 <%@page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <jsp:include page="header.jsp"></jsp:include>
-<link rel="stylesheet"
-	href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script src="//code.jquery.com/jquery-1.10.2.js"></script>
 <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
@@ -20,13 +19,6 @@
 			});
 			jQuery( "#amount" ).val($( "#slider-range" ).slider( "values", 0 ) + "원  ~ "
 					 + $( "#slider-range" ).slider( "values", 1 )+"원");
-		$('#datepicker').datepicker({
-			dateFormat : "yy-mm-dd",
-			changeMonth : true,
-			changeYear : true,
-			dayNamesMin : [ '일', '월', '화', '수', '목', '금', '토' ],
-			showMonthAfterYear : true
-		});
 	});
 </script>
 <script>

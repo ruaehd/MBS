@@ -1,5 +1,7 @@
 <%@page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
+<%@ page session="true" %>
 <!DOCTYPE html>
 <html lang="en" class="no-js">
 	<head>
@@ -42,10 +44,6 @@
 					<nav class="gn-menu-wrapper">
 						<div class="gn-scroller">
 							<ul class="gn-menu">
-								<li class="gn-search-item">
-									<input placeholder="Search" type="search" class="gn-search">
-									<a class="gn-icon gn-icon-search"><span>검색</span></a>
-								</li>
 								<li>
 									<a class="gn-icon gn-icon-help sub_main1">고객센터</a>
 									<ul class="gn-submenu sub_1" >
@@ -59,9 +57,8 @@
 								<li><a class="gn-icon gn-icon-cog sub_main2" >사용자관리</a>
 									<ul class="gn-submenu sub_2"  >
 										<li><a class="gn-icon gn-icon-illustrator" href="user_main.do">마이페이지</a></li>
-										<li><a class="gn-icon gn-icon-illustrator" href="user_member_changepw.do">비밀번호변경</a></li>
-										<li><a class="gn-icon gn-icon-photoshop" href="user_member_change.do">회원정보수정</a></li>
-										<li><a class="gn-icon gn-icon-photoshop" href="user_cheat.do">내 채팅내역</a></li>
+										<li><a class="gn-icon gn-icon-illustrator" href="user_changepw.do">비밀번호변경</a></li>
+										<li><a class="gn-icon gn-icon-photoshop" href="user_edit.do">회원정보수정</a></li>
 										<li><a class="gn-icon gn-icon-photoshop" href="user_question.do">내 문의내역</a></li>
 									</ul>
 								</li>
@@ -71,6 +68,11 @@
 				</li>
 				<li><a href="map_main.do">지도로 보기</a></li>
 				<li><a href="web_main.do">자세히 보기</a></li>
-				<li><a href="#">로그인</a></li>
+				<c:if test="${sessionScope.Mem_Id eq null}">
+				<li><a href="user_login.do">로그인</a></li>
+				</c:if>
+				<c:if test="${sessionScope.Mem_Id ne null}">
+				<li><a href="user_logout.do">로그아웃</a></li>
+				</c:if>
 			</ul>
 		</div><!-- /여기부터 container -->

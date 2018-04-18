@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="User">
+
+	<update id="updateMemberOne" parameterType="com.mbs.mvc.vo.MemberVO">
+		UPDATE member SET mb_name = #{mb_name}, mb_gender = #{mb_gender}, 
+		mb_birth = #{mb_birth}, mb_email = #{mb_email}, mb_tel = #{mb_tel} 
+		WHERE mb_id = #{mb_id}
+	</update>
+
+	<select id="selectMemberLogin" parameterType="com.mbs.mvc.vo.MemberVO" resultType="com.mbs.mvc.vo.MemberVO">
+		SELECT mb_id FROM member WHERE mb_id=#{mb_id} AND mb_pw=SHA1(#{mb_pw}) AND 
+		mb_delete = 1
+	</select>
+
+	<insert id="insertMemberJoin" parameterType="com.mbs.mvc.vo.MemberVO">
+		INSERT INTO 
+		member (mb_id, mb_pw, mb_name, mb_gender, mb_birth, mb_email, mb_tel, mb_delete, mb_date)
+		VALUES
+		(#{mb_id},SHA1(#{mb_pw}),#{mb_name},#{mb_gender},#{mb_birth},#{mb_email},#{mb_tel},1,NOW())
+	</insert>
+
+	<select id="selectMemberCheck" parameterType="String" resultType="int">
+		SELECT ifnull(count(*),0) FROM member WHERE mb_id = #{mb_id}
+	</select>
+
+	<update id="userChangePw" parameterType="com.mbs.mvc.vo.MemberVO">
+		UPDATE member SET mb_pw = SHA1(#{mb_pw}) WHERE mb_id = #{mb_id}
+	</update>
+	
+	<select id="selectMemberOne" parameterType="String" resultType="com.mbs.mvc.vo.MemberVO">
+		SELECT mb_id ,mb_pw mb_pw , mb_name, mb_gender, mb_birth, mb_email, mb_tel, mb_delete, mb_date, mb_grade 
+		FROM member WHERE mb_id = #{mb_id}
+	</select>
+	
+	<select id="selectResoverList" parameterType="String" resultType="com.mbs.mvc.vo.User_ResoverVO">
+		SELECT r.rsv_no,r.str_number,r.rsv_day, r.rsv_time,r.rsv_personnel,r.rsv_sub_id,s.str_name,s.str_category
+		FROM reservation r INNER JOIN store s ON r.str_number = s.str_number WHERE r.rsv_sub_id = #{mb_id}
+	</select>
+	
+	<select id="selectQuestionList" parameterType="String" resultType="com.mbs.mvc.vo.QuestionVO">
+		SELECT qst_no, qst_title, qst_content, qst_open, qst_date FROM question WHERE mb_id = #{mb_id} LIMIT 0,5
+	</select>
+	
+	<select id="selectNoticeList" resultType="com.mbs.mvc.vo.NoticeVO">
+	 	SELECT * FROM notice ORDER BY ntc_date DESC LIMIT 0,5
+	</select>
+	
+	<select id="selectEventList" resultType="com.mbs.mvc.vo.User_EventVO">
+	 	SELECT evt_no,evt_title,evt_begintime,evt_endtime,evt_date,mb_id FROM event ORDER BY evt_date DESC LIMIT 0,5
+	</select>
+
+</mapper>

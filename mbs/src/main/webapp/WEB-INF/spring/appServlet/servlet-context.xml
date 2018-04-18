@@ -11,6 +11,23 @@
 	
 	<!-- Enables the Spring MVC @Controller programming model -->
 	<annotation-driven />
+	
+	<interceptors>
+		<interceptor>
+			<mapping path="/**"/>
+			<exclude-mapping path="/user_login.do"/>
+			<exclude-mapping path="/user_join.do"/>
+			<exclude-mapping path="/user_logout.do"/>
+			<exclude-mapping path="/map_main.do"/>
+			<exclude-mapping path="/web_main.do"/>
+			<exclude-mapping path="/user_forgetpw.do"/>
+			<exclude-mapping path="/resources**"/>
+			<exclude-mapping path="/resources/**"/>
+			<exclude-mapping path="/ajax_**"/>
+			<exclude-mapping path="/get**"/>
+			<beans:bean class="com.mbs.mvc.interceptor.UserLoginInterceptor"/>
+		</interceptor>
+	</interceptors>
 
 	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
 	<resources mapping="/resources/**" location="/resources/" />
@@ -20,7 +37,6 @@
 		<beans:property name="prefix" value="/WEB-INF/views/" />
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
-	
 	<context:component-scan base-package="com.mbs.mvc.controller" />
 	<context:component-scan base-package="com.mbs.mvc.dao" />
 	

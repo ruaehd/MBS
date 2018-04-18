@@ -66,7 +66,6 @@ li{list-style-type:none;}
 						<div class="col-md-6">
 					예약일 <input type="text" class="form-control w3-white" value="" placeholder="예약일을 선택해주세요" readonly size="15" id="datepicker"/>
 					</div>
-					<!-- 키워드 : <input type="text" value="이태원 맛집" id="keyword" size="15"> -->
 					<div class="col-md-6">
 						<div align="center">가격</div>
 							<div align="center">
@@ -109,17 +108,20 @@ li{list-style-type:none;}
 		</script>
 		<script>
 		$(function(){
-			// 처음 접속시 모든 정보들을 화면에 맞춰 불러옴
+			// 처음 접속시 모든 정보들을 화면 크기에 맞춰 불러옴 so = south, we = west , no = north , ea = east 
 			$.post("ajax_main_join.do",	{"so":35.20484801698,"we":129.06638522570043,"no":35.20998700540691,"ea":129.07414659996573},function(datalist){
-				
+				//content id 를 listEl 에 element 방식으로 저장 = listEl 에 itemEl을 추가하는  방식
 				var listEl = document.getElementById('content'),
 				fragment = document.createDocumentFragment(),
 				bounds = new daum.maps.LatLngBounds();
+				//결과값의 길이만큼 반복문 생성
 				for(i=0;i<datalist.length;i++){
+					//placePosition = 마커의 위치를 지정하는 변수 , 결과값의 위도,경도 값 저장
 			        var placePosition = new daum.maps.LatLng(datalist[i].lat,datalist[i].lng),
+			        //마커에 1,2 형식으로 숫자 띄우고 위치 지정
 			            marker = addMarker(placePosition, i);
 			        	itemEl = getListItem(i,datalist[i]);//검색 결과 항목 Element생성
-			        	
+			        	//결과값 목록에 마우스 온오버 이벤트 지정
 			            (function(marker, datalist) {
 			                daum.maps.event.addListener(marker, 'mouseover', function() {
 			                    displayInfowindow(marker, datalist);
@@ -137,17 +139,19 @@ li{list-style-type:none;}
 			                    infowindow.close();
 			                };
 			            })(marker, datalist[i]);
+			        	// itemEl 리턴
 			            fragment.appendChild(itemEl);
 					};
+					//listEl 리턴
 					listEl.appendChild(fragment);
-			
+			//실질적으로 목록에 들어가는 div , append 함수와 동일하게 적용됨
 			 function getListItem(index,datalist){
 				 var el = document.createElement('li'),
 				    itemStr =
 				    	'<div class="w3-border w3-white" style="width:100%; height:100px;padding:5px;margin-top:10px">'+
 		            		'<div class="row">'+
-		            			'<div class="col-md-4">'+
-		            					'<img class="'+datalist.number+'" src="getBlobImg.do?no='+ datalist.number +'" align="left" style="width:100%;height:90px;z-index:1;"/>'+
+		            		'<div class="col-md-4">'+
+		            			'<img class="'+datalist.number+'" src="getBlobImg.do?no='+ datalist.number +'" align="left" style="width:100%;height:90px;z-index:1;"/>'+
 		            			'</div>'+
 		            			'<div class="col-md-8" style="padding:10px">'+
 		            			'<div style="font-size:15px"><a href="user_content.do?no='+datalist.number+'"><font style="font-size:15px;font-family:"Malgun Gothic","dotum","돋움"">'+datalist.name+'</font></a></div>'+
@@ -160,6 +164,7 @@ li{list-style-type:none;}
 		            el.className = 'item';
 		            return el;
 			}
+			//마커에 들어가는 인포윈도우 함수
 			function displayInfowindow(marker, datalist){
 				var content = '<div align="center" style="width:150px">'+
        		 '<a href="user_content.do?no='+datalist.number+'"><img class="'+datalist.number+'" src="getBlobImg.do?no='+ datalist.number + '" align="left" style="width:148px;height:100px;z-index:1;margin-top:0;margin-bottom:10px"/></a>' +
@@ -171,7 +176,7 @@ li{list-style-type:none;}
 			});
 			
 			
-			
+			// 달력을 불러오는 스크팁트 jquery-ui 사용
 			$('#datepicker').datepicker({
 				dateFormat:"yy-mm-dd",
 				changeMonth: true,
@@ -179,7 +184,7 @@ li{list-style-type:none;}
 				dayNamesMin:['일','월','화','수','목','금','토'],
 				showMonthAfterYear:true
 			});
-			
+			//카테고리 버튼을 눌렀을시 색 추가 , 기본색 삭제 
 			 $('#travel').click(function(){
 					if($(this).hasClass('w3-white')){
 						$(this).removeClass('w3-white w3-hover-white');
@@ -200,7 +205,10 @@ li{list-style-type:none;}
 							$(this).addClass('w3-white w3-hover-whiter');
 						}
 					 });
+				 
+				 //초기 접속시 검색패널 숨기기
 			$('#search_panel').hide();
+				 //검색버튼이 클릭되었을시에 검색 조건 변수 지정 후 새로 검색
 			$('#search_button').click(function(){
 				$('#search_panel').slideToggle(300);
 				var se = $('#search_button').val();
@@ -264,6 +272,8 @@ li{list-style-type:none;}
 			    $('#content').append('<div align="center">'+
 						 '<font color="red">검색옵션이 설정되어있습니다.</font>'+
 						 '</div>');
+			    
+			    //검색을 했을시 실실적으로 동작하는 ajax 내용추가는 위와 동일 ,
 				$.ajaxSettings.traditional = true;
 				$.post("ajax_main_search.do",	{"tr":tr,"fo":fo,"date":date,"ps":ps,"pe":pe},function(datalist){
 					var listEl = document.getElementById('content'),
@@ -403,6 +413,7 @@ li{list-style-type:none;}
 							pe = pe.substring(0,pe.length-1);
 						}
 					}
+					//마우스 드래그 시에 검색옵션이 설정되어있을경우 검색옵션 + 화면에 맟춘 위도경도 범위 넘겨주어 ajax 실행
 					$.ajaxSettings.traditional = true;
 					$.post("ajax_main_dragsearch.do",	{"tr":tr,"fo":fo,"date":date,"ps":ps,"pe":pe,"so":so,"we":we,"no":no,"ea":ea},function(datalist){
 						var listEl = document.getElementById('content'),

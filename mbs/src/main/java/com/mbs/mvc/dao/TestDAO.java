@@ -17,4 +17,7 @@ public class TestDAO {
 	public int insertTest(TestVO vo ) {
 		return sqlsession.insert("Test.insertTest", vo);
 	}
+	
+	
+	
 }

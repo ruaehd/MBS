@@ -12,18 +12,22 @@
       <div class="w3-display-container" style="height:200px;">
          <div class="w3-display-middle" align="center">
             <img src="resources/imgs/sou.jpg" style="width:200px; height:100%"/><br/>
-            <h1>비밀번호 변경</h1>
+            <h1>비밀번호 찾기</h1>
          </div>
       </div>
       <div class="container" style="width:80%;height:100px;margin-top:40px">
       <div class="row form-group">
          <div class="col-xs-12">
             <ul class="nav nav-pills nav-justified thumbnail setup-panel">
-               <li><a href="#step-1">
+           	 <li class="active"><a href="#step-1">
+                     <h4 class="list-group-item-heading">아이디확인</h4>
+                     <p class="list-group-item-text">First step description</p>
+               </a></li>
+               <li class="disabled"><a href="#step-2">
                      <h4 class="list-group-item-heading">본인확인</h4>
                      <p class="list-group-item-text">Second step description</p>
                </a></li>
-               <li class="disabled"><a href="#step-2">
+               <li class="disabled"><a href="#step-3">
                      <h4 class="list-group-item-heading">암호 변경</h4>
                      <p class="list-group-item-text">Third step description</p>
                </a></li>
@@ -31,7 +35,30 @@
          </div>
       </div>
    </div>
-       <div class="row setup-content" id="step-1">
+   
+   <div class="row setup-content" id="step-1">
+           <div class="col-xs-12">
+               <div class="col-md-12" style="width:100%;margin:0px auto">
+                  <div style="margin-left:20%">
+                      <h1>본인확인</h1>
+                      </div>
+                   <div style="border:1px solid #cccccc; width:64%;margin:0px auto;margin-bottom:50px">
+                    </div>
+                      <div class="form-inline" style="margin-left:20%">
+                     <label class="col-sm-2 control-label" for="email">아이디</label>
+                     <div class="col-sm-5">
+                           <input type="text" style="width:300px" class="form-control" id="id" placeholder="아이디를 입력하세요" />
+                     </div>      
+                  </div>
+                   <div align="center" style="margin-bottom:20px;margin-top:50px">
+                   	  <a href="user_main.do"><button class="btn btn-primary">마이페이지</button></a>
+                      <button id="next-2" class="btn btn-primary">다음단계로</button>
+                  </div>
+            </div>   
+           </div>
+       </div>
+   
+       <div class="row setup-content" id="step-2">
            <div class="col-xs-12">
                <div class="col-md-12" style="width:100%;margin:0px auto">
                   <div style="margin-left:20%">
@@ -41,7 +68,7 @@
                     </div>
                    <form name="auth" class="form-horizontal" action="emailAuth.do" target="emailAuth">
                       <div class="form-group">
-                     <label class="col-sm-4 control-label" for="email">본인확인</label>
+                     <label class="col-sm-4 control-label" for="email">이메일</label>
                      <div class="col-sm-5">
                         <div class="form-inline">
                            <input type="text" class="form-control" id="email" name="email" placeholder="이메일 주소를 입력하세요" />
@@ -64,14 +91,13 @@
                    </form>
                    <div align="center" style="margin-bottom:20px;margin-top:50px">
                    	  <a href="user_main.do"><button class="btn btn-primary">마이페이지</button></a>
-                      <button id="next-2" class="btn btn-primary">다음단계로</button>
+                      <button id="next-3" class="btn btn-primary">다음단계로</button>
                   </div>
             </div>   
            </div>
        </div>
       
-      
-      <div  class="container setup-content" style="width:80%;padding:30px;margin:0px auto"  align="center" id="step-2">
+      <div  class="container setup-content" style="width:80%;padding:30px;margin:0px auto"  align="center" id="step-3">
          <div style="margin:0px auto">
             <div align="left">
                   <h1>비밀번호변경</h1>
@@ -79,10 +105,11 @@
            </div>
                    <div style="border:1px solid #cccccc; width:100%;margin:0px auto;margin-bottom:50px">
                   </div>
-			<form action="user_changepw.do" method="post" id="form">
+			<form action="user_forgetpw.do" method="post" id="form">
 				<div class="row" style="width: 60%; margin: 0px auto">
 					<label class="col-sm-4 control-label" for="email">새 암호</label>
 					<div class="col-sm-8">
+					<input type="hidden" name="mb_id"  id="mb_id"/>
 						<input type="password" class="form-control" name="mb_pw" id="mb_pw" placeholder="새 암호를 입력하세요" />
 						<div id="exp" style="height:40px"></div>
 					</div>
@@ -142,7 +169,8 @@
 	});
 		$('#change').click(function() {
 			if($('#mb_pw').val() == "" || $('#mb_repw').val() == ""){alert('암호를 입력해주세요');return null}
-			else if (pcheck == 0 || repcheck == 0) {alert('암호 , 암호재확인 규정에 맞춰주세요.');$('#mb_pw').focus();return null}
+			else if (pcheck == 0 || repcheck == 0) {alert('암호 , 암호재확인 규정에 맞춰주세요.');$('#mb_pw').focus();return null} 
+			else if($('#nowpw').val() == $('#mb_pw').val()){alert('기존에 사용하던 암호로는 변경이 불가능합니다');return null}
 			else {$('#form').submit()}
 		});
 		
@@ -175,14 +203,38 @@
 		});
 		
 		$('ul.setup-panel li a[href="#step-1"]').trigger('click');
-								// DEMO ONLY //
-			$('#next-2').on('click',function(e) {
-				$('ul.setup-panel li:eq(1)').removeClass('disabled');
-				$('ul.setup-panel li a[href="#step-2"]').trigger('click');
-			});
-			$('#prev-1').on('click',function(e) {
-				$('ul.setup-panel li a[href="#step-1"]').trigger('click');
-			});
-		});
+			
+		 $('#next-2').on('click',function(e) {
+			 var id = $('#id').val();
+			 
+			 if(id == ""){alert("아이디를 입력해주세요"); return null}
+			 
+			 $.post('ajax_idcheck.do',{"id":id},function(ret){
+				if(ret == 1){
+					$('#mb_id').val(id);
+			      	$('ul.setup-panel li:eq(1)').removeClass('disabled');
+		            $('ul.setup-panel li a[href="#step-2"]').trigger('click');
+			      }
+				else if(ret == 0){
+		      		 alert('해당 아이디는 존재하지 않습니다');
+		       		 $('#idcheck').removeClass('w3-red');
+		      		 $('#idcheck').addClass('w3-green');
+		      		 return null;
+		      	}
+			 });
+            
+         });
+         $('#next-3').on('click',function(e) {
+        	 var em = $('#email').val();
+        	 $('#mb_email').val(em);
+        	 
+        	 //이메일 인증 유효성검사 확인 필요
+            $('ul.setup-panel li:eq(2)').removeClass('disabled');
+            $('ul.setup-panel li a[href="#step-3"]').trigger('click');
+         });
+         $('#prev-1').on('click',function(e) {
+            $('ul.setup-panel li a[href="#step-1"]').trigger('click');
+         });
+      });
 </script>
 <jsp:include page="footer.jsp"></jsp:include>

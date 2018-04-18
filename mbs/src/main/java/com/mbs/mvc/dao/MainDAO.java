@@ -15,6 +15,7 @@ import com.mbs.mvc.vo.Web_ListVO;
 
 @Service		
 public class MainDAO {
+	
 	@Autowired
 	@Resource(name="sqlSession")
 	private SqlSession sqlsession = null;
