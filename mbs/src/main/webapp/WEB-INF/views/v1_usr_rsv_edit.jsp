@@ -74,10 +74,14 @@
 							</div>
 							<div class="form-inline" style="margin-bottom:10px">
 								<label style="width:100px">인원</label>
-								<form:select class="form-control" path="rsv_personnel"  value="${vo.rsv_personnel}">
-									<option value="" selected disabled>==인원을 선택하세요==</option>
+								<form:select id="select" class="form-control" path="rsv_personnel">
 									<c:forEach var="i" begin="1" end="${vo.str_personnel}">
-										<option>${i}</option>
+										<c:if test="${i==vo.rsv_personnel}">
+											<option selected="selected">${i}</option>
+										</c:if>
+										<c:if test="${i!=vo.rsv_personnel}">
+											<option>${i}</option>
+										</c:if>
 									</c:forEach>
 								</form:select>
 							</div>
@@ -182,7 +186,6 @@
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=66e7156b3899e012effaa62fd20217d4&libraries=services"></script>
 	<script>
 		$(function() {
-			
 			var minDate = new Date();
 		    var maxDate = new Date();
 		    var dd = maxDate.getDate() + 30;

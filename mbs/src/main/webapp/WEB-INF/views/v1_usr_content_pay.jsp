@@ -73,8 +73,8 @@
 							</div>
 							<div class="form-inline" style="margin-bottom:10px">
 								<label style="width:100px">인원</label>
-								<form:select class="form-control" path="rsv_personnel">
-									<option value="" selected disabled>==인원을 선택하세요==</option>
+								<form:select id="select" class="form-control" path="rsv_personnel">
+									<!-- <option value="0" selected disabled>==인원을 선택하세요==</option> -->
 									<c:forEach var="i" begin="1" end="${svo.str_personnel}">
 										<option>${i}</option>
 									</c:forEach>
@@ -160,7 +160,7 @@
 						</div>
 						
 						<div style="margin-bottom:10px">
-							<input type="submit" class="btn btn-success" value="예약하기"	/>
+							<input type="submit" id="rsv_button" class="btn btn-success" value="예약하기"	/>
 							<a href="usr_content.do" class="btn btn-info">뒤로가기</a>
 						</div>
 						
