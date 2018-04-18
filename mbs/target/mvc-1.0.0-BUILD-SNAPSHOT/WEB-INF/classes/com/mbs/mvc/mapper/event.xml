@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Event">
+	
+	<resultMap type="com.mbs.mvc.vo.EventVO" id="resultEventImg">
+		<result column ="evt_no" property="evt_no" />
+		<result column ="evt_content" property="evt_content" jdbcType="BLOB" />
+		<result column ="evt_image" property="evt_image" jdbcType="BLOB" />
+	</resultMap>
+	<select id="selectEventImg" parameterType="int" resultMap="resultEventImg">
+		SELECT evt_no, evt_content, evt_iamage FROM `event` WHERE evt_no=#{evt_no}
+	</select>
+	
+	<resultMap type="com.mbs.mvc.vo.EventVO" id="resultEventImgList">
+		<result column ="evt_content" property="evt_content" jdbcType="BLOB" />
+		<result column ="evt_image" property="evt_image" jdbcType="BLOB" />
+	</resultMap>
+	<select id="selectEventImgList" resultMap="resultEventImg">
+		SELECT evt_content, evt_iamage FROM `event`
+	</select>
+	
+</mapper>
