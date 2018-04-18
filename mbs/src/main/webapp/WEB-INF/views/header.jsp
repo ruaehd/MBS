@@ -69,7 +69,6 @@
 						</div><!-- /gn-scroller -->
 					</nav>
 				</li>
-					<li><input type="search" class="gn-search" placeholder="주소로 검색하기"/></li>
 				<li><a href="map_main.do">지도로 보기</a></li>
 				<li><a href="web_main.do">자세히 보기</a></li>
 				<li><a href="#">로그인</a></li>
