@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Main">
+
+	<select id="selectJoinContentList" parameterType="com.mbs.mvc.vo.Main_SearchVO" resultType="com.mbs.mvc.vo.Map_ListVO">
+	SELECT 
+      distinct s.str_number number, s.str_name name, s.str_address address, s.str_lng lng, s.str_lat lat, 
+		s.str_category category
+    FROM 
+      store s 
+   	INNER JOIN 
+      str_menu sm
+    ON
+       s.str_number = sm.str_number 
+    WHERE 
+     s.str_lat BETWEEN #{so} AND #{no} AND
+     s.str_lng BETWEEN #{we} AND #{ea}
+	</select>
+
+	<select id="selectContentList" parameterType="com.mbs.mvc.vo.Main_SearchVO" resultType="com.mbs.mvc.vo.Map_ListVO">
+	SELECT 
+      distinct s.str_number number, s.str_name name, s.str_address address, s.str_lng lng, s.str_lat lat, 
+		s.str_category category
+    FROM 
+       store s 
+   	INNER JOIN 
+       str_menu sm
+    ON
+       s.str_number = sm.str_number 
+    WHERE
+        sm.mn_price BETWEEN  #{price_start} AND #{price_end} AND
+      CASE
+    	WHEN #{category} =1 
+    	THEN s.str_category = 1
+    	WHEN #{category} =2 
+    	THEN s.str_category = 2 
+    	WHEN #{category} =3 
+    	THEN s.str_category <![CDATA[<]]> 3
+      ELSE  
+    	s.str_category = 0 
+      END
+	</select>
+	
+	<select id="selectMainDragSearch" parameterType="com.mbs.mvc.vo.Main_SearchVO" resultType="com.mbs.mvc.vo.Map_ListVO">
+	SELECT 
+      distinct s.str_number number, s.str_name name, s.str_address address, s.str_lng lng, s.str_lat lat, 
+		s.str_category category
+    FROM 
+      store s 
+   	INNER JOIN 
+      str_menu sm
+     ON
+       s.str_number = sm.str_number 
+     WHERE
+    	s.str_lat BETWEEN #{so} AND #{no} AND
+    	s.str_lng BETWEEN #{we} AND #{ea} AND
+        sm.mn_price BETWEEN  #{price_start} AND #{price_end} AND
+      CASE
+    	WHEN #{category} =1 
+    	THEN s.str_category = 1
+    	WHEN #{category} =2 
+    	THEN s.str_category = 2 
+    	WHEN #{category} =3 
+    	THEN s.str_category <![CDATA[<]]> 3
+      ELSE  
+    	s.str_category = 0 
+      END
+	
+	</select>
+	
+	<select id="selectImgOne" parameterType="int" resultMap="imgBlob">
+		SELECT str_image FROM str_image WHERE str_number = #{no} AND str_image_idx = 1 
+	</select>
+	
+	<resultMap id="imgBlob" type="java.util.Map">
+		<result column="str_image" property="str_image" jdbcType="BLOB" />		
+	</resultMap>
+	
+	<select id="selectWebContentList" parameterType="com.mbs.mvc.vo.Main_SearchVO" resultType="com.mbs.mvc.vo.Web_ListVO">
+	SELECT 
+	      s.str_number number, s.str_name name, s.str_address address, s.str_lng lng, s.str_lat lat, 
+	      s.str_begintime starttime, s.str_endtime endtime,s.str_category category,s.distance distance,
+	      sm.mn_name menu, sm.mn_price menu_price, sm.mn_no, s.str_tel tel 
+    FROM 
+    	(SELECT 
+    		*
+    	 FROM (
+				SELECT 
+					str_number,str_name, str_address, str_lng, str_lat, str_begintime, str_endtime,str_category ,str_tel,
+					(6371*acos(cos(radians(#{lng}))*cos(radians(str_lat))*cos(radians(str_lng) -radians(#{lat}))+ sin(radians(#{lng}))*sin(radians(str_lat))))AS distance
+		    	 FROM 
+		    	 	store 
+		    	 HAVING 
+		    	 	distance <![CDATA[<=]]> #{range} 
+		    	 ORDER BY 
+		    	 	distance LIMIT 0,30
+    		)A
+    	) s 
+   	INNER JOIN 
+    	str_menu sm
+    ON
+    	s.str_number = sm.str_number 
+    WHERE 
+        sm.mn_price BETWEEN  #{price_start} AND #{price_end} AND
+    	sm.mn_no = (select  distinct MIN(sm.mn_no) from str_menu where sm.mn_idx = 1) AND
+	    CASE 
+	    	WHEN #{category} = 1 
+	    	THEN s.str_category = 1 
+	    	WHEN #{category} = 2 
+	    	THEN s.str_category = 2 
+	    	WHEN #{category} = 3 
+	    	THEN s.str_category <![CDATA[<]]> 3
+    	ELSE  
+    		s.str_category = 0 
+    	END
+	</select>
+
+</mapper>
