@@ -1,6 +1,6 @@
 package com.mbs.mvc.vo;
 
-public class TestVO {
+public class V1_TestVO {
 	private int no = 0;
 	private String title = null;
 	private String date = null;

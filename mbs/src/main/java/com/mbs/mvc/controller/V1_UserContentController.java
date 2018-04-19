@@ -27,7 +27,7 @@ import com.mbs.mvc.vo.V1_Store;
 import com.mbs.mvc.vo.V1_StrImg;
 
 @Controller
-public class UserContentController {
+public class V1_UserContentController {
 	
 	@Autowired private V1_UserContentDAO ucDAO = null;
 	@Autowired private V1_ReviewDAO reDAO = null;

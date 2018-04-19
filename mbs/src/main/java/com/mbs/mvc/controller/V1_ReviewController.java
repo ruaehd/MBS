@@ -12,7 +12,7 @@ import com.mbs.mvc.dao.V1_ReviewDAO;
 import com.mbs.mvc.vo.V1_Comment;
 
 @Controller
-public class ReviewController {
+public class V1_ReviewController {
 	@Autowired private V1_ReviewDAO reDAO = null;
 	
 	@RequestMapping(value="/usr_rsv_comment.do", method = RequestMethod.GET)

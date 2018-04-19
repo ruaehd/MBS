@@ -15,7 +15,7 @@ import com.mbs.mvc.dao.V1_UserContentDAO;
 import com.mbs.mvc.vo.V1_StrImg;
 
 @Controller
-public class TestController {
+public class V1_TestController {
 	
 	@Autowired private V1_UserContentDAO ucDAO = null;
 	

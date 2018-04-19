@@ -26,7 +26,7 @@ import com.mbs.mvc.vo.V1_Reservation;
 import com.mbs.mvc.vo.V1_RsvMenu;
 
 @Controller
-public class ReservationController {
+public class V1_ReservationController {
 	
 	@Autowired private V1_UserContentDAO ucDAO = null;
 	@Autowired private V1_ReservationDAO rDAO = null;

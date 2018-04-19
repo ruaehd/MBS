@@ -13,7 +13,7 @@ import com.mbs.mvc.vo.V1_Comment;
 import com.mbs.mvc.vo.V1_Store;
 
 @RestController
-public class Ajax_Controller {
+public class V1_Ajax_Controller {
 
 	@Autowired private V1_ReviewDAO reDAO = null;
 	
