@@ -13,7 +13,7 @@ import com.mbs.mvc.vo.EventVO;
 @Service
 public class EventDAO {
 	@Autowired
-	@Resource(name = "sqlSession")
+	@Resource(name="sqlSession")
 	private SqlSession sqlsession = null;
 	
 	public int eventCountEnd() {
