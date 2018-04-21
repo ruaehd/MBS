@@ -4,7 +4,7 @@
 <%@ page session="false" %>
 <html>
 <head>
-   <title>관리자test</title>
+   <title>관리자test11</title>
    <link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
    <link rel="stylesheet" href="resources/css/v1_adminside.css" />
    <link rel="stylesheet" href="resources/css/w3.css" />
