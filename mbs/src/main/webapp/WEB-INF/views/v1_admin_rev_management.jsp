@@ -45,8 +45,7 @@
 				 		<td>${tmp.rsv_sub_id}</td>
 				 		<td>${tmp.rsv_day}</td>
 				 		<td style="text-align:center">
-			 				<a href="#" class="btn btn-xs btn-info">수정</a>
-							<a href="#" class="btn btn-xs btn-danger">삭제</a>
+			 				<a href="#" class="btn btn-xs btn-info">리뷰관리</a>
 				 		</td>
 			 		</tr>
 			 	</c:forEach>

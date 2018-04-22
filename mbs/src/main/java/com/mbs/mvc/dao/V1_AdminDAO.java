@@ -1,7 +1,6 @@
 package com.mbs.mvc.dao;
 
 import java.util.List;
-import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -22,7 +21,7 @@ public class V1_AdminDAO {
 		return sqlsession.selectList("V1_AdminRsvMgt.selectAdminRsvList", vo);
 	}
 	
-	public Map<String, Integer> countAdminRsvTot() {
-		return sqlsession.selectOne("V1_AdminRsvMgt.countAdminRsvTot");
+	public int countAdminRsvTot(V1_Reservation vo) {
+		return sqlsession.selectOne("V1_AdminRsvMgt.countAdminRsvTot", vo);
 	}
 }
