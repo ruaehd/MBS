@@ -24,7 +24,18 @@
 				<li class="panel panel-default" id="dropdown">
 					<a data-toggle="collapse" href="#dropdown-lvl2"> 
 						<span class="glyphicon glyphicon-plane"></span> 예약관리
+						<span class="caret"></span>
 					</a>
+					<div id="dropdown-lvl2" class="panel-collapse collapse">
+						<div class="panel-body">
+							<ul class="nav navbar-nav">
+								<li><a href="#">ㅁㅁㅁ</a></li>
+								<li><a href="admin_rsv_management.do">예약관리</a></li>
+								<li><a href="admin_rev_management.do">리뷰관리</a></li>
+								<li><a href="admin_can_management.do">취소환불</a></li>
+							</ul>
+						</div>
+					</div>
 				</li>
 				<li class="panel panel-default" id="dropdown">
 					<a data-toggle="collapse" href="#dropdown-lvl3"> 
