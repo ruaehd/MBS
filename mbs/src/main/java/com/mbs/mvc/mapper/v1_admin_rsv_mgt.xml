@@ -13,11 +13,14 @@
 	<select id="selectAdminRsvList" parameterType="V1_Reservation" resultType="V1_Reservation">
 		UPDATE `reservation` SET rsv_code=2 WHERE rsv_day <![CDATA[<]]> NOW() AND rsv_no IN (SELECT * FROM(SELECT r.rsv_no FROM `reservation` as r) a);
 		
-		SELECT s.str_name, DATE_FORMAT(rc.rsv_day, '%Y-%m-%d') AS rsv_day, rc.rsv_code, rc.rsv_code_chk, rc.rsv_no, rc.rsv_sub_id, rc.rsv_sub_name FROM `store` s
+		SELECT s.str_name, DATE_FORMAT(rc.rsv_day, '%Y-%m-%d') AS rsv_day, rc.rsv_code, rc.rsv_code_chk, rc.rsv_no, rc.rsv_sub_id, rc.rsv_sub_name, rc.rsv_date FROM `store` s
 		INNER JOIN
-			(SELECT r.rsv_day, r.rsv_code, c.rsv_code_chk, r.str_number, r.rsv_no, r.rsv_sub_id, r.rsv_sub_name FROM `reservation` r 
+			(SELECT r.rsv_day, r.rsv_code, c.rsv_code_chk, r.str_number, r.rsv_no, r.rsv_sub_id, r.rsv_sub_name, r.rsv_date FROM `reservation` r 
 				INNER JOIN `rsv_code` c
 				ON r.rsv_code = c.rsv_code
+				<if test="rsv_code == 0">
+    				WHERE c.rsv_code != 2
+  				</if>
   				<if test="rsv_code != 0 ">
     				WHERE c.rsv_code=#{rsv_code}
   				</if>
@@ -25,5 +28,21 @@
 		ON s.str_number = rc.str_number
 		ORDER BY rc.rsv_no DESC LIMIT #{page} , 10
 	</select>
+	
+	<select id="selectStoreList" resultType="V1_Store">
+		SELECT sm.*, 
+			SUM(CASE WHEN rsv_code=1 THEN 1 ELSE 0 END) AS exp,
+			SUM(CASE WHEN rsv_code=2 THEN 1 ELSE 0 END) AS com,
+		    SUM(CASE WHEN rsv_code=3 THEN 1 ELSE 0 END) AS can
+		FROM `reservation` r 
+		INNER JOIN(
 
+			SELECT s.str_number, s.str_name, s.str_address, s.str_tel, m.mb_email FROM `store` s
+			INNER JOIN `member` m
+			ON s.mb_id = m.mb_id
+	    
+	    )sm
+		ON sm.str_number = r.str_number
+		GROUP BY sm.str_number
+	</select>
 </mapper>

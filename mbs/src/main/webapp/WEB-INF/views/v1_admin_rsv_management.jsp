@@ -54,6 +54,7 @@
 			 		<th>상태</th>
 			 		<th>상호명</th>
 			 		<th>예약자</th>
+			 		<th>사용예정일</th>
 			 		<th>예약일</th>
 			 		<th style="text-align:center">비고</th>
 			 	</tr>
@@ -61,19 +62,17 @@
 					<tr>
 				 		<td>${tmp.rsv_no}</td>
 				 		<td>${tmp.rsv_code_chk}</td>
-				 		<td>${tmp.str_name}</td>
-				 		<td>${tmp.rsv_sub_id}</td>
+				 		<td><a href="#">${tmp.str_name}</a></td>
+				 		<td><a href="#">${tmp.rsv_sub_id}</a></td>
 				 		<td>${tmp.rsv_day}</td>
+				 		<td>${tmp.rsv_date}</td>
 				 		<td style="text-align:center">
 				 			<c:if test="${tmp.rsv_code_chk eq '이용예정'}">
 				 				<a href="#" class="btn btn-xs btn-info">수정</a>
 								<a href="#" class="btn btn-xs btn-danger">삭제</a>
 							</c:if>
-							<c:if test="${tmp.rsv_code_chk eq '이용완료'}">
-				 				<a href="#" class="btn btn-xs btn-success">리뷰관리</a>
-							</c:if>
-							<c:if test="${tmp.rsv_code_chk eq '취소환불'}">
-				 				<a href="#" class="btn btn-xs btn-primary">신규예약</a>
+							<c:if test="${tmp.rsv_code_chk eq '예약취소'}">
+				 				<a href="#" class="btn btn-xs btn-success">다시예약</a>
 							</c:if>
 							
 				 		</td>
@@ -81,14 +80,14 @@
 			 	</c:forEach>
 			 </table>
 			 <hr/>
-			 <div align="center" class="form-inline" style="width:100px">
+			 <div align="right" class="form-inline" >
 			 	<div class="form-group">
-			 	<select class="form-control">
-			 		<option>상호명</option>
-			 		<option>예약자</option>
-			 	</select >
-			 	<input class="form-control" type="text" style="width:200px" />
-			 	<a href="#" class="btn btn-default">검색</a>
+				 	<select class="form-control" style="width:100px">
+				 		<option>상호명</option>
+				 		<option>예약자</option>
+				 	</select >
+				 	<input class="form-control" type="text" style="width:200px" />
+				 	<a href="#" class="btn btn-default">검색</a>
 			 	</div>
 			 </div>
 			 

@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.mbs.mvc.vo.V1_Reservation;
+import com.mbs.mvc.vo.V1_Store;
 
 @Service
 public class V1_AdminDAO {
@@ -25,4 +26,9 @@ public class V1_AdminDAO {
 	public Map<String, Integer> countAdminRsvTot() {
 		return sqlsession.selectOne("V1_AdminRsvMgt.countAdminRsvTot");
 	}
+	
+	public List<V1_Store> selectStoreList(){
+		return sqlsession.selectList("V1_AdminRsvMgt.selectStoreList");
+	}
+	
 }

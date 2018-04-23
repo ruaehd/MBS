@@ -26,9 +26,30 @@ public class V1_Store {
 	private int str_personnel = 0;
 	
 	private int page = 0;
+	private int exp = 0;
+	private int com = 0;
+	private int can = 0;
 	
 	
 	
+	public int getExp() {
+		return exp;
+	}
+	public void setExp(int exp) {
+		this.exp = exp;
+	}
+	public int getCom() {
+		return com;
+	}
+	public void setCom(int com) {
+		this.com = com;
+	}
+	public int getCan() {
+		return can;
+	}
+	public void setCan(int can) {
+		this.can = can;
+	}
 	public int getStr_personnel() {
 		return str_personnel;
 	}
