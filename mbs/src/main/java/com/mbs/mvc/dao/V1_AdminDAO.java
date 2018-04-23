@@ -27,8 +27,8 @@ public class V1_AdminDAO {
 		return sqlsession.selectOne("V1_AdminRsvMgt.countAdminRsvTot");
 	}
 	
-	public List<V1_Store> selectStoreList(){
-		return sqlsession.selectList("V1_AdminRsvMgt.selectStoreList");
+	public List<V1_Store> selectStoreList(V1_Store vo){
+		return sqlsession.selectList("V1_AdminRsvMgt.selectStoreList", vo);
 	}
 	
 }

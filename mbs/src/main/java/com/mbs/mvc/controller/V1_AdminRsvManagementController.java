@@ -1,6 +1,5 @@
 package com.mbs.mvc.controller;
 
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -59,17 +58,12 @@ public class V1_AdminRsvManagementController {
 	@RequestMapping(value="/admin_rev_management.do", method=RequestMethod.GET)
 	public String AdminReviewManagement(Model model, @RequestParam(value="page", defaultValue="1") int page) {
 		
-		List<V1_Store> list = aDAO.selectStoreList();
-		Map<String, Object> map = new LinkedHashMap<String, Object>();
-		
-		
-		for(int i= 0; i<list.size(); i++) {
-			map.put(list.get(i).getStr_name(), list.get(i).getStr_number());
-		}
-		System.out.println("AAAAAAAAA"+map);
-		
-		
+		V1_Store vo = new V1_Store();
+		vo.setPage((page-1)*9);
+		List<V1_Store> list = aDAO.selectStoreList(vo);
+
 		model.addAttribute("list", list);
+		model.addAttribute("tot", (list.size()-1/9+1));
 		
 		return"v1_admin_rev_management";
 	}

@@ -29,8 +29,23 @@ public class V1_Store {
 	private int exp = 0;
 	private int com = 0;
 	private int can = 0;
+	private int cnt = 0;
+	private double avg = 0;
 	
 	
+	
+	public double getAvg() {
+		return avg;
+	}
+	public void setAvg(double avg) {
+		this.avg = avg;
+	}
+	public int getCnt() {
+		return cnt;
+	}
+	public void setCnt(int cnt) {
+		this.cnt = cnt;
+	}
 	
 	public int getExp() {
 		return exp;

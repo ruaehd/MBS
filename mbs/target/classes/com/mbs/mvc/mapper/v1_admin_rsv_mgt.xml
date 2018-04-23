@@ -29,20 +29,27 @@
 		ORDER BY rc.rsv_no DESC LIMIT #{page} , 10
 	</select>
 	
-	<select id="selectStoreList" resultType="V1_Store">
-		SELECT sm.*, 
+	<select id="selectStoreList" parameterType="V1_Store" resultType="V1_Store">
+		SELECT src.str_number, src.mb_id, src.str_name, src.str_tel, src.str_address, m.mb_email,
+			COUNT(rsv_cmt_no) AS cnt,
+	        AVG(rsv_cmt_point) AS avg,
 			SUM(CASE WHEN rsv_code=1 THEN 1 ELSE 0 END) AS exp,
 			SUM(CASE WHEN rsv_code=2 THEN 1 ELSE 0 END) AS com,
-		    SUM(CASE WHEN rsv_code=3 THEN 1 ELSE 0 END) AS can
-		FROM `reservation` r 
-		INNER JOIN(
-
-			SELECT s.str_number, s.str_name, s.str_address, s.str_tel, m.mb_email FROM `store` s
-			INNER JOIN `member` m
-			ON s.mb_id = m.mb_id
-	    
-	    )sm
-		ON sm.str_number = r.str_number
-		GROUP BY sm.str_number
+			SUM(CASE WHEN rsv_code=3 THEN 1 ELSE 0 END) AS can
+		FROM `member` m
+		RIGHT OUTER JOIN
+			
+			(SELECT rc.*, s.mb_id, s.str_name, s.str_date, s.str_tel, s.str_address FROM `store` s
+			LEFT OUTER JOIN
+			
+				(SELECT r.str_number, r.rsv_no, r.rsv_code, c.rsv_cmt_point, c.rsv_cmt_no FROM `reservation` r
+				LEFT OUTER JOIN `rsv_comment` c
+				ON r.rsv_no=c.rsv_no) rc
+			
+			ON s.str_number=rc.str_number)src
+			
+		ON m.mb_id = src.mb_id
+	    GROUP BY src.str_number
+	    ORDER BY src.str_date DESC LIMIT #{page} , 9
 	</select>
 </mapper>

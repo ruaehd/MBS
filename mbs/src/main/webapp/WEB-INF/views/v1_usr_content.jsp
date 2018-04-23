@@ -84,11 +84,11 @@
 					<!-- Wrapper for slides -->
 					<div class="carousel-inner" id="back_imgs">
 						<div class="item active">
-							<img src="get_blob_img.do?idx=1" style="width: 100%; height: 500px"/>
+							<img src="get_blob_img.do?str_number=${vo.str_number}&idx=1" style="width: 100%; height: 500px"/>
 						</div>
 						<c:forEach var="i" begin="2" end="${cnt}">
 							<div class="item">
-								<img src="get_blob_img.do?idx=${i}" style="width: 100%; height: 500px"/>
+								<img src="get_blob_img.do?str_number=${vo.str_number}&idx=${i}" style="width: 100%; height: 500px"/>
 							</div>
 						</c:forEach>
 					</div>
@@ -236,7 +236,7 @@
 			totalPages:${totPage},
 			visiblePage:10,
 			onPageClick: function (event, page) {
-				$.get('ajax_reviewlist.do?page='+page, function(data){
+				$.get('ajax_reviewlist.do?page='+page+'&str_number='+${param.str_number}, function(data){
 					$('#review').empty();
 					
 					var len = data.length;

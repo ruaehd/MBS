@@ -35,14 +35,14 @@ public class V1_UserContentController {
 	 * 점포 정보
 	 */
 	@RequestMapping(value="/usr_content.do", method = RequestMethod.GET)
-	public String userContent(Model model, @RequestParam(value="page", defaultValue="1") int page) {
+	public String userContent(Model model, @RequestParam(value="page", defaultValue="1") int page, @RequestParam("str_number") int str_number) {
 		
 		//파람
-		V1_Store vo = ucDAO.selectStoreOne(1234567890);
-		int cnt = ucDAO.selectImgCount(1234567890);
-		List<V1_Menu> mlist = ucDAO.selectMenuList(1234567890);
-		int totPage = reDAO.selectReviewcCnt(1234567890);
-		List<V1_Comment> ctlist = reDAO.selectCmtTotList(1234567890);
+		V1_Store vo = ucDAO.selectStoreOne(str_number);
+		int cnt = ucDAO.selectImgCount(str_number);
+		List<V1_Menu> mlist = ucDAO.selectMenuList(str_number);
+		int totPage = reDAO.selectReviewcCnt(str_number);
+		List<V1_Comment> ctlist = reDAO.selectCmtTotList(str_number);
 		
 		double sum = 0;
 		double taste = 0;
@@ -129,7 +129,7 @@ public class V1_UserContentController {
 	 */
 	@SuppressWarnings("finally")
 	@RequestMapping(value = "/get_blob_img.do", method = RequestMethod.GET)
-	public ResponseEntity<byte[]> getBlobImg(@RequestParam("idx") int idx, HttpServletRequest request) {
+	public ResponseEntity<byte[]> getBlobImg(@RequestParam("idx") int idx, HttpServletRequest request, @RequestParam("str_number") int str_number) {
 		byte[] imgs = null;
 		//헤드 => 이진데이터를 어떠한 type으로 표현할 것인가?
 		HttpHeaders header = new HttpHeaders();
@@ -140,7 +140,7 @@ public class V1_UserContentController {
 			imgs = IOUtils.toByteArray(is);	
 			
 			V1_StrImg obj = new V1_StrImg();
-			obj.setStr_number(1234567890);
+			obj.setStr_number(str_number);
 			obj.setStr_image_idx(idx);
 			
 			//DAO로 코드번호를 전달하면 이미지를 읽어서 vo에 저장해서 리턴 
