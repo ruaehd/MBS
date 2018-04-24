@@ -82,7 +82,7 @@
 						<c:forEach var="tmp" items="${rlist}">
 							<tr>
 								<td>${tmp.rsv_code_chk}</td>
-								<td><a href="usr_rsv_content.do?rsv_no=${tmp.rsv_no}">${tmp.str_name}</a></td>
+								<td><a href="usr_rsv_content.do?rsv_no=${tmp.rsv_no}&str_number=${tmp.str_number}">${tmp.str_name}</a></td>
 								<td>${tmp.rsv_day}</td>
 							</tr>
 						</c:forEach>

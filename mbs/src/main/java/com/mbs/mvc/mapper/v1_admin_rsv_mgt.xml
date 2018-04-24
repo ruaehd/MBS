@@ -13,7 +13,7 @@
 	<select id="selectAdminRsvList" parameterType="V1_Reservation" resultType="V1_Reservation">
 		UPDATE `reservation` SET rsv_code=2 WHERE rsv_day <![CDATA[<]]> NOW() AND rsv_no IN (SELECT * FROM(SELECT r.rsv_no FROM `reservation` as r) a);
 		
-		SELECT s.str_name, DATE_FORMAT(rc.rsv_day, '%Y-%m-%d') AS rsv_day, rc.rsv_code, rc.rsv_code_chk, rc.rsv_no, rc.rsv_sub_id, rc.rsv_sub_name, rc.rsv_date FROM `store` s
+		SELECT s.str_number, s.str_name, DATE_FORMAT(rc.rsv_day, '%Y-%m-%d') AS rsv_day, rc.rsv_code, rc.rsv_code_chk, rc.rsv_no, rc.rsv_sub_id, rc.rsv_sub_name, rc.rsv_date FROM `store` s
 		INNER JOIN
 			(SELECT r.rsv_day, r.rsv_code, c.rsv_code_chk, r.str_number, r.rsv_no, r.rsv_sub_id, r.rsv_sub_name, r.rsv_date FROM `reservation` r 
 				INNER JOIN `rsv_code` c
@@ -31,7 +31,7 @@
 	
 	<select id="selectStoreList" parameterType="V1_Store" resultType="V1_Store">
 		SELECT src.str_number, src.mb_id, src.str_name, src.str_tel, src.str_address, m.mb_email,
-			COUNT(rsv_cmt_no) AS cnt,
+			COUNT(CASE WHEN rsv_cmt_delete=1 THEN 1 END) AS cnt,
 	        AVG(rsv_cmt_point) AS avg,
 			SUM(CASE WHEN rsv_code=1 THEN 1 ELSE 0 END) AS exp,
 			SUM(CASE WHEN rsv_code=2 THEN 1 ELSE 0 END) AS com,
@@ -42,7 +42,7 @@
 			(SELECT rc.*, s.mb_id, s.str_name, s.str_date, s.str_tel, s.str_address FROM `store` s
 			LEFT OUTER JOIN
 			
-				(SELECT r.str_number, r.rsv_no, r.rsv_code, c.rsv_cmt_point, c.rsv_cmt_no FROM `reservation` r
+				(SELECT r.str_number, r.rsv_no, r.rsv_code, c.rsv_cmt_point, c.rsv_cmt_no, c.rsv_cmt_delete FROM `reservation` r
 				LEFT OUTER JOIN `rsv_comment` c
 				ON r.rsv_no=c.rsv_no) rc
 			
@@ -52,4 +52,18 @@
 	    GROUP BY src.str_number
 	    ORDER BY src.str_date DESC LIMIT #{page} , 9
 	</select>
+	
+	<select id="selectReviewList" parameterType="V1_Comment" resultType="V1_Comment">
+		SELECT c.rsv_cmt_no, c.rsv_cmt_content, c.rsv_cmt_point, c.rsv_cmt_writer, c.rsv_cmt_date, DATE_FORMAT(r.rsv_day, '%Y-%m-%d') AS rsv_day, c.rsv_no FROM `rsv_comment` c
+		INNER JOIN `reservation` r
+		ON c.rsv_no = r.rsv_no
+		WHERE r.str_number=#{str_number} AND c.rsv_cmt_delete=1
+		ORDER BY c.rsv_cmt_no DESC LIMIT #{page} , 10
+	</select>
+	
+	<update id="multiDeleteReview" parameterType="java.util.List">
+		<foreach separator=";" collection="list" item="vo">
+			UPDATE `rsv_comment` SET rsv_cmt_delete=0 WHERE rsv_cmt_no=#{vo.rsv_cmt_no}	
+		</foreach>
+	</update>
 </mapper>

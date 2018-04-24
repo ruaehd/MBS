@@ -62,17 +62,17 @@
 					<tr>
 				 		<td>${tmp.rsv_no}</td>
 				 		<td>${tmp.rsv_code_chk}</td>
-				 		<td><a href="#">${tmp.str_name}</a></td>
+				 		<td><a href="usr_content.do?str_number=${tmp.str_number}">${tmp.str_name}</a></td>
 				 		<td><a href="#">${tmp.rsv_sub_id}</a></td>
 				 		<td>${tmp.rsv_day}</td>
 				 		<td>${tmp.rsv_date}</td>
 				 		<td style="text-align:center">
 				 			<c:if test="${tmp.rsv_code_chk eq '이용예정'}">
-				 				<a href="#" class="btn btn-xs btn-info">수정</a>
-								<a href="#" class="btn btn-xs btn-danger">삭제</a>
+				 				<a href="usr_rsv_edit.do?str_number=${tmp.str_number}&rsv_no=${tmp.rsv_no}" class="btn btn-xs btn-info">수정</a>
+								<a href="usr_rsv_cancel.do?rsv_no=${tmp.rsv_no}" class="btn btn-xs btn-danger">삭제</a>
 							</c:if>
 							<c:if test="${tmp.rsv_code_chk eq '예약취소'}">
-				 				<a href="#" class="btn btn-xs btn-success">다시예약</a>
+				 				<a href="usr_rsv_edit.do?str_number=${tmp.str_number}&rsv_no=${tmp.rsv_no}" class="btn btn-xs btn-success">다시예약</a>
 							</c:if>
 							
 				 		</td>

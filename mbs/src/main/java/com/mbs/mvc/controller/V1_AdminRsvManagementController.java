@@ -1,8 +1,11 @@
 package com.mbs.mvc.controller;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.mbs.mvc.dao.V1_AdminDAO;
+import com.mbs.mvc.vo.V1_Comment;
 import com.mbs.mvc.vo.V1_Reservation;
 import com.mbs.mvc.vo.V1_Store;
 
@@ -54,7 +58,6 @@ public class V1_AdminRsvManagementController {
 		return"v1_admin_rsv_management";
 	}
 	
-	
 	@RequestMapping(value="/admin_rev_management.do", method=RequestMethod.GET)
 	public String AdminReviewManagement(Model model, @RequestParam(value="page", defaultValue="1") int page) {
 		
@@ -66,5 +69,54 @@ public class V1_AdminRsvManagementController {
 		model.addAttribute("tot", (list.size()-1/9+1));
 		
 		return"v1_admin_rev_management";
+	}
+	
+	@RequestMapping(value="/admin_rev_list.do", method=RequestMethod.GET)
+	public String AdminReviewList(Model model, @RequestParam(value="page", defaultValue="1") int page, @RequestParam("str_number") int str_number) {
+		V1_Comment vo = new V1_Comment();
+		vo.setStr_number(str_number);
+		vo.setPage((page-1)*10);
+		
+		List<V1_Comment> list = aDAO.selectReviewList(vo);
+		
+		model.addAttribute("list", list);
+		return "v1_admin_rev_list";
+	}
+	
+	@RequestMapping(value="/admin_rev_delete.do", method=RequestMethod.GET)
+	public String AdminReviewDelete(@RequestParam("rsv_cmt_no") int rsv_cmt_no, HttpServletRequest request) {
+		if(request.getHeader("REFERER") != null) {
+			List<V1_Comment> list = new ArrayList<V1_Comment>();
+			V1_Comment vo = new V1_Comment();
+			vo.setRsv_cmt_no(rsv_cmt_no);
+			list.add(vo);
+			
+			aDAO.multiDeleteReview(list);
+			return "redirect:"+request.getHeader("REFERER");
+		}
+		else {
+			return "redirect:admin_rev_management.do";
+		}
+		
+	}
+	
+	@RequestMapping(value="/admin_rev_delete.do", method=RequestMethod.POST)
+	public String AdminReviewDelete(@RequestParam("chk[]") int[] chk, HttpServletRequest request) {
+		if(request.getHeader("REFERER") != null) {
+			List<V1_Comment> list = new ArrayList<V1_Comment>();
+			
+			for(int i=0; i< chk.length; i++) {
+				V1_Comment vo = new V1_Comment();
+				vo.setRsv_cmt_no(chk[i]);
+				list.add(vo);
+			}
+			
+			aDAO.multiDeleteReview(list);
+			return "redirect:"+request.getHeader("REFERER");
+		}
+		else {
+			return "redirect:admin_rev_management.do";
+		}
+		
 	}
 }

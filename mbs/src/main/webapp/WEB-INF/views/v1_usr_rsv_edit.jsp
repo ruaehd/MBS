@@ -44,11 +44,11 @@
 							<!-- Wrapper for slides -->
 							<div class="carousel-inner" id="back_imgs">
 								<div class="item active">
-									<img src="get_blob_img.do?idx=1" style="width: 100%; height: 350px"/>
+									<img src="get_blob_img.do?str_number=${vo.str_number}&idx=1" style="width: 100%; height: 350px"/>
 								</div>
 								<c:forEach var="i" begin="2" end="${cnt}">
 									<div class="item">
-										<img src="get_blob_img.do?idx=${i}" style="width: 100%; height: 350px"/>
+										<img src="get_blob_img.do?str_number=${vo.str_number}&idx=${i}" style="width: 100%; height: 350px"/>
 									</div>
 								</c:forEach>
 							</div>
@@ -67,6 +67,7 @@
 						<div id="select" style="margin-bottom:20px">
 							<h3>예약 정보</h3>
 							<form:input type="hidden" path="rsv_no" value="${vo.rsv_no}" />
+							<form:input type="hidden" path="str_number" value="${vo.str_number}" />
 							<hr />
 							<div class="form-inline" style="margin-bottom:10px">
 								<label style="width:100px">날짜</label>
@@ -166,7 +167,7 @@
 						
 						<div style="margin-bottom:10px">
 							<input type="submit" class="btn btn-success" value="예약변경"	/>
-							<a href="usr_rsv_content.do?rsv_no=${param.rsv_no}" class="btn btn-info">취소</a>
+							<a href="usr_rsv_content.do?str_number=${param.str_number}&rsv_no=${param.rsv_no}" class="btn btn-info">취소</a>
 						</div>
 						
 					</div>

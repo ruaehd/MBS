@@ -41,11 +41,11 @@
 						<!-- Wrapper for slides -->
 						<div class="carousel-inner" id="back_imgs">
 							<div class="item active">
-								<img src="get_blob_img.do?idx=1" style="width: 100%; height: 350px"/>
+								<img src="get_blob_img.do?str_number=${vo.str_number}&idx=1" style="width: 100%; height: 350px"/>
 							</div>
 							<c:forEach var="i" begin="2" end="${cnt}">
 								<div class="item">
-									<img src="get_blob_img.do?idx=${i}" style="width: 100%; height: 350px"/>
+									<img src="get_blob_img.do?str_number=${vo.str_number}&idx=${i}" style="width: 100%; height: 350px"/>
 								</div>
 							</c:forEach>
 						</div>
@@ -151,7 +151,7 @@
 					<div style="margin-bottom:10px">
 						<c:choose>
 							<c:when test="${vo.rsv_code == 1}">
-								<a href="usr_rsv_edit.do?rsv_no=${vo.rsv_no}&str_num=${vo.str_number}" class="btn btn-success">예약 변경</a>
+								<a href="usr_rsv_edit.do?str_number=${vo.str_number}&rsv_no=${vo.rsv_no}" class="btn btn-success">예약 변경</a>
 								<a href="usr_rsv_cancel.do?rsv_no=${vo.rsv_no}" class="btn btn-danger">예약 취소</a>
 							</c:when>
 							<c:when test="${vo.rsv_code == 2}">
@@ -164,7 +164,7 @@
 								
 							</c:when>
 							<c:when test="${vo.rsv_code == 3}">
-								<a href="usr_rsv_edit.do?rsv_no=${vo.rsv_no}&str_num=${vo.str_number}" class="btn btn-info">다시 예약 하기</a>
+								<a href="usr_rsv_edit.do?rsv_no=${vo.rsv_no}&str_number=${vo.str_number}" class="btn btn-info">다시 예약 하기</a>
 							</c:when>
 						</c:choose>
 						<a href="usr_rsv_list.do?rsv_code=0" class="btn btn-primary">목록</a>

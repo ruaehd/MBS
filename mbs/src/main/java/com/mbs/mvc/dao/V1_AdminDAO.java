@@ -9,6 +9,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.mbs.mvc.vo.V1_Comment;
 import com.mbs.mvc.vo.V1_Reservation;
 import com.mbs.mvc.vo.V1_Store;
 
@@ -29,6 +30,14 @@ public class V1_AdminDAO {
 	
 	public List<V1_Store> selectStoreList(V1_Store vo){
 		return sqlsession.selectList("V1_AdminRsvMgt.selectStoreList", vo);
+	}
+	
+	public List<V1_Comment> selectReviewList(V1_Comment vo){
+		return sqlsession.selectList("V1_AdminRsvMgt.selectReviewList", vo);
+	}
+	
+	public int multiDeleteReview(List<V1_Comment> list) {
+		return sqlsession.update("V1_AdminRsvMgt.multiDeleteReview", list);
 	}
 	
 }

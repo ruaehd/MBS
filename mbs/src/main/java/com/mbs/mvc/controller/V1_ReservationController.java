@@ -104,7 +104,7 @@ public class V1_ReservationController {
 	 * 예약내용
 	 */
 	@RequestMapping(value="/usr_rsv_content.do", method = RequestMethod.GET)
-	public String userReservationContent(Model model, @RequestParam("rsv_no") int rsv_no) {
+	public String userReservationContent(Model model, @RequestParam("rsv_no") int rsv_no, @RequestParam("str_number") int str_number) {
 		
 		V1_Reservation vo = new V1_Reservation();
 		vo.setRsv_no(rsv_no);
@@ -115,7 +115,7 @@ public class V1_ReservationController {
 		
 		V1_Reservation rvo = rDAO.selectRsvOne(vo);
 		List<V1_RsvMenu> rmlist = rDAO.selectRsvMenuList(rsv_no);
-		int cnt = ucDAO.selectImgCount(1234567890);
+		int cnt = ucDAO.selectImgCount(str_number);
 		int chk = reDAO.selectReviewChk(revo);
 		
 		model.addAttribute("chk", chk);
@@ -127,14 +127,14 @@ public class V1_ReservationController {
 	}
 	
 	@RequestMapping(value="/usr_rsv_edit.do", method = RequestMethod.GET)
-	public String userReservationEdit(Model model, @RequestParam("rsv_no") int rsv_no, @RequestParam("str_num") int str_num) {
+	public String userReservationEdit(Model model, @RequestParam("rsv_no") int rsv_no, @RequestParam("str_number") int str_number) {
 		
 		V1_Reservation vo = new V1_Reservation();
 		vo.setRsv_no(rsv_no);
-		vo.setStr_number(str_num);
+		vo.setStr_number(str_number);
 		V1_Reservation rvo = rDAO.selectRsvOne(vo);
 		List<V1_RsvMenu> rmlist = rDAO.selectRsvMenuList(rsv_no);
-		int cnt = ucDAO.selectImgCount(str_num);
+		int cnt = ucDAO.selectImgCount(str_number);
 		
 		model.addAttribute("cnt", cnt);
 		model.addAttribute("rmlist", rmlist);
@@ -144,7 +144,10 @@ public class V1_ReservationController {
 	}
 	
 	@RequestMapping(value="/usr_rsv_edit.do", method = RequestMethod.POST)
-	public String userReservationEdit(@ModelAttribute("vo") V1_Reservation vo, @RequestParam("mn_name[]") String[] name, @RequestParam("mn_price[]") int[] price, @RequestParam("mn_cnt[]") int[] cnt) {
+	public String userReservationEdit(@ModelAttribute("vo") V1_Reservation vo, 
+			@RequestParam("mn_name[]") String[] name, 
+			@RequestParam("mn_price[]") int[] price, 
+			@RequestParam("mn_cnt[]") int[] cnt) {
 		
 		List<V1_RsvMenu> list = new ArrayList<V1_RsvMenu>();
 		for(int i=0; i<name.length; i++) {
@@ -164,7 +167,7 @@ public class V1_ReservationController {
 		
 		int ret = rDAO.updateRsv(vo);
 		if(ret>0) {
-			return "redirect:usr_rsv_content.do?rsv_no="+vo.getRsv_no();
+			return "redirect:usr_rsv_content.do?str_number="+vo.getStr_number()+"&rsv_no="+vo.getRsv_no();
 		}
 		return "redirect:usr_rsv_edit.do";
 	}

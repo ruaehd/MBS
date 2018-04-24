@@ -31,9 +31,18 @@ public class V1_Store {
 	private int can = 0;
 	private int cnt = 0;
 	private double avg = 0;
+	private String mb_email = null;
 	
 	
 	
+	
+	
+	public String getMb_email() {
+		return mb_email;
+	}
+	public void setMb_email(String mb_email) {
+		this.mb_email = mb_email;
+	}
 	public double getAvg() {
 		return avg;
 	}
