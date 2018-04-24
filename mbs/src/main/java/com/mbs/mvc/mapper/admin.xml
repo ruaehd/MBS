@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Admin">
+	<select id="noticeList" parameterType="com.mbs.mvc.vo.NoticeVO" resultType="com.mbs.mvc.vo.NoticeVO">
+		SELECT * FROM `notice` WHERE ntc_title LIKE CONCAT('%', #{ntc_sc_text}, '%') OR ntc_content LIKE CONCAT('%', #{ntc_sc_text}, '%') 
+		ORDER BY ntc_no DESC LIMIT #{ntc_page}, 10
+	</select>
+	
+	<select id="noticePage" resultType="int">
+		SELECT COUNT(*) FROM `notice`
+	</select>
+</mapper>
