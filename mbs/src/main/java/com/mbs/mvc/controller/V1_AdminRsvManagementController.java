@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,7 +14,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
+import com.mbs.mvc.conf.V1_EmailConfigure;
 import com.mbs.mvc.dao.V1_AdminDAO;
 import com.mbs.mvc.vo.V1_Comment;
 import com.mbs.mvc.vo.V1_Reservation;
@@ -119,4 +122,18 @@ public class V1_AdminRsvManagementController {
 		}
 		
 	}
+	
+	@RequestMapping(value="/sendemail.do", method=RequestMethod.POST)
+	public String sendEmail(HttpServletRequest request, Model model, @RequestParam("email") String email, @RequestParam("title") String title, @RequestParam("text") String text) {
+		
+		V1_EmailConfigure.sendEmail(email.toString(), title, text);
+		
+		model.addAttribute("message", "메일을 보냈습니다.");
+		String url = (String)request.getHeader("REFERER");
+		model.addAttribute("url", url);
+		
+		return "alert";
+	}
+	
+	
 }

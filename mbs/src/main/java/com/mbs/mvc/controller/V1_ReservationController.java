@@ -7,6 +7,9 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+
+import javax.servlet.http.HttpServletRequest;
+
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.mbs.mvc.conf.V1_EmailConfigure;
 import com.mbs.mvc.dao.V1_ReservationDAO;
 import com.mbs.mvc.dao.V1_ReviewDAO;
 import com.mbs.mvc.dao.V1_UserContentDAO;
@@ -147,7 +151,7 @@ public class V1_ReservationController {
 	public String userReservationEdit(@ModelAttribute("vo") V1_Reservation vo, 
 			@RequestParam("mn_name[]") String[] name, 
 			@RequestParam("mn_price[]") int[] price, 
-			@RequestParam("mn_cnt[]") int[] cnt) {
+			@RequestParam("mn_cnt[]") int[] cnt, Model model) {
 		
 		List<V1_RsvMenu> list = new ArrayList<V1_RsvMenu>();
 		for(int i=0; i<name.length; i++) {
@@ -167,17 +171,39 @@ public class V1_ReservationController {
 		
 		int ret = rDAO.updateRsv(vo);
 		if(ret>0) {
-			return "redirect:usr_rsv_content.do?str_number="+vo.getStr_number()+"&rsv_no="+vo.getRsv_no();
+			
+			String email = "ruaehdehddk@naver.com";
+			String title = "예약수정";
+			String text = "확인하셈";
+			String title1 = "예약바뀜";
+			String text1 = "확인ㄱㄱ";
+			
+			V1_EmailConfigure.sendEmail(email.toString(), title, text);
+			V1_EmailConfigure.sendEmail(email.toString(), title1, text1);
+			
+			String url = "usr_rsv_content.do?str_number="+vo.getStr_number()+"&rsv_no="+vo.getRsv_no();
+			model.addAttribute("message", "예약을 수정했습니다.");
+			model.addAttribute("url", url);
+			return "alert";
 		}
 		return "redirect:usr_rsv_edit.do";
 	}
 	
 	@RequestMapping(value="/usr_rsv_cancel.do", method = RequestMethod.GET)
-	public String userRsvCancel(@RequestParam("rsv_no") int rsv_no) {
-		System.out.println(rsv_no);
-		
+	public String userRsvCancel(@RequestParam("rsv_no") int rsv_no, Model model, HttpServletRequest request) {
 		rDAO.cancelRsv(rsv_no);
 		
-		return "redirect:usr_rsv_list.do";
+		String email = "ruaehdehddk@naver.com";
+		String title = "예약취소";
+		String text = "확인하셈";
+		
+		
+		V1_EmailConfigure.sendEmail(email.toString(), title, text);
+		
+		model.addAttribute("message", "예약을 취소했습니다.");
+		String url = (String)request.getHeader("REFERER");
+		model.addAttribute("url", url);
+		
+		return "alert";
 	}
 }

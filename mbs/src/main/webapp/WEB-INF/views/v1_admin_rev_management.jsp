@@ -97,15 +97,15 @@
 						</div>
 						<div class="form-inline" style="margin-bottom:10px">
 							<label style="width:100px">이메일 주소</label>
-							<input style="width:300px" type="text" id="emial" class="form-control" readonly/>
+							<input style="width:300px" type="text" id="email" name="email" class="form-control" readonly/>
 						</div>
 						<div class="form-inline" style="margin-bottom:10px">
 							<label style="width:100px">제목</label>
-							<input style="width:300px" type="text" id="title" class="form-control" />
+							<input style="width:300px" type="text" name="title" class="form-control" />
 						</div>
 						<div class="form-inline" style="margin-bottom:10px">
 							<label style="width:100px">내용</label>
-							<textarea style="width:300px; resize:none" rows="6" class="form-control" ></textarea>
+							<textarea style="width:300px; resize:none" name="text" rows="6" class="form-control" ></textarea>
 						</div>
 						
 					</div>
@@ -136,7 +136,7 @@
 				var email =  $('.mb_email').eq(idx).val();
 				var name =  $('.str_name').eq(idx).text();
 				
-				$('#emial').val(email);
+				$('#email').val(email);
 				$('#str_name').val(name);
 				$('#sendemail').modal('show');
 				
