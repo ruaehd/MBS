@@ -28,32 +28,46 @@ public class V1_AdminRsvManagementController {
 	@Autowired V1_AdminDAO aDAO = null;
 	
 	@RequestMapping(value="/admin_rsv_management.do", method=RequestMethod.GET)
-	public String AdminRsvManagement(Model model, @RequestParam(value="rsv_code", defaultValue="-1") int rsv_code, @RequestParam(value="page", defaultValue="1") int page) {
+	public String AdminRsvManagement(Model model, 
+			@RequestParam(value="rsv_code", defaultValue="-1") int rsv_code, 
+			@RequestParam(value="page", defaultValue="1") int page,
+			@RequestParam(value="type", defaultValue="str_name") String type,
+			@RequestParam(value="text", defaultValue="") String text) {
 		
 		if(rsv_code == -1) {	//menu값이 없을 경우
 			return "redirect:admin_rsv_management.do?rsv_code=0";
 		}
 		
-		if(rsv_code == 2) {
-			return "redirect:admin_rsv_management.do?rsv_code=3";
-		}
-		//세션아이디
+		V1_Reservation vo = new V1_Reservation();
+		vo.setPage((page-1)*10);
+		vo.setRsv_code(rsv_code);
+		vo.setText(text);
+		vo.setType(type);
+		
+		Map<String, Object> map = aDAO.countAdminRsvTot(vo);
+		Map<String, Object> map1 = new LinkedHashMap<String, Object>();
+	
 			
-		Map<String, Integer> map = aDAO.countAdminRsvTot();
-		Map<String, Integer> map1 = new LinkedHashMap<String, Integer>();
+		if(map.get("exp") == null) {
+			map.put("exp", 0);
+			map.put("com", 0);
+			map.put("can", 0);
+		}
+		
 		int tot = Integer.parseInt(String.valueOf(map.get("exp")))
+				+Integer.parseInt(String.valueOf(map.get("com")))
 				+Integer.parseInt(String.valueOf(map.get("can")));
 		
 		map1.put("전체", tot);
 		map1.put("이용예정", Integer.parseInt(String.valueOf(map.get("exp"))));
+		map1.put("이용완료", Integer.parseInt(String.valueOf(map.get("com"))));
 		map1.put("예약취소", Integer.parseInt(String.valueOf(map.get("can"))));
 		
 		
-		V1_Reservation vo = new V1_Reservation();
-		vo.setPage((page-1)*10);
-		vo.setRsv_code(rsv_code);
+		
 		
 		List<V1_Reservation> list = aDAO.selectAdminRsvList(vo);
+		
 		
 		model.addAttribute("map", map1);
 		model.addAttribute("list", list);
@@ -62,7 +76,8 @@ public class V1_AdminRsvManagementController {
 	}
 	
 	@RequestMapping(value="/admin_rev_management.do", method=RequestMethod.GET)
-	public String AdminReviewManagement(Model model, @RequestParam(value="page", defaultValue="1") int page) {
+	public String AdminReviewManagement(Model model, 
+			@RequestParam(value="page", defaultValue="1") int page) {
 		
 		V1_Store vo = new V1_Store();
 		vo.setPage((page-1)*9);

@@ -44,11 +44,11 @@
 							<!-- Wrapper for slides -->
 							<div class="carousel-inner" id="back_imgs">
 								<div class="item active">
-									<img src="get_blob_img.do?idx=1" style="width: 100%; height: 350px"/>
+									<img src="get_blob_img.do?str_number=${svo.str_number}&idx=1" style="width: 100%; height: 350px"/>
 								</div>
 								<c:forEach var="i" begin="2" end="${cnt}">
 									<div class="item">
-										<img src="get_blob_img.do?idx=${i}" style="width: 100%; height: 350px"/>
+										<img src="get_blob_img.do?str_number=${svo.str_number}&idx=${i}" style="width: 100%; height: 350px"/>
 									</div>
 								</c:forEach>
 							</div>
@@ -161,7 +161,7 @@
 						
 						<div style="margin-bottom:10px">
 							<input type="submit" id="rsv_button" class="btn btn-success" value="예약하기"	/>
-							<a href="usr_content.do" class="btn btn-info">뒤로가기</a>
+							<a href="usr_content.do?str_number=${param.str_number}" class="btn btn-info">뒤로가기</a>
 						</div>
 						
 					</div>
@@ -212,7 +212,7 @@
 			var map = new daum.maps.Map(mapContainer, mapOption); 
 			var geocoder = new daum.maps.services.Geocoder();
 			
-			geocoder.addressSearch('${vo.str_address}', function(result, status) {
+			geocoder.addressSearch('${svo.str_address}', function(result, status) {
 			
 			     if (status === daum.maps.services.Status.OK) {
 			
@@ -224,7 +224,7 @@
 			        });
 			
 			        var infowindow = new daum.maps.InfoWindow({
-			            content: '<div style="text-align:center;padding:6px 0;">${vo.str_name}</div>'
+			            content: '<div style="text-align:center;padding:6px 0;">${svo.str_name}</div>'
 			        });
 			        infowindow.open(map, marker);
 			

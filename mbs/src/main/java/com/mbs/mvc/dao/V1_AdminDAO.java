@@ -24,8 +24,8 @@ public class V1_AdminDAO {
 		return sqlsession.selectList("V1_AdminRsvMgt.selectAdminRsvList", vo);
 	}
 	
-	public Map<String, Integer> countAdminRsvTot() {
-		return sqlsession.selectOne("V1_AdminRsvMgt.countAdminRsvTot");
+	public Map<String, Object> countAdminRsvTot(V1_Reservation vo) {
+		return sqlsession.selectOne("V1_AdminRsvMgt.countAdminRsvTot", vo);
 	}
 	
 	public List<V1_Store> selectStoreList(V1_Store vo){

@@ -40,7 +40,10 @@ public class V1_ReservationController {
 	 * 예약
 	 */
 	@RequestMapping(value="/usr_content_pay.do", method = RequestMethod.POST)
-	public String userContentPay(@ModelAttribute("rvo") V1_Reservation vo, @RequestParam("mn_name[]") String[] name, @RequestParam("mn_price[]") int[] price, @RequestParam("mn_cnt[]") int[] cnt) {
+	public String userContentPay(@ModelAttribute("rvo") V1_Reservation vo, 
+			@RequestParam("mn_name[]") String[] name, 
+			@RequestParam("mn_price[]") int[] price, 
+			@RequestParam("mn_cnt[]") int[] cnt) {
 		//세션아이디
 		vo.setRsv_sub_id("user");
 		//param

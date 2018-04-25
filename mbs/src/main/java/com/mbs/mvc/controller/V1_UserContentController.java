@@ -105,15 +105,15 @@ public class V1_UserContentController {
 	 * 예약하기
 	 */
 	@RequestMapping(value="/usr_content_pay.do", method = RequestMethod.GET)
-	public String userContentPay(Model model) {
+	public String userContentPay(Model model, @RequestParam("str_number") int str_number) {
 		
 		V1_Reservation rvo = new V1_Reservation();
 		//파람
 		//세션 아이디
-		int cnt = ucDAO.selectImgCount(1234567890);
-		V1_Store svo = ucDAO.selectStoreOne(1234567890);
+		int cnt = ucDAO.selectImgCount(str_number);
+		V1_Store svo = ucDAO.selectStoreOne(str_number);
 		V1_Member mvo = ucDAO.selectMemberOne("user");
-		List<V1_Menu> mlist = ucDAO.selectMenuList(1234567890);
+		List<V1_Menu> mlist = ucDAO.selectMenuList(str_number);
 		
 		model.addAttribute("mlist", mlist);
 		model.addAttribute("cnt", cnt);

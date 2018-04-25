@@ -35,8 +35,55 @@ public class V1_Reservation {
 	
 	private int page = 0;
 	
+	private String type = null;
+	private String text = null;
+	
+	private int exp = 0;
+	private int com = 0;
+	private int can = 0;
 	
 	
+	
+	public int getExp() {
+		return exp;
+	}
+
+	public void setExp(int exp) {
+		this.exp = exp;
+	}
+
+	public int getCom() {
+		return com;
+	}
+
+	public void setCom(int com) {
+		this.com = com;
+	}
+
+	public int getCan() {
+		return can;
+	}
+
+	public void setCan(int can) {
+		this.can = can;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	public String getText() {
+		return text;
+	}
+
+	public void setText(String text) {
+		this.text = text;
+	}
+
 	public int getStr_personnel() {
 		return str_personnel;
 	}

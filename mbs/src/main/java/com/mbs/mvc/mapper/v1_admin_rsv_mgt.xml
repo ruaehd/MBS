@@ -6,8 +6,12 @@
 		SELECT 
 			SUM(CASE WHEN rsv_code=1 THEN 1 ELSE 0 END) AS exp,
 			SUM(CASE WHEN rsv_code=2 THEN 1 ELSE 0 END) AS com,
-            SUM(CASE WHEN rsv_code=3 THEN 1 ELSE 0 END) AS can 
-		FROM `reservation`
+            SUM(CASE WHEN rsv_code=3 THEN 1 ELSE 0 END) AS can
+ 
+		FROM `reservation` r
+		INNER JOIN `store` s
+		ON r.str_number = s.str_number
+		WHERE ${type} LIKE CONCAT('%', #{text}, '%')
 	</select>
 	
 	<select id="selectAdminRsvList" parameterType="V1_Reservation" resultType="V1_Reservation">
@@ -18,14 +22,12 @@
 			(SELECT r.rsv_day, r.rsv_code, c.rsv_code_chk, r.str_number, r.rsv_no, r.rsv_sub_id, r.rsv_sub_name, r.rsv_date FROM `reservation` r 
 				INNER JOIN `rsv_code` c
 				ON r.rsv_code = c.rsv_code
-				<if test="rsv_code == 0">
-    				WHERE c.rsv_code != 2
-  				</if>
   				<if test="rsv_code != 0 ">
     				WHERE c.rsv_code=#{rsv_code}
   				</if>
 			) rc
 		ON s.str_number = rc.str_number
+		WHERE ${type} LIKE CONCAT('%', #{text}, '%')
 		ORDER BY rc.rsv_no DESC LIMIT #{page} , 10
 	</select>
 	

@@ -109,7 +109,7 @@
 						<h1>${vo.str_name}</h1>
 						<hr/>
 						<div>
-							<a href="usr_content_pay.do" class="btn btn-info">예약하기</a>
+							<a href="usr_content_pay.do?str_number=${vo.str_number}" class="btn btn-info">예약하기</a>
 							<a href="#commnet" class="btn btn-primary">후기보기</a>
 							<a href="#map" class="btn btn-success">지도보기</a>
 							<a href="#" class="btn btn-danger">뒤로가기</a>
