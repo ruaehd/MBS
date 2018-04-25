@@ -33,10 +33,16 @@ public class V1_Store {
 	private double avg = 0;
 	private String mb_email = null;
 	
+	private String text = null;
 	
 	
 	
-	
+	public String getText() {
+		return text;
+	}
+	public void setText(String text) {
+		this.text = text;
+	}
 	public String getMb_email() {
 		return mb_email;
 	}

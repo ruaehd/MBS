@@ -31,7 +31,9 @@
 	<div class="row">
 		<jsp:include page="v1_admin_nav.jsp"></jsp:include>
 		<div class="container" style="margin-top:20px">
-			 
+			<c:if test="${fn:length(param.text) ne 0}">
+				검색어 : ${param.text}
+			</c:if>
 			<div id="summary_board" class="form-group" style="margin-bottom:100px" align="right">
 				<ul id="rsv_cnt" class="list-group">
 					<c:forEach var="tmp" items="${map}" varStatus="i">
@@ -133,7 +135,7 @@
 				func();
 			});
 			
-			var totpage = 0;
+			var totpage=0;
 			if(${param.rsv_code} == 0){
 				totpage = (${map.get("전체")}-1)/10+1
 			}

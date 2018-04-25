@@ -51,15 +51,16 @@
 			ON s.str_number=rc.str_number)src
 			
 		ON m.mb_id = src.mb_id
+		WHERE src.str_name LIKE CONCAT('%', #{text}, '%')
 	    GROUP BY src.str_number
-	    ORDER BY src.str_date DESC LIMIT #{page} , 9
+	    ORDER BY src.str_date DESC LIMIT #{page} , 6
 	</select>
 	
 	<select id="selectReviewList" parameterType="V1_Comment" resultType="V1_Comment">
 		SELECT c.rsv_cmt_no, c.rsv_cmt_content, c.rsv_cmt_point, c.rsv_cmt_writer, c.rsv_cmt_date, DATE_FORMAT(r.rsv_day, '%Y-%m-%d') AS rsv_day, c.rsv_no FROM `rsv_comment` c
 		INNER JOIN `reservation` r
 		ON c.rsv_no = r.rsv_no
-		WHERE r.str_number=#{str_number} AND c.rsv_cmt_delete=1
+		WHERE r.str_number=#{str_number} AND c.rsv_cmt_delete=1 AND ${type} LIKE CONCAT('%', #{text}, '%')
 		ORDER BY c.rsv_cmt_no DESC LIMIT #{page} , 10
 	</select>
 	
@@ -68,4 +69,17 @@
 			UPDATE `rsv_comment` SET rsv_cmt_delete=0 WHERE rsv_cmt_no=#{vo.rsv_cmt_no}	
 		</foreach>
 	</update>
+	
+	<select id="countStoreTot" parameterType="V1_Store" resultType="int">
+		SELECT COUNT(*) AS cnt FROM `store` WHERE str_name LIKE CONCAT('%', #{text}, '%')
+	</select>
+	
+	<select id="countReviewTot" parameterType="V1_Comment" resultType="int">
+		SELECT 
+			COUNT(*) AS cnt 
+		FROM `rsv_comment` c
+		INNER JOIN `reservation` r
+		ON c.rsv_no = r.rsv_no
+		WHERE r.str_number=#{str_number} AND ${type} LIKE CONCAT('%', #{text}, '%')
+	</select>
 </mapper>

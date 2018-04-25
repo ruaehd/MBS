@@ -27,6 +27,9 @@
 					</div>
 				</c:if>
 				<c:if test="${fn:length(list) ne 0 }">
+					<div align="right" class="form-inline" style="margin-top:10px">
+				 		<a href="#" class="btn btn-success" id="btn_del_chk">선택 삭제</a>
+					</div>
 					<table class="table">
 						<tr>
 							<th><input type="checkbox" id="chk_all"/></th>
@@ -48,15 +51,23 @@
 						 		<td>${tmp.rsv_day}</td>
 						 		<td>${tmp.rsv_cmt_date}</td>
 						 		<td>
-						 			<a href="#" class="btn btn-xs btn-danger del_rev" >삭제</a>
+						 			<a href="#" class="btn btn-xs btn-danger del_rev"  >삭제</a>
 						 		</td>	
 						 	</tr>
 					 	</c:forEach>
 					 </table>
 				 </c:if>
-				 <div align="right" class="form-inline" style="margin-top:10px">
-				 	<a href="#" class="btn btn-success" id="btn_del_chk">선택 삭제</a>
-				 </div>
+				 
+				 
+				<div class="form-inline" align="right" style="margin-top:5px; margin-bottom:5px">
+					<select class="form-control" id="search_type" >
+						<option value="rsv_cmt_content">내용</option>
+						<option value="rsv_cmt_writer">작성자</option>
+					</select>
+					<input type="text" id="search_text" class="form-control" />
+					<input type="button" id="search_btn" class="btn btn-success" value="검색" />
+				</div>
+				 
 			 </form>
 			 <div align="center">
 				<ul id="pagination" class="pagination"></ul>
@@ -70,10 +81,28 @@
 	<script src="resources/js/sweetalert.min.js"></script>
 	<script>
 		$(function(){
+			
+			var func = function(){
+				var ty = $('#search_type').val();
+				var tx = encodeURIComponent( $('#search_text').val() );
+				window.location.href="?str_number=${param.str_number}&type="+ty+"&text="+tx;
+			};
+			
+			$('#search_text').keyup(function(event){
+				if(event.which == 13){
+					func();
+				}
+			});
+			
+			$('#search_btn').click(function(){
+				func();
+			});
+			
+			
 			$('#pagination').twbsPagination({
-				totalPages: 10,
+				totalPages:${tot},
 				visiblePage:10,
-				href:'?str_number=${param.str_number}&page={{number}}'
+				href:'?str_number=${param.str_number}&page={{number}}&type=${param.type}&text=${param.text}'
 			});
 			
 			$('.del_rev').click(function(){

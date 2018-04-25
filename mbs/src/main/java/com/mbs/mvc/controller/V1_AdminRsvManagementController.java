@@ -1,5 +1,6 @@
 package com.mbs.mvc.controller;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -47,7 +48,9 @@ public class V1_AdminRsvManagementController {
 		Map<String, Object> map = aDAO.countAdminRsvTot(vo);
 		Map<String, Object> map1 = new LinkedHashMap<String, Object>();
 	
-			
+		System.out.println("AAAAAAAAAA"+text);
+		System.out.println("BBBBBBBBBB"+vo.getText());
+		
 		if(map.get("exp") == null) {
 			map.put("exp", 0);
 			map.put("com", 0);
@@ -58,16 +61,12 @@ public class V1_AdminRsvManagementController {
 				+Integer.parseInt(String.valueOf(map.get("com")))
 				+Integer.parseInt(String.valueOf(map.get("can")));
 		
-		map1.put("전체", tot);
+		map1.put("합계", tot);
 		map1.put("이용예정", Integer.parseInt(String.valueOf(map.get("exp"))));
 		map1.put("이용완료", Integer.parseInt(String.valueOf(map.get("com"))));
 		map1.put("예약취소", Integer.parseInt(String.valueOf(map.get("can"))));
 		
-		
-		
-		
 		List<V1_Reservation> list = aDAO.selectAdminRsvList(vo);
-		
 		
 		model.addAttribute("map", map1);
 		model.addAttribute("list", list);
@@ -77,27 +76,38 @@ public class V1_AdminRsvManagementController {
 	
 	@RequestMapping(value="/admin_rev_management.do", method=RequestMethod.GET)
 	public String AdminReviewManagement(Model model, 
-			@RequestParam(value="page", defaultValue="1") int page) {
+			@RequestParam(value="page", defaultValue="1") int page, @RequestParam(value="text", defaultValue="") String text) {
 		
 		V1_Store vo = new V1_Store();
-		vo.setPage((page-1)*9);
+		vo.setPage((page-1)*6);
+		vo.setText(text);
 		List<V1_Store> list = aDAO.selectStoreList(vo);
-
+		
+		int tot = aDAO.countStoreTot(vo);
+		
 		model.addAttribute("list", list);
-		model.addAttribute("tot", (list.size()-1/9+1));
+		model.addAttribute("tot", (tot-1)/6+1);
 		
 		return"v1_admin_rev_management";
 	}
 	
 	@RequestMapping(value="/admin_rev_list.do", method=RequestMethod.GET)
-	public String AdminReviewList(Model model, @RequestParam(value="page", defaultValue="1") int page, @RequestParam("str_number") int str_number) {
+	public String AdminReviewList(Model model, 
+			@RequestParam(value="page", defaultValue="1") int page, 
+			@RequestParam("str_number") int str_number, 
+			@RequestParam(value="type", defaultValue="rsv_cmt_content") String type,
+			@RequestParam(value="text", defaultValue="") String text) {
 		V1_Comment vo = new V1_Comment();
 		vo.setStr_number(str_number);
 		vo.setPage((page-1)*10);
+		vo.setType(type);
+		vo.setText(text);
 		
 		List<V1_Comment> list = aDAO.selectReviewList(vo);
+		int tot = aDAO.countReviewTot(vo);
 		
 		model.addAttribute("list", list);
+		model.addAttribute("tot", (tot-1)/10+1);
 		return "v1_admin_rev_list";
 	}
 	

@@ -67,11 +67,11 @@
 			</section>
 			<hr/>
 			 
-			<div align="right" class="form-inline" >
+			<div class="form-inline" align="right" style="margin-top:5px; margin-bottom:5px">
 				<div class="form-group">
 				 	<label>상호명 검색</label>
-				 	<input class="form-control" type="text" style="width:200px" />
-				 	<a href="#" class="btn btn-default">검색</a>
+				 	<input type="text" id="search_text" class="form-control" />
+					<input type="button" id="search_btn" class="btn btn-success" value="검색" />
 			 	</div>
 			</div>
 			 
@@ -125,10 +125,27 @@
 	<script src="resources/js/jquery.twbsPagination.min.js"></script>
 	<script>
 		$(function(){
+			
+			var func = function(){
+				var tx = encodeURIComponent( $('#search_text').val() );
+				window.location.href="?text="+tx;
+			};
+			
+			$('#search_text').keyup(function(event){
+				if(event.which == 13){
+					func();
+				}
+			});
+			
+			$('#search_btn').click(function(){
+				func();
+			});
+			
+			
 			$('#pagination').twbsPagination({
 				totalPages: ${tot},
 				visiblePage:10,
-				href:'?page={{number}}'
+				href:'?page={{number}}&text=${param.text}'
 			});
 			
 			$('.send_email').click(function(){

@@ -40,4 +40,12 @@ public class V1_AdminDAO {
 		return sqlsession.update("V1_AdminRsvMgt.multiDeleteReview", list);
 	}
 	
+	public int countStoreTot(V1_Store vo) {
+		return sqlsession.selectOne("V1_AdminRsvMgt.countStoreTot", vo);
+	}
+	
+	
+	public int countReviewTot(V1_Comment vo) {
+		return sqlsession.selectOne("V1_AdminRsvMgt.countReviewTot", vo);
+	}
 }
