@@ -49,9 +49,9 @@
            </div>
            <div class=" col-md-offset-7 col-md-3 form-inline">
                  <select class="form-control" id="search_type">
-                    <option>이름</option>
-                    <option>날짜</option>
-                    <option>번호</option>
+                 	<option value="ntc_title">전체</option>
+                    <option value="ntc_title">제목</option>
+                    <option value="ntc_content">내용</option>
                  </select>
                  <input type="text" class="form-control" id="search_text" />
                  <button type="button" class="form-control btn-success" id="search_btn">검색</button>
@@ -89,6 +89,7 @@
         </div>
     </div>
 
+	
 
 
    <script>
