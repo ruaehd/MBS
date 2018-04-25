@@ -3,10 +3,23 @@
 
 <mapper namespace="Admin">
 	<select id="noticeList" parameterType="com.mbs.mvc.vo.NoticeVO" resultType="com.mbs.mvc.vo.NoticeVO">
-		SELECT * FROM `notice` WHERE ${ntc_sc_type} LIKE CONCAT('%', #{ntc_sc_text}, '%') ORDER BY ntc_no DESC LIMIT #{ntc_page}, 10
+		SELECT * FROM `notice` 
+		<if test="ntc_sc_type == 'all'">
+		WHERE ntc_title LIKE CONCAT('%', #{ntc_sc_text}, '%') OR ntc_content LIKE CONCAT('%', #{ntc_sc_text}, '%') 
+		</if>  
+		<if test="ntc_sc_type != 'all'">
+		WHERE ${ntc_sc_type} LIKE CONCAT('%', #{ntc_sc_text}, '%') 
+		</if>
+		ORDER BY ntc_no DESC LIMIT #{ntc_page}, 10
 	</select>
 	
-	<select id="noticePage" resultType="int">
-		SELECT COUNT(*) FROM `notice`
+	<select id="noticePage" parameterType="com.mbs.mvc.vo.NoticeVO" resultType="int">
+		SELECT COUNT(*) FROM `notice` 
+		<if test="ntc_sc_type == 'all'">
+		WHERE ntc_title LIKE CONCAT('%', #{ntc_sc_text}, '%') OR ntc_content LIKE CONCAT('%', #{ntc_sc_text}, '%') 
+		</if>  
+		<if test="ntc_sc_type != 'all'">
+		WHERE ${ntc_sc_type} LIKE CONCAT('%', #{ntc_sc_text}, '%') 
+		</if>
 	</select>
 </mapper>

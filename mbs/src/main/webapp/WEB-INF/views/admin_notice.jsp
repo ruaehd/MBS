@@ -42,14 +42,14 @@
     <!-- Main Content -->
     <div class="container-fluid">
         <div class="side-body">
-        <div class="title"> 관리명 </div>
+        <div class="title">공지관리</div>
             <div class="row">
            <div class="col-md-2">
-              <button type="button" class="btn btn-primary btn_add">추가하기</button>
+              <button type="button" class="btn btn-primary btn_add" id="btn_insert">추가하기</button>
            </div>
            <div class=" col-md-offset-7 col-md-3 form-inline">
                  <select class="form-control" id="search_type">
-                 	<option value="ntc_title">전체</option>
+                 	<option value="all">제목+내용</option>
                     <option value="ntc_title">제목</option>
                     <option value="ntc_content">내용</option>
                  </select>
@@ -89,11 +89,48 @@
         </div>
     </div>
 
-	
+	<form:form action="admin_notice.do" modelAttribute="vo" method="post">
+	<div class="modal fade" id="insertmodal">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4>공지등록</h4>
+				</div>
+				<div class="modal-body">
+					<div class="form-inline" style="margin-top:3px; margin-bottom:3px">
+						<label style="width:120px">공지제목</label>
+						<input type="text" class="form-control" placeholder="공지제목" />
+					</div>
+					
+					<div class="form-inline" style="margin-top:3px; margin-bottom:3px">
+						<label style="width:120px">공지내용</label>
+						<input type="text" class="form-control" placeholder="공지내용" />
+					</div>
+					
+					<div class="form-inline" style="margin-top:3px; margin-bottom:3px">
+						<label style="width:120px">공개여부</label>
+						<select class="form-control">
+								<option value="1">공개</option>
+								<option value="0">비공개</option>
+						</select>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<input type="submit" class="btn btn-success" value="등록" />
+					<button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	</form:form>
 
 
    <script>
       $(function() {
+    		$('#btn_insert').click(function(){
+				$('#insertmodal').modal('show');	
+			});	
+    	  
     	  	var func = function(){
 				var ty = $('#search_type').val();
 				var tx = encodeURIComponent($('#search_text').val());

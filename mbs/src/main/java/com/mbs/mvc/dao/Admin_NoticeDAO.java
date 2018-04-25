@@ -19,7 +19,7 @@ public class Admin_NoticeDAO {
 	public List<NoticeVO> NoticeList(NoticeVO vo){
 		return sqlsession.selectList("Admin.noticeList", vo);
 	}
-	public int NoticePage() {
-		return sqlsession.selectOne("Admin.noticePage");
+	public int NoticePage(NoticeVO vo) {
+		return sqlsession.selectOne("Admin.noticePage", vo);
 	}
 }

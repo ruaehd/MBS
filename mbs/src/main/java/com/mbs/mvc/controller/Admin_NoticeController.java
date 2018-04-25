@@ -20,7 +20,7 @@ public class Admin_NoticeController {
 	
 	@RequestMapping(value="/admin_notice.do", method= RequestMethod.GET)
 	public String notice(Model model, @RequestParam(value="page", defaultValue="1") int page1, 
-			@RequestParam(value = "type", defaultValue="ntc_title") String type, @RequestParam(value = "text", defaultValue="") String text) {
+			@RequestParam(value = "type", defaultValue="all") String type, @RequestParam(value = "text", defaultValue="") String text) {
 		int page = (page1-1)*10;
 		NoticeVO vo = new NoticeVO();
 		vo.setNtc_sc_type(type);
@@ -29,9 +29,15 @@ public class Admin_NoticeController {
 		
 		List<NoticeVO> list = anDAO.NoticeList(vo);
 		model.addAttribute("list", list);
-		int totPage = anDAO.NoticePage();
+		model.addAttribute("vo", vo);
+		int totPage = anDAO.NoticePage(vo);
 		model.addAttribute("totPage", (totPage-1)/10+1);
 		return "admin_notice";
+	}
+	
+	@RequestMapping(value="/admin_notice.do", method= RequestMethod.POST)
+	public String notice(Model model) {
+		return "redirect:admin_notice.do";
 	}
 
 
