@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="AdminReview">
+	<!-- 업체명 검색 리스트 -->
+	
+	<select id="selectReviewSearchNameList" parameterType="com.mbs.mvc.vo.V1_Admin_SearchVO" resultType="com.mbs.mvc.vo.V1_AdminReviewVO">
+		SELECT * FROM 
+			 (SELECT  r.rsv_no , r.str_number , r.rsv_sub_id , rc.rsv_cmt_no ,
+			 rc.rsv_cmt_content , rc.rsv_cmt_writer, rc.rsv_cmt_delete , rc.rsv_cmt_date 
+			 FROM reservation r INNER JOIN rsv_comment rc ON r.rsv_no = rc.rsv_no 
+			 WHERE CASE 
+				WHEN #{gubun} = 1
+				THEN rc.rsv_cmt_delete = '1'
+				WHEN #{gubun} = 2
+				THEN rc.rsv_cmt_delete = '2' END ) rrc 
+		INNER JOIN store s
+		ON rrc.str_number = s.str_number WHERE s.str_name LIKE concat('%',#{searchval},'%') ORDER BY rrc.rsv_cmt_no DESC LIMIT #{page} , 10
+	</select>
+	
+	<select id="selectReviewSearchNameCount" parameterType="com.mbs.mvc.vo.V1_Admin_SearchVO" resultType="int">
+		SELECT count(*) FROM 
+			 (SELECT  r.rsv_no , r.str_number , r.rsv_sub_id , rc.rsv_cmt_no ,
+			 rc.rsv_cmt_content , rc.rsv_cmt_writer, rc.rsv_cmt_delete , rc.rsv_cmt_date 
+			 FROM reservation r INNER JOIN rsv_comment rc ON r.rsv_no = rc.rsv_no 
+			  WHERE CASE 
+				WHEN #{gubun} = 1
+				THEN rc.rsv_cmt_delete = '1'
+				WHEN #{gubun} = 2
+				THEN rc.rsv_cmt_delete = '2' END ) rrc 
+		INNER JOIN store s 
+		ON rrc.str_number = s.str_number WHERE s.str_name LIKE concat('%',#{searchval},'%')
+	</select>
+	
+	<!-- 사용자 검색 리스트 -->
+	
+	<select id="selectReviewSearchUserList" parameterType="com.mbs.mvc.vo.V1_Admin_SearchVO"  resultType="com.mbs.mvc.vo.V1_AdminReviewVO">
+		SELECT * FROM 
+			 (SELECT  r.rsv_no , r.str_number , r.rsv_sub_id , rc.rsv_cmt_no ,
+			 rc.rsv_cmt_content , rc.rsv_cmt_writer, rc.rsv_cmt_delete , rc.rsv_cmt_date 
+			 FROM reservation r INNER JOIN rsv_comment rc ON r.rsv_no = rc.rsv_no 
+			 WHERE rc.rsv_cmt_writer LIKE concat('%',#{searchval},'%') AND 
+			 CASE 
+				WHEN #{gubun} = 1
+				THEN rc.rsv_cmt_delete = '1'
+				WHEN #{gubun} = 2
+				THEN rc.rsv_cmt_delete = '2' 
+			 END ) rrc 
+		INNER JOIN store s 
+		ON rrc.str_number = s.str_number ORDER BY rrc.rsv_cmt_no DESC  LIMIT #{page} , 10
+	</select>
+
+	<select id="selectReviewSearchUserCount" parameterType="com.mbs.mvc.vo.V1_Admin_SearchVO" resultType="int">
+		SELECT count(*) FROM rsv_comment WHERE 
+			CASE 
+				WHEN #{gubun} = 1
+				THEN rc.rsv_cmt_delete = '1'
+				WHEN #{gubun} = 2
+				THEN rc.rsv_cmt_delete = '2' 
+			END  
+			 AND rsv_cmt_writer = #{searchval} 
+	</select>
+	
+	<update id="adminUpdateReview" parameterType="com.mbs.mvc.vo.V1_AdminReviewVO">
+		UPDATE rsv_comment SET rsv_cmt_content = #{rsv_cmt_content} WHERE rsv_cmt_no = #{rsv_cmt_no}
+	</update>
+	
+	<update id="admindeleteReview" parameterType="int">
+		UPDATE rsv_comment SET rsv_cmt_delete = '0' WHERE rsv_cmt_no = #{rsv_cmt_no}
+	</update>
+	
+	<update id="adminReportReview" parameterType="int">
+		UPDATE rsv_comment SET rsv_cmt_delete = '1' WHERE rsv_cmt_no = #{rsv_cmt_no}
+	</update>
+	
+</mapper>
