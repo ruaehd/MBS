@@ -11,25 +11,40 @@
 	<link rel="stylesheet" href="resources/css/bootstrap.css" />
 	<link rel="stylesheet" href="resources/css/v1_adminside.css" />
 	<link rel="stylesheet" href="resources/css/w3.css" />
-	
 </head>
 <body>
 	<div class="row">
 		<jsp:include page="v1_admin_nav.jsp"></jsp:include>
-		<div class="container" style="margin-top:100px">
-			<h3>리뷰 목록</h3>
+		<div class="container" style="margin-top:20px">
+			<h2>리뷰 목록</h2>
 			<hr />
 			<form id="form" action="admin_rev_delete.do" method="post"> 
-				<input type="hidden" name="str_number" value="${param.str_number}"/>
+				
+					<div style="display:none">
+						<input type="submit" onclick="return false;" />
+						<input type="text"/>
+					</div>
+					<input type="hidden" name="str_number" value="${param.str_number}"/>
+				
+				<div class="row" style="margin-bottom:10px">
+					<div class="col-md-6">
+						<c:if test="${fn:length(param.text) ne 0}">
+							<a href="admin_rev_list.do?str_number=${param.str_number}" class="btn btn-success">전체보기</a>
+							검색어 : <strong>${param.text}</strong>
+						</c:if>
+					</div>
+					<div class="col-md-6">
+						<div align="right">
+							<a href="#" class="btn btn-danger" id="btn_del_chk">선택 삭제</a>
+						</div>
+					</div>
+				</div>
 				<c:if test="${fn:length(list) eq 0 }">
-					<div style="padding:100px">
-						<h3>작성된 후기가 없습니다</h3>
+					<div style="text-align:center; vertical-align:middle;">
+						<h3>결과가 없습니다</h3>
 					</div>
 				</c:if>
 				<c:if test="${fn:length(list) ne 0 }">
-					<div align="right" class="form-inline" style="margin-top:10px">
-				 		<a href="#" class="btn btn-success" id="btn_del_chk">선택 삭제</a>
-					</div>
 					<table class="table">
 						<tr>
 							<th><input type="checkbox" id="chk_all"/></th>
@@ -46,12 +61,16 @@
 								<td><input id="no_${i.index}" type="checkbox" class="chk" name="chk[]" value="${tmp.rsv_cmt_no}"/></td>
 						 		<td><a href="usr_rsv_content.do?rsv_no=${tmp.rsv_no}&str_number=${param.str_number}">${tmp.rsv_no}</a></td>
 						 		<td>${tmp.rsv_cmt_point}</td>
-						 		<td>${tmp.rsv_cmt_content}</td>
+						 		<td>
+									<div style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap; width: 300px;" title="${tmp.rsv_cmt_content}">
+										${tmp.rsv_cmt_content}
+									</div>
+						 		</td>
 						 		<td>${tmp.rsv_cmt_writer}</td>
 						 		<td>${tmp.rsv_day}</td>
 						 		<td>${tmp.rsv_cmt_date}</td>
 						 		<td>
-						 			<a href="#" class="btn btn-xs btn-danger del_rev"  >삭제</a>
+						 			<a href="#" class="btn btn-xs btn-warning del_rev"  >삭제</a>
 						 		</td>	
 						 	</tr>
 					 	</c:forEach>
@@ -91,6 +110,7 @@
 			$('#search_text').keyup(function(event){
 				if(event.which == 13){
 					func();
+					$('#btn_del_chk').event.preventDefault();
 				}
 			});
 			
@@ -102,7 +122,7 @@
 			$('#pagination').twbsPagination({
 				totalPages:${tot},
 				visiblePage:10,
-				href:'?str_number=${param.str_number}&page={{number}}&type=${param.type}&text=${param.text}'
+				href:'?str_number=${param.str_number}&page={{number}}&type=${param.type}&text='+encodeURIComponent('${param.text}')
 			});
 			
 			$('.del_rev').click(function(){

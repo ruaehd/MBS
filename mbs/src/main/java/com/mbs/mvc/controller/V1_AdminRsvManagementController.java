@@ -1,13 +1,13 @@
 package com.mbs.mvc.controller;
 
 import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,7 +15,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.mbs.mvc.conf.V1_EmailConfigure;
 import com.mbs.mvc.dao.V1_AdminDAO;
@@ -33,7 +32,7 @@ public class V1_AdminRsvManagementController {
 			@RequestParam(value="rsv_code", defaultValue="-1") int rsv_code, 
 			@RequestParam(value="page", defaultValue="1") int page,
 			@RequestParam(value="type", defaultValue="str_name") String type,
-			@RequestParam(value="text", defaultValue="") String text) {
+			@RequestParam(value="text", defaultValue="") String text) throws UnsupportedEncodingException {
 		
 		if(rsv_code == -1) {	//menu값이 없을 경우
 			return "redirect:admin_rsv_management.do?rsv_code=0";
@@ -48,8 +47,6 @@ public class V1_AdminRsvManagementController {
 		Map<String, Object> map = aDAO.countAdminRsvTot(vo);
 		Map<String, Object> map1 = new LinkedHashMap<String, Object>();
 	
-		System.out.println("AAAAAAAAAA"+text);
-		System.out.println("BBBBBBBBBB"+vo.getText());
 		
 		if(map.get("exp") == null) {
 			map.put("exp", 0);
