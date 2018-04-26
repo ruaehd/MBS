@@ -2,6 +2,10 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="Admin">
+	<insert id="noticeInsert" parameterType="com.mbs.mvc.vo.NoticeVO">
+		INSERT INTO `notice`(ntc_title, ntc_content, ntc_delete, ntc_date, mb_id) VALUES(#{ntc_title},#{ntc_content},#{ntc_delete},NOW(),#{mb_id})
+	</insert>
+
 	<select id="noticeList" parameterType="com.mbs.mvc.vo.NoticeVO" resultType="com.mbs.mvc.vo.NoticeVO">
 		SELECT * FROM `notice` 
 		<if test="ntc_sc_type == 'all'">

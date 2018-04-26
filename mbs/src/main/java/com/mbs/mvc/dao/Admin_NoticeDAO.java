@@ -16,6 +16,10 @@ public class Admin_NoticeDAO {
 	@Resource(name = "sqlSession")
 	private SqlSession sqlsession = null;
 	
+	public int NoticeInsert(NoticeVO vo) {
+		return sqlsession.insert("Admin.noticeInsert", vo);
+	}
+	
 	public List<NoticeVO> NoticeList(NoticeVO vo){
 		return sqlsession.selectList("Admin.noticeList", vo);
 	}

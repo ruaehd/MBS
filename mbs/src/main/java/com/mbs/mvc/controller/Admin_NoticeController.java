@@ -5,12 +5,14 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.mbs.mvc.dao.Admin_NoticeDAO;
 import com.mbs.mvc.vo.NoticeVO;
+import com.mbs.mvc.vo.V1_Comment;
 
 @Controller
 public class Admin_NoticeController {
@@ -36,7 +38,10 @@ public class Admin_NoticeController {
 	}
 	
 	@RequestMapping(value="/admin_notice.do", method= RequestMethod.POST)
-	public String notice(Model model) {
+	public String notice(@ModelAttribute("vo") NoticeVO vo) {
+		
+		vo.setMb_id("admin");
+		anDAO.NoticeInsert(vo);
 		return "redirect:admin_notice.do";
 	}
 

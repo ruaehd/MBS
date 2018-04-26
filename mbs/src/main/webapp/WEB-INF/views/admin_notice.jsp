@@ -10,6 +10,9 @@
    <link rel="stylesheet" href="resources/css/w3.css" />
 </head>
 <style>
+   .modal-backdrop.in {
+         z-index:auto;
+   }
    .table-head{
       font-color:white;
    }
@@ -50,7 +53,7 @@
            <div class=" col-md-offset-7 col-md-3 form-inline">
                  <select class="form-control" id="search_type">
                  	<option value="all">제목+내용</option>
-                    <option value="ntc_title">제목</option>
+                    <option value="ntc_title" >제목</option>
                     <option value="ntc_content">내용</option>
                  </select>
                  <input type="text" class="form-control" id="search_text" />
@@ -62,11 +65,14 @@
                  <th style="vertical-align:middle">공지번호</th>
                  <th style="vertical-align:middle">공지제목</th>
                  <th style="vertical-align:middle">공지내용</th>
-                 <th style="vertical-align:middle">  <select class="form-control w3-dark-gray w3-border-dark-gray">
-                    <option>전체</option>
-                    <option>공개</option>
-                    <option>비공개</option>
-                 </select></th>
+                 <th style="vertical-align:middle">  
+                 <select id="sel_type" class="form-control w3-dark-gray w3-border-dark-gray">
+                 	
+                    <option value="all" ${param.sel_type eq all ? 'selected="selected"':''}>전체</option>
+                    <option value="1" ${param.sel_type == '1' ? 'selected="selected"':''}>공개</option>
+                    <option value="0" ${param.sel_type == '0' ? 'selected="selected"':''}>비공개</option>
+                 </select>
+                 </th>
                  <th style="vertical-align:middle">등록시간</th>
                
               </tr>
@@ -76,8 +82,8 @@
                     <td>${vo.ntc_title}</td>
                     <td>${vo.ntc_content}</td>
                     <td>
-                    <c:if test="${vo.ntc_delete==0}">공개</c:if>
-                    <c:if test="${vo.ntc_delete==1}">비공개</c:if>
+                    <c:if test="${vo.ntc_delete==1}">공개</c:if>
+                    <c:if test="${vo.ntc_delete==0}">비공개</c:if>
                     </td>
                     <td>${vo.ntc_date}</td>
                  </tr>
@@ -99,20 +105,20 @@
 				<div class="modal-body">
 					<div class="form-inline" style="margin-top:3px; margin-bottom:3px">
 						<label style="width:120px">공지제목</label>
-						<input type="text" class="form-control" placeholder="공지제목" />
+						<form:input type="text" class="form-control" path="ntc_title" style="width:400px;" placeholder="공지제목" />
 					</div>
 					
 					<div class="form-inline" style="margin-top:3px; margin-bottom:3px">
 						<label style="width:120px">공지내용</label>
-						<input type="text" class="form-control" placeholder="공지내용" />
+						<form:textarea class="form-control" path="ntc_content" style="width: 400px; resize:none;" rows="20" placeholder="공지내용"></form:textarea>
 					</div>
 					
 					<div class="form-inline" style="margin-top:3px; margin-bottom:3px">
 						<label style="width:120px">공개여부</label>
-						<select class="form-control">
+						<form:select class="form-control" path="ntc_delete">
 								<option value="1">공개</option>
 								<option value="0">비공개</option>
-						</select>
+						</form:select>
 					</div>
 				</div>
 				<div class="modal-footer">
@@ -127,6 +133,11 @@
 
    <script>
       $(function() {
+    	 	 $('#sel_type').change(function(){
+	  	  		var sty = $(this).val();
+	  	  		window.location.href="admin_notice.do?sel_type="+sty;
+  	  		});
+    	  
     		$('#btn_insert').click(function(){
 				$('#insertmodal').modal('show');	
 			});	
