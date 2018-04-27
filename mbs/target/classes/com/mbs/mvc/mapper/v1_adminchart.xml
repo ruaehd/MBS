@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="AdminChart">
+	
+	<select id="selectOldCount" parameterType="java.util.Map" resultType="com.mbs.mvc.vo.V1_AgeVO">
+		select
+		sum(if(date_format(now(),'%Y')-substring(mb_birth,1,4) between 10 and 19 , 1, 0)) as age_10,
+		sum(if(date_format(now(),'%Y')-substring(mb_birth,1,4) between 20 and 29 , 1, 0)) as age_20,
+		sum(if(date_format(now(),'%Y')-substring(mb_birth,1,4) between 30 and 39 , 1, 0)) as age_30,
+		sum(if(date_format(now(),'%Y')-substring(mb_birth,1,4) between 40 and 49 , 1, 0)) as age_40,
+		sum(if(date_format(now(),'%Y')-substring(mb_birth,1,4) between 50 and 59 , 1, 0)) as age_50,
+		sum(if(date_format(now(),'%Y')-substring(mb_birth,1,4) between 60 and 69 , 1, 0)) as age_60
+	from member
+	</select>
+</mapper>
