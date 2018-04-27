@@ -50,31 +50,32 @@ public class V1_ReservationController {
 			HttpSession httpSession,
 			HttpServletRequest request,
 			Model model) {
-		//세션아이디
-		if((Integer)httpSession.getAttribute("_gr")>1) {	//관리자라면
-			vo.setRsv_sub_id(mb_id);
-		}
-		else {
-			vo.setRsv_sub_id((String)httpSession.getAttribute("_id"));
-		}
-		//param
-		vo.setStr_number(str_number);
-		System.out.println(vo.getRsv_day());
 		
-		List<V1_RsvMenu> list = new ArrayList<V1_RsvMenu>();
-		
-		for(int i=0; i<name.length; i++) {
-			V1_RsvMenu vo1 = new V1_RsvMenu();
-			vo1.setRsv_mn_name(name[i]);
-			vo1.setRsv_mn_price(price[i]);
-			vo1.setRsv_mn_cnt(cnt[i]);
-			vo1.setRsv_mn_idx(i);
-			list.add(vo1);
-		}
-		vo.setRmlist(list);
-		int ret = rDAO.insertReservation(vo);
-		
-		if(ret!=0) {
+		try{
+			//세션아이디
+			if((Integer)httpSession.getAttribute("_gr")>1) {	//관리자라면
+				vo.setRsv_sub_id(mb_id);
+			}
+			else {	//관리자가 아니라면
+				vo.setRsv_sub_id((String)httpSession.getAttribute("_id"));
+			}
+			vo.setStr_number(str_number);
+			System.out.println(vo.getRsv_day());
+			
+			List<V1_RsvMenu> list = new ArrayList<V1_RsvMenu>();
+			
+			for(int i=0; i<name.length; i++) {
+				V1_RsvMenu vo1 = new V1_RsvMenu();
+				vo1.setRsv_mn_name(name[i]);
+				vo1.setRsv_mn_price(price[i]);
+				vo1.setRsv_mn_cnt(cnt[i]);
+				vo1.setRsv_mn_idx(i);
+				list.add(vo1);
+			}
+			vo.setRmlist(list);
+			
+			rDAO.insertReservation(vo);
+			
 			if((Integer)httpSession.getAttribute("_gr")>1) {	//관리자라면
 				model.addAttribute("message", "예약이 되었습니다.");
 				model.addAttribute("url", "admin_rsv_management.do");
@@ -85,11 +86,15 @@ public class V1_ReservationController {
 				model.addAttribute("url", "usr_rsv_list.do");
 				return "alert";
 			}
+		}
+		catch (Exception e) {
+			System.out.println(e.getMessage());
+			model.addAttribute("message", "예약이 실패하였습니다.");
+			model.addAttribute("url", "redirect:usr_content_pay.do");
+			return "alert";
 			
 		}
-		model.addAttribute("message", "예약이 실패하였습니다.");
-		model.addAttribute("url", "redirect:usr_content_pay.do");
-		return "alert";
+		
 	}
 	
 	/*
@@ -99,7 +104,6 @@ public class V1_ReservationController {
 	public String userReservationList(Model model,  
 			@RequestParam(value="rsv_code", defaultValue="-1") int rsv_code, 
 			@RequestParam(value="page", defaultValue="1") int page,
-			
 			HttpSession httpSession) {
 		
 		if(rsv_code == -1) {	//menu값이 없을 경우
