@@ -4,6 +4,7 @@ import java.io.InputStream;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +36,13 @@ public class V1_UserContentController {
 	 * 점포 정보
 	 */
 	@RequestMapping(value="/usr_content.do", method = RequestMethod.GET)
-	public String userContent(Model model, @RequestParam(value="page", defaultValue="1") int page, @RequestParam("str_number") int str_number) {
+	public String userContent(Model model, 
+			@RequestParam(value="page", defaultValue="1") int page, 
+			@RequestParam("str_number") int str_number,
+			HttpSession httpSession) {
+		
+		httpSession.setAttribute("_gr",999);
+		httpSession.setAttribute("_id", "admin");
 		
 		//파람
 		V1_Store vo = ucDAO.selectStoreOne(str_number);
@@ -105,14 +112,25 @@ public class V1_UserContentController {
 	 * 예약하기
 	 */
 	@RequestMapping(value="/usr_content_pay.do", method = RequestMethod.GET)
-	public String userContentPay(Model model, @RequestParam("str_number") int str_number) {
+	public String userContentPay(Model model, 
+			@RequestParam("str_number") int str_number, 
+			@RequestParam(value="rsv_id", defaultValue="") String rsv_id,
+			HttpSession httpSession) {
+		
+		V1_Member mvo = new V1_Member();
+		
+		if((Integer)httpSession.getAttribute("_gr")>1) {	//관리자라면
+			mvo = ucDAO.selectMemberOne(rsv_id);
+		}
+		else {
+			String user_id = (String)httpSession.getAttribute("_id");
+			mvo = ucDAO.selectMemberOne(user_id);	//관리자가 아니라면
+		}
 		
 		V1_Reservation rvo = new V1_Reservation();
-		//파람
-		//세션 아이디
 		int cnt = ucDAO.selectImgCount(str_number);
 		V1_Store svo = ucDAO.selectStoreOne(str_number);
-		V1_Member mvo = ucDAO.selectMemberOne("user");
+		
 		List<V1_Menu> mlist = ucDAO.selectMenuList(str_number);
 		
 		model.addAttribute("mlist", mlist);

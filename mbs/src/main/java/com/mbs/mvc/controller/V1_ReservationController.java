@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import java.util.Set;
 
@@ -43,11 +44,21 @@ public class V1_ReservationController {
 	public String userContentPay(@ModelAttribute("rvo") V1_Reservation vo, 
 			@RequestParam("mn_name[]") String[] name, 
 			@RequestParam("mn_price[]") int[] price, 
-			@RequestParam("mn_cnt[]") int[] cnt) {
+			@RequestParam("mn_cnt[]") int[] cnt,
+			@RequestParam("str_number") int str_number,
+			@RequestParam("mb_id") String mb_id,
+			HttpSession httpSession,
+			HttpServletRequest request,
+			Model model) {
 		//세션아이디
-		vo.setRsv_sub_id("user");
+		if((Integer)httpSession.getAttribute("_gr")>1) {	//관리자라면
+			vo.setRsv_sub_id(mb_id);
+		}
+		else {
+			vo.setRsv_sub_id((String)httpSession.getAttribute("_id"));
+		}
 		//param
-		vo.setStr_number(1234567890);
+		vo.setStr_number(str_number);
 		System.out.println(vo.getRsv_day());
 		
 		List<V1_RsvMenu> list = new ArrayList<V1_RsvMenu>();
@@ -64,29 +75,51 @@ public class V1_ReservationController {
 		int ret = rDAO.insertReservation(vo);
 		
 		if(ret!=0) {
-			return "redirect:usr_rsv_list.do";
+			if((Integer)httpSession.getAttribute("_gr")>1) {	//관리자라면
+				model.addAttribute("message", "예약이 되었습니다.");
+				model.addAttribute("url", "admin_rsv_management.do");
+				return "alert";
+			}
+			else {	//관리자가 아니라면
+				model.addAttribute("message", "예약이 되었습니다.");
+				model.addAttribute("url", "usr_rsv_list.do");
+				return "alert";
+			}
+			
 		}
-		
-		return "redirect:usr_content_pay.do";
+		model.addAttribute("message", "예약이 실패하였습니다.");
+		model.addAttribute("url", "redirect:usr_content_pay.do");
+		return "alert";
 	}
 	
 	/*
 	 * 예약목록
 	 */
 	@RequestMapping(value="/usr_rsv_list.do", method = RequestMethod.GET)
-	public String userReservationList(Model model,  @RequestParam(value="rsv_code", defaultValue="-1") int rsv_code, @RequestParam(value="page", defaultValue="1") int page) {
+	public String userReservationList(Model model,  
+			@RequestParam(value="rsv_code", defaultValue="-1") int rsv_code, 
+			@RequestParam(value="page", defaultValue="1") int page,
+			
+			HttpSession httpSession) {
 		
 		if(rsv_code == -1) {	//menu값이 없을 경우
 			return "redirect:usr_rsv_list.do?rsv_code=0";
 		}
+		String rsv_id = (String)httpSession.getAttribute("_id");
 		
 		//세션아이디
 		V1_Reservation vo = new V1_Reservation();
-		vo.setRsv_sub_id("user");
+		vo.setRsv_sub_id(rsv_id);
 		vo.setPage((page-1)*10);
 		vo.setRsv_code(rsv_code);
 		Map<String, Integer> map = rDAO.countRsvTot(vo);
 		Map<String, Integer> map1 = new LinkedHashMap<String, Integer>();
+		
+		if(map.get("exp") == null) {
+			map.put("exp", 0);
+			map.put("com", 0);
+			map.put("can", 0);
+		}
 		
 		int tot = Integer.parseInt(String.valueOf(map.get("exp")))
 				+Integer.parseInt(String.valueOf(map.get("com")))

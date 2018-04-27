@@ -75,7 +75,7 @@
 									<a href="usr_rsv_cancel.do?rsv_no=${tmp.rsv_no}" class="btn btn-xs btn-danger">예약취소</a>
 								</c:if>
 								<c:if test="${tmp.rsv_code_chk eq '이용완료'}">
-					 				<a href="usr_content_pay.do?str_number=${tmp.str_number}" class="btn btn-xs btn-warning">추가예약</a>
+					 				<a href="usr_content_pay.do?str_number=${tmp.str_number}&rsv_id=${tmp.rsv_sub_id}" class="btn btn-xs btn-warning">추가예약</a>
 								</c:if>
 								<c:if test="${tmp.rsv_code_chk eq '예약취소'}">
 					 				<a href="usr_rsv_edit.do?str_number=${tmp.str_number}&rsv_no=${tmp.rsv_no}" class="btn btn-xs btn-success">신규예약</a>

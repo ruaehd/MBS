@@ -1,7 +1,7 @@
 <%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ page session="false"%>
+<%@ page session="true"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -67,6 +67,7 @@
 						<div id="select" style="margin-bottom:20px">
 							<h3>예약 정보</h3>
 							<hr />
+							<input type="hidden" name="str_number" value="${param.str_number}" />
 							<div class="form-inline" style="margin-bottom:10px">
 								<label style="width:100px">날짜</label>
 								<form:input type="text" class="form-control" path="rsv_day" id="date1"/>
@@ -119,6 +120,7 @@
 							<div>
 								<div class="form-inline" style="margin-bottom:10px">
 									<label style="width:100px">이름</label>
+									<input type="hidden" name="mb_id" value="${mvo.mb_id}"/>
 									<form:input type="text" class="form-control" path="rsv_sub_name" id="" value="${mvo.mb_name}"/>
 								</div>
 								<div class="form-inline" style="margin-bottom:10px">

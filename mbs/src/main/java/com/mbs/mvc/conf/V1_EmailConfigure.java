@@ -34,7 +34,7 @@ public class V1_EmailConfigure {
 			
 			Session mailSession = Session.getInstance(props, new javax.mail.Authenticator() {
 				protected PasswordAuthentication getPasswordAuthentication() {
-					return new PasswordAuthentication("ruaehdehddk", "1qazxsw2");
+					return new PasswordAuthentication("ruaehdehddk", "!Qazxsw2");
 				}
 			});
 			Message msg = new MimeMessage(mailSession);
