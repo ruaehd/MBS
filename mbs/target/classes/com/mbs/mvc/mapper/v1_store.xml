@@ -3,7 +3,10 @@
 
 <mapper namespace="V1_Store">
 	<select id="selectStoreOne" parameterType="int" resultType="V1_Store">
-		SELECT * FROM `store` WHERE str_number=#{str_number}
+		SELECT s.*, m.mb_id, m.mb_name, m.mb_email FROM `store` s
+		INNER JOIN `member` m
+		ON s.mb_id = m.mb_id
+		WHERE s.str_number=#{str_number}
 	</select>
 	
 	<select id="selectMenuList" parameterType="int" resultType="V1_Menu">

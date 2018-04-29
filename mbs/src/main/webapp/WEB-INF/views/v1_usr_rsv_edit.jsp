@@ -146,13 +146,14 @@
 							<h3>판매자 정보</h3>
 							<hr />
 							<div>
+								<input type="hidden" name="str_email" value="${vo.mb_email}"/>
 								<div class="form-inline" style="margin-bottom:10px">
 									<label style="width:100px">상호</label>
 									${vo.str_name}
 								</div>
 								<div class="form-inline" style="margin-bottom:10px">
 									<label style="width:100px">대표자명</label>
-									<input type="text" class="form-control" name="" id="" />
+									${vo.mb_name}
 								</div>
 								<div class="form-inline" style="margin-bottom:10px">
 									<label style="width:100px">소재지</label>
@@ -167,7 +168,7 @@
 						
 						<div style="margin-bottom:10px">
 							<input type="submit" class="btn btn-success" value="예약변경"	/>
-							<a href="usr_rsv_content.do?str_number=${param.str_number}&rsv_no=${param.rsv_no}" class="btn btn-info">취소</a>
+							<a href="${url}" class="btn btn-info">취소</a>
 						</div>
 						
 					</div>

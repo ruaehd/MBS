@@ -115,7 +115,8 @@ public class V1_UserContentController {
 	public String userContentPay(Model model, 
 			@RequestParam("str_number") int str_number, 
 			@RequestParam(value="rsv_id", defaultValue="") String rsv_id,
-			HttpSession httpSession) {
+			HttpSession httpSession,
+			HttpServletRequest request) {
 		
 		V1_Member mvo = new V1_Member();
 		
@@ -133,11 +134,15 @@ public class V1_UserContentController {
 		
 		List<V1_Menu> mlist = ucDAO.selectMenuList(str_number);
 		
+		String back_url = request.getHeader("REFERER");
+		
 		model.addAttribute("mlist", mlist);
 		model.addAttribute("cnt", cnt);
 		model.addAttribute("svo", svo);
 		model.addAttribute("mvo", mvo);
 		model.addAttribute("rvo", rvo);
+		model.addAttribute("url", back_url);
+		
 		return "v1_usr_content_pay";
 	}
 	

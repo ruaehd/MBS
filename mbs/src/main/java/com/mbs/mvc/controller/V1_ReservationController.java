@@ -47,6 +47,7 @@ public class V1_ReservationController {
 			@RequestParam("mn_cnt[]") int[] cnt,
 			@RequestParam("str_number") int str_number,
 			@RequestParam("mb_id") String mb_id,
+			@RequestParam("str_email") String str_email,
 			HttpSession httpSession,
 			HttpServletRequest request,
 			Model model) {
@@ -76,25 +77,33 @@ public class V1_ReservationController {
 			
 			rDAO.insertReservation(vo);
 			
+			String rsv_email = vo.getRsv_sub_email();
+			String rsv_title = "예약완료";
+			String rsv_text = "확인하셈";
+			
+			String str_title = "신규예약";
+			String str_text = "확인ㄱㄱ";
+			
+			V1_EmailConfigure.sendEmail(rsv_email.toString(), rsv_title, rsv_text);	//예약자
+			V1_EmailConfigure.sendEmail(str_email.toString(), str_title, str_text);	//사업자
+
+			model.addAttribute("message", "예약이 되었습니다.");
+			
 			if((Integer)httpSession.getAttribute("_gr")>1) {	//관리자라면
-				model.addAttribute("message", "예약이 되었습니다.");
 				model.addAttribute("url", "admin_rsv_management.do");
-				return "alert";
 			}
 			else {	//관리자가 아니라면
-				model.addAttribute("message", "예약이 되었습니다.");
 				model.addAttribute("url", "usr_rsv_list.do");
-				return "alert";
 			}
+			
+			return "alert";
 		}
 		catch (Exception e) {
 			System.out.println(e.getMessage());
 			model.addAttribute("message", "예약이 실패하였습니다.");
 			model.addAttribute("url", "redirect:usr_content_pay.do");
 			return "alert";
-			
 		}
-		
 	}
 	
 	/*
@@ -140,7 +149,6 @@ public class V1_ReservationController {
 		List<V1_Reservation> rlist = rDAO.selectRsvList(vo);
 		model.addAttribute("rlist", rlist);
 		
-		
 		return "v1_usr_rsv_list";
 	}
 	
@@ -148,7 +156,9 @@ public class V1_ReservationController {
 	 * 예약내용
 	 */
 	@RequestMapping(value="/usr_rsv_content.do", method = RequestMethod.GET)
-	public String userReservationContent(Model model, @RequestParam("rsv_no") int rsv_no, @RequestParam("str_number") int str_number) {
+	public String userReservationContent(Model model,
+			@RequestParam("rsv_no") int rsv_no, 
+			@RequestParam("str_number") int str_number) {
 		
 		V1_Reservation vo = new V1_Reservation();
 		vo.setRsv_no(rsv_no);
@@ -166,12 +176,15 @@ public class V1_ReservationController {
 		model.addAttribute("cnt", cnt);
 		model.addAttribute("rmlist", rmlist);
 		model.addAttribute("vo", rvo);
+		
 		return "v1_usr_rsv_content";
 	
 	}
 	
 	@RequestMapping(value="/usr_rsv_edit.do", method = RequestMethod.GET)
-	public String userReservationEdit(Model model, @RequestParam("rsv_no") int rsv_no, @RequestParam("str_number") int str_number) {
+	public String userReservationEdit(Model model, HttpServletRequest request,
+			@RequestParam("rsv_no") int rsv_no, 
+			@RequestParam("str_number") int str_number) {
 		
 		V1_Reservation vo = new V1_Reservation();
 		vo.setRsv_no(rsv_no);
@@ -180,9 +193,13 @@ public class V1_ReservationController {
 		List<V1_RsvMenu> rmlist = rDAO.selectRsvMenuList(rsv_no);
 		int cnt = ucDAO.selectImgCount(str_number);
 		
+		String back_url = request.getHeader("REFERER");
+		
+		
 		model.addAttribute("cnt", cnt);
 		model.addAttribute("rmlist", rmlist);
 		model.addAttribute("vo", rvo);
+		model.addAttribute("url", back_url);
 		
 		return "v1_usr_rsv_edit";
 	}
@@ -191,7 +208,9 @@ public class V1_ReservationController {
 	public String userReservationEdit(@ModelAttribute("vo") V1_Reservation vo, 
 			@RequestParam("mn_name[]") String[] name, 
 			@RequestParam("mn_price[]") int[] price, 
-			@RequestParam("mn_cnt[]") int[] cnt, Model model) {
+			@RequestParam("mn_cnt[]") int[] cnt, 
+			@RequestParam("str_email") String str_email,
+			Model model) {
 		
 		List<V1_RsvMenu> list = new ArrayList<V1_RsvMenu>();
 		for(int i=0; i<name.length; i++) {
@@ -207,19 +226,18 @@ public class V1_ReservationController {
 		}
 		vo.setRmlist(list);
 		
-		
-		
 		int ret = rDAO.updateRsv(vo);
 		if(ret>0) {
 			
-			String email = "ruaehdehddk@naver.com";
-			String title = "예약수정";
-			String text = "확인하셈";
-			String title1 = "예약바뀜";
-			String text1 = "확인ㄱㄱ";
+			String rsv_email = vo.getRsv_sub_email();
+			String rsv_title = "예약수정";
+			String rsv_text = "확인하셈";
 			
-			V1_EmailConfigure.sendEmail(email.toString(), title, text);
-			V1_EmailConfigure.sendEmail(email.toString(), title1, text1);
+			String str_title = "예약바뀜";
+			String str_text = "확인ㄱㄱ";
+			
+			V1_EmailConfigure.sendEmail(rsv_email.toString(), rsv_title, rsv_text);	//예약자
+			V1_EmailConfigure.sendEmail(str_email.toString(), str_title, str_text);	//사업자
 			
 			String url = "usr_rsv_content.do?str_number="+vo.getStr_number()+"&rsv_no="+vo.getRsv_no();
 			model.addAttribute("message", "예약을 수정했습니다.");
@@ -233,12 +251,18 @@ public class V1_ReservationController {
 	public String userRsvCancel(@RequestParam("rsv_no") int rsv_no, Model model, HttpServletRequest request) {
 		rDAO.cancelRsv(rsv_no);
 		
-		String email = "ruaehdehddk@naver.com";
-		String title = "예약취소";
-		String text = "확인하셈";
+		V1_Reservation vo = rDAO.rsvEmail(rsv_no);
 		
+		String rsv_email = vo.getRsv_sub_email();
+		String rsv_title = "예약취소";
+		String rsv_text = "확인하셈";
 		
-		V1_EmailConfigure.sendEmail(email.toString(), title, text);
+		String str_email = vo.getMb_email();
+		String str_title = "예약취소1";
+		String str_text = "확인ㄱㄱ";
+		
+		V1_EmailConfigure.sendEmail(rsv_email.toString(), rsv_title, rsv_text);	//예약자
+		V1_EmailConfigure.sendEmail(str_email.toString(), str_title, str_text);	//사업자
 		
 		model.addAttribute("message", "예약을 취소했습니다.");
 		String url = (String)request.getHeader("REFERER");

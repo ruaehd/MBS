@@ -35,8 +35,15 @@ public class V1_Store {
 	
 	private String text = null;
 	
+	private String mb_name = null;
 	
 	
+	public String getMb_name() {
+		return mb_name;
+	}
+	public void setMb_name(String mb_name) {
+		this.mb_name = mb_name;
+	}
 	public String getText() {
 		return text;
 	}

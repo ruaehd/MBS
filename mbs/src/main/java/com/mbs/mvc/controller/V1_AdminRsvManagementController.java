@@ -73,7 +73,8 @@ public class V1_AdminRsvManagementController {
 	
 	@RequestMapping(value="/admin_rev_management.do", method=RequestMethod.GET)
 	public String AdminReviewManagement(Model model, 
-			@RequestParam(value="page", defaultValue="1") int page, @RequestParam(value="text", defaultValue="") String text) {
+			@RequestParam(value="page", defaultValue="1") int page, 
+			@RequestParam(value="text", defaultValue="") String text) {
 		
 		V1_Store vo = new V1_Store();
 		vo.setPage((page-1)*6);
@@ -146,7 +147,10 @@ public class V1_AdminRsvManagementController {
 	}
 	
 	@RequestMapping(value="/sendemail.do", method=RequestMethod.POST)
-	public String sendEmail(HttpServletRequest request, Model model, @RequestParam("email") String email, @RequestParam("title") String title, @RequestParam("text") String text) {
+	public String sendEmail(HttpServletRequest request, Model model, 
+			@RequestParam("email") String email, 
+			@RequestParam("title") String title, 
+			@RequestParam("text") String text) {
 		
 		V1_EmailConfigure.sendEmail(email.toString(), title, text);
 		
