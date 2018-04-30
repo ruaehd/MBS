@@ -97,22 +97,36 @@ public class V1_ReviewController {
 	}
 	
 	@RequestMapping(value="/usr_tour_comment_edit.do", method = RequestMethod.GET)
-	public String usrTourRsvCommentEdit(Model model, @RequestParam("str_number") int str_number) {
+	public String usrTourRsvCommentEdit(Model model, @RequestParam("str_number") int str_number, HttpSession httpSession) {
 		
-		/*V1_Comment vo1 = reDAO.selectPreReview(rsv_no); 
-		V1_Comment vo = new V1_Comment();
+		V1_Store vo1 = reDAO.selectTourPreReview(str_number);
+		V1_TourComment vo = new V1_TourComment();
+		vo.setStr_number(vo1.getStr_number());
+		vo.setTour_cmt_writer((String) httpSession.getAttribute("_id"));
 		
-		vo.setRsv_no(rsv_no);
-		vo.setRsv_cmt_writer("user");
-		
-		V1_Comment rvo = reDAO.selectReviewOne(vo);
+		V1_TourComment rvo = reDAO.selectTourReviewOne(vo);
 		rvo.setStr_name(vo1.getStr_name());
-		rvo.setRsv_day(vo1.getRsv_day());
 		
 		model.addAttribute("vo", rvo);
-		return "v1_usr_rsv_review_edit";*/
-		return "";
+		return "v1_usr_tour_comment_edit";
 	}
 	
+	@RequestMapping(value="/usr_tour_comment_edit.do", method = RequestMethod.POST)
+	public String usrTourRsvCommentEdit(Model model, @ModelAttribute("vo") V1_TourComment vo) {
+		
+		reDAO.updateTourReview(vo);
+		
+		model.addAttribute("message", "리뷰 수정이 완료되었습니다.");
+		
+		return "v1_alert";
+	}
 	
+	@RequestMapping(value="/usr_tour_comment_delete.do", method = RequestMethod.GET)
+	public String usrTourRsvCommentDelete(Model model, @RequestParam("tour_cmt_no") int tour_cmt_no, HttpSession httpSession) {
+		
+		reDAO.deleteTourReview(tour_cmt_no);
+		
+		model.addAttribute("message", "리뷰 삭제가 완료되었습니다.");
+		return "v1_alert";
+	}
 }

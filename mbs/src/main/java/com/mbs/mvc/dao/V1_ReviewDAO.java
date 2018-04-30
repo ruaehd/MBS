@@ -78,4 +78,16 @@ public class V1_ReviewDAO {
 	public int selectTourReviewChk(V1_TourComment vo) {
 		return sqlsession.selectOne("V1_Review.selectTourReviewChk", vo);
 	}
+	
+	public V1_TourComment selectTourReviewOne(V1_TourComment vo) {
+		return sqlsession.selectOne("V1_Review.selectTourReviewOne", vo);
+	}
+	
+	public int updateTourReview(V1_TourComment vo) {
+		return sqlsession.update("V1_Review.updateTourReview", vo);
+	}
+	
+	public int deleteTourReview(int tour_cmt_no) {
+		return sqlsession.update("V1_Review.deleteTourReview", tour_cmt_no);
+	}
 }

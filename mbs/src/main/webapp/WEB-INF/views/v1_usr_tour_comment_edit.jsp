@@ -38,7 +38,7 @@
 </head>
 <body>
 	<div id="wrapper" >
-		<form:form action="usr_tour_comment.do" modelAttribute="vo" method="post">
+		<form:form action="usr_tour_comment_edit.do" modelAttribute="vo" method="post">
 			<div class="container" style="padding:20px">
 				<h3>한줄평 작성</h3>
 				<hr />
@@ -46,6 +46,7 @@
 					<label style="width:100px">관광지 명</label>
 					${vo.str_name}
 					<form:input type="hidden" path="str_number" />
+					<form:input type="hidden" path="tour_cmt_no" />
 				</div>
 				<div class="form-inline" style="margin-bottom:20px">
 					<label style="width:100px">사용일</label>
@@ -55,11 +56,12 @@
 					<div class="form-group">
 						<label style="width:100px">예약 평가</label>
 				        <p style="display:inline-block" class="star_rating">
-						    <a href="#" class="on">★</a>
-						    <a href="#">★</a>
-						    <a href="#">★</a>
-						    <a href="#">★</a>
-						    <a href="#">★</a>
+						    <c:forEach begin="1" end="${vo.tour_cmt_point}">
+						    	<a href="#" class="on">★</a>
+						    </c:forEach>
+						    <c:forEach begin="1" end="${5-vo.tour_cmt_point}">
+						    	<a href="#">★</a>
+						    </c:forEach>
 						</p>
 						<form:input type="hidden" id="rating" path="tour_cmt_point" value="1"/>
 					</div>
@@ -72,8 +74,9 @@
 				</div>
 				<hr />
 				<div class="form-inline" align="center">
-					<input type="submit" class="btn btn-success" value="한줄평 작성" />
-					<input type="button" class="btn btn-danger" value="작성 취소"/>
+					<input type="submit" class="btn btn-success" value="후기 수정" />
+					<a href="usr_tour_comment_delete.do?tour_cmt_no=${vo.tour_cmt_no}" class="btn btn-danger">후기 삭제</a>
+					<input type="button" class="btn btn-default" value="작성 취소"/>
 				</div>
 			</div>
 		</form:form>

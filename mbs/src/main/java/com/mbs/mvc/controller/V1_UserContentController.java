@@ -128,6 +128,7 @@ public class V1_UserContentController {
 			vo1.setStr_number(str_number);
 			vo1.setTour_cmt_writer((String)httpSession.getAttribute("_id"));
 			
+			
 			int chk = reDAO.selectTourReviewChk(vo1);
 			
 			model.addAttribute("vo", vo);	
