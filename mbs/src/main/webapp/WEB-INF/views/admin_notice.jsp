@@ -50,7 +50,7 @@
            <div class="col-md-2">
               <button type="button" class="btn btn-primary btn_add" id="btn_insert">추가하기</button>
            </div>
-           <div class=" col-md-offset-7 col-md-3 form-inline">
+           <div class=" col-md-offset-6 col-md-4 form-inline">
                  <select class="form-control" id="search_type">
                  	<option value="all">제목+내용</option>
                     <option value="ntc_title" >제목</option>
@@ -74,7 +74,7 @@
                  </select>
                  </th>
                  <th style="vertical-align:middle">등록시간</th>
-               
+               	 <th>비고</th>	
               </tr>
               <c:forEach var="vo" items="${list}">
                  <tr>
@@ -86,6 +86,15 @@
                     <c:if test="${vo.ntc_delete==0}">비공개</c:if>
                     </td>
                     <td>${vo.ntc_date}</td>
+                    <td>
+                    <a href="#" class="btn btn-xs btn-info">공지수정</a>
+                    <c:if test="${vo.ntc_delete==1}">
+                    <a href="#" class="btn btn-xs btn-danger">비공개전환</a>
+                    </c:if>
+                    <c:if test="${vo.ntc_delete==0}">
+                    <a href="#" class="btn btn-xs btn-danger">공개전환</a>
+                    </c:if>
+                    </td>
                  </tr>
               </c:forEach>
            </table>
@@ -129,13 +138,53 @@
 		</div>
 	</div>
 	</form:form>
+	
+	<form action="notice_delete.do" method="get">
+			<div class="modal fade" id="deletemodal">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h4>공지전환</h4>
+						</div>
+						<div class="modal-body">
+							<input type="text" name="ntc_no" id="ntc_delete_no" />
+							<input type="text" name="ntc_delete" id="delete_no">
+							<label>전환 하시겠습니까?</label>
+						</div>
+						<div class="modal-footer">
+							<input type="submit" class="btn btn-success" value="전환" />
+							<button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
 
 
    <script>
       $(function() {
+    		$('.btn-info').click(function(){
+  	  			var idx = $(this).index('.btn-info');
+    		});
+    	  
+    	  
+    		$('.btn-danger').click(function(){
+    			var idx = $(this).index('.btn-danger');
+    			var arr = new Array(); 
+    	  		<c:forEach var="vo" items="${list}">
+    	  			var arr1 = new Array()
+    	  			arr1.push("${vo.ntc_no}");
+    	  			arr1.push("${vo.ntc_delete}")
+    	  			arr.push(arr1);
+    	  		</c:forEach>
+    	  		$('#ntc_delete_no').val(arr[idx][0]);
+    	  		$('#delete_no').val(arr[idx][1]);
+    			$('#deletemodal').modal('show');
+    	  	});
+    	  
     	 	 $('#sel_type').change(function(){
 	  	  		var sty = $(this).val();
-	  	  		window.location.href="admin_notice.do?sel_type="+sty;
+	  	  		window.location.href="admin_notice.do?type=${param.type}&text=${param.text}&sel_type="+sty;
   	  		});
     	  
     		$('#btn_insert').click(function(){
@@ -145,14 +194,12 @@
     	  	var func = function(){
 				var ty = $('#search_type').val();
 				var tx = encodeURIComponent($('#search_text').val());
-				window.location.href="admin_notice.do?type="+ty+"&text="+tx;
+				window.location.href="admin_notice.do?type="+ty+"&text="+tx+"&sel_type=${param.sel_type}";
 			};
 			
 			$('#search_btn').click(function(){
 					func();
 			});
-
-			
 	
 			$('#search_text').keyup(function(event){
 				if(event.which == 13){
@@ -160,7 +207,6 @@
 				}
 			});
     	  	
-         
             $('.pagination').twbsPagination({
                totalPages:'${totPage}',
                visiblePages:10,

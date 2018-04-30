@@ -11,6 +11,13 @@ public class NoticeVO {
 	private String ntc_sc_type = null;
 	private String ntc_sc_text = null;
 	private int ntc_page = 0;
+	private String sel_type = null;
+	public String getSel_type() {
+		return sel_type;
+	}
+	public void setSel_type(String sel_type) {
+		this.sel_type = sel_type;
+	}
 	public String getNtc_sc_type() {
 		return ntc_sc_type;
 	}

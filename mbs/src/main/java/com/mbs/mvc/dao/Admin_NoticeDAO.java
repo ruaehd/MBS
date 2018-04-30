@@ -16,6 +16,10 @@ public class Admin_NoticeDAO {
 	@Resource(name = "sqlSession")
 	private SqlSession sqlsession = null;
 	
+	public int NoticeDelete(NoticeVO vo) {
+		return sqlsession.update("Admin.noticeDelete", vo);
+	}
+	
 	public int NoticeInsert(NoticeVO vo) {
 		return sqlsession.insert("Admin.noticeInsert", vo);
 	}
