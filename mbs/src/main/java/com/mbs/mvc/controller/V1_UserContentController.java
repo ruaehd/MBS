@@ -26,6 +26,7 @@ import com.mbs.mvc.vo.V1_Menu;
 import com.mbs.mvc.vo.V1_Reservation;
 import com.mbs.mvc.vo.V1_Store;
 import com.mbs.mvc.vo.V1_StrImg;
+import com.mbs.mvc.vo.V1_TourComment;
 
 @Controller
 public class V1_UserContentController {
@@ -42,70 +43,102 @@ public class V1_UserContentController {
 			HttpSession httpSession) {
 		
 		httpSession.setAttribute("_gr",999);
-		httpSession.setAttribute("_id", "admin");
+		httpSession.setAttribute("_id", "user");
 		
 		//파람
 		V1_Store vo = ucDAO.selectStoreOne(str_number);
 		int cnt = ucDAO.selectImgCount(str_number);
-		List<V1_Menu> mlist = ucDAO.selectMenuList(str_number);
-		int totPage = reDAO.selectReviewcCnt(str_number);
-		List<V1_Comment> ctlist = reDAO.selectCmtTotList(str_number);
 		
-		double sum = 0;
-		double taste = 0;
-		double service = 0;
-		double price = 0;
-		
-		for(V1_Comment tmp : ctlist) {
-			sum += tmp.getRsv_cmt_point();
+		if(vo.getStr_category()==1) {
 			
-			if(tmp.getRsv_cmt_taste().equals("맛은 별로에요")) {
-				taste = taste + 1/(double)3;
-			}
-			else if(tmp.getRsv_cmt_taste().equals("맛은 보통이에요")) {
-				taste = taste + 2/(double)3;
-			}
-			else if(tmp.getRsv_cmt_taste().equals("맛있어요")) {
-				taste = taste + 3/(double)3;
+			List<V1_Menu> mlist = ucDAO.selectMenuList(str_number);
+			int tot = reDAO.selectReviewcCnt(str_number);
+			List<V1_Comment> ctlist = reDAO.selectCmtTotList(str_number);
+			
+			double sum = 0;
+			double taste = 0;
+			double service = 0;
+			double price = 0;
+			
+			for(V1_Comment tmp : ctlist) {
+				sum += tmp.getRsv_cmt_point();
+				
+				if(tmp.getRsv_cmt_taste().equals("맛은 별로에요")) {
+					taste = taste + 1/(double)3;
+				}
+				else if(tmp.getRsv_cmt_taste().equals("맛은 보통이에요")) {
+					taste = taste + 2/(double)3;
+				}
+				else if(tmp.getRsv_cmt_taste().equals("맛있어요")) {
+					taste = taste + 3/(double)3;
+				}
+				
+				if(tmp.getRsv_cmt_service().equals("서비스는 불친절해요")) {
+					service = service + 1/(double)3;
+				}
+				else if(tmp.getRsv_cmt_service().equals("서비스는 보통이에요")) {
+					service = service + 2/(double)3;
+				}
+				else if(tmp.getRsv_cmt_service().equals("서비스는 친절해요")) {
+					service = service + 3/(double)3;
+				}
+				
+				if(tmp.getRsv_cmt_price().equals("가격은 비싸요")) {
+					price = price + 1/(double)3;
+				}
+				else if(tmp.getRsv_cmt_price().equals("가격은 적절해요")) {
+					price = price + 2/(double)3;
+				}
+				else if(tmp.getRsv_cmt_price().equals("가격은 저렴해요")) {
+					price = price + 3/(double)3;
+				}
+				
 			}
 			
-			if(tmp.getRsv_cmt_service().equals("서비스는 불친절해요")) {
-				service = service + 1/(double)3;
-			}
-			else if(tmp.getRsv_cmt_service().equals("서비스는 보통이에요")) {
-				service = service + 2/(double)3;
-			}
-			else if(tmp.getRsv_cmt_service().equals("서비스는 친절해요")) {
-				service = service + 3/(double)3;
-			}
+			double avg = Math.round(sum/tot);
+			taste = Math.round(taste/tot*100d)/100d;
+			service = Math.round(service/tot*100d)/100d;
+			price = Math.round(price/tot*100d)/100d;
 			
-			if(tmp.getRsv_cmt_price().equals("가격은 비싸요")) {
-				price = price + 1/(double)3;
-			}
-			else if(tmp.getRsv_cmt_price().equals("가격은 적절해요")) {
-				price = price + 2/(double)3;
-			}
-			else if(tmp.getRsv_cmt_price().equals("가격은 저렴해요")) {
-				price = price + 3/(double)3;
-			}
+			model.addAttribute("vo", vo);	
+			model.addAttribute("cnt", cnt);
+			model.addAttribute("mlist", mlist);
+			model.addAttribute("avg", avg);
+			model.addAttribute("taste", taste);
+			model.addAttribute("service", service);
+			model.addAttribute("price", price);
+			model.addAttribute("recnt", tot);
+			model.addAttribute("totPage", (tot-1)/5+1);
 			
+			return "v1_usr_content";
 		}
-		
-		double avg = Math.round(sum/totPage);
-		taste = Math.round(taste/totPage*100d)/100d;
-		service = Math.round(service/totPage*100d)/100d;
-		price = Math.round(price/totPage*100d)/100d;
-		
-		model.addAttribute("vo", vo);		
-		model.addAttribute("cnt", cnt);
-		model.addAttribute("mlist", mlist);
-		model.addAttribute("avg", avg);
-		model.addAttribute("taste", taste);
-		model.addAttribute("service", service);
-		model.addAttribute("price", price);
-		model.addAttribute("recnt", totPage);
-		model.addAttribute("totPage", (totPage-1)/5+1);
-		return "v1_usr_content";
+		else {
+			
+			int tot = reDAO.selectTourReviewcCnt(str_number);
+			List<V1_TourComment> list = reDAO.selectTourReviewList(str_number);
+			
+			int sum=0;
+			
+			for(V1_TourComment tmp : list) {
+				sum += tmp.getTour_cmt_point();
+			}
+			double avg = Math.round(sum/tot);
+			
+			V1_TourComment vo1 = new V1_TourComment();
+			vo1.setStr_number(str_number);
+			vo1.setTour_cmt_writer((String)httpSession.getAttribute("_id"));
+			
+			int chk = reDAO.selectTourReviewChk(vo1);
+			
+			model.addAttribute("vo", vo);	
+			model.addAttribute("cnt", cnt);
+			model.addAttribute("chk", chk);
+			model.addAttribute("recnt", tot);
+			model.addAttribute("totPage", (tot-1)/5+1);
+			model.addAttribute("avg", avg);
+			
+			return "v1_usr_tour_content";
+		}
 	}
 	
 	/*

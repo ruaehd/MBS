@@ -10,7 +10,7 @@
 		WHERE r.rsv_no=#{rsv_no}
 	</select>
 	
-	<insert id="insertComment">
+	<insert id="insertComment" parameterType="V1_Comment">
 		INSERT INTO `rsv_comment` (rsv_cmt_content, rsv_cmt_point, rsv_cmt_writer, rsv_cmt_date, rsv_no, rsv_cmt_taste, rsv_cmt_service, rsv_cmt_price) VALUES(#{rsv_cmt_content}, #{rsv_cmt_point}, #{rsv_cmt_writer}, NOW(), #{rsv_no}, #{rsv_cmt_taste}, #{rsv_cmt_service}, #{rsv_cmt_price})
 	</insert>
 	
@@ -61,6 +61,10 @@
 		WHERE r.rsv_no=#{rsv_no}
 	</select>
 	
+	<select id="selectTourPreReview" parameterType="int" resultType="V1_Store">
+		SELECT str_name, str_number FROM `store` WHERE str_number=#{str_number}
+	</select>
+	
 	<select id="selectReviewcCnt" parameterType="int" resultType="int">
 		SELECT COUNT(*) 
 		FROM `rsv_comment` c
@@ -68,6 +72,26 @@
 		ON c.rsv_no=r.rsv_no
 
 		WHERE r.str_number=#{str_no}	
+	</select>
+	
+	<select id="selectTourReviewcCnt" parameterType="int" resultType="int">
+		SELECT COUNT(*) FROM `tour_comment` WHERE str_number=#{str_number}
+	</select>
+	
+	<insert id="insertTourCmt" parameterType="V1_TourCmt">
+		INSERT INTO `tour_comment` (tour_cmt_content, tour_cmt_writer, tour_cmt_point, tour_cmt_day, str_number, tour_cmt_date) VALUES(#{tour_cmt_content}, #{tour_cmt_writer}, #{tour_cmt_point}, #{tour_cmt_day}, #{str_number}, NOW())
+	</insert>
+	
+	<select id="selectTourReviewList" parameterType="int" resultType="V1_TourCmt">
+		SELECT tour_cmt_point FROM `tour_comment` WHERE str_number=#{str_number}
+	</select>
+	
+	<select id="selectTourCmtList" parameterType="V1_Store" resultType="V1_TourCmt">
+		SELECT * FROM `tour_comment` WHERE str_number=#{str_number} ORDER BY tour_cmt_no DESC LIMIT #{page} , 5
+	</select>
+	
+	<select id="selectTourReviewChk" parameterType="V1_TourCmt" resultType="int">
+		SELECT COUNT(*) AS cnt FROM `tour_comment` WHERE tour_cmt_writer=#{tour_cmt_writer} AND str_number=#{str_number} 
 	</select>
 	
 </mapper>

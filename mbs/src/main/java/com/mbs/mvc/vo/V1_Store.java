@@ -37,7 +37,15 @@ public class V1_Store {
 	
 	private String mb_name = null;
 	
+	private int str_category = 0;
 	
+	
+	public int getStr_category() {
+		return str_category;
+	}
+	public void setStr_category(int str_category) {
+		this.str_category = str_category;
+	}
 	public String getMb_name() {
 		return mb_name;
 	}

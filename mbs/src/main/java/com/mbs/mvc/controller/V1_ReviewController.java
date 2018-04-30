@@ -1,5 +1,7 @@
 package com.mbs.mvc.controller;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.mbs.mvc.dao.V1_ReviewDAO;
 import com.mbs.mvc.vo.V1_Comment;
+import com.mbs.mvc.vo.V1_Store;
+import com.mbs.mvc.vo.V1_TourComment;
 
 @Controller
 public class V1_ReviewController {
@@ -65,4 +69,50 @@ public class V1_ReviewController {
 		
 		return "alert";
 	}
+	
+	@RequestMapping(value="/usr_tour_comment.do", method = RequestMethod.GET)
+	public String usrTourComment(Model model, @RequestParam("str_number") int str_number) {
+		
+		V1_Store vo1 = reDAO.selectTourPreReview(str_number); 
+		
+		V1_TourComment vo = new V1_TourComment();
+		vo.setStr_name(vo1.getStr_name());
+		vo.setStr_number(vo1.getStr_number());
+		
+		model.addAttribute("vo", vo);
+		return "v1_usr_tour_comment";
+	}
+	
+	@RequestMapping(value="/usr_tour_comment.do", method = RequestMethod.POST)
+	public String usrTourComment(Model model, @ModelAttribute("vo") V1_TourComment vo, HttpSession httpSession) {
+		
+		System.out.println(vo.getTour_cmt_content());
+		
+		vo.setTour_cmt_writer((String)httpSession.getAttribute("_id"));
+		reDAO.insertTourCmt(vo);
+		
+		model.addAttribute("message", "후기 작성이 완료되었습니다.");
+		
+		return "v1_alert";
+	}
+	
+	@RequestMapping(value="/usr_tour_comment_edit.do", method = RequestMethod.GET)
+	public String usrTourRsvCommentEdit(Model model, @RequestParam("str_number") int str_number) {
+		
+		/*V1_Comment vo1 = reDAO.selectPreReview(rsv_no); 
+		V1_Comment vo = new V1_Comment();
+		
+		vo.setRsv_no(rsv_no);
+		vo.setRsv_cmt_writer("user");
+		
+		V1_Comment rvo = reDAO.selectReviewOne(vo);
+		rvo.setStr_name(vo1.getStr_name());
+		rvo.setRsv_day(vo1.getRsv_day());
+		
+		model.addAttribute("vo", rvo);
+		return "v1_usr_rsv_review_edit";*/
+		return "";
+	}
+	
+	
 }
