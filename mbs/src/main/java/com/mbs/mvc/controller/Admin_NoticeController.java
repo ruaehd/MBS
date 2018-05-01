@@ -45,6 +45,11 @@ public class Admin_NoticeController {
 		vo.setSel_type(sel_type);
 		
 		List<NoticeVO> list = anDAO.NoticeList(vo);
+		
+		for(NoticeVO tmp:list) {
+			tmp.setNtc_content(   nl2br(tmp.getNtc_content())  );
+		}
+		
 		model.addAttribute("list", list);
 		model.addAttribute("vo", vo);
 		int totPage = anDAO.NoticePage(vo);
@@ -59,7 +64,21 @@ public class Admin_NoticeController {
 		anDAO.NoticeInsert(vo);
 		return "redirect:admin_notice.do";
 	}
-
-
 	
+	@RequestMapping(value="/notice_update.do", method= RequestMethod.POST)
+	public String updateNotice(@ModelAttribute("vo") NoticeVO vo) {
+		anDAO.NoticeUpdate(vo);
+		return "redirect:admin_notice.do";
+	}
+
+
+	private String nl2br(String str) {
+		  str = str.replaceAll("\r\n", "<br>");
+		  str = str.replaceAll("\r", "<br>");
+		  str = str.replaceAll("\n", "<br>");
+		  
+		  return str;
+	}
+
+
 }

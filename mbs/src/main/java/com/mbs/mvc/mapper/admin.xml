@@ -2,6 +2,10 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="Admin">
+	<update id="noticeUpdate" parameterType="com.mbs.mvc.vo.NoticeVO">
+		UPDATE `notice` SET ntc_title=#{ntc_title}, ntc_content=#{ntc_content}, ntc_delete=#{ntc_delete} WHERE ntc_no=#{ntc_no}
+	</update>
+
 	<update id="noticeDelete" parameterType="com.mbs.mvc.vo.NoticeVO">
 		UPDATE `notice` SET ntc_delete=#{ntc_delete} WHERE ntc_no=#{ntc_no} 
 	</update>
@@ -29,11 +33,17 @@
 	
 	<select id="noticePage" parameterType="com.mbs.mvc.vo.NoticeVO" resultType="int">
 		SELECT COUNT(*) FROM `notice` 
-		<if test="ntc_sc_type == 'all'">
-		WHERE ntc_title LIKE CONCAT('%', #{ntc_sc_text}, '%') OR ntc_content LIKE CONCAT('%', #{ntc_sc_text}, '%') 
-		</if>  
-		<if test="ntc_sc_type != 'all'">
-		WHERE ${ntc_sc_type} LIKE CONCAT('%', #{ntc_sc_text}, '%') 
-		</if>
+			<if test="ntc_sc_type == 'all'">
+				WHERE (ntc_title LIKE CONCAT('%', #{ntc_sc_text}, '%') OR ntc_content LIKE CONCAT('%', #{ntc_sc_text}, '%')) 
+			<if test="sel_type != 'all'">
+				AND ntc_delete=#{sel_type}
+			</if>  
+			</if>
+			<if test="ntc_sc_type != 'all'">
+				WHERE ${ntc_sc_type} LIKE CONCAT('%', #{ntc_sc_text}, '%') 
+			</if>
+			<if test="sel_type != 'all'">
+				AND ntc_delete=#{sel_type}
+			</if>  
 	</select>
 </mapper>
