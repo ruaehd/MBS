@@ -167,11 +167,16 @@
 							</h3>
 						</div>
 						<div class="col-md-4" align="right">
-							<c:if test="${chk == 0}">
-								<input type="button" class="btn btn-success" value="후기 작성" onClick="writeComment()" />
-							</c:if>	
-							<c:if test="${chk != 0}">
-								<input type="button" class="btn btn-success" value="후기 수정" onClick="editComment()" />
+							<c:if test="${sessionScope._gr > 1}">
+								<input type="button" class="btn btn-success disabled" value="후기 작성" onClick="writeComment()" />
+							</c:if>
+							<c:if test="${sessionScope._gr == 1}">
+								<c:if test="${chk == 0}">
+									<input type="button" class="btn btn-success" value="후기 작성" onClick="writeComment()" />
+								</c:if>	
+								<c:if test="${chk != 0}">
+									<input type="button" class="btn btn-success" value="후기 수정" onClick="editComment()" />
+								</c:if>
 							</c:if>
 						</div>
 					</div>
@@ -184,8 +189,14 @@
 					    </c:forEach>
 					</div>
 					<div class="row ">
-						<div id="review" class="form-inline"></div>
-						
+						<c:if test="${recnt!=0}">
+							<div id="review" class="form-inline"></div>
+						</c:if>
+						<c:if test="${recnt==0}">
+							<div style="text-align:center; vertical-align:middle;">
+								<h3>작성된 후기가 없습니다</h3>
+							</div>
+						</c:if>
 						<div align="center">
 							<ul id="pagination" class="pagination"></ul>
 						</div>

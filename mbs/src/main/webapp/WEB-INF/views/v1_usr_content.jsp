@@ -109,10 +109,10 @@
 						<h1>${vo.str_name}</h1>
 						<hr/>
 						<div>
-							<c:if test="${sessionScope._gr > 1}">
+							<c:if test="${sessionScope._gr > 1 || sessionScope._id == vo.mb_id}">
 								<a href="usr_content_pay.do?str_number=${vo.str_number}" class="btn btn-info disabled">예약하기</a>
 							</c:if>
-							<c:if test="${sessionScope._gr == 1}">
+							<c:if test="${sessionScope._gr == 1 && sessionScope._id != vo.mb_id}">
 								<a href="usr_content_pay.do?str_number=${vo.str_number}" class="btn btn-info">예약하기</a>
 							</c:if>
 							<a href="#commnet" class="btn btn-primary">후기보기</a>
@@ -190,7 +190,14 @@
 					
 					<hr />
 					<div class="row ">
-						<div id="review" class="form-inline"></div>
+						<c:if test="${recnt!=0}">
+							<div id="review" class="form-inline"></div>
+						</c:if>
+						<c:if test="${recnt==0}">
+							<div style="text-align:center; vertical-align:middle;">
+								<h3>작성된 후기가 없습니다</h3>
+							</div>
+						</c:if>
 						<div align="center">
 							<ul id="pagination" class="pagination"></ul>
 						</div>

@@ -48,7 +48,7 @@
 			ON s.str_number=r.str_number)sr
 		INNER JOIN `rsv_comment` c
 		ON sr.rsv_no = c.rsv_no
-		WHERE sr.str_number=#{str_number} 
+		WHERE sr.str_number=#{str_number} AND c.rsv_cmt_delete = 1
 		ORDER BY c.rsv_cmt_no DESC
 	</select>
 	
@@ -71,7 +71,7 @@
 		INNER JOIN `reservation` r
 		ON c.rsv_no=r.rsv_no
 
-		WHERE r.str_number=#{str_no}	
+		WHERE r.str_number=#{str_no} AND c.rsv_cmt_delete=1	
 	</select>
 	
 	<select id="selectTourReviewcCnt" parameterType="int" resultType="int">

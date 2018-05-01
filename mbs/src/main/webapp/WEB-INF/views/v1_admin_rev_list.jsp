@@ -30,7 +30,7 @@
 				<div class="row" style="margin-bottom:10px">
 					<div class="col-md-6">
 						<c:if test="${fn:length(param.text) ne 0}">
-							<a href="admin_rev_list.do?str_number=${param.str_number}" class="btn btn-success">전체보기</a>
+							<a href="admin_rev_list.do?str_number=${param.str_number}&str_cat=${param.str_cat}" class="btn btn-success">전체보기</a>
 							검색어 : <strong>${param.text}</strong>
 						</c:if>
 					</div>

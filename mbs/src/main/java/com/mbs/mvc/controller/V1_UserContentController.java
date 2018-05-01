@@ -42,8 +42,8 @@ public class V1_UserContentController {
 			@RequestParam("str_number") int str_number,
 			HttpSession httpSession) {
 		
-		httpSession.setAttribute("_gr",999);
-		httpSession.setAttribute("_id", "user");
+		httpSession.setAttribute("_gr",1);
+		httpSession.setAttribute("_id", "shop1");
 		
 		//파람
 		V1_Store vo = ucDAO.selectStoreOne(str_number);
@@ -59,7 +59,8 @@ public class V1_UserContentController {
 			double taste = 0;
 			double service = 0;
 			double price = 0;
-			
+			double avg = 0;
+						
 			for(V1_Comment tmp : ctlist) {
 				sum += tmp.getRsv_cmt_point();
 				
@@ -92,13 +93,14 @@ public class V1_UserContentController {
 				else if(tmp.getRsv_cmt_price().equals("가격은 저렴해요")) {
 					price = price + 3/(double)3;
 				}
-				
 			}
 			
-			double avg = Math.round(sum/tot);
-			taste = Math.round(taste/tot*100d)/100d;
-			service = Math.round(service/tot*100d)/100d;
-			price = Math.round(price/tot*100d)/100d;
+			if(tot != 0) {
+				avg = Math.round(sum/tot);
+				taste = Math.round(taste/tot*100d)/100d;
+				service = Math.round(service/tot*100d)/100d;
+				price = Math.round(price/tot*100d)/100d;
+			}
 			
 			model.addAttribute("vo", vo);	
 			model.addAttribute("cnt", cnt);
@@ -118,11 +120,16 @@ public class V1_UserContentController {
 			List<V1_TourComment> list = reDAO.selectTourReviewList(str_number);
 			
 			int sum=0;
+			double avg = 0;
 			
 			for(V1_TourComment tmp : list) {
 				sum += tmp.getTour_cmt_point();
 			}
-			double avg = Math.round(sum/tot);
+			
+			if(tot != 0) {
+				avg = Math.round(sum/tot);
+			}
+			
 			
 			V1_TourComment vo1 = new V1_TourComment();
 			vo1.setStr_number(str_number);
