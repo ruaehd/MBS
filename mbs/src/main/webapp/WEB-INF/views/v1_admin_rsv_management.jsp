@@ -27,21 +27,21 @@
 				</div>
 				<div class="col-md-6">
 					<div align="right">
-					<div class="btn-group" role="group" aria-label="..."  style="margin-bottom:10px">
-						<c:forEach var="tmp" items="${map}" varStatus="i">
-					  		<c:if test="${param.rsv_code == i.index}">
-						  		<a class="btn btn-primary" href="admin_rsv_management.do?rsv_code=${i.index}&type=${param.type}&text=${param.text}">
-									${tmp.key} : <strong>${tmp.value}</strong>
-								</a>
-							</c:if>
-							<c:if test="${param.rsv_code != i.index}">
-								<a class="btn btn-default" href="admin_rsv_management.do?rsv_code=${i.index}&type=${param.type}&text=${param.text}">
-									${tmp.key} : <strong>${tmp.value}</strong>
-								</a>
-							</c:if>
-					  	</c:forEach>
+						<div class="btn-group" role="group" aria-label="..."  style="margin-bottom:10px">
+							<c:forEach var="tmp" items="${map}" varStatus="i">
+						  		<c:if test="${param.rsv_code == i.index}">
+							  		<a class="btn btn-primary" href="admin_rsv_management.do?rsv_code=${i.index}&type=${param.type}&text=${param.text}">
+										${tmp.key} : <strong>${tmp.value}</strong>
+									</a>
+								</c:if>
+								<c:if test="${param.rsv_code != i.index}">
+									<a class="btn btn-default" href="admin_rsv_management.do?rsv_code=${i.index}&type=${param.type}&text=${param.text}">
+										${tmp.key} : <strong>${tmp.value}</strong>
+									</a>
+								</c:if>
+						  	</c:forEach>
+						</div>
 					</div>
-				</div>
 				</div>
 			</div>
 			

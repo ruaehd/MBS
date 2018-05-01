@@ -76,18 +76,39 @@ public class V1_AdminRsvManagementController {
 	@RequestMapping(value="/admin_rev_management.do", method=RequestMethod.GET)
 	public String AdminReviewManagement(Model model, 
 			@RequestParam(value="page", defaultValue="1") int page, 
+			@RequestParam(value="str_cat", defaultValue="-1") int str_cat,
 			@RequestParam(value="text", defaultValue="") String text) {
+		
+		if(str_cat == -1) {	//menu값이 없을 경우
+			return "redirect:admin_rev_management.do?str_cat=0";
+		}
 		
 		V1_Store vo = new V1_Store();
 		vo.setPage((page-1)*6);
 		vo.setText(text);
+		vo.setStr_category(str_cat);
+		
+		
+		Map<String, Object> map = aDAO.countAdminStrTot(vo);
+		Map<String, Object> map1 = new LinkedHashMap<String, Object>();
+	
+		
+		if(map.get("usual") == null) {
+			map.put("usual", 0);
+			map.put("tour", 0);
+		}
+		
+		int tot = Integer.parseInt(String.valueOf(map.get("usual")))
+				+Integer.parseInt(String.valueOf(map.get("tour")));
+		
+		map1.put("전체", tot);
+		map1.put("일반", Integer.parseInt(String.valueOf(map.get("usual"))));
+		map1.put("관광지", Integer.parseInt(String.valueOf(map.get("tour"))));
 		
 		List<V1_Store> list = aDAO.selectStoreList(vo);
 		
-		int tot = aDAO.countStoreTot(vo);
-		
+		model.addAttribute("map", map1);
 		model.addAttribute("list", list);
-		model.addAttribute("tot", (tot-1)/6+1);
 		
 		return"v1_admin_rev_management";
 	}

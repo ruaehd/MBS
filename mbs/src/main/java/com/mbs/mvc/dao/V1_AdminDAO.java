@@ -30,6 +30,11 @@ public class V1_AdminDAO {
 		return sqlsession.selectOne("V1_AdminRsvMgt.countAdminRsvTot", vo);
 	}
 	
+	public Map<String, Object> countAdminStrTot(V1_Store vo) {
+		return sqlsession.selectOne("V1_AdminRsvMgt.countAdminStrTot", vo);
+	}
+	
+	
 	public List<V1_Store> selectStoreList(V1_Store vo){
 		return sqlsession.selectList("V1_AdminRsvMgt.selectStoreList", vo);
 	}

@@ -21,19 +21,40 @@
 			<hr />
 			
 			<section id="team" class="pb-5">
-			<div style="margin-bottom:10px; margin-left:20px" >
-				<c:if test="${fn:length(param.text) ne 0}">
-					<a href="admin_rev_management.do" class="btn btn-success">전체보기</a>
-					검색어 : <strong>${param.text}</strong>
-				</c:if>
+			<div class="row">
+				<div class="col-md-6" style="margin-bottom:10px; margin-left:20px" >
+					<c:if test="${fn:length(param.text) ne 0}">
+						<a href="admin_rev_management.do" class="btn btn-success">전체보기</a>
+						검색어 : <strong>${param.text}</strong>
+					</c:if>
+				</div>
+				<div class="col-md-6">
+					<div align="right">
+						<div class="btn-group" role="group" aria-label="..."  style="margin-bottom:10px">
+							<c:forEach var="tmp" items="${map}" varStatus="i">
+								<c:if test="${param.str_cat == i.index}">
+									<a class="btn btn-primary" href="admin_rev_management.do?str_cat=${i.index}&type=${param.type}&text=${param.text}">
+										${tmp.key} : <strong>${tmp.value}</strong>
+									</a>
+								</c:if>
+								<c:if test="${param.str_cat != i.index}">
+									<a class="btn btn-default" href="admin_rev_management.do?str_cat=${i.index}&type=${param.type}&text=${param.text}">
+										${tmp.key} : <strong>${tmp.value}</strong>
+									</a>
+								</c:if>
+							</c:forEach>
+						</div>
+					</div>
+				</div>
 			</div>
 				<c:if test="${fn:length(list) eq 0 }">
 					<div style="text-align:center; vertical-align:middle;">
 						<h3>검색 결과가 없습니다</h3>
 					</div>
 				</c:if>
+			
 				<c:if test="${fn:length(list) ne 0 }">
-			        
+			     
 			        <div class="row">
 			            <c:forEach var="tmp" items="${list}">
 			            <div class="col-xs-12 col-sm-6 col-md-4">
@@ -147,7 +168,7 @@
 			
 			var func = function(){
 				var tx = encodeURIComponent( $('#search_text').val() );
-				window.location.href="?text="+tx;
+				window.location.href="?str_cat=${param.str_cat}&text="+tx;
 			};
 			
 			$('#search_text').keyup(function(event){
@@ -161,10 +182,21 @@
 			});
 			
 			
+			var totpage=0;
+			if(${param.str_cat} == 0){
+				totpage = (${map.get("전체")}-1)/6+1
+			}
+			else if(${param.str_cat} == 1){
+				totpage = (${map.get("일반")}-1)/6+1
+			}
+			else if(${param.str_cat} == 2){
+				totpage = (${map.get("관광지")}-1)/6+1
+			}
+			
 			$('#pagination').twbsPagination({
-				totalPages: ${tot},
+				totalPages: totpage,
 				visiblePage:10,
-				href:'?page={{number}}&text=${param.text}'
+				href:'?str_cat=${param.str_cat}&page={{number}}&text=${param.text}'
 			});
 			
 			$('.send_email').click(function(){

@@ -14,6 +14,14 @@
 		WHERE ${type} LIKE CONCAT('%', #{text}, '%')
 	</select>
 	
+	<select id="countAdminStrTot" parameterType="V1_Store" resultType="hashmap">
+		SELECT 
+			SUM(CASE WHEN str_category=1 THEN 1 ELSE 0 END) AS usual,
+			SUM(CASE WHEN str_category=2 THEN 1 ELSE 0 END) AS tour
+		FROM `store`
+		WHERE str_name LIKE CONCAT('%', #{text}, '%')
+	</select>
+	
 	<select id="selectAdminRsvList" parameterType="V1_Reservation" resultType="V1_Reservation">
 		UPDATE `reservation` SET rsv_code=2 WHERE rsv_day <![CDATA[<]]> NOW() AND rsv_no IN (SELECT * FROM(SELECT r.rsv_no FROM `reservation` as r) a);
 		
@@ -71,6 +79,9 @@
 		ON t.str_number = msrc.str_number
 	        
 		WHERE msrc.str_name LIKE CONCAT('%', #{text}, '%')
+			<if test="str_category != 0 ">
+    			AND msrc.str_category=#{str_category}
+ 			</if>
 		GROUP BY msrc.str_number
 		ORDER BY msrc.str_date DESC LIMIT #{page} , 6 ;
 	</select>
