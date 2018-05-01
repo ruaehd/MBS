@@ -18,9 +18,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.mbs.mvc.conf.V1_EmailConfigure;
 import com.mbs.mvc.dao.V1_AdminDAO;
+import com.mbs.mvc.vo.V1_AdminReview;
 import com.mbs.mvc.vo.V1_Comment;
 import com.mbs.mvc.vo.V1_Reservation;
 import com.mbs.mvc.vo.V1_Store;
+import com.mbs.mvc.vo.V1_TourComment;
 
 @Controller
 public class V1_AdminRsvManagementController {
@@ -79,6 +81,7 @@ public class V1_AdminRsvManagementController {
 		V1_Store vo = new V1_Store();
 		vo.setPage((page-1)*6);
 		vo.setText(text);
+		
 		List<V1_Store> list = aDAO.selectStoreList(vo);
 		
 		int tot = aDAO.countStoreTot(vo);
@@ -92,32 +95,59 @@ public class V1_AdminRsvManagementController {
 	@RequestMapping(value="/admin_rev_list.do", method=RequestMethod.GET)
 	public String AdminReviewList(Model model, 
 			@RequestParam(value="page", defaultValue="1") int page, 
-			@RequestParam("str_number") int str_number, 
+			@RequestParam("str_number") int str_number,
+			@RequestParam("str_cat") int str_category,
 			@RequestParam(value="type", defaultValue="rsv_cmt_content") String type,
 			@RequestParam(value="text", defaultValue="") String text) {
+		
 		V1_Comment vo = new V1_Comment();
-		vo.setStr_number(str_number);
-		vo.setPage((page-1)*10);
-		vo.setType(type);
-		vo.setText(text);
+			vo.setStr_number(str_number);
+			vo.setPage((page-1)*10);
+			vo.setType(type);
+			vo.setText(text);
+			
+		if(str_category == 1) {
+			List<V1_AdminReview> list = aDAO.selectReviewList(vo);
+			int tot = aDAO.countReviewTot(vo);
+			model.addAttribute("list", list);
+			model.addAttribute("tot", (tot-1)/10+1);
+		}
 		
-		List<V1_Comment> list = aDAO.selectReviewList(vo);
-		int tot = aDAO.countReviewTot(vo);
+		if(str_category == 2) {
+			vo.setType("tour_cmt_content");
+			List<V1_AdminReview> list = aDAO.selectTourReviewList(vo);
+			int tot = aDAO.countTourReviewTot(vo);
+			model.addAttribute("list", list);
+			model.addAttribute("tot", (tot-1)/10+1);
+		}
 		
-		model.addAttribute("list", list);
-		model.addAttribute("tot", (tot-1)/10+1);
+		model.addAttribute("cat", str_category);
 		return "v1_admin_rev_list";
 	}
 	
 	@RequestMapping(value="/admin_rev_delete.do", method=RequestMethod.GET)
-	public String AdminReviewDelete(@RequestParam("rsv_cmt_no") int rsv_cmt_no, HttpServletRequest request) {
+	public String AdminReviewDelete(
+			@RequestParam("no") int no, 
+			@RequestParam("str_cat") int str_category,
+			HttpServletRequest request) {
 		if(request.getHeader("REFERER") != null) {
-			List<V1_Comment> list = new ArrayList<V1_Comment>();
-			V1_Comment vo = new V1_Comment();
-			vo.setRsv_cmt_no(rsv_cmt_no);
-			list.add(vo);
 			
-			aDAO.multiDeleteReview(list);
+			if(str_category == 1) {
+				List<V1_Comment> list = new ArrayList<V1_Comment>();
+				V1_Comment vo = new V1_Comment();
+				vo.setRsv_cmt_no(no);
+				list.add(vo);
+				
+				aDAO.multiDeleteReview(list);
+			}
+			if(str_category == 2) {
+				List<V1_TourComment> list = new ArrayList<V1_TourComment>();
+				V1_TourComment vo = new V1_TourComment();
+				vo.setTour_cmt_no(no);
+				list.add(vo);
+				
+				aDAO.multiDeleteTourReview(list);
+			}
 			return "redirect:"+request.getHeader("REFERER");
 		}
 		else {
@@ -127,17 +157,37 @@ public class V1_AdminRsvManagementController {
 	}
 	
 	@RequestMapping(value="/admin_rev_delete.do", method=RequestMethod.POST)
-	public String AdminReviewDelete(@RequestParam("chk[]") int[] chk, HttpServletRequest request) {
+	public String AdminReviewDelete(
+			@RequestParam("chk[]") int[] chk, 
+			@RequestParam("str_cat") int str_category,
+			HttpServletRequest request) {
 		if(request.getHeader("REFERER") != null) {
-			List<V1_Comment> list = new ArrayList<V1_Comment>();
 			
-			for(int i=0; i< chk.length; i++) {
-				V1_Comment vo = new V1_Comment();
-				vo.setRsv_cmt_no(chk[i]);
-				list.add(vo);
+			
+			if(str_category == 1) {
+				List<V1_Comment> list = new ArrayList<V1_Comment>();
+				
+				for(int i=0; i< chk.length; i++) {
+					V1_Comment vo = new V1_Comment();
+					vo.setRsv_cmt_no(chk[i]);
+					list.add(vo);
+				}
+				
+				aDAO.multiDeleteReview(list);
 			}
 			
-			aDAO.multiDeleteReview(list);
+			if(str_category == 2) {
+				List<V1_TourComment> list = new ArrayList<V1_TourComment>();
+				
+				for(int i=0; i< chk.length; i++) {
+					V1_TourComment vo = new V1_TourComment();
+					vo.setTour_cmt_no(chk[i]);
+					list.add(vo);
+				}
+				
+				aDAO.multiDeleteTourReview(list);
+			}
+			
 			return "redirect:"+request.getHeader("REFERER");
 		}
 		else {

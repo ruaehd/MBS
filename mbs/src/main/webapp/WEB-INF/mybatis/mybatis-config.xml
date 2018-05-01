@@ -25,6 +25,7 @@
 		<typeAlias alias="V1_Comment" type="com.mbs.mvc.vo.V1_Comment" />
 		<typeAlias alias="V1_RsvMenu" type="com.mbs.mvc.vo.V1_RsvMenu" />
 		<typeAlias alias="V1_TourCmt" type="com.mbs.mvc.vo.V1_TourComment" />
+		<typeAlias alias="V1_AdminReview" type="com.mbs.mvc.vo.V1_AdminReview" />
 	</typeAliases>
 
 </configuration>

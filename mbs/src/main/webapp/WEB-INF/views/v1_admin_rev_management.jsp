@@ -55,16 +55,17 @@
 			                                <div class="card-body text-center mt-4">
 			                                    <a href="usr_content.do?str_number=${tmp.str_number}"><h4 class="card-title">${tmp.str_name}</h4></a>
 			                                    <p class="card-text">평점평균 : <fmt:formatNumber value="${tmp.avg}" pattern=".00"/> /5</p>
-			                                    
-			                                    <p class="card-text">이용예정 : ${tmp.exp}</p>
-			                                    <p class="card-text">이용완료 : ${tmp.com}</p>
-			                                    <p class="card-text">예약취소 : ${tmp.can}</p>
+			                                    <c:if test="${tmp.str_category == 1}">
+				                                    <p class="card-text">이용예정 : ${tmp.exp}</p>
+				                                    <p class="card-text">이용완료 : ${tmp.com}</p>
+				                                    <p class="card-text">예약취소 : ${tmp.can}</p>
+			                                    </c:if>
 			                                    <div class="form-inline">
 			                                    	<a href="#" class="btn btn-primary btn-sm send_email">
 			                                    		<i class="glyphicon glyphicon-envelope"></i>
 			                                    		<input type="hidden" class="mb_email" value="${tmp.mb_email}" />
 			                                    	</a>
-			                                        <a href="admin_rev_list.do?str_number=${tmp.str_number}" class="btn btn-primary btn-sm">리뷰관리(${tmp.cnt})</a> 
+			                                        <a href="admin_rev_list.do?str_number=${tmp.str_number}&str_cat=${tmp.str_category}" class="btn btn-primary btn-sm">리뷰관리(${tmp.cnt})</a> 
 			                                    </div>
 			                                    
 			                                    

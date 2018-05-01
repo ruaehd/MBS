@@ -25,7 +25,8 @@
 						<input type="text"/>
 					</div>
 					<input type="hidden" name="str_number" value="${param.str_number}"/>
-				
+					<input type="hidden" name="str_cat" value="${param.str_cat}"/>
+									
 				<div class="row" style="margin-bottom:10px">
 					<div class="col-md-6">
 						<c:if test="${fn:length(param.text) ne 0}">
@@ -45,36 +46,41 @@
 					</div>
 				</c:if>
 				<c:if test="${fn:length(list) ne 0 }">
-					<table class="table">
-						<tr>
-							<th><input type="checkbox" id="chk_all"/></th>
-							<th>예약번호</th>
-							<th>평점</th>
-							<th>내용</th>
-							<th>작성자</th>
-							<th>사용일</th>
-							<th>작성일</th>
-							<th>비고</th>
-						</tr>
-						<c:forEach var="tmp" items="${list}" varStatus="i">
+					
+						<table class="table">
 							<tr>
-								<td><input id="no_${i.index}" type="checkbox" class="chk" name="chk[]" value="${tmp.rsv_cmt_no}"/></td>
-						 		<td><a href="usr_rsv_content.do?rsv_no=${tmp.rsv_no}&str_number=${param.str_number}">${tmp.rsv_no}</a></td>
-						 		<td>${tmp.rsv_cmt_point}</td>
-						 		<td>
-									<div style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap; width: 300px;" title="${tmp.rsv_cmt_content}">
-										${tmp.rsv_cmt_content}
-									</div>
-						 		</td>
-						 		<td>${tmp.rsv_cmt_writer}</td>
-						 		<td>${tmp.rsv_day}</td>
-						 		<td>${tmp.rsv_cmt_date}</td>
-						 		<td>
-						 			<a href="#" class="btn btn-xs btn-warning del_rev"  >삭제</a>
-						 		</td>	
-						 	</tr>
-					 	</c:forEach>
-					 </table>
+								<th><input type="checkbox" id="chk_all"/></th>
+								<c:if test="${cat == 1}">
+									<th>예약번호</th>
+								</c:if>
+								<th>평점</th>
+								<th>내용</th>
+								<th>작성자</th>
+								<th>사용일</th>
+								<th>작성일</th>
+								<th>비고</th>
+							</tr>
+							<c:forEach var="tmp" items="${list}" varStatus="i">
+								<tr>
+									<td><input id="no_${i.index}" type="checkbox" class="chk" name="chk[]" value="${tmp.no}"/></td>
+							 		<c:if test="${cat == 1}">
+							 			<td><a href="usr_rsv_content.do?rsv_no=${tmp.rsv_no}&str_number=${param.str_number}">${tmp.rsv_no}</a></td>
+							 		</c:if>
+							 		<td>${tmp.point}</td>
+							 		<td>
+										<div style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap; width: 300px;" title="${tmp.content}">
+											${tmp.content}
+										</div>
+							 		</td>
+							 		<td>${tmp.writer}</td>
+							 		<td>${tmp.day}</td>
+							 		<td>${tmp.date}</td>
+							 		<td>
+							 			<a href="#" class="btn btn-xs btn-warning del_rev"  >삭제</a>
+							 		</td>	
+							 	</tr>
+						 	</c:forEach>
+						 </table>
 				 </c:if>
 				 
 				 
@@ -104,7 +110,7 @@
 			var func = function(){
 				var ty = $('#search_type').val();
 				var tx = encodeURIComponent( $('#search_text').val() );
-				window.location.href="?str_number=${param.str_number}&type="+ty+"&text="+tx;
+				window.location.href="?str_number=${param.str_number}&str_cat=${param.str_cat}&type="+ty+"&text="+tx;
 			};
 			
 			$('#search_text').keyup(function(event){
@@ -122,7 +128,7 @@
 			$('#pagination').twbsPagination({
 				totalPages:${tot},
 				visiblePage:10,
-				href:'?str_number=${param.str_number}&page={{number}}&type=${param.type}&text='+encodeURIComponent('${param.text}')
+				href:'?str_number=${param.str_number}&str_cat=${param.str_cat}&page={{number}}&type=${param.type}&text='+encodeURIComponent('${param.text}')
 			});
 			
 			$('.del_rev').click(function(){
@@ -137,7 +143,7 @@
 					button : "확인"
 				}).then((value)=>{
 					if(value){
-						window.location.href='admin_rev_delete.do?str_number=${param.str_number}&rsv_cmt_no='+no;	
+						window.location.href='admin_rev_delete.do?str_number=${param.str_number}&str_cat=${param.str_cat}&no='+no;	
 					}
 				});	
 			});

@@ -9,9 +9,11 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.mbs.mvc.vo.V1_AdminReview;
 import com.mbs.mvc.vo.V1_Comment;
 import com.mbs.mvc.vo.V1_Reservation;
 import com.mbs.mvc.vo.V1_Store;
+import com.mbs.mvc.vo.V1_TourComment;
 
 @Service
 public class V1_AdminDAO {
@@ -32,20 +34,35 @@ public class V1_AdminDAO {
 		return sqlsession.selectList("V1_AdminRsvMgt.selectStoreList", vo);
 	}
 	
-	public List<V1_Comment> selectReviewList(V1_Comment vo){
+	public List<V1_AdminReview> selectReviewList(V1_Comment vo){
 		return sqlsession.selectList("V1_AdminRsvMgt.selectReviewList", vo);
+	}
+	public List<V1_AdminReview> selectTourReviewList(V1_Comment vo){
+		return sqlsession.selectList("V1_AdminRsvMgt.selectTourReviewList", vo);
 	}
 	
 	public int multiDeleteReview(List<V1_Comment> list) {
 		return sqlsession.update("V1_AdminRsvMgt.multiDeleteReview", list);
 	}
 	
+	public int multiDeleteTourReview(List<V1_TourComment> list) {
+		return sqlsession.update("V1_AdminRsvMgt.multiDeleteTourReview", list);
+	}
+	
 	public int countStoreTot(V1_Store vo) {
 		return sqlsession.selectOne("V1_AdminRsvMgt.countStoreTot", vo);
 	}
 	
-	
 	public int countReviewTot(V1_Comment vo) {
 		return sqlsession.selectOne("V1_AdminRsvMgt.countReviewTot", vo);
+	}
+	
+	public int countTourReviewTot(V1_Comment vo) {
+		return sqlsession.selectOne("V1_AdminRsvMgt.countTourReviewTot", vo);
+	}
+	
+	
+	public List<V1_Store> selectStrCat(List<V1_Store> list) {
+		return sqlsession.selectList("V1_AdminRsvMgt.selectStrCat", list);
 	}
 }
