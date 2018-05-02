@@ -42,8 +42,8 @@ public class V1_UserContentController {
 			@RequestParam("str_number") int str_number,
 			HttpSession httpSession) {
 		
-		httpSession.setAttribute("_gr",1);
-		httpSession.setAttribute("_id", "shop1");
+		httpSession.setAttribute("_gr",999);
+		httpSession.setAttribute("_id", "admin");
 		
 		//파람
 		V1_Store vo = ucDAO.selectStoreOne(str_number);

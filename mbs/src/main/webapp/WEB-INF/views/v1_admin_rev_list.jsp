@@ -64,7 +64,7 @@
 								<tr>
 									<td><input id="no_${i.index}" type="checkbox" class="chk" name="chk[]" value="${tmp.no}"/></td>
 							 		<c:if test="${cat == 1}">
-							 			<td><a href="usr_rsv_content.do?rsv_no=${tmp.rsv_no}&str_number=${param.str_number}">${tmp.rsv_no}</a></td>
+							 			<td>${tmp.rsv_no}</td>
 							 		</c:if>
 							 		<td>${tmp.point}</td>
 							 		<td>
@@ -143,7 +143,7 @@
 					button : "확인"
 				}).then((value)=>{
 					if(value){
-						window.location.href='admin_rev_delete.do?str_number=${param.str_number}&str_cat=${param.str_cat}&no='+no;	
+						window.location.href='admin_rev_delete.do?str_number=${param.str_number}&str_cat=${param.str_cat}&no='+no;
 					}
 				});	
 			});

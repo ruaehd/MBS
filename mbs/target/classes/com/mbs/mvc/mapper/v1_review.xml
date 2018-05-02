@@ -15,11 +15,11 @@
 	</insert>
 	
 	<select id="selectReviewChk" parameterType="V1_Comment" resultType="int">
-		SELECT COUNT(*) AS cnt FROM `rsv_comment` WHERE rsv_cmt_writer=#{rsv_cmt_writer} AND rsv_no=#{rsv_no} 
+		SELECT COUNT(*) AS cnt FROM `rsv_comment` WHERE rsv_cmt_writer=#{rsv_cmt_writer} AND rsv_no=#{rsv_no} AND rsv_cmt_delete=1
 	</select>
 	
 	<select id="selectReviewOne" parameterType="V1_Comment" resultType="V1_Comment">
-		SELECT * FROM `rsv_comment` WHERE rsv_cmt_writer=#{rsv_cmt_writer} AND rsv_no=#{rsv_no}
+		SELECT * FROM `rsv_comment` WHERE rsv_cmt_writer=#{rsv_cmt_writer} AND rsv_no=#{rsv_no} AND rsv_cmt_delete=1
 	</select>
 	
 	<update id="updateComment" parameterType="V1_Comment">
@@ -35,7 +35,7 @@
 			ON s.str_number=r.str_number)sr
 		INNER JOIN `rsv_comment` c
 		ON sr.rsv_no = c.rsv_no
-		WHERE sr.str_number=#{str_number}
+		WHERE sr.str_number=#{str_number} AND c.rsv_cmt_delete=1
 		ORDER BY c.rsv_cmt_no DESC LIMIT #{page} , 5
 	</select>
 	
@@ -105,5 +105,10 @@
 	<update id="deleteTourReview" parameterType="int">
 		UPDATE `tour_comment` SET tour_cmt_delete=0 WHERE tour_cmt_no=#{tour_cmt_no}
 	</update>
+	
+	<update id="deleteReview" parameterType="int">
+		UPDATE `rsv_comment` SET rsv_cmt_delete=0 WHERE rsv_cmt_no=#{rsv_cmt_no}
+	</update>
+	
 	
 </mapper>

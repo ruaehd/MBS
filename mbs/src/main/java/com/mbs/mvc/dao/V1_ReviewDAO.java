@@ -87,6 +87,11 @@ public class V1_ReviewDAO {
 		return sqlsession.update("V1_Review.updateTourReview", vo);
 	}
 	
+	public int deleteReview(int rsv_cmt_no) {
+		return sqlsession.update("V1_Review.deleteReview", rsv_cmt_no);
+	}
+	
+	
 	public int deleteTourReview(int tour_cmt_no) {
 		return sqlsession.update("V1_Review.deleteTourReview", tour_cmt_no);
 	}

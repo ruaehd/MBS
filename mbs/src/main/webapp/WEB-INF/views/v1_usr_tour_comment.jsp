@@ -73,7 +73,7 @@
 				<hr />
 				<div class="form-inline" align="center">
 					<input type="submit" class="btn btn-success" value="한줄평 작성" />
-					<input type="button" class="btn btn-danger" value="작성 취소"/>
+					<input type="button" id="btn_cancel" class="btn btn-default" value="작성 취소"/>
 				</div>
 			</div>
 		</form:form>
@@ -105,6 +105,10 @@
 		     console.log(str);
 		     $('#rating').val(str);
 		     return false;
+		});
+		
+		$('#btn_cancel').click(function() {
+			close();
 		});
 		
 	});

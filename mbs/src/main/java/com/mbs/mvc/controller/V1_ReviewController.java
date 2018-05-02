@@ -39,8 +39,9 @@ public class V1_ReviewController {
 		reDAO.insertComment(vo);
 		
 		model.addAttribute("message", "후기가 작성되었습니다.");
+		model.addAttribute("title", "후기 작성 완료");
 		
-		return "alert";
+		return "v1_alert_pop";
 	}
 	
 	@RequestMapping(value="/usr_rsv_comment_edit.do", method = RequestMethod.GET)
@@ -66,8 +67,8 @@ public class V1_ReviewController {
 		reDAO.updateComment(vo);
 		
 		model.addAttribute("message", "후기가 수정되었습니다.");
-		
-		return "alert";
+		model.addAttribute("title", "후기 수정 완료");
+		return "v1_alert_pop";
 	}
 	
 	@RequestMapping(value="/usr_tour_comment.do", method = RequestMethod.GET)
@@ -92,8 +93,8 @@ public class V1_ReviewController {
 		reDAO.insertTourCmt(vo);
 		
 		model.addAttribute("message", "후기 작성이 완료되었습니다.");
-		
-		return "v1_alert";
+		model.addAttribute("title", "후기 작성 완료");
+		return "v1_alert_pop";
 	}
 	
 	@RequestMapping(value="/usr_tour_comment_edit.do", method = RequestMethod.GET)
@@ -116,10 +117,23 @@ public class V1_ReviewController {
 		
 		reDAO.updateTourReview(vo);
 		
-		model.addAttribute("message", "리뷰 수정이 완료되었습니다.");
-		
-		return "v1_alert";
+		model.addAttribute("message", "후기 수정이 완료되었습니다.");
+		model.addAttribute("title", "후기 수정 완료");
+		return "v1_alert_pop";
 	}
+	
+	@RequestMapping(value="/usr_comment_delete.do", method = RequestMethod.GET)
+	public String usrRsvCommentDelete(Model model, @RequestParam("rsv_cmt_no") int rsv_cmt_no, HttpSession httpSession) {
+		
+		reDAO.deleteReview(rsv_cmt_no);
+		
+		model.addAttribute("message", "리뷰 삭제가 완료되었습니다.");
+		model.addAttribute("title", "후기 삭제 완료");
+		
+		return "v1_alert_pop";
+	}
+	
+	
 	
 	@RequestMapping(value="/usr_tour_comment_delete.do", method = RequestMethod.GET)
 	public String usrTourRsvCommentDelete(Model model, @RequestParam("tour_cmt_no") int tour_cmt_no, HttpSession httpSession) {
@@ -127,6 +141,8 @@ public class V1_ReviewController {
 		reDAO.deleteTourReview(tour_cmt_no);
 		
 		model.addAttribute("message", "리뷰 삭제가 완료되었습니다.");
-		return "v1_alert";
+		model.addAttribute("title", "후기 삭제 완료");
+		
+		return "v1_alert_pop";
 	}
 }

@@ -87,7 +87,8 @@ public class V1_ReservationController {
 			V1_EmailConfigure.sendEmail(rsv_email.toString(), rsv_title, rsv_text);	//예약자
 			V1_EmailConfigure.sendEmail(str_email.toString(), str_title, str_text);	//사업자
 
-			model.addAttribute("message", "예약이 되었습니다.");
+			model.addAttribute("message", "신규 예약이 완료 되었습니다.");
+			model.addAttribute("title", "예약 완료");
 			
 			if((Integer)httpSession.getAttribute("_gr")>1) {	//관리자라면
 				model.addAttribute("url", "admin_rsv_management.do");
@@ -96,13 +97,14 @@ public class V1_ReservationController {
 				model.addAttribute("url", "usr_rsv_list.do");
 			}
 			
-			return "alert";
+			return "v1_alert";
 		}
 		catch (Exception e) {
 			System.out.println(e.getMessage());
+			model.addAttribute("title", "예약 실패");
 			model.addAttribute("message", "예약이 실패하였습니다.");
 			model.addAttribute("url", "redirect:usr_content_pay.do");
-			return "alert";
+			return "v1_alert";
 		}
 	}
 	
@@ -141,7 +143,7 @@ public class V1_ReservationController {
 		map1.put("전체", tot);
 		map1.put("이용예정", Integer.parseInt(String.valueOf(map.get("exp"))));
 		map1.put("이용완료", Integer.parseInt(String.valueOf(map.get("com"))));
-		map1.put("취소환불", Integer.parseInt(String.valueOf(map.get("can"))));
+		map1.put("예약취소", Integer.parseInt(String.valueOf(map.get("can"))));
 		
 		
 		model.addAttribute("map", map1);
@@ -240,9 +242,10 @@ public class V1_ReservationController {
 			V1_EmailConfigure.sendEmail(str_email.toString(), str_title, str_text);	//사업자
 			
 			String url = "usr_rsv_content.do?str_number="+vo.getStr_number()+"&rsv_no="+vo.getRsv_no();
-			model.addAttribute("message", "예약을 수정했습니다.");
+			model.addAttribute("title", "수정 완료");
+			model.addAttribute("message", "예약 수정이 완료 되었습니다.");
 			model.addAttribute("url", url);
-			return "alert";
+			return "v1_alert";
 		}
 		return "redirect:usr_rsv_edit.do";
 	}
@@ -265,9 +268,10 @@ public class V1_ReservationController {
 		V1_EmailConfigure.sendEmail(str_email.toString(), str_title, str_text);	//사업자
 		
 		model.addAttribute("message", "예약을 취소했습니다.");
+		model.addAttribute("title", "예약 취소 완료");
 		String url = (String)request.getHeader("REFERER");
 		model.addAttribute("url", url);
 		
-		return "alert";
+		return "v1_alert";
 	}
 }

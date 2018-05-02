@@ -148,6 +148,7 @@ public class V1_AdminRsvManagementController {
 	
 	@RequestMapping(value="/admin_rev_delete.do", method=RequestMethod.GET)
 	public String AdminReviewDelete(
+			Model model,
 			@RequestParam("no") int no, 
 			@RequestParam("str_cat") int str_category,
 			HttpServletRequest request) {
@@ -169,7 +170,12 @@ public class V1_AdminRsvManagementController {
 				
 				aDAO.multiDeleteTourReview(list);
 			}
-			return "redirect:"+request.getHeader("REFERER");
+					
+			model.addAttribute("url", request.getHeader("REFERER"));
+			model.addAttribute("message", "후기 삭제가 완료 되었습니다.");
+			model.addAttribute("title", "삭제 완료");
+			
+			return "v1_alert";
 		}
 		else {
 			return "redirect:admin_rev_management.do";
@@ -179,6 +185,7 @@ public class V1_AdminRsvManagementController {
 	
 	@RequestMapping(value="/admin_rev_delete.do", method=RequestMethod.POST)
 	public String AdminReviewDelete(
+			Model model,
 			@RequestParam("chk[]") int[] chk, 
 			@RequestParam("str_cat") int str_category,
 			HttpServletRequest request) {
@@ -209,7 +216,11 @@ public class V1_AdminRsvManagementController {
 				aDAO.multiDeleteTourReview(list);
 			}
 			
-			return "redirect:"+request.getHeader("REFERER");
+			model.addAttribute("url", request.getHeader("REFERER"));
+			model.addAttribute("message", "후기 삭제가 완료 되었습니다.");
+			model.addAttribute("title", "삭제 완료");
+			
+			return "v1_alert";
 		}
 		else {
 			return "redirect:admin_rev_management.do";
@@ -226,10 +237,10 @@ public class V1_AdminRsvManagementController {
 		V1_EmailConfigure.sendEmail(email.toString(), title, text);
 		
 		model.addAttribute("message", "메일을 보냈습니다.");
-		String url = (String)request.getHeader("REFERER");
-		model.addAttribute("url", url);
+		model.addAttribute("url", request.getHeader("REFERER"));
+		model.addAttribute("title", "이메일 전송 완료");
 		
-		return "alert";
+		return "v1_alert";
 	}
 	
 	

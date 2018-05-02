@@ -63,12 +63,12 @@
 				 	</tr>
 				 	<c:forEach var="tmp" items="${list}">
 						<tr>
-					 		<td style="vertical-align:middle;">${tmp.rsv_no}</td>
-					 		<td style="vertical-align:middle;">${tmp.rsv_code_chk}</td>
-					 		<td style="vertical-align:middle;"><a href="usr_content.do?str_number=${tmp.str_number}">${tmp.str_name}</a></td>
-					 		<td style="vertical-align:middle;"><a href="#">${tmp.rsv_sub_id}</a></td>
-					 		<td style="vertical-align:middle;">${tmp.rsv_day}</td>
-					 		<td style="vertical-align:middle;">${tmp.rsv_date}</td>
+					 		<td>${tmp.rsv_no}</td>
+					 		<td>${tmp.rsv_code_chk}</td>
+					 		<td><a href="usr_content.do?str_number=${tmp.str_number}">${tmp.str_name}</a></td>
+					 		<td><a href="#">${tmp.rsv_sub_id}</a></td>
+					 		<td>${tmp.rsv_day}</td>
+					 		<td>${tmp.rsv_date}</td>
 					 		<td style="text-align:center">
 					 			<c:if test="${tmp.rsv_code_chk eq '이용예정'}">
 					 				<a href="usr_rsv_edit.do?str_number=${tmp.str_number}&rsv_no=${tmp.rsv_no}" class="btn btn-xs btn-info">예약수정</a>

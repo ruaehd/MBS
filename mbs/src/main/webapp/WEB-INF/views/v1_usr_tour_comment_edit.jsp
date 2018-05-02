@@ -76,7 +76,7 @@
 				<div class="form-inline" align="center">
 					<input type="submit" class="btn btn-success" value="후기 수정" />
 					<a href="usr_tour_comment_delete.do?tour_cmt_no=${vo.tour_cmt_no}" class="btn btn-danger">후기 삭제</a>
-					<input type="button" class="btn btn-default" value="작성 취소"/>
+					<input type="button" id="btn_cancel" class="btn btn-default" value="작성 취소"/>
 				</div>
 			</div>
 		</form:form>
@@ -108,6 +108,10 @@
 		     console.log(str);
 		     $('#rating').val(str);
 		     return false;
+		});
+		
+		$('#btn_cancel').click(function() {
+			close();
 		});
 		
 	});
