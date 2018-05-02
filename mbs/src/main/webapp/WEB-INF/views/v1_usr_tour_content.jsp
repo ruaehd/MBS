@@ -103,9 +103,9 @@
 					<!-- Wrapper for slides -->
 					<div class="carousel-inner" id="back_imgs">
 						<div class="item active">
-							<img src="get_blob_img.do?str_number=${vo.str_number}&idx=1" style="width: 100%; height: 500px"/>
+							<img src="get_blob_img.do?str_number=${vo.str_number}&idx=0" style="width: 100%; height: 500px"/>
 						</div>
-						<c:forEach var="i" begin="2" end="${cnt}">
+						<c:forEach var="i" begin="1" end="${cnt}">
 							<div class="item">
 								<img src="get_blob_img.do?str_number=${vo.str_number}&idx=${i}" style="width: 100%; height: 500px"/>
 							</div>

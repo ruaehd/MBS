@@ -103,7 +103,7 @@ public class V1_UserContentController {
 			}
 			
 			model.addAttribute("vo", vo);	
-			model.addAttribute("cnt", cnt);
+			model.addAttribute("cnt", cnt-1);
 			model.addAttribute("mlist", mlist);
 			model.addAttribute("avg", avg);
 			model.addAttribute("taste", taste);
