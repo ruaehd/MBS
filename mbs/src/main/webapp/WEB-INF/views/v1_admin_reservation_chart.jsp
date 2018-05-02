@@ -25,15 +25,15 @@
 				<div class="row">
 					<div class="col-md-4" align="center" style="margin: 150px auto">
 						<div id="titletext">
-							<div id="text"></div>
+							
 							<h2>
 								<b id="resercount">현재 ${nowcount}개의 예약이 진행중입니다</b>
-								<canvas id="canvas"></canvas>
 							</h2>
 							<h2 style="margin-top: 150px">
 							<b id="resernowcount">현재까지 ${allcount}개의 예약이 완료되었습니다</b>
 							<canvas id="linecanvas"></canvas>
 							</h2>
+							<div id="text"></div>
 						</div>
 					</div>
 					<div class="col-md-8" style="margin: 0px auto">
@@ -63,43 +63,8 @@
 <script type="text/javascript" src="resources/js/Chart.bundle.js"></script>
 <script>
 	$(function(){
-		$('#canvas').hide();
 		$('#linecanvas').hide();
-		var ctx1 = document.getElementById('canvas').getContext('2d');
 		var ctx = document.getElementById('linecanvas').getContext('2d');
-		var config = {
-				type: 'bar',
-				data: {
-					labels: ['10대이하', '20대', '30대', '40대', '50대','60대', '70대', '80대', '90대이상'],
-					datasets: [{
-						label: '여성',
-						backgroundColor: 'rgba(255, 99, 132, 0.6)',
-						borderColor: 'rgba(255, 99, 132, 0.6)',
-						data: [1,2,3,4,5,6,7,8,9]
-						
-					}, {
-						label: '남성',
-						backgroundColor: 'rgba(54, 162, 235, 0.6)',
-						borderColor: 'rgba(54, 162, 235, 0.6)',
-						data: [1,2,3,4,5,6,7,8,9]
-					}]
-				},
-				options: {
-					responsive: true,
-					title: {
-						display: true,
-						text: '예약 연령/성별'
-					},
-					tooltips: {
-						mode: 'index',
-						intersect: false,
-					},
-					hover: {
-						mode: 'nearest',
-						intersect: true
-					}
-				}
-			};
 		
 		function func1() {
 			weekdatelist = [];
@@ -158,7 +123,6 @@
 				if(wvo.day_1 == 0 && wvo.day_2 == 0&& wvo.day_3 == 0 && wvo.day_4 == 0&& wvo.day_5 == 0 && wvo.day_6 == 0 &&wvo.day_7 == 0){
 					$('#resercount').text("입력하신 검색어에 대한 정보가");
 					$('#resernowcount').text("존재하지 않습니다");
-					$('#canvas').hide();
 					$('#linecanvas').hide();
 					return null;
 				};
@@ -170,7 +134,6 @@
 		function func() {
 			if($('#searchval').val() == ""){
 				$('#table').empty();
-				$('#canvas').hide();
 				$('#linecanvas').hide();
 				$('#resercount').text("현재 ${nowcount}개의 예약이 진행중입니다");
 				$('#resernowcount').text("현재까지 ${allcount}개의 예약이 완료되었습니다");
@@ -220,8 +183,8 @@
 							'<td>'+list[i].rsv_sub_email+'</td>'+
 							'<td>'+list[i].rsv_date+'</td>');
 				}
-				$('#text').append('<font color="green">이용예정 :</font>'+soon+',<font color="blue">이용완료 :</font>'+already+
-						',<font color="red">예약취소 :</font>'+fail);
+				$('#text').append('<br/><h4><b>총 예약 통계</b><br/><br/><font color="green">이용예정 :</font>'+soon+',<font color="blue">이용완료 :</font>'+already+
+						',<font color="red">예약취소 :</font>'+fail+'</h4>');
 				$('#resercount').text("");
 				$('#resernowcount').text("");
 				window.myBar = new Chart(ctx1, config);
@@ -230,7 +193,6 @@
 				if(list.length == 0){
 					$('#resercount').text("입력하신 검색어에 대한 정보가");
 					$('#resernowcount').text("존재하지 않습니다");
-					$('#canvas').hide();
 					$('#linecanvas').hide();
 					$('#text').text("");
 				};

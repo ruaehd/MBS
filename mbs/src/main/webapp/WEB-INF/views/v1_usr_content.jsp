@@ -91,6 +91,7 @@
 								<img src="get_blob_img.do?str_number=${vo.str_number}&idx=${i}" style="width: 100%; height: 500px"/>
 							</div>
 						</c:forEach>
+						
 					</div>
 					
 					<!-- Controls -->
