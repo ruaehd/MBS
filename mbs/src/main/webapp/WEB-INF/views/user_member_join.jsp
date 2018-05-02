@@ -342,7 +342,8 @@
 	      	}
 	      	else if(ret == 1){
 	      		alert('동일한 아이디가 존재합니다 다른 아이디를 입력해주세요');
-	      		return null;
+	      		$('#idcheck').removeClass('w3-green');
+	      		$('#idcheck').addClass('w3-red');
 	      	}
 	      	else{
 	      		alert('중복확인에 실패하셨습니다 다시 눌러주세요 !');
