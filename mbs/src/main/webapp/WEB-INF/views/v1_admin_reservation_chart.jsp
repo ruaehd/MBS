@@ -25,6 +25,7 @@
 				<div class="row">
 					<div class="col-md-4" align="center" style="margin: 150px auto">
 						<div id="titletext">
+							<div id="text"></div>
 							<h2>
 								<b id="resercount">현재 ${nowcount}개의 예약이 진행중입니다</b>
 								<canvas id="canvas"></canvas>
@@ -109,6 +110,7 @@
 				$('#linecanvas').hide();
 				$('#resercount').text("현재 ${nowcount}개의 예약이 진행중입니다");
 				$('#resernowcount').text("현재까지 ${allcount}개의 예약이 완료되었습니다");
+				$('#text').text("");
 				return null;
 			}
 			if($('#searchval').val() != null){
@@ -172,11 +174,16 @@
 				$('#linecanvas').hide();
 				$('#resercount').text("현재 ${nowcount}개의 예약이 진행중입니다");
 				$('#resernowcount').text("현재까지 ${allcount}개의 예약이 완료되었습니다");
+				$('#text').text("");
 				return null;
 			}
 			if($('#searchval').val() != null){
 			var name = $('#searchval').val();
 			$.post('ajax_searchreservation.do',{'name':name},function(list){
+				var soon = 0;
+				var already = 0;
+				var fail = 0;
+				$('#text').text("");
 				$('#table').empty();
 				if(list.length != 0){
 				$('#table').append('<tr align="center">'+
@@ -187,18 +194,21 @@
 						'<td>예약인원</td>'+
 						'<td>예약자</td>'+
 						'<td>예약자 이메일</td>'+
-						'<td>예약한날</td>');
+						'<td>예약한 날짜</td>');
 				for(var i=0;i<list.length;i++){
 					var code = list[i].rsv_code;
 					var codecontent = null;
 						if(code == 1){
-							codecontent ='<td>1</td>';
+							codecontent ='<td><font color="green">이용예정</font></td>';
+							soon += 1;
 							}
-						if(code == 2){
-							codecontent ='<td>2</td>';
+						if(code == 2){ 
+							codecontent ='<td><font color="blue">이용완료</font></td>';
+							already += 1;
 							}
 						if(code == 3){
-							codecontent ='<td>3</td>';
+							codecontent ='<td><font color="red">예약취소</font></td>';
+							fail += 1;
 							}
 					$('#table').append('<tr>'+
 							'<td>'+list[i].rsv_no+'</td>'+
@@ -210,6 +220,8 @@
 							'<td>'+list[i].rsv_sub_email+'</td>'+
 							'<td>'+list[i].rsv_date+'</td>');
 				}
+				$('#text').append('<font color="green">이용예정 :</font>'+soon+',<font color="blue">이용완료 :</font>'+already+
+						',<font color="red">예약취소 :</font>'+fail);
 				$('#resercount').text("");
 				$('#resernowcount').text("");
 				window.myBar = new Chart(ctx1, config);
@@ -220,6 +232,7 @@
 					$('#resernowcount').text("존재하지 않습니다");
 					$('#canvas').hide();
 					$('#linecanvas').hide();
+					$('#text').text("");
 				};
 			});
 			return null;
@@ -280,7 +293,7 @@
 					data: {
 						labels: datelist,
 						datasets: [{
-							label: '한달 간 예약수',
+							label: '한달 간 총 예약수',
 							data: monthdata,
 							backgroundColor: 'rgba(132, 132, 132, 0.4)',
 							type: 'line',
