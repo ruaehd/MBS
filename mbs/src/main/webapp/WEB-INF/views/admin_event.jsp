@@ -8,6 +8,7 @@
    <link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
    <link rel="stylesheet" href="resources/css/v1_adminside.css" />
    <link rel="stylesheet" href="resources/css/w3.css" />
+   <link rel="stylesheet" href="resources/css/daterangepicker.css" />
 </head>
 <style>
    .table-head{
@@ -31,10 +32,6 @@
    }
 </style>
 <body>
-   <script type="text/javascript" src="resources/js/jquery-1.11.1.js"></script>
-   <script type="text/javascript" src="resources/js/bootstrap.min.js"></script>
-   <script type="text/javascript" src="resources/js/jquery.twbsPagination-1.3.1.js"></script>
-
 <div class="row">
     <jsp:include page="admin_header.jsp"></jsp:include>
 </div>
@@ -60,37 +57,78 @@
            <table class="table">
               <tr class="w3-dark-gray table-head">
                  <th style="vertical-align:middle">번호</th>
-                 <th style="vertical-align:middle">칼럼 설명</th>
-                 <th style="vertical-align:middle">칼럼 설명</th>
-                 <th style="vertical-align:middle">칼럼 설명</th>
-                 <th style="vertical-align:middle">칼럼 설명</th>
-                 <th>
+                 <th style="vertical-align:middle">제목</th>
+                 <th style="vertical-align:middle">이미지</th>
+                 <th style="vertical-align:middle">내용</th>
+                 <th style="vertical-align:middle">이벤트기간</th>
+                 <th style="width:120px">
                  <select class="form-control w3-dark-gray w3-border-dark-gray">
-                    <option>최근날짜순</option>
-                    <option>예전날짜순</option>
+                    <option>전체</option>
+                    <option>진행</option>
+                    <option>종료</option>	
                  </select>
                  </th>
-                 <th style="vertical-align:middle">칼럼 설명</th>
+                 <th style="vertical-align:middle">등록날짜</th>
+                 <th style="vertical-align:middle">등록날짜</th>
               </tr>
-              <c:forEach begin="1" end="10" varStatus="i">
+              <c:forEach var="vo" items="${list}">
                  <tr>
-                    <td class="count">${i.count}</td>
-                    <td colspan="5">칼럼 내용</td>
-                    <td></td>
-                 </tr>
+	              	<td>${vo.evt_no}</td>
+	                <td style="width:200px">${vo.evt_title}</td>
+	                <td style="width:300px"><img src="eventImgList.do?evt_no=${vo.evt_no}" width="300px" height="60px" /></td>
+	                <td style="width:300px"><img src="eventImgContent.do?evt_no=${vo.evt_no}" width="300px" height="60px" /></td>
+	                <td style="width:225px">${vo.evt_begintime}~${vo.evt_endtime}</td>
+	                <td>${vo.evt_delete}</td>
+	                <td style="width:50px">${vo.evt_date}</td>	
+	                <td><input id="date" class="date" type="text"></td>
+                </tr>
               </c:forEach>
+       
            </table>
+           
+           
+           
            <div align="center">
             <ul class="pagination"></ul>
          </div>
         </div>
     </div>
 
+	<script type="text/javascript" src="resources/js/jquery-1.11.1.js"></script>
+   <script type="text/javascript" src="resources/js/bootstrap.min.js"></script>
+   <script type="text/javascript" src="resources/js/jquery.twbsPagination-1.3.1.js"></script>
+	<script type="text/javascript" src="resources/js/moment.js"></script>
+	<script type="text/javascript" src="resources/js/daterangepicker.js"></script>
+
 
 
    <script>
-      $(function() {
-         
+	$(function() {
+			$('.btn-success').click(function(){
+			/* var idx = $(this).index('.date');
+			var arr = new Array();  */
+	  		<c:forEach var="vo" items="${list}">
+	  			/* var arr1 = new Array();
+	  			arr1.push("${vo.evt_begintime}");
+	  			arr1.push("${vo.evt_endtime}");
+	  			arr.push(arr1); */
+	  			console.log("${vo.evt_begintime}"); 
+	  		</c:forEach>
+			});
+		
+		
+			$('#date').daterangepicker({
+			 	 locale: {
+			            format: 'YYYY-MM-DD',
+			            applyLabel: '적용',
+			            cancelLabel: '취소',
+			            monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+			            daysOfWeek: ['일', '월', '화', '수', '목', '금', '토'],
+			     },
+			     "startDate": "2018/04/20",
+			     "endDate": "2018/05/20" 
+			});
+
             $('.pagination').twbsPagination({
                totalPages:15,
                visiblePages:10,

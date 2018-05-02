@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Admin_Event">
+
+	<select id="Amind_EventImgList" resultType="com.mbs.mvc.vo.EventVO">
+		SELECT evt_no, evt_title, evt_begintime, evt_endtime, evt_delete, evt_date FROM `event` ORDER BY evt_date DESC LIMIT 10
+	</select>
+	
+		
+</mapper>
