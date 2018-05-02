@@ -106,9 +106,8 @@
                     <div class="panel-body">
                         <ul class="nav navbar-nav">
                             <li><a href="admin_memberchart.do">회원통계</a></li>
-                            <li><a href="#">업체통계</a></li>
-                            <li><a href="#">후기통계</a></li>
-                            <li><a href="#">예약통계</a></li>
+                            <li><a href="admin_storechart.do">업체통계</a></li>
+                            <li><a href="admin_reservationchart.do">예약통계</a></li>
                         </ul>
                     </div>
                 </div>
