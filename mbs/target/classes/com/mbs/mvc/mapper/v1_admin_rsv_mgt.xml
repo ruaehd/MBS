@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="V1_AdminRsvMgt">
+	<select id="countAdminRsvTot" parameterType="V1_Reservation" resultType="hashmap">
+		SELECT 
+			SUM(CASE WHEN rsv_code=1 THEN 1 ELSE 0 END) AS exp,
+			SUM(CASE WHEN rsv_code=2 THEN 1 ELSE 0 END) AS com,
+            SUM(CASE WHEN rsv_code=3 THEN 1 ELSE 0 END) AS can
+ 
+		FROM `reservation` r
+		INNER JOIN `store` s
+		ON r.str_number = s.str_number
+		WHERE ${type} LIKE CONCAT('%', #{text}, '%')
+	</select>
+	
+	<select id="countAdminStrTot" parameterType="V1_Store" resultType="hashmap">
+		SELECT 
+			SUM(CASE WHEN str_category=1 THEN 1 ELSE 0 END) AS usual,
+			SUM(CASE WHEN str_category=2 THEN 1 ELSE 0 END) AS tour
+		FROM `store`
+		WHERE str_name LIKE CONCAT('%', #{text}, '%')
+	</select>
+	
+	<select id="selectAdminRsvList" parameterType="V1_Reservation" resultType="V1_Reservation">
+		UPDATE `reservation` SET rsv_code=2 WHERE rsv_day <![CDATA[<]]> NOW() AND rsv_no IN (SELECT * FROM(SELECT r.rsv_no FROM `reservation` as r) a);
+		
+		SELECT s.str_number, s.str_name, DATE_FORMAT(rc.rsv_day, '%Y-%m-%d') AS rsv_day, rc.rsv_code, rc.rsv_code_chk, rc.rsv_no, rc.rsv_sub_id, rc.rsv_sub_name, rc.rsv_date FROM `store` s
+		INNER JOIN
+			(SELECT r.rsv_day, r.rsv_code, c.rsv_code_chk, r.str_number, r.rsv_no, r.rsv_sub_id, r.rsv_sub_name, r.rsv_date FROM `reservation` r 
+				INNER JOIN `rsv_code` c
+				ON r.rsv_code = c.rsv_code
+  				<if test="rsv_code != 0 ">
+    				WHERE c.rsv_code=#{rsv_code}
+  				</if>
+			) rc
+		ON s.str_number = rc.str_number
+		WHERE ${type} LIKE CONCAT('%', #{text}, '%')
+		ORDER BY rc.rsv_no DESC LIMIT #{page} , 10
+	</select>
+	
+	<select id="selectStoreList" parameterType="V1_Store" resultType="V1_Store">
+		SELECT 
+			msrc.str_number, msrc.mb_id, msrc.str_name, msrc.str_tel, msrc.str_address, msrc.str_category, msrc.mb_email, msrc.str_category,
+			COUNT(CASE 
+					WHEN str_category=1 THEN
+						CASE WHEN rsv_cmt_delete=1 THEN 1 END
+					WHEN str_category=2 THEN
+						CASE WHEN tour_cmt_delete=1 THEN 1 END
+				END) AS cnt,
+			AVG(CASE 
+					WHEN str_category=1 THEN
+						CASE WHEN rsv_cmt_delete=1 THEN rsv_cmt_point END
+					WHEN str_category=2 THEN
+						CASE WHEN tour_cmt_delete=1 THEN tour_cmt_point END
+				END) AS avg,
+			SUM(CASE WHEN rsv_code=1 THEN 1 ELSE 0 END) AS exp,
+			SUM(CASE WHEN rsv_code=2 THEN 1 ELSE 0 END) AS com,
+			SUM(CASE WHEN rsv_code=3 THEN 1 ELSE 0 END) AS can
+	
+		FROM `tour_comment` t
+		RIGHT OUTER JOIN
+	        (SELECT src.*, m.mb_email
+			FROM `member` m
+			INNER JOIN
+				
+				(SELECT rc.rsv_no, rc.rsv_code, rc.rsv_cmt_point, rc.rsv_cmt_no, rc.rsv_cmt_delete, rc.rsv_delete, s.str_number, s.mb_id, s.str_name, s.str_date, s.str_tel, s.str_address, s.str_category FROM `store` s
+				LEFT OUTER JOIN
+				
+					(SELECT r.str_number, r.rsv_no, r.rsv_code, c.rsv_cmt_point, c.rsv_cmt_no, c.rsv_cmt_delete, r.rsv_delete FROM `reservation` r
+					LEFT OUTER JOIN `rsv_comment` c
+					ON r.rsv_no=c.rsv_no                
+	                ) rc
+				
+				ON s.str_number=rc.str_number)src
+				
+			ON m.mb_id = src.mb_id) msrc
+	        
+		ON t.str_number = msrc.str_number
+	        
+		WHERE msrc.str_name LIKE CONCAT('%', #{text}, '%')
+			<if test="str_category != 0 ">
+    			AND msrc.str_category=#{str_category}
+ 			</if>
+		GROUP BY msrc.str_number
+		ORDER BY msrc.str_date DESC LIMIT #{page} , 6 ;
+	</select>
+	
+	<select id="selectReviewList" parameterType="V1_Comment" resultType="V1_AdminReview">
+		SELECT c.rsv_cmt_no AS no, c.rsv_cmt_content AS content, c.rsv_cmt_point AS point, c.rsv_cmt_writer AS writer, c.rsv_cmt_date AS date, DATE_FORMAT(r.rsv_day, '%Y-%m-%d') AS day, c.rsv_no AS rsv_no FROM `rsv_comment` c
+		INNER JOIN `reservation` r
+		ON c.rsv_no = r.rsv_no
+		WHERE r.str_number=#{str_number} AND c.rsv_cmt_delete=1 AND ${type} LIKE CONCAT('%', #{text}, '%')
+		ORDER BY c.rsv_cmt_no DESC LIMIT #{page} , 10
+	</select>
+	
+	<select id="selectTourReviewList" parameterType="V1_Comment" resultType="V1_AdminReview">
+		SELECT tour_cmt_no AS no, tour_cmt_content AS content, tour_cmt_writer AS writer, tour_cmt_point AS point, tour_cmt_date AS date, str_number, tour_cmt_day AS day FROM `tour_comment` 
+		WHERE str_number=#{str_number} AND tour_cmt_delete = 1 AND ${type} 
+		LIKE CONCAT('%', #{text}, '%')
+		ORDER BY tour_cmt_no DESC LIMIT #{page} , 10
+	</select>
+	
+	<update id="multiDeleteReview" parameterType="java.util.List">
+		<foreach separator=";" collection="list" item="vo">
+			UPDATE `rsv_comment` SET rsv_cmt_delete=0 WHERE rsv_cmt_no=#{vo.rsv_cmt_no}	
+		</foreach>
+	</update>
+	
+	<update id="multiDeleteTourReview" parameterType="java.util.List">
+		<foreach separator=";" collection="list" item="vo">
+			UPDATE `tour_comment` SET tour_cmt_delete=0 WHERE tour_cmt_no=#{vo.tour_cmt_no}	
+		</foreach>
+	</update>
+	
+	<select id="countStoreTot" parameterType="V1_Store" resultType="int">
+		SELECT COUNT(*) AS cnt FROM `store` WHERE str_name LIKE CONCAT('%', #{text}, '%') 
+	</select>
+	
+	<select id="countReviewTot" parameterType="V1_Comment" resultType="int">
+		SELECT 
+			COUNT(*) AS cnt 
+		FROM `rsv_comment` c
+		INNER JOIN `reservation` r
+		ON c.rsv_no = r.rsv_no
+		WHERE r.str_number=#{str_number} AND ${type} LIKE CONCAT('%', #{text}, '%') AND rsv_cmt_delete=1
+	</select>
+	
+	<select id="countTourReviewTot" parameterType="V1_Comment" resultType="int">
+		SELECT COUNT(*) AS cnt FROM `tour_comment` 
+		WHERE str_number=#{str_number} AND ${type} LIKE CONCAT('%', #{text}, '%') AND tour_cmt_delete=1
+	</select>
+	
+</mapper>

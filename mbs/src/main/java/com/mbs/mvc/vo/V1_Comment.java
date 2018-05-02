@@ -16,8 +16,29 @@ public class V1_Comment {
 	private String str_name = null;
 	private String rsv_day = null;
 	
+	private int page = 0;
+	private String type = null;
+	private String text = null;
 	
 	
+	public String getType() {
+		return type;
+	}
+	public void setType(String type) {
+		this.type = type;
+	}
+	public String getText() {
+		return text;
+	}
+	public void setText(String text) {
+		this.text = text;
+	}
+	public int getPage() {
+		return page;
+	}
+	public void setPage(int page) {
+		this.page = page;
+	}
 	public String getRsv_cmt_taste() {
 		return rsv_cmt_taste;
 	}

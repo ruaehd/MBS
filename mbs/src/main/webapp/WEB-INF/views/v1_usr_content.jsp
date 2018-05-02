@@ -1,7 +1,7 @@
 <%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%@ page session="false"%>
+<%@ page session="true"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -84,13 +84,14 @@
 					<!-- Wrapper for slides -->
 					<div class="carousel-inner" id="back_imgs">
 						<div class="item active">
-							<img src="get_blob_img.do?idx=1" style="width: 100%; height: 500px"/>
+							<img src="get_blob_img.do?str_number=${vo.str_number}&idx=0" style="width: 100%; height: 500px"/>
 						</div>
-						<c:forEach var="i" begin="2" end="${cnt}">
+						<c:forEach var="i" begin="1" end="${cnt}">
 							<div class="item">
-								<img src="get_blob_img.do?idx=${i}" style="width: 100%; height: 500px"/>
+								<img src="get_blob_img.do?str_number=${vo.str_number}&idx=${i}" style="width: 100%; height: 500px"/>
 							</div>
 						</c:forEach>
+						
 					</div>
 					
 					<!-- Controls -->
@@ -109,7 +110,12 @@
 						<h1>${vo.str_name}</h1>
 						<hr/>
 						<div>
-							<a href="usr_content_pay.do" class="btn btn-info">예약하기</a>
+							<c:if test="${sessionScope._gr > 1 || sessionScope._id == vo.mb_id}">
+								<a href="usr_content_pay.do?str_number=${vo.str_number}" class="btn btn-info disabled">예약하기</a>
+							</c:if>
+							<c:if test="${sessionScope._gr == 1 && sessionScope._id != vo.mb_id}">
+								<a href="usr_content_pay.do?str_number=${vo.str_number}" class="btn btn-info">예약하기</a>
+							</c:if>
 							<a href="#commnet" class="btn btn-primary">후기보기</a>
 							<a href="#map" class="btn btn-success">지도보기</a>
 							<a href="#" class="btn btn-danger">뒤로가기</a>
@@ -185,7 +191,14 @@
 					
 					<hr />
 					<div class="row ">
-						<div id="review" class="form-inline"></div>
+						<c:if test="${recnt!=0}">
+							<div id="review" class="form-inline"></div>
+						</c:if>
+						<c:if test="${recnt==0}">
+							<div style="text-align:center; vertical-align:middle;">
+								<h3>작성된 후기가 없습니다</h3>
+							</div>
+						</c:if>
 						<div align="center">
 							<ul id="pagination" class="pagination"></ul>
 						</div>
@@ -236,7 +249,7 @@
 			totalPages:${totPage},
 			visiblePage:10,
 			onPageClick: function (event, page) {
-				$.get('ajax_reviewlist.do?page='+page, function(data){
+				$.get('ajax_reviewlist.do?page='+page+'&str_number='+${param.str_number}, function(data){
 					$('#review').empty();
 					
 					var len = data.length;

@@ -21,7 +21,7 @@ public class V1_TestController {
 	
 	@RequestMapping(value="/test.do", method = RequestMethod.GET)
 	public String test(Model model) {
-		return "test";
+		return "v1_test";
 	}
 	
 	@RequestMapping(value="/test.do", method = RequestMethod.POST)
