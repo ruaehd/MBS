@@ -107,8 +107,8 @@
 				<hr />
 				<div class="form-inline" align="center" style="margin-bottom:20px">
 					<input type="submit" class="btn btn-success" value="후기 수정"/>
-					<a href="#" class="btn btn-danger">후기 삭제</a>
-					<input type="button" class="btn btn-primary" id="btn_cancel" value="작성 취소"/>
+					<a href="usr_comment_delete.do?rsv_cmt_no=${vo.rsv_cmt_no}" class="btn btn-danger">후기 삭제</a>
+					<input type="button" class="btn btn-primary" id="btn-default" value="작성 취소"/>
 				</div>
 			</div>
 		</form:form>

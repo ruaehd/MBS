@@ -26,9 +26,75 @@ public class V1_Store {
 	private int str_personnel = 0;
 	
 	private int page = 0;
+	private int exp = 0;
+	private int com = 0;
+	private int can = 0;
+	private int cnt = 0;
+	private double avg = 0;
+	private String mb_email = null;
+	
+	private String text = null;
+	
+	private String mb_name = null;
+	
+	private int str_category = 0;
 	
 	
+	public int getStr_category() {
+		return str_category;
+	}
+	public void setStr_category(int str_category) {
+		this.str_category = str_category;
+	}
+	public String getMb_name() {
+		return mb_name;
+	}
+	public void setMb_name(String mb_name) {
+		this.mb_name = mb_name;
+	}
+	public String getText() {
+		return text;
+	}
+	public void setText(String text) {
+		this.text = text;
+	}
+	public String getMb_email() {
+		return mb_email;
+	}
+	public void setMb_email(String mb_email) {
+		this.mb_email = mb_email;
+	}
+	public double getAvg() {
+		return avg;
+	}
+	public void setAvg(double avg) {
+		this.avg = avg;
+	}
+	public int getCnt() {
+		return cnt;
+	}
+	public void setCnt(int cnt) {
+		this.cnt = cnt;
+	}
 	
+	public int getExp() {
+		return exp;
+	}
+	public void setExp(int exp) {
+		this.exp = exp;
+	}
+	public int getCom() {
+		return com;
+	}
+	public void setCom(int com) {
+		this.com = com;
+	}
+	public int getCan() {
+		return can;
+	}
+	public void setCan(int can) {
+		this.can = can;
+	}
 	public int getStr_personnel() {
 		return str_personnel;
 	}

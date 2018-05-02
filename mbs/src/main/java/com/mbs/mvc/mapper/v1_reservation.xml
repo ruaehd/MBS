@@ -21,7 +21,7 @@
 	<select id="selectRsvList" parameterType="V1_Reservation" resultType="V1_Reservation">
 		UPDATE `reservation` SET rsv_code=2 WHERE rsv_day <![CDATA[<]]> NOW() AND rsv_no IN (SELECT * FROM(SELECT r.rsv_no FROM `reservation` as r) a);
 		
-		SELECT s.str_name, DATE_FORMAT(rc.rsv_day, '%Y-%m-%d') AS rsv_day, rc.rsv_code, rc.rsv_code_chk, rc.rsv_no FROM `store` s
+		SELECT s.str_name, s.str_number, DATE_FORMAT(rc.rsv_day, '%Y-%m-%d') AS rsv_day, rc.rsv_code, rc.rsv_code_chk, rc.rsv_no FROM `store` s
 		INNER JOIN
 			(SELECT r.rsv_day, r.rsv_code, c.rsv_code_chk, r.str_number, r.rsv_no FROM `reservation` r 
 				INNER JOIN `rsv_code` c
@@ -38,11 +38,13 @@
 	</select>
 	
 	<select id="selectRsvOne" parameterType="V1_Reservation" resultType="V1_Reservation">
-		SELECT s.str_name, s.str_tel, s.str_address, s.str_begintime, s.str_endtime, s.str_personnel, r.rsv_no, DATE_FORMAT(r.rsv_day, '%Y-%m-%d %H:%i') AS rsv_day, r.rsv_personnel, r.rsv_sub_id, r.rsv_sub_name, r.rsv_sub_tel, r.rsv_sub_email, r.rsv_sub_request, r.str_number, r.rsv_delete, r.rsv_code
-		FROM `reservation` r 
-			INNER JOIN `store` s
-			ON r.str_number = s.str_number
-		WHERE r.rsv_no=#{rsv_no}
+		SELECT ms.*, r.rsv_no, DATE_FORMAT(r.rsv_day, '%Y-%m-%d %H:%i') AS rsv_day, r.rsv_personnel, r.rsv_sub_id, r.rsv_sub_name, r.rsv_sub_tel, r.rsv_sub_email, r.rsv_sub_request, r.str_number, r.rsv_delete, r.rsv_code FROM `reservation` r 
+			INNER JOIN 
+				(SELECT s.str_number, s.str_name, s.str_tel, s.str_address, s.str_begintime, s.str_endtime, s.str_personnel, m.mb_id, m.mb_email, m.mb_name FROM `member` m
+				INNER JOIN `store` s
+				ON m.mb_id = s.mb_id) ms
+			ON r.str_number = ms.str_number
+		WHERE r.rsv_no=#{rsv_no};
 	</select>
 	<select id="selectRsvMenuList" parameterType="int" resultType="V1_RsvMenu">
 		SELECT * FROM `rsv_menu` WHERE rsv_no=#{rsv_no}
@@ -73,5 +75,15 @@
 	<update id="cancelRsv" parameterType="int">
 		UPDATE `reservation` SET rsv_code=3 WHERE rsv_no=#{rsv_no}
 	</update>
+	
+	<select id="rsvEmail" parameterType="int" resultType="V1_Reservation">
+		SELECT ms.mb_email, r.rsv_sub_email FROM `reservation` r 
+			INNER JOIN 
+				(SELECT m.mb_email, s.str_number FROM `member` m
+				INNER JOIN `store` s
+				ON m.mb_id = s.mb_id) ms
+			ON r.str_number = ms.str_number
+		WHERE r.rsv_no=#{rsv_no}
+	</select>
 		
 </mapper>

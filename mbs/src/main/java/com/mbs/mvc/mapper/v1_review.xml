@@ -10,16 +10,16 @@
 		WHERE r.rsv_no=#{rsv_no}
 	</select>
 	
-	<insert id="insertComment">
+	<insert id="insertComment" parameterType="V1_Comment">
 		INSERT INTO `rsv_comment` (rsv_cmt_content, rsv_cmt_point, rsv_cmt_writer, rsv_cmt_date, rsv_no, rsv_cmt_taste, rsv_cmt_service, rsv_cmt_price) VALUES(#{rsv_cmt_content}, #{rsv_cmt_point}, #{rsv_cmt_writer}, NOW(), #{rsv_no}, #{rsv_cmt_taste}, #{rsv_cmt_service}, #{rsv_cmt_price})
 	</insert>
 	
 	<select id="selectReviewChk" parameterType="V1_Comment" resultType="int">
-		SELECT COUNT(*) AS cnt FROM `rsv_comment` WHERE rsv_cmt_writer=#{rsv_cmt_writer} AND rsv_no=#{rsv_no} 
+		SELECT COUNT(*) AS cnt FROM `rsv_comment` WHERE rsv_cmt_writer=#{rsv_cmt_writer} AND rsv_no=#{rsv_no} AND rsv_cmt_delete=1
 	</select>
 	
 	<select id="selectReviewOne" parameterType="V1_Comment" resultType="V1_Comment">
-		SELECT * FROM `rsv_comment` WHERE rsv_cmt_writer=#{rsv_cmt_writer} AND rsv_no=#{rsv_no}
+		SELECT * FROM `rsv_comment` WHERE rsv_cmt_writer=#{rsv_cmt_writer} AND rsv_no=#{rsv_no} AND rsv_cmt_delete=1
 	</select>
 	
 	<update id="updateComment" parameterType="V1_Comment">
@@ -35,7 +35,7 @@
 			ON s.str_number=r.str_number)sr
 		INNER JOIN `rsv_comment` c
 		ON sr.rsv_no = c.rsv_no
-		WHERE sr.str_number=#{str_number}
+		WHERE sr.str_number=#{str_number} AND c.rsv_cmt_delete=1
 		ORDER BY c.rsv_cmt_no DESC LIMIT #{page} , 5
 	</select>
 	
@@ -48,7 +48,7 @@
 			ON s.str_number=r.str_number)sr
 		INNER JOIN `rsv_comment` c
 		ON sr.rsv_no = c.rsv_no
-		WHERE sr.str_number=#{str_number}
+		WHERE sr.str_number=#{str_number} AND c.rsv_cmt_delete = 1
 		ORDER BY c.rsv_cmt_no DESC
 	</select>
 	
@@ -61,13 +61,54 @@
 		WHERE r.rsv_no=#{rsv_no}
 	</select>
 	
+	<select id="selectTourPreReview" parameterType="int" resultType="V1_Store">
+		SELECT str_name, str_number FROM `store` WHERE str_number=#{str_number}
+	</select>
+	
 	<select id="selectReviewcCnt" parameterType="int" resultType="int">
 		SELECT COUNT(*) 
 		FROM `rsv_comment` c
 		INNER JOIN `reservation` r
 		ON c.rsv_no=r.rsv_no
 
-		WHERE r.str_number=#{str_no}	
+		WHERE r.str_number=#{str_no} AND c.rsv_cmt_delete=1	
 	</select>
+	
+	<select id="selectTourReviewcCnt" parameterType="int" resultType="int">
+		SELECT COUNT(*) FROM `tour_comment` WHERE str_number=#{str_number} AND tour_cmt_delete=1
+	</select>
+	
+	<insert id="insertTourCmt" parameterType="V1_TourCmt">
+		INSERT INTO `tour_comment` (tour_cmt_content, tour_cmt_writer, tour_cmt_point, tour_cmt_day, str_number, tour_cmt_date) VALUES(#{tour_cmt_content}, #{tour_cmt_writer}, #{tour_cmt_point}, #{tour_cmt_day}, #{str_number}, NOW())
+	</insert>
+	
+	<select id="selectTourReviewList" parameterType="int" resultType="V1_TourCmt">
+		SELECT tour_cmt_point FROM `tour_comment` WHERE str_number=#{str_number} AND tour_cmt_delete=1
+	</select>
+	
+	<select id="selectTourCmtList" parameterType="V1_Store" resultType="V1_TourCmt">
+		SELECT * FROM `tour_comment` WHERE str_number=#{str_number} AND tour_cmt_delete=1 ORDER BY tour_cmt_no DESC LIMIT #{page} , 5
+	</select>
+	
+	<select id="selectTourReviewChk" parameterType="V1_TourCmt" resultType="int">
+		SELECT COUNT(*) AS cnt FROM `tour_comment` WHERE tour_cmt_writer=#{tour_cmt_writer} AND str_number=#{str_number} AND tour_cmt_delete=1
+	</select>
+	
+	<select id="selectTourReviewOne" parameterType="V1_TourCmt" resultType="V1_TourCmt">
+	 	SELECT * FROM `tour_comment` WHERE str_number=#{str_number} AND tour_cmt_writer=#{tour_cmt_writer} AND tour_cmt_delete=1
+	</select>
+	
+	<update id="updateTourReview" parameterType="V1_TourCmt">
+		UPDATE `tour_comment` SET tour_cmt_content=#{tour_cmt_content}, tour_cmt_point=#{tour_cmt_point}, tour_cmt_day=#{tour_cmt_day} WHERE tour_cmt_no=#{tour_cmt_no}
+	</update>
+	
+	<update id="deleteTourReview" parameterType="int">
+		UPDATE `tour_comment` SET tour_cmt_delete=0 WHERE tour_cmt_no=#{tour_cmt_no}
+	</update>
+	
+	<update id="deleteReview" parameterType="int">
+		UPDATE `rsv_comment` SET rsv_cmt_delete=0 WHERE rsv_cmt_no=#{rsv_cmt_no}
+	</update>
+	
 	
 </mapper>

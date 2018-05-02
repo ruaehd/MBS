@@ -106,7 +106,8 @@
 				<hr />
 				<div class="form-inline" align="center" style="margin-bottom:20px">
 					<input type="submit" class="btn btn-success" value="후기 작성"/>
-					<input type="button" class="btn btn-danger" id="btn_cancel" value="작성 취소"/>
+					<input type="button" class="btn btn-default" id="btn_cancel" value="작성 취소"/>
+					
 				</div>
 			</div>
 		</form:form>
