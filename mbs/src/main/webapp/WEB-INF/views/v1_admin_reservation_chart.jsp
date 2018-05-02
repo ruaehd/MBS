@@ -23,26 +23,27 @@
 			<div class="side-body">
 				<div class="title">예약통계</div>
 				<div class="row">
-					<div class="col-md-4" align="center" style="margin: 150px auto">
+					<div class="col-md-4" align="center" style="margin: 150px auto;height:400px">
 						<div id="titletext">
-							
+							<canvas id="linecanvas"></canvas>
+							<div id="text"></div>
 							<h2>
 								<b id="resercount">현재 ${nowcount}개의 예약이 진행중입니다</b>
 							</h2>
 							<h2 style="margin-top: 150px">
 							<b id="resernowcount">현재까지 ${allcount}개의 예약이 완료되었습니다</b>
-							<canvas id="linecanvas"></canvas>
+							
 							</h2>
-							<div id="text"></div>
+							
 						</div>
 					</div>
 					<div class="col-md-8" style="margin: 0px auto">
 						<div class="form-horizontal form-inline">
-							<div class="form-group form-group-lg" style="width: 100%"
+							<div class="form-group form-group-lg" style="width: 100%;"
 								align="center">
-								<input type="text" style="width: 80%" class="form-control" id="searchval" placeholder="예약 통계 조회를 위한 업체명을 입력해주세요" />
+								<input type="text" style="width: 80%;" class="form-control" id="searchval" placeholder="예약 통계 조회를 위한 업체명을 입력해주세요" />
 								<button type="button" class="form-control" id="search_btn">검색</button>
-								<div style="overflow: auto; height: 800px">
+								<div style="overflow:auto;height:550px">
 								<table class="table table-striped" id="table">
 								</table>
 								</div>
