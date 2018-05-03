@@ -63,7 +63,7 @@
 			                        <div class="frontside">
 			                            <div class="card" style="padding-top:10px">
 			                                <div class="card-body text-center">
-			                                    <p><img class=" img-fluid" src="get_blob_img.do?str_number=${tmp.str_number}&idx=1" alt="card image"></p>
+			                                    <p><img class=" img-fluid" src="get_blob_img.do?str_number=${tmp.str_number}&idx=0" alt="card image"></p>
 			                                    <h4 class="card-title str_name">${tmp.str_name}</h4>
 			                                    <p class="card-text">${tmp.str_address}</p>
 			                                    <p class="card-text"></p>

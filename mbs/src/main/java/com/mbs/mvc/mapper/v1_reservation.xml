@@ -7,8 +7,8 @@
 		INSERT INTO `reservation` (rsv_day, rsv_time, rsv_personnel, rsv_sub_id, rsv_sub_name, rsv_sub_tel, rsv_sub_email, rsv_sub_request, str_number, rsv_date)
 		VALUES(#{rsv_day}, #{rsv_time}, #{rsv_personnel}, #{rsv_sub_id}, #{rsv_sub_name}, #{rsv_sub_tel}, #{rsv_sub_email}, #{rsv_sub_request}, #{str_number}, NOW());
 		
-		<selectKey resultType="int" keyProperty="rsv_no" order="BEFORE">	
-			SELECT IFNULL(MAX(rsv_no), 0)+1 FROM `reservation`
+   		<selectKey resultType="int" keyProperty="rsv_no" order="AFTER">	
+			SELECT LAST_INSERT_ID() FROM `reservation`
    		</selectKey>
 
 		<foreach item="tmp" collection="rmlist" separator=" ">

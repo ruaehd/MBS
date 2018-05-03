@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="V1_BizStrMgt">
+	<select id="selectMyStoreList" parameterType="V1_Store" resultType="V1_Store">
+		SELECT m.mb_email, crs.str_number, crs.mb_id, crs.str_name, crs.str_tel, crs.str_address, crs.str_delete, crs.cnt, crs.avg, crs.exp, crs.com, crs.can
+		FROM `member` m
+		INNER JOIN
+			(SELECT rs.*, 
+				COUNT(CASE WHEN rsv_cmt_delete=1 THEN 1 END) AS cnt,
+				AVG(CASE WHEN rsv_cmt_delete=1 THEN rsv_cmt_point END) AS avg,
+				c.rsv_cmt_point, c.rsv_cmt_no, c.rsv_cmt_delete FROM `rsv_comment` c
+			
+			CROSS JOIN
+				(
+					SELECT 
+						COUNT(CASE WHEN rsv_code=1 THEN 1 END) AS exp,
+						COUNT(CASE WHEN rsv_code=2 THEN 1 END) AS com,
+						COUNT(CASE WHEN rsv_code=3 THEN 1 END) AS can,
+						r.str_number, r.rsv_no, r.rsv_code, s.str_name, s.mb_id, s.str_date, s.str_tel, s.str_address, s.str_delete 
+					FROM `reservation` r
+					LEFT OUTER JOIN `store` s
+					ON r.str_number=s.str_number
+	                GROUP BY r.str_number) rs
+				GROUP BY str_number
+	        ) crs
+			
+		ON m.mb_id = crs.mb_id
+		WHERE crs.str_name LIKE CONCAT('%', #{text}, '%') AND crs.mb_id=#{mb_id}
+		GROUP BY crs.str_number
+		ORDER BY crs.str_date DESC LIMIT #{page} , 6 ;
+	</select>
+	
+	<select id="selectBizRsvList" parameterType="V1_Reservation" resultType="V1_Reservation">
+		UPDATE `reservation` SET rsv_code=2 WHERE rsv_day <![CDATA[<]]> NOW() AND rsv_no IN (SELECT * FROM(SELECT r.rsv_no FROM `reservation` as r) a);
+		
+		SELECT s.str_number, s.str_name, DATE_FORMAT(rc.rsv_day, '%Y-%m-%d') AS rsv_day, rc.rsv_code, rc.rsv_code_chk, rc.rsv_no, rc.rsv_sub_id, rc.rsv_sub_name, rc.rsv_date FROM `store` s
+		INNER JOIN
+			(SELECT r.rsv_day, r.rsv_code, c.rsv_code_chk, r.str_number, r.rsv_no, r.rsv_sub_id, r.rsv_sub_name, r.rsv_date FROM `reservation` r 
+				INNER JOIN `rsv_code` c
+				ON r.rsv_code = c.rsv_code
+  				<if test="rsv_code != 0 ">
+    				WHERE c.rsv_code=#{rsv_code}
+  				</if>
+			) rc
+		ON s.str_number = rc.str_number
+		WHERE rsv_sub_id LIKE CONCAT('%', #{text}, '%') AND s.str_number=#{str_number}
+		ORDER BY rc.rsv_no DESC LIMIT #{page} , 10
+	</select>
+	
+	<select id="countBizRsvTot" parameterType="V1_Reservation" resultType="hashmap">
+		SELECT 
+			SUM(CASE WHEN rsv_code=1 THEN 1 ELSE 0 END) AS exp,
+			SUM(CASE WHEN rsv_code=2 THEN 1 ELSE 0 END) AS com,
+            SUM(CASE WHEN rsv_code=3 THEN 1 ELSE 0 END) AS can
+ 
+		FROM `reservation`
+	
+		WHERE rsv_sub_id LIKE CONCAT('%', #{text}, '%') AND str_number=#{str_number}
+	</select>
+</mapper>

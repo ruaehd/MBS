@@ -1,0 +1,35 @@
+package com.mbs.mvc.dao;
+
+import java.util.List;
+import java.util.Map;
+
+import javax.annotation.Resource;
+
+import org.apache.ibatis.session.SqlSession;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.mbs.mvc.vo.V1_Reservation;
+import com.mbs.mvc.vo.V1_Store;
+
+@Service
+public class V1_BusinessStoreManagementDAO {
+
+	@Autowired
+	@Resource(name="sqlSession")
+	private SqlSession sqlsession = null;
+	
+	public List<V1_Store> selectMyStoreList(V1_Store vo){
+		return sqlsession.selectList("V1_BizStrMgt.selectMyStoreList", vo);
+	}
+	
+	public List<V1_Reservation> selectBizRsvList(V1_Reservation vo){
+		return sqlsession.selectList("V1_BizStrMgt.selectBizRsvList", vo);
+	}
+	
+	public Map<String, Object> countBizRsvTot(V1_Reservation vo) {
+		return sqlsession.selectOne("V1_BizStrMgt.countBizRsvTot", vo);
+	}
+	
+	
+}

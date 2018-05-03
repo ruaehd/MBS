@@ -41,7 +41,7 @@
 	
 	<select id="selectStoreList" parameterType="V1_Store" resultType="V1_Store">
 		SELECT 
-			msrc.str_number, msrc.mb_id, msrc.str_name, msrc.str_tel, msrc.str_address, msrc.str_category, msrc.mb_email, msrc.str_category,
+			msrc.str_number, msrc.mb_id, msrc.str_name, msrc.str_tel, msrc.str_address, msrc.str_category, msrc.mb_email,
 			COUNT(CASE 
 					WHEN str_category=1 THEN
 						CASE WHEN rsv_cmt_delete=1 THEN 1 END
