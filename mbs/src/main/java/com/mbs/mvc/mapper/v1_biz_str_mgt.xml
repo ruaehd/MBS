@@ -3,32 +3,37 @@
 
 <mapper namespace="V1_BizStrMgt">
 	<select id="selectMyStoreList" parameterType="V1_Store" resultType="V1_Store">
-		SELECT m.mb_email, crs.str_number, crs.mb_id, crs.str_name, crs.str_tel, crs.str_address, crs.str_delete, crs.cnt, crs.avg, crs.exp, crs.com, crs.can
-		FROM `member` m
-		INNER JOIN
-			(SELECT rs.*, 
+		SELECT src.*, m.mb_id, m.mb_email FROM `member` m
+        INNER JOIN
+			(
+			SELECT s.str_name, s.mb_id, s.str_date, s.str_tel, s.str_address, s.str_delete , 
 				COUNT(CASE WHEN rsv_cmt_delete=1 THEN 1 END) AS cnt,
 				AVG(CASE WHEN rsv_cmt_delete=1 THEN rsv_cmt_point END) AS avg,
-				c.rsv_cmt_point, c.rsv_cmt_no, c.rsv_cmt_delete FROM `rsv_comment` c
-			
-			CROSS JOIN
+                COUNT(CASE WHEN rsv_code=1 THEN 1 END) AS exp,
+				COUNT(CASE WHEN rsv_code=2 THEN 1 END) AS com,
+				COUNT(CASE WHEN rsv_code=3 THEN 1 END) AS can
+            FROM `store` s
+            RIGHT JOIN
 				(
-					SELECT 
-						COUNT(CASE WHEN rsv_code=1 THEN 1 END) AS exp,
-						COUNT(CASE WHEN rsv_code=2 THEN 1 END) AS com,
-						COUNT(CASE WHEN rsv_code=3 THEN 1 END) AS can,
-						r.str_number, r.rsv_no, r.rsv_code, s.str_name, s.mb_id, s.str_date, s.str_tel, s.str_address, s.str_delete 
-					FROM `reservation` r
-					LEFT OUTER JOIN `store` s
-					ON r.str_number=s.str_number
-	                GROUP BY r.str_number) rs
-				GROUP BY str_number
-	        ) crs
-			
-		ON m.mb_id = crs.mb_id
-		WHERE crs.str_name LIKE CONCAT('%', #{text}, '%') AND crs.mb_id=#{mb_id}
-		GROUP BY crs.str_number
-		ORDER BY crs.str_date DESC LIMIT #{page} , 6 ;
+				SELECT r.rsv_no, r.rsv_code, c.rsv_cmt_point, c.rsv_cmt_delete, r.str_number FROM `reservation` r
+				RIGHT JOIN `rsv_comment` c
+				ON r.rsv_no = c.rsv_no
+                GROUP BY r.rsv_no
+				
+				UNION
+				
+				SELECT r.rsv_no, r.rsv_code, c.rsv_cmt_point, c.rsv_cmt_delete, r.str_number FROM `reservation` r
+				LEFT JOIN `rsv_comment` c
+				ON r.rsv_no = c.rsv_no
+                GROUP BY r.rsv_no
+                ) rc
+			ON s.str_number = rc.str_number
+            GROUP BY s.str_number
+            )src
+		ON m.mb_id = src.mb_id
+        
+        WHERE src.str_name LIKE CONCAT('%', #{text}, '%') AND src.mb_id=#{mb_id}
+		ORDER BY src.str_date DESC LIMIT #{page} , 6 ; 
 	</select>
 	
 	<select id="selectBizRsvList" parameterType="V1_Reservation" resultType="V1_Reservation">
