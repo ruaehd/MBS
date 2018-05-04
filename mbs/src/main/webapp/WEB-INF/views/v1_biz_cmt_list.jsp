@@ -37,29 +37,6 @@
 						검색어 : <strong>${param.text}</strong>
 					</c:if>
 				</div>
-				<div class="col-md-6">
-					<div align="right" class="form-inline">
-						<div class="btn-group" role="group" aria-label="..."  style="margin-bottom:10px">
-							<c:forEach var="tmp" items="${map}" varStatus="i">
-						  		<c:if test="${param.rsv_code == i.index}">
-							  		<a class="btn btn-primary" href="biz_rsv_management.do?str_number=${param.str_number}&rsv_code=${i.index}&type=${param.type}&text=${param.text}">
-										${tmp.key} : <strong>${tmp.value}</strong>
-									</a>
-								</c:if>
-								<c:if test="${param.rsv_code != i.index}">
-									<a class="btn btn-default" href="biz_rsv_management.do?str_number=${param.str_number}&rsv_code=${i.index}&type=${param.type}&text=${param.text}">
-										${tmp.key} : <strong>${tmp.value}</strong>
-									</a>
-								</c:if>
-						  	</c:forEach>
-						  	<select class="form-control">
-						  		<option>1</option>
-						  		<option>2</option>
-						  		<option>3</option>
-						  	</select>
-						</div>
-					</div>
-				</div>
 			</div>
 			
 			<c:if test="${fn:length(list) eq 0 }">
@@ -71,11 +48,11 @@
 				<table class="table">
 				 	<tr>
 				 		<th>예약번호</th>
-				 		<th>상태</th>
-				 		<th>예약자</th>
-				 		<th>예약자명</th>
-				 		<th>사용예정일</th>
+				 		<th>평점</th>
+				 		<th>내용</th>
+				 		<th>작성자</th>
 				 		<th>예약일</th>
+				 		<th>리뷰작성일</th>
 				 		<th>예약확인</th>
 				 	</tr>
 				 	<c:forEach var="tmp" items="${list}" varStatus="i">
@@ -84,11 +61,15 @@
 					 			<input type="hidden" id="no_${i.index}" value="${tmp.rsv_no}" />
 					 			${tmp.rsv_no}
 					 		</td>
-					 		<td>${tmp.rsv_code_chk}</td>
-					 		<td><a href="#">${tmp.rsv_sub_id}</a></td>
-					 		<td>${tmp.rsv_sub_name}</td>
+					 		<td>${tmp.rsv_cmt_point}</td>
+					 		<td>
+					 			<div style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap; width: 300px;" title="${tmp.rsv_cmt_content}">
+									${tmp.rsv_cmt_content}
+								</div>
+					 		</td>
+					 		<td>${tmp.rsv_cmt_writer}</td>
 					 		<td>${tmp.rsv_day}</td>
-					 		<td>${tmp.rsv_date}</td>
+					 		<td>${tmp.rsv_cmt_date}</td>
 					 		<td>
 					 			<a href="#" class="btn btn-success btn-xs rsv_info">내용확인</a>
 					 		</td>
@@ -100,8 +81,8 @@
 
 			 <div class="form-inline" align="right" style="margin-top:5px; margin-bottom:5px">
 				<select class="form-control" id="search_type" >
-					<option value="rsv_no">예약번호</option>
-					<option value="rsv_sub_name">예약자명</option>
+					<option value="rsv_cmt_content">내용</option>
+					<option value="rsv_cmt_writer">작성자</option>
 				</select>
 				<input type="text" id="search_text" class="form-control" />
 				<input type="button" id="search_btn" class="btn btn-default" value="검색" />
@@ -131,7 +112,7 @@
 			var func = function(){
 				var ty = $('#search_type').val();
 				var tx = encodeURIComponent( $('#search_text').val() );
-				window.location.href="?str_number=${param.str_number}&rsv_code=${param.rsv_code}&text="+tx+"&type="+ty;
+				window.location.href="?str_number=${param.str_number}&text="+tx+"&type="+ty;
 			};
 			
 			$('#search_text').keyup(function(event){
@@ -143,25 +124,12 @@
 			$('#search_btn').click(function(){
 				func();
 			});
-			
-			var totpage=0;
-			if(${param.rsv_code} == 0){
-				totpage = (${map.get("합계")}-1)/10+1
-			}
-			else if(${param.rsv_code} == 1){
-				totpage = (${map.get("이용예정")}-1)/10+1
-			}
-			else if(${param.rsv_code} == 2){
-				totpage = (${map.get("이용완료")}-1)/10+1
-			}
-			else if (${param.rsv_code} == 3){
-				totpage = (${map.get("예약취소")}-1)/10+1
-			}
+
 			
 			$('#pagination').twbsPagination({
-				totalPages: totpage,
+				totalPages: 5,
 				visiblePage:10,
-				href:'?str_number=${param.str_number}&rsv_code=${param.rsv_code}&page={{number}}&text='+encodeURIComponent('${param.text}')+'&type=${param.type}'
+				href:'?str_number=${param.str_number}&page={{number}}&type=${param.type}&text='+encodeURIComponent('${param.text}')
 			})
 		});
 	</script>

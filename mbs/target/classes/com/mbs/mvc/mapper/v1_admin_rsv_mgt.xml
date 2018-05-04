@@ -25,7 +25,7 @@
 	<select id="selectAdminRsvList" parameterType="V1_Reservation" resultType="V1_Reservation">
 		UPDATE `reservation` SET rsv_code=2 WHERE rsv_day <![CDATA[<]]> NOW() AND rsv_no IN (SELECT * FROM(SELECT r.rsv_no FROM `reservation` as r) a);
 		
-		SELECT s.str_number, s.str_name, DATE_FORMAT(rc.rsv_day, '%Y-%m-%d') AS rsv_day, rc.rsv_code, rc.rsv_code_chk, rc.rsv_no, rc.rsv_sub_id, rc.rsv_sub_name, rc.rsv_date FROM `store` s
+		SELECT s.str_delete, s.str_number, s.str_name, DATE_FORMAT(rc.rsv_day, '%Y-%m-%d') AS rsv_day, rc.rsv_code, rc.rsv_code_chk, rc.rsv_no, rc.rsv_sub_id, rc.rsv_sub_name, rc.rsv_date FROM `store` s
 		INNER JOIN
 			(SELECT r.rsv_day, r.rsv_code, c.rsv_code_chk, r.str_number, r.rsv_no, r.rsv_sub_id, r.rsv_sub_name, r.rsv_date FROM `reservation` r 
 				INNER JOIN `rsv_code` c
@@ -41,7 +41,7 @@
 	
 	<select id="selectStoreList" parameterType="V1_Store" resultType="V1_Store">
 		SELECT 
-			msrc.str_number, msrc.mb_id, msrc.str_name, msrc.str_tel, msrc.str_address, msrc.str_category, msrc.mb_email,
+			msrc.str_number, msrc.str_delete, msrc.mb_id, msrc.str_name, msrc.str_tel, msrc.str_address, msrc.str_category, msrc.mb_email,
 			COUNT(CASE 
 					WHEN str_category=1 THEN
 						CASE WHEN rsv_cmt_delete=1 THEN 1 END
@@ -64,12 +64,19 @@
 			FROM `member` m
 			INNER JOIN
 				
-				(SELECT rc.rsv_no, rc.rsv_code, rc.rsv_cmt_point, rc.rsv_cmt_no, rc.rsv_cmt_delete, rc.rsv_delete, s.str_number, s.mb_id, s.str_name, s.str_date, s.str_tel, s.str_address, s.str_category FROM `store` s
+				(SELECT rc.rsv_no, rc.rsv_code, rc.rsv_cmt_point, rc.rsv_cmt_no, rc.rsv_cmt_delete, rc.rsv_delete, s.str_number, s.mb_id, s.str_name, s.str_date, s.str_tel, s.str_address, s.str_category, s.str_delete FROM `store` s
 				LEFT OUTER JOIN
 				
 					(SELECT r.str_number, r.rsv_no, r.rsv_code, c.rsv_cmt_point, c.rsv_cmt_no, c.rsv_cmt_delete, r.rsv_delete FROM `reservation` r
 					LEFT OUTER JOIN `rsv_comment` c
-					ON r.rsv_no=c.rsv_no                
+					ON r.rsv_no=c.rsv_no
+                    GROUP BY r.rsv_no
+                    UNION
+                    
+                    SELECT r.str_number, r.rsv_no, r.rsv_code, c.rsv_cmt_point, c.rsv_cmt_no, c.rsv_cmt_delete, r.rsv_delete FROM `reservation` r
+					RIGHT OUTER JOIN `rsv_comment` c
+					ON r.rsv_no=c.rsv_no
+                    GROUP BY r.rsv_no
 	                ) rc
 				
 				ON s.str_number=rc.str_number)src
@@ -79,13 +86,14 @@
 		ON t.str_number = msrc.str_number
 	        
 		WHERE msrc.str_name LIKE CONCAT('%', #{text}, '%')
-			<if test="str_category != 0 ">
+			 <if test="str_category != 0 ">
     			AND msrc.str_category=#{str_category}
  			</if>
 		GROUP BY msrc.str_number
-		ORDER BY msrc.str_date DESC LIMIT #{page} , 6 ;
+		ORDER BY msrc.str_date DESC LIMIT #{page} , 6 ; 
 	</select>
 	
+
 	<select id="selectReviewList" parameterType="V1_Comment" resultType="V1_AdminReview">
 		SELECT c.rsv_cmt_no AS no, c.rsv_cmt_content AS content, c.rsv_cmt_point AS point, c.rsv_cmt_writer AS writer, c.rsv_cmt_date AS date, DATE_FORMAT(r.rsv_day, '%Y-%m-%d') AS day, c.rsv_no AS rsv_no FROM `rsv_comment` c
 		INNER JOIN `reservation` r

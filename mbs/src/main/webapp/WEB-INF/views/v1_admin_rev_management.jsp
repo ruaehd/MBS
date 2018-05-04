@@ -12,6 +12,22 @@
 	<link rel="stylesheet" href="resources/css/v1_adminside.css" />
 	<link rel="stylesheet" href="resources/css/w3.css" />
 	<link rel="stylesheet" href="resources/css/card.css" />
+	<style>
+		.stop_store{
+			opacity:0.4; 	
+			background-color:#000000;
+			width:100%;
+			min-height: 312px;
+			position: fixed;		
+		}
+		.stop_btn{
+			width:100%;
+			min-height: 312px;
+			position: fixed;
+			text-align: center;
+			margin-top: 50%
+		}
+	</style>
 </head>
 <body>
 	<div class="row">
@@ -56,15 +72,19 @@
 				<c:if test="${fn:length(list) ne 0 }">
 			     
 			        <div class="row">
-			            <c:forEach var="tmp" items="${list}">
+			            <c:forEach var="tmp" items="${list}" varStatus="i">
 			            <div class="col-xs-12 col-sm-6 col-md-4">
 			                <div class="image-flip" ontouchstart="this.classList.toggle('hover');">
 			                    <div class="mainflip">
 			                        <div class="frontside">
+			                        	<c:if test="${tmp.str_delete == 0 }">
+					                        <div class="stop_store"></div>
+					                        <div class="stop_btn"><a href="#" class="btn btn-danger btn-lg">운영중지</a></div>
+				                        </c:if>
 			                            <div class="card" style="padding-top:10px">
 			                                <div class="card-body text-center">
 			                                    <p><img class=" img-fluid" src="get_blob_img.do?str_number=${tmp.str_number}&idx=0" alt="card image"></p>
-			                                    <h4 class="card-title str_name">${tmp.str_name}</h4>
+			                                    <h4 class="card-title str_name" id="name_${i.index}">${tmp.str_name}</h4>
 			                                    <p class="card-text">${tmp.str_address}</p>
 			                                    <p class="card-text"></p>
 			                                    <a href="#" class="btn btn-primary btn-sm" style="margin-right:10px"><i class="glyphicon glyphicon-earphone"></i></a>${tmp.str_tel}
@@ -75,6 +95,8 @@
 			                            <div class="card">
 			                                <div class="card-body text-center mt-4">
 			                                    <a href="usr_content.do?str_number=${tmp.str_number}"><h4 class="card-title">${tmp.str_name}</h4></a>
+			                                    <input type="hidden" value="${tmp.str_number}" id="no_${i.index}"/>
+			                                    <input type="hidden" value="${tmp.str_delete}" id="chk_${i.index}"/>
 			                                    <p class="card-text">평점평균 : <fmt:formatNumber value="${tmp.avg}" pattern=".00"/> /5</p>
 			                                    <c:if test="${tmp.str_category == 1}">
 				                                    <p class="card-text">이용예정 : ${tmp.exp}</p>
@@ -88,13 +110,14 @@
 			                                    	</a>
 			                                        <a href="admin_rev_list.do?str_number=${tmp.str_number}&str_cat=${tmp.str_category}" class="btn btn-primary btn-sm">리뷰관리(${tmp.cnt})</a> 
 			                                    </div>
+			                                    <hr />
+												<c:if test="${tmp.str_delete == 1 }">
+			                                   		<a href="#" class="btn btn-danger operate">운영중지</a>
+			                                   	</c:if>
+			                                   	<c:if test="${tmp.str_delete == 0 }">
+			                                   		<a href="#" class="btn btn-warning operate">운영재개</a>
+			                                   	</c:if>
 			                                    
-			                                    
-			                                    <ul class="list-inline">
-			                                        <li class="list-inline-item">
-			                                            
-			                                        </li>
-			                                    </ul>
 			                                </div>
 			                            </div>
 			                        </div>
@@ -163,8 +186,40 @@
 	<script src="resources/js/jquery-1.11.1.js"></script>
 	<script src="resources/js/bootstrap.min.js"></script>
 	<script src="resources/js/jquery.twbsPagination.min.js"></script>
+	<script src="resources/js/sweetalert.min.js"></script>
 	<script>
 		$(function(){
+			
+			$('.operate').click(function(){
+				//class로 지정란 버튼의 위치 얻기(0부터 시작함)
+				var idx = $(this).index('.operate');
+				var no = $('#no_'+idx).val();
+				var chk = $('#chk_'+idx).val();
+				var name = $('#name_'+idx).text();
+				console.log(no);
+				console.log(chk);
+				
+				if(chk==0){
+					var t = "재개확인";
+					var c = name+"의 운영을 재개 하시겠습니까?";
+				};
+				if(chk==1){
+					var t = "중지확인";
+					var c = name+"의 운영을 중지 하시겠습니까?";
+				};
+				
+				swal({
+					title : t,
+					text : c,
+					icon : "warning",
+					buttons: ["취소", "확인"]
+				}).then((value)=>{
+					if(value){
+						window.location.href='biz_operate_convert.do?str_number='+no+'&str_delete='+chk;
+					}
+				});
+			});
+			
 			
 			var func = function(){
 				var tx = encodeURIComponent( $('#search_text').val() );

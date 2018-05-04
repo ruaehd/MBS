@@ -27,7 +27,7 @@ import com.mbs.mvc.vo.V1_TourComment;
 @Controller
 public class V1_AdminRsvManagementController {
 	
-	@Autowired V1_AdminDAO aDAO = null;
+	@Autowired private V1_AdminDAO aDAO = null;
 	
 	@RequestMapping(value="/admin_rsv_management.do", method=RequestMethod.GET)
 	public String AdminRsvManagement(Model model, 

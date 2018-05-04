@@ -9,7 +9,9 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.mbs.mvc.vo.V1_Comment;
 import com.mbs.mvc.vo.V1_Reservation;
+import com.mbs.mvc.vo.V1_RsvMenu;
 import com.mbs.mvc.vo.V1_Store;
 
 @Service
@@ -31,5 +33,19 @@ public class V1_BusinessStoreManagementDAO {
 		return sqlsession.selectOne("V1_BizStrMgt.countBizRsvTot", vo);
 	}
 	
+	public V1_Reservation selectBizRsvOne(int rsv_no) {
+		return sqlsession.selectOne("V1_BizStrMgt.selectBizRsvOne", rsv_no);
+	}
+
+	public List<V1_RsvMenu> selectBizRsvMenuList(int rsv_no) {
+		return sqlsession.selectList("V1_BizStrMgt.selectBizRsvMenuList", rsv_no);
+	}
 	
+	public List<V1_Comment> selectBizCmtiewList(V1_Comment vo){
+		return sqlsession.selectList("V1_BizStrMgt.selectBizCmtiewList", vo);
+	}
+	
+	public int updateStoreChk(V1_Store vo) {
+		return sqlsession.update("V1_BizStrMgt.updateStoreChk", vo);
+	}
 }

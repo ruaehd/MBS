@@ -6,7 +6,7 @@
 		SELECT src.*, m.mb_id, m.mb_email FROM `member` m
         INNER JOIN
 			(
-			SELECT s.str_name, s.mb_id, s.str_date, s.str_tel, s.str_address, s.str_delete , 
+			SELECT s.str_name, s.mb_id, s.str_date, s.str_tel, s.str_address, s.str_delete , s.str_number,
 				COUNT(CASE WHEN rsv_cmt_delete=1 THEN 1 END) AS cnt,
 				AVG(CASE WHEN rsv_cmt_delete=1 THEN rsv_cmt_point END) AS avg,
                 COUNT(CASE WHEN rsv_code=1 THEN 1 END) AS exp,
@@ -39,9 +39,9 @@
 	<select id="selectBizRsvList" parameterType="V1_Reservation" resultType="V1_Reservation">
 		UPDATE `reservation` SET rsv_code=2 WHERE rsv_day <![CDATA[<]]> NOW() AND rsv_no IN (SELECT * FROM(SELECT r.rsv_no FROM `reservation` as r) a);
 		
-		SELECT s.str_number, s.str_name, DATE_FORMAT(rc.rsv_day, '%Y-%m-%d') AS rsv_day, rc.rsv_code, rc.rsv_code_chk, rc.rsv_no, rc.rsv_sub_id, rc.rsv_sub_name, rc.rsv_date FROM `store` s
+		SELECT s.str_number, s.str_name, DATE_FORMAT(rc.rsv_day, '%Y-%m-%d') AS rsv_day, rc.rsv_code, rc.rsv_code_chk, rc.rsv_no, rc.rsv_sub_id, rc.rsv_sub_name, rc.rsv_sub_tel, rc.rsv_date FROM `store` s
 		INNER JOIN
-			(SELECT r.rsv_day, r.rsv_code, c.rsv_code_chk, r.str_number, r.rsv_no, r.rsv_sub_id, r.rsv_sub_name, r.rsv_date FROM `reservation` r 
+			(SELECT r.rsv_day, r.rsv_code, r.rsv_sub_tel, c.rsv_code_chk, r.str_number, r.rsv_no, r.rsv_sub_id, r.rsv_sub_name, r.rsv_date FROM `reservation` r 
 				INNER JOIN `rsv_code` c
 				ON r.rsv_code = c.rsv_code
   				<if test="rsv_code != 0 ">
@@ -49,7 +49,7 @@
   				</if>
 			) rc
 		ON s.str_number = rc.str_number
-		WHERE rsv_sub_id LIKE CONCAT('%', #{text}, '%') AND s.str_number=#{str_number}
+		WHERE ${type} LIKE CONCAT('%', #{text}, '%') AND s.str_number=#{str_number}
 		ORDER BY rc.rsv_no DESC LIMIT #{page} , 10
 	</select>
 	
@@ -61,6 +61,35 @@
  
 		FROM `reservation`
 	
-		WHERE rsv_sub_id LIKE CONCAT('%', #{text}, '%') AND str_number=#{str_number}
+		WHERE ${type} LIKE CONCAT('%', #{text}, '%') AND str_number=#{str_number}
 	</select>
+	
+	<select id="selectBizRsvOne" parameterType="int" resultType="V1_Reservation">
+		SELECT DATE_FORMAT(rsv_day, '%Y-%m-%d %H:%i') AS rsv_day, rsv_sub_id, rsv_sub_name, rsv_sub_tel, rsv_sub_request, rsv_personnel FROM `reservation` WHERE rsv_no=#{rsv_no}
+	</select>
+	
+	<select id="selectBizRsvMenuList" parameterType="int" resultType="V1_RsvMenu">
+		SELECT rsv_mn_name, rsv_mn_cnt FROM `rsv_menu` WHERE rsv_no=#{rsv_no}
+	</select>
+	
+	<select id="selectBizCmtiewList" parameterType="V1_Comment" resultType="V1_Comment">
+		SELECT r.rsv_no, DATE_FORMAT(r.rsv_day, '%Y-%m-%d') AS rsv_day, c.rsv_cmt_content, c.rsv_cmt_point, c.rsv_cmt_writer, c.rsv_cmt_date, c.rsv_cmt_taste, c.rsv_cmt_service, c.rsv_cmt_price FROM `reservation` r
+	    INNER JOIN `rsv_comment` c
+	    ON r.rsv_no = c.rsv_no
+	    WHERE ${type} LIKE CONCAT('%', #{text}, '%') AND r.str_number=#{str_number} AND rsv_cmt_delete=1
+		ORDER BY c.rsv_cmt_date DESC LIMIT #{page} , 10
+	</select>
+	
+	<update id="updateStoreChk" parameterType="V1_Store">
+		UPDATE `store` SET 
+		<choose>
+			<when test="str_delete == 0">
+				str_delete = 1
+			</when>
+			<when test="str_delete == 1">
+				str_delete = 0
+			</when>
+		</choose>
+		WHERE str_number=#{str_number}
+	</update>
 </mapper>
