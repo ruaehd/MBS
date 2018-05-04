@@ -10,7 +10,15 @@ public class EventVO {
 	private String evt_date = null;
 	private String mb_id = null;
 	private int evt_delete = 0;
+	/* search */
+	private String sel_type = null;
 	
+	public String getSel_type() {
+		return sel_type;
+	}
+	public void setSel_type(String sel_type) {
+		this.sel_type = sel_type;
+	}
 	public int getEvt_delete() {
 		return evt_delete;
 	}

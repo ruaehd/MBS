@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
@@ -53,9 +54,11 @@ public class Admin_EventController {
 	}
 	
 	@RequestMapping(value="/admin_event.do", method= RequestMethod.GET)
-	public String adminEvent(Model model) {
-		List<EventVO> list = aeDAO.Admin_EventImgList();
+	public String adminEvent(Model model, @RequestParam(value = "sel_type", defaultValue="all") String sel_type) {
+
 		EventVO vo = new EventVO();
+		vo.setSel_type(sel_type);
+		List<EventVO> list = aeDAO.Admin_EventImgList(vo);
 		model.addAttribute("vo", vo);
 		model.addAttribute("list", list);
 		return "admin_event";

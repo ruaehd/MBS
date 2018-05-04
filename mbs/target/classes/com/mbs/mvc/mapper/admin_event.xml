@@ -11,8 +11,12 @@
 		UPDATE `event` SET evt_delete=#{evt_delete} WHERE evt_no=#{evt_no} 
 	</update>
 
-	<select id="Amind_EventImgList" resultType="com.mbs.mvc.vo.EventVO">
-		SELECT evt_no, evt_title, evt_begintime, evt_endtime, evt_delete, evt_date FROM `event` ORDER BY evt_date DESC LIMIT 10
+	<select id="Amind_EventImgList" parameterType="com.mbs.mvc.vo.EventVO" resultType="com.mbs.mvc.vo.EventVO">
+		SELECT evt_no, evt_title, evt_begintime, evt_endtime, evt_delete, evt_date FROM `event` 
+			<if test="sel_type != 'all'">
+				WHERE evt_delete=#{sel_type}
+			</if>  
+		ORDER BY evt_date DESC LIMIT 10
 	</select>
 	
 	<insert id="insertEvent" parameterType="com.mbs.mvc.vo.EventVO">

@@ -27,8 +27,8 @@ public class Admin_EventDAO {
 		return sqlsession.selectOne("Event.selectEventImg", evt_no);
 	}
 	
-	public List<EventVO> Admin_EventImgList() {
-		return sqlsession.selectList("Admin_Event.Amind_EventImgList");
+	public List<EventVO> Admin_EventImgList(EventVO vo) {
+		return sqlsession.selectList("Admin_Event.Amind_EventImgList", vo);
 	}
 	
 	public int insertEvent(EventVO vo){

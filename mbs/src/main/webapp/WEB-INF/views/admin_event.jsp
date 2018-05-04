@@ -47,14 +47,12 @@
            <div class="col-md-2">
               <button type="button" id="btn_insert" class="btn btn-primary btn_add">추가하기</button>
            </div>
-           <div class=" col-md-offset-7 col-md-3 form-inline">
-                 <select class="form-control">
-                    <option>이름</option>
-                    <option>날짜</option>
-                    <option>번호</option>
+           <div class=" col-md-offset-6 col-md-4 form-inline">
+                 <select class="form-control" id="search_type">
+                    <option value="evt_title">제목</option>
                  </select>
-                 <input type="text" class="form-control"/>
-                 <button type="button" class="form-control btn-success">검색</button>
+                 <input type="text" class="form-control" id="search_text" />
+                 <button type="button" class="form-control btn-success" id="search_btn">검색</button>
               </div>
            </div>
            <table class="table">
@@ -63,14 +61,18 @@
                  <th style="vertical-align:middle">제목</th>
                  <th style="vertical-align:middle">이미지</th>
                  <th style="vertical-align:middle">내용</th>
-                 <th style="vertical-align:middle">이벤트기간</th>
+                 <th style="vertical-align:middle">
+            	  <select class="form-control w3-dark-gray w3-border-dark-gray" id="date_sel">
+                 	<option style="display:none">이벤트기간</option>
+                 </select>
+                 </th>
                  <th style="width:120px">
-                 <select class="form-control w3-dark-gray w3-border-dark-gray">
-                    <option>전체</option>
-                    <option>진행</option>
-                    <option>대기</option>
-                    <option>종료</option>
-                    <option>삭제</option>	
+                 <select id="sel_type" class="form-control w3-dark-gray w3-border-dark-gray">
+                    <option value="all" ${param.sel_type eq all ? 'selected="selected"':''}>전체</option>
+                    <option value="1" ${param.sel_type == '1' ? 'selected="selected"':''}>진행</option>
+                    <option value="2" ${param.sel_type == '2' ? 'selected="selected"':''}>대기</option>
+                    <option value="3" ${param.sel_type == '3' ? 'selected="selected"':''}>종료</option>
+                    <option value="0" ${param.sel_type == '0' ? 'selected="selected"':''}>삭제</option>	
                  </select>
                  </th>
                  <th style="vertical-align:middle">등록날짜</th>
@@ -101,9 +103,7 @@
 	                </td>
                 </tr>
               </c:forEach>
-       
            </table>
-            
            
            
            <div align="center">
@@ -243,6 +243,86 @@
 
    <script>
 	$(function() {
+		$('#evt_img1').change(function(){
+			//현재 파일을 img변수에 넣음
+			var img = this;
+			//img변수에 값이 있다면, 파일을 선택했다면
+			if(img.files && img.files[0]){
+				//파일을 읽기위한 객체 생성
+				var reader = new FileReader();
+				//파일을 읽어 들임.
+				reader.onload = function(e){
+					//읽은 파일을 img src태그에 넣음
+					$('#evt_img').attr('src',e.target.result);
+				};
+				//파일의 링크를 읽음
+				reader.readAsDataURL(img.files[0]);
+			}
+			/* else{	//파일을 선택하지 않았다면
+				$('#preview_img').attr('src','resources/imgs/dafault.jpg');
+			} */
+		});
+		
+		$('#evt_content1').change(function(){
+			//현재 파일을 img변수에 넣음
+			var img = this;
+			//img변수에 값이 있다면, 파일을 선택했다면
+			if(img.files && img.files[0]){
+				//파일을 읽기위한 객체 생성
+				var reader = new FileReader();
+				//파일을 읽어 들임.
+				reader.onload = function(e){
+					//읽은 파일을 img src태그에 넣음
+					$('#evt_content').attr('src',e.target.result);
+				};
+				//파일의 링크를 읽음
+				reader.readAsDataURL(img.files[0]);
+			}
+			/* else{	//파일을 선택하지 않았다면
+				$('#preview_img').attr('src','resources/imgs/dafault.jpg');
+			} */
+		});
+		
+		
+		
+		
+		$('#date_sel').daterangepicker({
+			locale: {
+		            format: 'YYYY-MM-DD',
+		            applyLabel: '적용',
+		            cancelLabel: '취소',
+		            monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+		            daysOfWeek: ['일', '월', '화', '수', '목', '금', '토'],
+		    }, 
+			opens: 'left'
+		}, 
+		function(start, end, label) {
+			var start = start.format('YYYY-MM-DD');
+			var end = end.format('YYYY-MM-DD');
+			window.location.href="admin_event.do?sel_type="+start+","+end;
+		}); 
+		
+		var func = function(){
+			var ty = $('#search_type').val();
+			var tx = encodeURIComponent($('#search_text').val());
+			window.location.href="admin_event.do?type="+ty+"&text="+tx+"&sel_type=${param.sel_type}";
+		};
+		
+		$('#search_btn').click(function(){
+				func();
+		});
+
+		$('#search_text').keyup(function(event){
+			if(event.which == 13){
+				func();
+			}
+		});
+		
+		$('#sel_type').change(function(){
+	  	  		var sty = $(this).val();
+	  	  		window.location.href="admin_event.do?sel_type="+sty;
+	  	});
+			
 		$('#evt_img').click(function(){
 			$('#evt_img1').click();
 		})
