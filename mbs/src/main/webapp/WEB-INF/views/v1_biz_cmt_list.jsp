@@ -54,11 +54,16 @@
 				 		<th>예약일</th>
 				 		<th>리뷰작성일</th>
 				 		<th>예약확인</th>
+				 		<th>답글달기</th>
 				 	</tr>
 				 	<c:forEach var="tmp" items="${list}" varStatus="i">
+						<input type="hidden" id="no_${i.index}" value="${tmp.rsv_no}" />
+					 	<input type="hidden" id="cmt_no_${i.index}" value="${tmp.rsv_cmt_no}" />
+					 	<input type="hidden" id="cmt_point_${i.index}" value="${tmp.rsv_cmt_point}" />
+					 	<input type="hidden" id="cmt_content_${i.index}" value="${tmp.rsv_cmt_content}" />
+					 	<input type="hidden" id="cmt_writer_${i.index}" value="${tmp.rsv_cmt_writer}" />
 						<tr>
 					 		<td>
-					 			<input type="hidden" id="no_${i.index}" value="${tmp.rsv_no}" />
 					 			${tmp.rsv_no}
 					 		</td>
 					 		<td>${tmp.rsv_cmt_point}</td>
@@ -72,6 +77,9 @@
 					 		<td>${tmp.rsv_cmt_date}</td>
 					 		<td>
 					 			<a href="#" class="btn btn-success btn-xs rsv_info">내용확인</a>
+					 		</td>
+					 		<td>
+					 			<a href="#" class="btn btn-primary btn-xs reply">답글달기</a>
 					 		</td>
 				 		</tr>
 				 	</c:forEach>
@@ -95,6 +103,44 @@
 		 </div>
 	</div>
 
+	<form action="write_reply.do" method="post">
+		<div class="modal fade" id="writeReply">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4>답글 달기</h4>
+					</div>
+					<div class="modal-body" style="padding:50px">
+						<input type="hidden" id="cmt_no" name="cmt_no"/>
+						<div class="form-inline" style="margin-bottom:10px">
+							<label style="width:100px">평점</label>
+							<input style="width:300px" type="text" id="cmt_point" class="form-control" readonly/>
+						</div>
+						<div class="form-inline" style="margin-bottom:10px">
+							<label style="width:100px">작성자</label>
+							<input style="width:300px" type="text" id="cmt_writer" class="form-control" readonly/>
+						</div>
+						<div class="form-inline" style="margin-bottom:10px">
+							<label style="width:100px">리뷰내용</label>
+							<input style="width:300px" type="text" id="cmt_content" class="form-control" readonly/>
+						</div>
+						<div class="form-inline" style="margin-bottom:10px">
+							<label style="width:100px">리뷰답글</label>
+							<textarea style="width:300px; resize:none" name="text" rows="6" class="form-control" ></textarea>
+						</div>
+						
+					</div>
+					<div class="modal-footer">
+						<input type="submit" class="btn btn-success" value="보내기" />
+						<button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+
+
+
 	<script src="resources/js/jquery-1.11.1.js"></script>
 	<script src="resources/js/bootstrap.min.js"></script>
 	<script src="resources/js/jquery.twbsPagination.min.js"></script>
@@ -108,6 +154,24 @@
 				console.log(no);
 				window.open('biz_rsv_info.do?rsv_no='+no,'','width=800, height=700, left=650, top=100');
 			});
+			
+			$('.reply').click(function(){
+				//class로 지정란 버튼의 위치 얻기(0부터 시작함)
+				var idx = $(this).index('.reply');
+				var no = $('#cmt_no_'+idx).val();
+				var point = $('#cmt_point_'+idx).val();
+				var content = $('#cmt_content_'+idx).val();
+				var writer = $('#cmt_writer_'+idx).val();
+				
+				console.log(no);
+				
+				$('#cmt_no').val(no);
+				$('#cmt_point').val(point);
+				$('#cmt_content').val(content);
+				$('#cmt_writer').val(writer);
+				$('#writeReply').modal('show');
+			});
+			
 			
 			var func = function(){
 				var ty = $('#search_type').val();

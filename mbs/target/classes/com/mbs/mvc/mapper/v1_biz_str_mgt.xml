@@ -73,7 +73,7 @@
 	</select>
 	
 	<select id="selectBizCmtiewList" parameterType="V1_Comment" resultType="V1_Comment">
-		SELECT r.rsv_no, DATE_FORMAT(r.rsv_day, '%Y-%m-%d') AS rsv_day, c.rsv_cmt_content, c.rsv_cmt_point, c.rsv_cmt_writer, c.rsv_cmt_date, c.rsv_cmt_taste, c.rsv_cmt_service, c.rsv_cmt_price FROM `reservation` r
+		SELECT r.rsv_no, DATE_FORMAT(r.rsv_day, '%Y-%m-%d') AS rsv_day, c.rsv_cmt_no, c.rsv_cmt_content, c.rsv_cmt_point, c.rsv_cmt_writer, c.rsv_cmt_date, c.rsv_cmt_taste, c.rsv_cmt_service, c.rsv_cmt_price FROM `reservation` r
 	    INNER JOIN `rsv_comment` c
 	    ON r.rsv_no = c.rsv_no
 	    WHERE ${type} LIKE CONCAT('%', #{text}, '%') AND r.str_number=#{str_number} AND rsv_cmt_delete=1
@@ -92,4 +92,9 @@
 		</choose>
 		WHERE str_number=#{str_number}
 	</update>
+	
+	<insert id="insertReply" parameterType="V1_Reply">
+		INSERT INTO `reply`(rep_content, rep_date, rsv_cmt_no) VALUES(#{rep_content}, NOW(), #{rsv_cmt_no})
+	</insert>
+	
 </mapper>

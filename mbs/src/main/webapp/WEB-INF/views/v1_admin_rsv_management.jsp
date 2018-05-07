@@ -64,7 +64,6 @@
 				 	<c:forEach var="tmp" items="${list}" varStatus="i">
 						<tr>
 					 		<td>
-					 			<input type="hidden" id="no_${i.index}" value="${tmp.rsv_no}" />
 						 		<a href="" class="rsv_info">${tmp.rsv_no}</a>
 					 		</td>
 					 		<td>${tmp.rsv_code_chk}</td>

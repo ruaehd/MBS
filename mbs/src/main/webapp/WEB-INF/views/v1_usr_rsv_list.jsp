@@ -117,7 +117,7 @@
 				totpage = (${map.get("이용완료")}-1)/10+1
 			}
 			else if (${param.rsv_code} == 3){
-				totpage = (${map.get("취소환불")}-1)/10+1
+				totpage = (${map.get("예약취소")}-1)/10+1
 			}
 			
 			$('#pagination').twbsPagination({

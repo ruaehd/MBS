@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.mbs.mvc.dao.V1_BusinessStoreManagementDAO;
 import com.mbs.mvc.dao.V1_ReservationDAO;
 import com.mbs.mvc.vo.V1_Comment;
+import com.mbs.mvc.vo.V1_Reply;
 import com.mbs.mvc.vo.V1_Reservation;
 import com.mbs.mvc.vo.V1_RsvMenu;
 import com.mbs.mvc.vo.V1_Store;
@@ -123,7 +124,6 @@ public class V1_BusinessStoreManagementController {
 		vo.setType(type);
 		vo.setPage((page-1)*10);
 		
-		
 		List<V1_Comment> list = bsmDAO.selectBizCmtiewList(vo);
 		
 		model.addAttribute("list", list);
@@ -133,8 +133,7 @@ public class V1_BusinessStoreManagementController {
 	@RequestMapping(value="biz_operate_convert.do", method = RequestMethod.GET)
 	public String BizOperateConvert(Model model, HttpServletRequest request,
 			@RequestParam("str_number") int str_number,
-			@RequestParam("str_delete") int str_delete
-			) {
+			@RequestParam("str_delete") int str_delete) {
 		
 		V1_Store vo = new V1_Store();
 		vo.setStr_number(str_number);
@@ -145,6 +144,26 @@ public class V1_BusinessStoreManagementController {
 		model.addAttribute("url", request.getHeader("REFERER"));
 		model.addAttribute("message", "정상적으로 처리 되었습니다.");
 		model.addAttribute("title", "처리 완료");
+		
+		return "v1_alert";
+	}
+	
+	
+	@RequestMapping(value="write_reply.do", method = RequestMethod.POST)
+	public String writeReply(
+			HttpServletRequest request, Model model,
+			@RequestParam("text") String rep_content,
+			@RequestParam("cmt_no") int rsv_cmt_no) {
+		
+		V1_Reply vo = new V1_Reply();
+		vo.setRep_content(rep_content);
+		vo.setRsv_cmt_no(rsv_cmt_no);
+		
+		bsmDAO.insertReply(vo);
+		
+		model.addAttribute("message", "리뷰 답글 작성이 완료되었습니다.");
+		model.addAttribute("url", request.getHeader("REFERER"));
+		model.addAttribute("title", "답글 작성 완료");
 		
 		return "v1_alert";
 	}

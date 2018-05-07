@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.mbs.mvc.vo.V1_Comment;
+import com.mbs.mvc.vo.V1_Reply;
 import com.mbs.mvc.vo.V1_Reservation;
 import com.mbs.mvc.vo.V1_RsvMenu;
 import com.mbs.mvc.vo.V1_Store;
@@ -47,5 +48,9 @@ public class V1_BusinessStoreManagementDAO {
 	
 	public int updateStoreChk(V1_Store vo) {
 		return sqlsession.update("V1_BizStrMgt.updateStoreChk", vo);
+	}
+	
+	public int insertReply(V1_Reply vo) {
+		return sqlsession.insert("V1_BizStrMgt.insertReply", vo);
 	}
 }
