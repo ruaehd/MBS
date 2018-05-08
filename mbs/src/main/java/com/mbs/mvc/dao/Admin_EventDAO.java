@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.mbs.mvc.vo.EventVO;
+import com.mbs.mvc.vo.NoticeVO;
 
 @Service
 public class Admin_EventDAO {
@@ -37,5 +38,9 @@ public class Admin_EventDAO {
 	
 	public int EventDelete(EventVO vo) {
 		return sqlsession.update("Admin_Event.EventDelete", vo);
+	}
+	
+	public int EventPage(EventVO vo) {
+		return sqlsession.selectOne("Admin_Event.EventPage", vo);
 	}
 }

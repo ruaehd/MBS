@@ -2,16 +2,15 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%> <!-- // 반복문 c:forEach c:if-->
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %> <!-- // model and view -->
 <%@ page session="false" %>
-
 <html>
 <head>
-   <title>관리자test1122</title>
+   <title>자주하는질문</title>
    <link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
    <link rel="stylesheet" href="resources/css/v1_adminside.css" />
    <link rel="stylesheet" href="resources/css/w3.css" />
 </head>
 <style>
-   .modal-backdrop.in {
+	.modal-backdrop.in {
          z-index:auto;
    }
    .table-head{
@@ -46,53 +45,71 @@
     <!-- Main Content -->
     <div class="container-fluid">
         <div class="side-body">
-        <div class="title">공지관리</div>
+        <div class="title"> 자주하는질문 </div>
             <div class="row">
            <div class="col-md-2">
-              <button type="button" class="btn btn-info btn_add" id="btn_insert">추가하기</button>
+              <button type="button" class="btn btn-primary btn_add" id="btn_insert">추가하기</button>
            </div>
            <div class=" col-md-offset-6 col-md-4 form-inline">
                  <select class="form-control" id="search_type">
-                 	<option value="all">제목+내용</option>
-                    <option value="ntc_title" >제목</option>
-                    <option value="ntc_content">내용</option>
+                    <option value="all">질문+답변</option>
+                    <option value="0">질문</option>
+                    <option value="1">답변</option>
                  </select>
-                 <input type="text" class="form-control" id="search_text" />
+                 <input type="text" class="form-control"  id="search_text" />
                  <button type="button" class="form-control btn-success" id="search_btn">검색</button>
               </div>
            </div>
            <table class="table">
               <tr class="w3-dark-gray table-head">
-                 <th style="vertical-align:middle">공지번호</th>
-                 <th style="vertical-align:middle">공지제목</th>
-                 <th style="vertical-align:middle">공지내용</th>
-                 <th style="vertical-align:middle">  
-                 <select id="sel_type" class="form-control w3-dark-gray w3-border-dark-gray">
-                 	
-                    <option value="all" ${param.sel_type eq all ? 'selected="selected"':''}>전체</option>
+                 <th style="vertical-align:middle">번호</th>
+                 <th style="vertical-align:middle">질문</th>
+                 <th style="vertical-align:middle">답변</th>
+                 <th style="vertical-align:middle">
+				<select class="form-control w3-dark-gray w3-border-dark-gray" id="sel_code">
+                    <option value="0" ${param.sel_code == '0' ? 'selected="selected"':''}>전체</option>
+                    <option value="1" ${param.sel_code == '1' ? 'selected="selected"':''}>예약</option>
+                    <option value="2" ${param.sel_code == '2' ? 'selected="selected"':''}>결재</option>
+                    <option value="3" ${param.sel_code == '3' ? 'selected="selected"':''}>환불</option>
+                    <option value="4" ${param.sel_code == '4' ? 'selected="selected"':''}>리뷰</option>
+                    <option value="5" ${param.sel_code == '5' ? 'selected="selected"':''}>회원</option>
+                    <option value="6" ${param.sel_code == '6' ? 'selected="selected"':''}>서비스</option>
+                 </select>
+				</th>
+                 <th>
+                 <select class="form-control w3-dark-gray w3-border-dark-gray" id="sel_type">
+                    <option value="2" ${param.sel_type == '2' ? 'selected="selected"':''}>전체</option>
                     <option value="1" ${param.sel_type == '1' ? 'selected="selected"':''}>공개</option>
                     <option value="0" ${param.sel_type == '0' ? 'selected="selected"':''}>비공개</option>
                  </select>
                  </th>
-                 <th style="vertical-align:middle">등록시간</th>
-               	 <th>비고</th>	
+                  <th style="vertical-align:middle">날짜</th>
+                  <th style="vertical-align:middle">비고</th>
               </tr>
               <c:forEach var="vo" items="${list}">
                  <tr>
-                    <td>${vo.ntc_no}</td>
-                    <td>${vo.ntc_title}</td>
-                    <td style="width:800px;">${vo.ntc_content}</td>
+                    <td class="count">${vo.fna_no}</td>
+                    <td style="width:200px;">${vo.fna_title}</td>
+                    <td style="width:500px;">${vo.fna_content}</td>
                     <td>
-                    <c:if test="${vo.ntc_delete==1}">공개</c:if>
-                    <c:if test="${vo.ntc_delete==0}">비공개</c:if>
+                    <c:if test="${vo.fna_code==1}">예약</c:if>
+                    <c:if test="${vo.fna_code==2}">결재</c:if>
+                    <c:if test="${vo.fna_code==3}">환불</c:if>
+                    <c:if test="${vo.fna_code==4}">리뷰</c:if>
+                    <c:if test="${vo.fna_code==5}">회원</c:if>
+                    <c:if test="${vo.fna_code==6}">서비스</c:if>
                     </td>
-                    <td>${vo.ntc_date}</td>
+                    <td>
+                    <c:if test="${vo.fna_delete==0}">비공개</c:if>
+                    <c:if test="${vo.fna_delete==1}">공개</c:if>
+                    </td>
+                    <td>${vo.fna_date}</td>
                     <td>
                     <a href="#" class="btn btn-xs btn-warning">공지수정</a>
-                    <c:if test="${vo.ntc_delete==1}">
+                    <c:if test="${vo.fna_delete==1}">
                     <a href="#" class="btn btn-xs btn-danger btn-change">비공개전환</a>
                     </c:if>
-                    <c:if test="${vo.ntc_delete==0}">
+                    <c:if test="${vo.fna_delete==0}">
                     <a href="#" class="btn btn-xs btn-primary btn-change">공개전환</a>
                     </c:if>
                     </td>
@@ -105,29 +122,33 @@
         </div>
     </div>
 
-	<form:form action="admin_notice.do" modelAttribute="vo" method="post">
+	<form:form action="admin_fna.do" modelAttribute="vo" method="post">
 	<div class="modal fade" id="insertmodal">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h4>공지등록</h4>
+					<h4>자주하는질문 등록</h4>
 				</div>
 				<div class="modal-body">
 					<div class="form-inline" style="margin-top:3px; margin-bottom:3px">
-						<label style="width:120px">공지제목</label>
-						<form:input type="text" class="form-control" path="ntc_title" style="width:400px;" placeholder="공지제목" />
+						<label style="width:120px">질문</label>
+						<form:input type="text" class="form-control" style="width:400px;" path="fna_title" />
 					</div>
 					
 					<div class="form-inline" style="margin-top:3px; margin-bottom:3px">
-						<label style="width:120px">공지내용</label>
-						<form:textarea class="form-control" path="ntc_content" style="width: 400px; resize:none;" rows="20" placeholder="공지내용"></form:textarea>
+						<label style="width:120px">답변</label>
+						<form:textarea class="form-control" style="width: 400px; resize:none;" rows="20" path="fna_content"></form:textarea>
 					</div>
 					
 					<div class="form-inline" style="margin-top:3px; margin-bottom:3px">
-						<label style="width:120px">공개여부</label>
-						<form:select class="form-control" path="ntc_delete">
-								<option value="1">공개</option>
-								<option value="0">비공개</option>
+						<label style="width:120px">분류</label>
+						<form:select class="form-control" path="fna_code">
+								<option value="1">예약</option>
+								<option value="2">결재</option>
+								<option value="3">환불</option>
+								<option value="4">리뷰</option>
+								<option value="5">회원</option>
+								<option value="6">서비스</option>
 						</form:select>
 					</div>
 				</div>
@@ -140,16 +161,16 @@
 	</div>
 	</form:form>
 	
-	<form action="notice_delete.do" method="get">
+	<form action="fna_delete.do" method="get">
 			<div class="modal fade" id="deletemodal">
 				<div class="modal-dialog">
 					<div class="modal-content">
 						<div class="modal-header">
-							<h2>공지전환</h2>
+							<h2>자주하는질문 전환</h2>
 						</div>
 						<div class="modal-body">
-							<input type="hidden" name="ntc_no" id="ntc_delete_no" />
-							<input type="hidden" name="ntc_delete" id="delete_no">
+							<input type="hidden" name="fna_no" id="fna_delete_no" />
+							<input type="hidden" name="fna_delete" id="delete_no">
 							<label style="font-size:30px">제목 : </label>
 							<label style="font-size:30px" id="delete_title"></label><br />
 							<label style="" id="delete_name"></label>
@@ -164,28 +185,32 @@
 			</div>
 		</form>
 		
-	<form:form action="notice_update.do" method="post" modelAttribute="vo">
+		<form:form action="fna_update.do" method="post" modelAttribute="vo">
 			<div class="modal fade" id="updatemodal">
 				<div class="modal-dialog">
 					<div class="modal-content">
 						<div class="modal-header">
-							<h2>공지수정</h2>
+							<h2>자주하는질문 수정</h2>
 						</div>
 						<div class="modal-body">
 							<div class="form-inline" style="margin-top:3px; margin-bottom:3px">
-								<form:input type="hidden" class="form-control" path="ntc_no" style="width:400px;" id="update_ntc_no"/>
+								<form:input type="hidden" class="form-control" path="fna_no" style="width:400px;" id="update_fna_no"/>
 								<label style="width:120px">공지제목</label>
-								<form:input type="text" class="form-control" path="ntc_title" style="width:400px;" id="update_ntc_title"/>
+								<form:input type="text" class="form-control" path="fna_title" style="width:400px;" id="update_fna_title"/>
 							</div>
 							<div class="form-inline" style="margin-top:3px; margin-bottom:3px">
 								<label style="width:120px">공지내용</label>
-								<form:textarea class="form-control" path="ntc_content" style="width: 400px; resize:none;" rows="20" id="update_ntc_content"></form:textarea>
+								<form:textarea class="form-control" path="fna_content" style="width: 400px; resize:none;" rows="20" id="update_fna_content"></form:textarea>
 							</div>
 							<div class="form-inline" style="margin-top:3px; margin-bottom:3px">
 								<label style="width:120px">공개여부</label>
-								<form:select class="form-control" id="update_ntc_delete" path="ntc_delete">
-										<option value="1">공개</option>
-										<option value="0">비공개</option>
+								<form:select class="form-control" id="update_fna_code" path="fna_code">
+										<option value="1">예약</option>
+										<option value="2">결재</option>
+										<option value="3">환불</option>
+										<option value="4">리뷰</option>
+										<option value="5">회원</option>
+										<option value="6">서비스</option>
 								</form:select>
 							</div>
 					</div>
@@ -197,76 +222,13 @@
 				</div>
 			</div>
 		</form:form>
-   <script>
-	 /*   function nl2br(str){  
-		    return str.replace(/\n/g, "<br />");  
-		}   */
 
-	
-	$(function() {
-			var br2nl = function(varTest){
-				return varTest.replace(/<br>/g, "\n");
-			};
-    	  
-    		$('.btn-warning').click(function(){
-    			var idx = $(this).index('.btn-warning');
-    			var arr = new Array(); //js 배열 생성
-    	  		<c:forEach var="vo" items="${list}">
-    	  			var arr1 = new Array();
-    	  			arr1.push("${vo.ntc_no}");
-    	  			arr1.push("${vo.ntc_title}");
-    	  			arr1.push("${vo.ntc_content}");
-    	  			arr1.push("${vo.ntc_delete}");
-    	  			arr.push(arr1);
-    	  		</c:forEach>
-    	  		
-    	  		$('#update_ntc_no').val(arr[idx][0]);
-     	  		$('#update_ntc_title').val(arr[idx][1]);
-     	  		$('#update_ntc_content').val(br2nl(arr[idx][2]));
- 				$('#update_ntc_delete').val(arr[idx][3]).prop("selected", true);
-    	  	 
-    	  		$('#updatemodal').modal('show');
-    	  	});
-    	  
-    	  
-    		$('.btn-change').click(function(){
-    			var idx = $(this).index('.btn-change');
-    			var arr = new Array(); 
-    	  		<c:forEach var="vo" items="${list}">
-    	  			var arr1 = new Array()
-    	  			arr1.push("${vo.ntc_no}");
-    	  			arr1.push("${vo.ntc_delete}");
-    	  			arr1.push("${vo.ntc_title}");
-    	  			arr.push(arr1);
-    	  		</c:forEach>
-    	  		$('#ntc_delete_no').val(arr[idx][0]);
-    	  		$('#delete_no').val(arr[idx][1]);
-    	  		$('#delete_title').text(arr[idx][2]);
-    	  		if(arr[idx][1] == 0){
-    	  			$('#delete_name').text('공개');
-    	  			$('#delete_name').attr('style', 'color:blue; font-size:30px');
-    	  		}
-    	  		else if(arr[idx][1] == 1){
-					$('#delete_name').text('비공개');
-					$('#delete_name').attr('style', 'color:red; font-size:30px');
-				}
-    	  		
-    			$('#deletemodal').modal('show');
-    	  	});
-    	  
-    	 	 $('#sel_type').change(function(){
-	  	  		var sty = $(this).val();
-	  	  		window.location.href="admin_notice.do?type=${param.type}&text=${param.text}&sel_type="+sty;
-  	  		});
-    	  
-    		$('#btn_insert').click(function(){
-				$('#insertmodal').modal('show');	
-			});	
-    	  
-    	  	var func = function(){
+   <script>
+      $(function() {
+    		var func = function(){
 				var ty = $('#search_type').val();
 				var tx = encodeURIComponent($('#search_text').val());
-				window.location.href="admin_notice.do?type="+ty+"&text="+tx+"&sel_type=${param.sel_type}";
+				window.location.href="admin_fna.do?type="+ty+"&text="+tx;
 			};
 			
 			$('#search_btn').click(function(){
@@ -278,11 +240,71 @@
 					func();
 				}
 			});
+    	  
+    	  
+    		$('.btn-warning').click(function(){
+    			var idx = $(this).index('.btn-warning');
+    			var arr = new Array(); 
+    	  		<c:forEach var="vo" items="${list}">
+    	  			var arr1 = new Array();
+    	  			arr1.push("${vo.fna_no}");
+    	  			arr1.push("${vo.fna_title}");
+    	  			arr1.push("${vo.fna_content}");
+    	  			arr1.push("${vo.fna_code}");
+    	  			arr.push(arr1);
+    	  		</c:forEach>
+    	  		
+    	  		$('#update_fna_no').val(arr[idx][0]);
+     	  		$('#update_fna_title').val(arr[idx][1]);
+     	  		$('#update_fna_content').val(arr[idx][2]);
+ 				$('#update_fna_code').val(arr[idx][3]).prop("selected", true);
+    	  	 
+    	  		$('#updatemodal').modal('show');
+    	  	});
+    	  
+    	  $('.btn-change').click(function(){
+  			var idx = $(this).index('.btn-change');
+  			var arr = new Array(); 
+  	  		<c:forEach var="vo" items="${list}">
+  	  			var arr1 = new Array()
+  	  			arr1.push("${vo.fna_no}");
+  	  			arr1.push("${vo.fna_delete}");
+  	  			arr1.push("${vo.fna_title}");
+  	  			arr.push(arr1);
+  	  		</c:forEach>
+  	  		$('#fna_delete_no').val(arr[idx][0]);
+  	  		$('#delete_no').val(arr[idx][1]);
+  	  		$('#delete_title').text(arr[idx][2]);
+  	  		if(arr[idx][1] == 0){
+  	  			$('#delete_name').text('공개');
+  	  			$('#delete_name').attr('style', 'color:blue; font-size:30px');
+  	  		}
+  	  		else if(arr[idx][1] == 1){
+					$('#delete_name').text('비공개');
+					$('#delete_name').attr('style', 'color:red; font-size:30px');
+				}
+  	  		
+  			$('#deletemodal').modal('show');
+  	  	});
+    	  
+    	  	$('#sel_code').change(function(){
+	  	  		var sty = $(this).val();
+	  	  		window.location.href="admin_fna.do?sel_code="+sty;
+	  		});
     	  	
+    	  	 $('#sel_type').change(function(){
+ 	  	  		var sty = $(this).val();
+ 	  	  		window.location.href="admin_fna.do?sel_code=${param.sel_code}&sel_type="+sty;
+   	  		});
+    	  
+		   	$('#btn_insert').click(function(){
+				$('#insertmodal').modal('show');	
+			});	
+         
             $('.pagination').twbsPagination({
-               totalPages:'${totPage}',
-               visiblePages:10,
-               href:'?type=${param.type}&text='+encodeURIComponent('${param.text}')+'&sel_type=${param.sel_type}&page={{number}}'
+            	totalPages:'5',
+                visiblePages:10,
+                href:'page={{number}}'
             });
             
             $('.navbar-toggle').click(function () {

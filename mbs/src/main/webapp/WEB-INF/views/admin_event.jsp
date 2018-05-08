@@ -55,6 +55,7 @@
                  <button type="button" class="form-control btn-success" id="search_btn">검색</button>
               </div>
            </div>
+          
            <table class="table">
               <tr class="w3-dark-gray table-head">
                  <th style="vertical-align:middle">번호</th>
@@ -283,9 +284,6 @@
 			} */
 		});
 		
-		
-		
-		
 		$('#date_sel').daterangepicker({
 			locale: {
 		            format: 'YYYY-MM-DD',
@@ -296,19 +294,21 @@
 		    }, 
 			opens: 'left'
 		}, 
+		
 		function(start, end, label) {
 			var start = start.format('YYYY-MM-DD');
 			var end = end.format('YYYY-MM-DD');
-			window.location.href="admin_event.do?sel_type="+start+","+end;
+			window.location.href="admin_event.do?type=${param.type}&text=${param.text}&sel_type=${param.sel_type}&begin="+start+"&end="+end;
+			
 		}); 
 		
 		var func = function(){
 			var ty = $('#search_type').val();
 			var tx = encodeURIComponent($('#search_text').val());
-			window.location.href="admin_event.do?type="+ty+"&text="+tx+"&sel_type=${param.sel_type}";
+			window.location.href="admin_event.do?type="+ty+"&text="+tx+"&sel_type=${param.sel_type}&begin=${param.begin}&end=${param.end}";
 		};
 		
-		$('#search_btn').click(function(){
+	 	$('#search_btn').click(function(){
 				func();
 		});
 
@@ -316,11 +316,11 @@
 			if(event.which == 13){
 				func();
 			}
-		});
+		}); 
 		
 		$('#sel_type').change(function(){
 	  	  		var sty = $(this).val();
-	  	  		window.location.href="admin_event.do?sel_type="+sty;
+	  	  		window.location.href="admin_event.do?type=${param.type}&text=${param.text}&sel_type="+sty+"&begin=${param.begin}&end=${param.end}";
 	  	});
 			
 		$('#evt_img').click(function(){
@@ -463,9 +463,9 @@
 	  		</c:forEach> */
 
             $('.pagination').twbsPagination({
-               totalPages:15,
+               totalPages:'${totPage}',
                visiblePages:10,
-               href:'#'
+               href:'?type=${param.type}&text='+encodeURIComponent('${param.text}')+'&sel_type=${param.sel_type}&begin=${param.begin}&end=${param.end}&page={{number}}'
             });
             
             $('.navbar-toggle').click(function () {

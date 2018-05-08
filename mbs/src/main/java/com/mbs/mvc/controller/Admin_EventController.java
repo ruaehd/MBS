@@ -35,8 +35,6 @@ public class Admin_EventController {
 			System.out.println(e.getMessage());
 			return "redirect:qna.do";
 		}
-			
-		
 	}
 	
 	@RequestMapping(value="/event_delete.do", method= RequestMethod.GET)
@@ -54,11 +52,22 @@ public class Admin_EventController {
 	}
 	
 	@RequestMapping(value="/admin_event.do", method= RequestMethod.GET)
-	public String adminEvent(Model model, @RequestParam(value = "sel_type", defaultValue="all") String sel_type) {
-
+	public String adminEvent(Model model, @RequestParam(value = "sel_type", defaultValue="all") String sel_type, 
+			@RequestParam(value = "begin", defaultValue="null") String begin, @RequestParam(value = "end", defaultValue="") String end, 
+			@RequestParam(value = "type", defaultValue="all") String type, @RequestParam(value = "text", defaultValue="") String text, 
+			@RequestParam(value = "page", defaultValue="1") int page1) {
 		EventVO vo = new EventVO();
+		int page = (page1-1)*10;
+		vo.setEvt_page(page);
+		vo.setEvt_sc_text(text);
+		vo.setEvt_sc_type(type);
+		vo.setEvt_begintime(begin);
+		vo.setEvt_endtime(end);
 		vo.setSel_type(sel_type);
+		System.out.println(vo.toString());
 		List<EventVO> list = aeDAO.Admin_EventImgList(vo);
+		int totPage = aeDAO.EventPage(vo);
+		model.addAttribute("totPage", (totPage-1)/10+1);
 		model.addAttribute("vo", vo);
 		model.addAttribute("list", list);
 		return "admin_event";

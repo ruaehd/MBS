@@ -65,7 +65,7 @@
                             <li><a href="admin_notice.do">공지</a></li>
                             <li><a href="admin_event.do">이벤트</a></li>
                             <li><a href="admin.do?code=4&idx=2">1:1문의</a></li>
-                             <li><a href="admin.do?code=4&idx=3">자주하는질문</a></li>
+                             <li><a href="admin_fna.do">자주하는질문</a></li>
                         </ul>
                     </div>
                 </div>
