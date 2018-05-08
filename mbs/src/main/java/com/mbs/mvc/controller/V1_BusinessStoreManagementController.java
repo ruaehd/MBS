@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -149,23 +150,71 @@ public class V1_BusinessStoreManagementController {
 	}
 	
 	
+	@RequestMapping(value="write_reply.do", method = RequestMethod.GET)
+	public String writeReply(Model model, 
+			@RequestParam("rsv_cmt_no") int rsv_cmt_no,
+			@RequestParam("chk") int chk) {
+		
+		if(chk == 0) {
+			V1_Comment vo = bsmDAO.selectBizCmtOne(rsv_cmt_no);
+			
+			model.addAttribute("rvo", new V1_Reply());
+			model.addAttribute("vo", vo);
+			
+			return "v1_biz_reply";
+		}
+		
+		else{
+			V1_Comment vo = bsmDAO.selectBizRepOne(rsv_cmt_no);
+
+			V1_Reply rvo = new V1_Reply();
+				
+			rvo.setRep_content(vo.getRep_content());
+			model.addAttribute("rvo", rvo);
+			
+			model.addAttribute("vo", vo);
+			
+			return "v1_biz_edit_reply";
+		}
+	}
+	
+			
 	@RequestMapping(value="write_reply.do", method = RequestMethod.POST)
 	public String writeReply(
 			HttpServletRequest request, Model model,
-			@RequestParam("text") String rep_content,
-			@RequestParam("cmt_no") int rsv_cmt_no) {
-		
-		V1_Reply vo = new V1_Reply();
-		vo.setRep_content(rep_content);
-		vo.setRsv_cmt_no(rsv_cmt_no);
+			@ModelAttribute("rvo") V1_Reply vo){
 		
 		bsmDAO.insertReply(vo);
 		
 		model.addAttribute("message", "리뷰 답글 작성이 완료되었습니다.");
-		model.addAttribute("url", request.getHeader("REFERER"));
 		model.addAttribute("title", "답글 작성 완료");
 		
-		return "v1_alert";
+		return "v1_alert_pop";
+	}
+	
+	@RequestMapping(value="edit_reply.do", method = RequestMethod.POST)
+	public String editReply(
+			HttpServletRequest request, Model model,
+			@ModelAttribute("rvo") V1_Reply vo){
+		
+		bsmDAO.updateReply(vo);
+		
+		model.addAttribute("message", "리뷰 답글 수정이 완료되었습니다.");
+		model.addAttribute("title", "답글 수정 완료");
+		
+		return "v1_alert_pop";
+	}
+	
+	@RequestMapping(value="delete_reply.do", method = RequestMethod.GET)
+	public String deleteReply(Model model, 
+			@RequestParam("rep_no") int rep_no) {
+		
+		bsmDAO.deleteReply(rep_no);
+		
+		model.addAttribute("message", "리뷰 답글 수정이 완료되었습니다.");
+		model.addAttribute("title", "답글 수정 완료");
+		
+		return "v1_alert_pop";
 	}
 	
 }

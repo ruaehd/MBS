@@ -7,6 +7,8 @@ public class V1_Reply {
 	private String rep_date = null;
 	private int rep_delete = 0;
 	private int rsv_cmt_no = 0;
+	
+	
 	public int getRep_no() {
 		return rep_no;
 	}

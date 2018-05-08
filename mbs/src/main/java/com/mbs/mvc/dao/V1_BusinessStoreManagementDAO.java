@@ -53,4 +53,22 @@ public class V1_BusinessStoreManagementDAO {
 	public int insertReply(V1_Reply vo) {
 		return sqlsession.insert("V1_BizStrMgt.insertReply", vo);
 	}
+	
+	public V1_Comment selectBizCmtOne(int rsv_cmt_no) {
+		return sqlsession.selectOne("V1_BizStrMgt.selectBizCmtOne", rsv_cmt_no);
+	}
+	
+	public V1_Comment selectBizRepOne(int rsv_cmt_no) {
+		return sqlsession.selectOne("V1_BizStrMgt.selectBizRepOne", rsv_cmt_no);
+	}
+	
+	public int updateReply(V1_Reply vo) {
+		return sqlsession.update("V1_BizStrMgt.updateReply", vo);
+	}
+	
+	public int deleteReply(int rep_no) {
+		return sqlsession.update("V1_BizStrMgt.deleteReply", rep_no);
+	}
+	
+	
 }
