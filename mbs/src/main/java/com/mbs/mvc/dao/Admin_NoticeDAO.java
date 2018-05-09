@@ -17,21 +17,21 @@ public class Admin_NoticeDAO {
 	private SqlSession sqlsession = null;
 	
 	public int NoticeUpdate(NoticeVO vo) {
-		return sqlsession.update("Admin.noticeUpdate", vo);
+		return sqlsession.update("Admin_Notice.noticeUpdate", vo);
 	}
 	
 	public int NoticeDelete(NoticeVO vo) {
-		return sqlsession.update("Admin.noticeDelete", vo);
+		return sqlsession.update("Admin_Notice.noticeDelete", vo);
 	}
 	
 	public int NoticeInsert(NoticeVO vo) {
-		return sqlsession.insert("Admin.noticeInsert", vo);
+		return sqlsession.insert("Admin_Notice.noticeInsert", vo);
 	}
 	
 	public List<NoticeVO> NoticeList(NoticeVO vo){
-		return sqlsession.selectList("Admin.noticeList", vo);
+		return sqlsession.selectList("Admin_Notice.noticeList", vo);
 	}
 	public int NoticePage(NoticeVO vo) {
-		return sqlsession.selectOne("Admin.noticePage", vo);
+		return sqlsession.selectOne("Admin_Notice.noticePage", vo);
 	}
 }

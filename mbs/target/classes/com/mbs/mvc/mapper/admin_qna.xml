@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Admin_Qna">
+	<select id="Amind_QnaList" resultType="com.mbs.mvc.vo.QNAVO">
+		SELECT qst_no, qst_title, qst_content, qst_date, mb_id, qst_open, qst_code FROM `question`
+	</select>
+	<insert id="Admin_Asnwer" parameterType="com.mbs.mvc.vo.Qst_AnswerVO">
+		INSERT INTO `qst_answer`(qst_as_content, qst_as_date, qst_no) VALUES(#{qst_as_content},NOW(),#{qst_no}); 
+		UPDATE `question` SET qst_open=1 WHERE qst_no=#{qst_no}; 
+	</insert>
+	
+	<select id="Qst_Answer" parameterType="int" resultType="com.mbs.mvc.vo.Qst_AnswerVO">
+		SELECT qst_as_content, qst_as_date FROM `qst_answer` WHERE qst_no=#{qst_no}
+	</select>
+	
+	<update id="Qst_AnswerUpdate" parameterType="com.mbs.mvc.vo.Qst_AnswerVO">
+		UPDATE `qst_answer` SET qst_as_content=#{qst_as_content} WHERE qst_no=#{qst_no}
+	</update>
+</mapper>

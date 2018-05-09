@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.mbs.mvc.vo.FNAVO;
-import com.mbs.mvc.vo.NoticeVO;
 
 @Service
 public class Admin_FNADAO {
@@ -34,6 +33,6 @@ public class Admin_FNADAO {
 	}
 	
 	public int FnaPage(FNAVO vo) {
-		return sqlsession.selectOne("Admin_Fna.Fna_Page", vo);
+		return sqlsession.selectOne("Admin_Fna.FnaPage", vo);
 	}
 }

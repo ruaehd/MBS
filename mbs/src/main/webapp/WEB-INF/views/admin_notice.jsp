@@ -256,7 +256,7 @@
     	  
     	 	 $('#sel_type').change(function(){
 	  	  		var sty = $(this).val();
-	  	  		window.location.href="admin_notice.do?type=${param.type}&text=${param.text}&sel_type="+sty;
+	  	  		window.location.href="admin_notice.do?type=${param.type}&text=${param.text}&sel_type="+sty+"&page=1";
   	  		});
     	  
     		$('#btn_insert').click(function(){
@@ -266,7 +266,7 @@
     	  	var func = function(){
 				var ty = $('#search_type').val();
 				var tx = encodeURIComponent($('#search_text').val());
-				window.location.href="admin_notice.do?type="+ty+"&text="+tx+"&sel_type=${param.sel_type}";
+				window.location.href="admin_notice.do?type="+ty+"&text="+tx+"&sel_type=${param.sel_type}&page=1";
 			};
 			
 			$('#search_btn').click(function(){

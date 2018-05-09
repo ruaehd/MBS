@@ -298,14 +298,14 @@
 		function(start, end, label) {
 			var start = start.format('YYYY-MM-DD');
 			var end = end.format('YYYY-MM-DD');
-			window.location.href="admin_event.do?type=${param.type}&text=${param.text}&sel_type=${param.sel_type}&begin="+start+"&end="+end;
+			window.location.href="admin_event.do?type=${param.type}&text=${param.text}&sel_type=${param.sel_type}&begin="+start+"&end="+end+"&page=1";
 			
 		}); 
 		
 		var func = function(){
 			var ty = $('#search_type').val();
 			var tx = encodeURIComponent($('#search_text').val());
-			window.location.href="admin_event.do?type="+ty+"&text="+tx+"&sel_type=${param.sel_type}&begin=${param.begin}&end=${param.end}";
+			window.location.href="admin_event.do?type="+ty+"&text="+tx+"&sel_type=${param.sel_type}&begin=${param.begin}&end=${param.end}&page=1";
 		};
 		
 	 	$('#search_btn').click(function(){
@@ -320,7 +320,7 @@
 		
 		$('#sel_type').change(function(){
 	  	  		var sty = $(this).val();
-	  	  		window.location.href="admin_event.do?type=${param.type}&text=${param.text}&sel_type="+sty+"&begin=${param.begin}&end=${param.end}";
+	  	  		window.location.href="admin_event.do?type=${param.type}&text=${param.text}&sel_type="+sty+"&begin=${param.begin}&end=${param.end}&page=1";
 	  	});
 			
 		$('#evt_img').click(function(){

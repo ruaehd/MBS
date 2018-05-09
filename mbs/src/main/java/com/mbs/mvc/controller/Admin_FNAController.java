@@ -53,8 +53,8 @@ public class Admin_FNAController {
 		List<FNAVO> list = afDAO.FnaList(vo);
 		model.addAttribute("vo", vo);
 		model.addAttribute("list", list);
-		//int totPage = afDAO.FnaPage(vo);
-		//model.addAttribute("totPage", (totPage-1)/10+1);
+		int totPage = afDAO.FnaPage(vo);
+		model.addAttribute("totPage", (totPage-1)/10+1);
 		return "admin_fna";
 	}
 	

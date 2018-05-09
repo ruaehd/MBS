@@ -9,7 +9,14 @@ public class QNAVO {
 	private String mb_id = null;
 	private byte[] qst_img = null;
 	private String qst_code = null;
+	private int qst_open = 0;
 	
+	public int getQst_open() {
+		return qst_open;
+	}
+	public void setQst_open(int qst_open) {
+		this.qst_open = qst_open;
+	}
 	public String getQst_code() {
 		return qst_code;
 	}

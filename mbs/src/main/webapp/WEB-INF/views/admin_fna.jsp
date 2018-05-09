@@ -53,8 +53,8 @@
            <div class=" col-md-offset-6 col-md-4 form-inline">
                  <select class="form-control" id="search_type">
                     <option value="all">질문+답변</option>
-                    <option value="0">질문</option>
-                    <option value="1">답변</option>
+                    <option value="fna_title">질문</option>
+                    <option value="fna_content">답변</option>
                  </select>
                  <input type="text" class="form-control"  id="search_text" />
                  <button type="button" class="form-control btn-success" id="search_btn">검색</button>
@@ -228,7 +228,7 @@
     		var func = function(){
 				var ty = $('#search_type').val();
 				var tx = encodeURIComponent($('#search_text').val());
-				window.location.href="admin_fna.do?type="+ty+"&text="+tx;
+				window.location.href="admin_fna.do?type="+ty+"&text="+tx+"&sel_code=${param.sel_code}&sel_type=${param.sel_type}&page=1";
 			};
 			
 			$('#search_btn').click(function(){
@@ -289,12 +289,12 @@
     	  
     	  	$('#sel_code').change(function(){
 	  	  		var sty = $(this).val();
-	  	  		window.location.href="admin_fna.do?sel_code="+sty;
+	  	  		window.location.href="admin_fna.do?type=${param.type}&text=${param.text}&sel_code="+sty+"&sel_type=${param.sel_type}&page=1";
 	  		});
     	  	
     	  	 $('#sel_type').change(function(){
  	  	  		var sty = $(this).val();
- 	  	  		window.location.href="admin_fna.do?sel_code=${param.sel_code}&sel_type="+sty;
+ 	  	  		window.location.href="admin_fna.do?type=${param.type}&text=${param.text}&sel_code=${param.sel_code}&sel_type="+sty+"&page=1";
    	  		});
     	  
 		   	$('#btn_insert').click(function(){
@@ -302,9 +302,9 @@
 			});	
          
             $('.pagination').twbsPagination({
-            	totalPages:'5',
+            	totalPages:'${totPage}',
                 visiblePages:10,
-                href:'page={{number}}'
+                href:'?type=${param.type}&text=${param.text}&sel_code=${param.sel_code}&sel_type=${param.sel_type}&page={{number}}'
             });
             
             $('.navbar-toggle').click(function () {
