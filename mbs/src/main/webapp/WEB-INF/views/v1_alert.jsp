@@ -8,6 +8,8 @@
 <script>
 	$(function(){
 		swal({
+			closeOnClickOutside: false,
+			closeOnEsc: false,
 			title: "${title}",
 			text: "${message}",
 			icon: "success",

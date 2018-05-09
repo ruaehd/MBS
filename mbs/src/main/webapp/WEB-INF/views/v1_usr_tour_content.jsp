@@ -107,7 +107,7 @@
 						</div>
 						<c:forEach var="i" begin="1" end="${cnt}">
 							<div class="item">
-								<img src="get_blob_img.do?str_number=${vo.str_number}&idx=${i}" style="width: 100%; height: 500px"/>
+								<img src="get_blob_img.do?str_number=${svo.str_number}&idx=${i}" style="width: 100%; height: 500px"/>
 							</div>
 						</c:forEach>
 					</div>
@@ -167,10 +167,10 @@
 							</h3>
 						</div>
 						<div class="col-md-4" align="right">
-							<c:if test="${sessionScope._gr > 1}">
+							<c:if test="${sessionScope._gr > 2}">
 								<input type="button" class="btn btn-success disabled" value="후기 작성" onClick="writeComment()" />
 							</c:if>
-							<c:if test="${sessionScope._gr == 1}">
+							<c:if test="${sessionScope._gr < 3}">
 								<c:if test="${chk == 0}">
 									<input type="button" class="btn btn-success" value="후기 작성" onClick="writeComment()" />
 								</c:if>	

@@ -192,7 +192,7 @@
 			
 			
 			$('#pagination').twbsPagination({
-				totalPages: 5,
+				totalPages: ${tot},
 				visiblePage:10,
 				href:'?str_cat=${param.str_cat}&page={{number}}&text=${param.text}'
 			});

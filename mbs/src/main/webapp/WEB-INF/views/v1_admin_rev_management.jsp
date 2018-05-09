@@ -37,15 +37,15 @@
 			<hr />
 			
 			<section id="team" class="pb-5">
-			<div class="row">
-				<div class="col-md-6" style="margin-bottom:10px; margin-left:20px" >
+			<div class="row" style="margin-bottom:10px">
+				<div class="col-md-4" style="margin-bottom:10px; padding-left:20px" >
 					<c:if test="${fn:length(param.text) ne 0}">
 						<a href="admin_rev_management.do" class="btn btn-success">전체보기</a>
 						검색어 : <strong>${param.text}</strong>
 					</c:if>
 				</div>
-				<div class="col-md-6">
-					<div align="right">
+				<div class="col-md-8" align="right">
+					<div >
 						<div class="btn-group" role="group" aria-label="..."  style="margin-bottom:10px">
 							<c:forEach var="tmp" items="${map}" varStatus="i">
 								<c:if test="${param.str_cat == i.index}">

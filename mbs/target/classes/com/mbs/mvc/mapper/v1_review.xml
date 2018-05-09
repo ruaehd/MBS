@@ -110,5 +110,7 @@
 		UPDATE `rsv_comment` SET rsv_cmt_delete=0 WHERE rsv_cmt_no=#{rsv_cmt_no}
 	</update>
 	
-	
+	<select id="selectReplyList" parameterType="int" resultType="V1_Reply">
+		 SELECT * FROM `reply` WHERE rsv_cmt_no=#{rsv_cmt_no} AND rep_delete=1
+	</select>
 </mapper>

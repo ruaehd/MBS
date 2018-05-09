@@ -1,6 +1,11 @@
 <%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%
+	pageContext.setAttribute("br", "<br/>");
+	pageContext.setAttribute("cn", "\n");
+%>
 <%@ page session="true"%>
 <!DOCTYPE html>
 <html>
@@ -65,6 +70,11 @@
 		.star_rating p.on {
 			color:#EDD200;
 		}
+		code{
+			color:#353535;
+			background-color:#EAEAEA; 
+			margin-right:5px
+		}
 	</style>
 </head>
 <body>
@@ -86,11 +96,13 @@
 						<div class="item active">
 							<img src="get_blob_img.do?str_number=${vo.str_number}&idx=0" style="width: 100%; height: 500px"/>
 						</div>
-						<c:forEach var="i" begin="1" end="${cnt}">
-							<div class="item">
-								<img src="get_blob_img.do?str_number=${vo.str_number}&idx=${i}" style="width: 100%; height: 500px"/>
-							</div>
-						</c:forEach>
+						<c:if test="${cnt > 1}">
+							<c:forEach var="i" begin="1" end="${cnt}">
+								<div class="item">
+									<img src="get_blob_img.do?str_number=${vo.str_number}&idx=${i}" style="width: 100%; height: 500px"/>
+								</div>
+							</c:forEach>
+						</c:if>
 						
 					</div>
 					
@@ -110,10 +122,10 @@
 						<h1>${vo.str_name}</h1>
 						<hr/>
 						<div>
-							<c:if test="${sessionScope._gr > 1 || sessionScope._id == vo.mb_id}">
+							<c:if test="${sessionScope._gr > 2 || sessionScope._id == vo.mb_id}">
 								<a href="usr_content_pay.do?str_number=${vo.str_number}" class="btn btn-info disabled">예약하기</a>
 							</c:if>
-							<c:if test="${sessionScope._gr == 1 && sessionScope._id != vo.mb_id}">
+							<c:if test="${sessionScope._gr < 3 && sessionScope._id != vo.mb_id}">
 								<a href="usr_content_pay.do?str_number=${vo.str_number}" class="btn btn-info">예약하기</a>
 							</c:if>
 							<a href="#commnet" class="btn btn-primary">후기보기</a>
@@ -152,7 +164,7 @@
 					</div>
 					<div class="form-inline">
 						<label>소개</label>
-						소개글
+						${vo.str_document}
 					</div>
 				</div>
 		
@@ -241,47 +253,89 @@
 		  }).on('circle-animation-progress', function(event, progress) {
 		    $(this).find('strong').html(Math.round(100 * progress) + '<i>%</i>');
 		  });
-	
-	
-	
 		
 		$('#pagination').twbsPagination({
 			totalPages:${totPage},
 			visiblePage:10,
 			onPageClick: function (event, page) {
-				$.get('ajax_reviewlist.do?page='+page+'&str_number='+${param.str_number}, function(data){
-					$('#review').empty();
-					
-					var len = data.length;
-					for(var i=0; i<len; i++){
+				
+				$.ajax({
+					type: 'GET',
+					url: 'ajax_reviewlist.do',
+					data: {page:page, str_number:"${param.str_number}"},
+					cache:false,
+					async: false,
+					success:function(data){
+				
+						$('#review').empty();
 						
-						var str = '';
-						var str1 = '';
-						
-						for(var j=0; j<data[i].rsv_cmt_point; j++){
-							str = str+'<p class="on">★</p>';
-						}
-						for(var k=0; k<5-data[i].rsv_cmt_point; k++){
-							str1 = str1+'<p>★</p>';
-						}
-						
-						$('#review').append(
-							'<div class="review" style="margin-bottom:10px; border:1px solid #ccc">'
-								+ '<div style="display:inline-block; margin-right:10px" class="star_rating">'
-									+ str
-									+ str1
-								+ '</div>'
-								+ '<code style="color:#353535; background-color:#EAEAEA; margin-right:5px">'+data[i].rsv_cmt_taste+'</code>'
-								+ '<code style="color:#353535; background-color:#EAEAEA; margin-right:5px">'+data[i].rsv_cmt_service+'</code>'
-								+ '<code style="color:#353535; background-color:#EAEAEA; margin-right:5px">'+data[i].rsv_cmt_price+'</code>'
+						var len = data.length;
+						for(var i=0; i<len; i++){
+							
+							$.ajax({
+								type: 'GET',
+								url: 'ajax_replylist.do',
+								data: {rsv_cmt_no:data[i].rsv_cmt_no},
+								cache:false,
+								async: false,
+								success:function(data1){
+									
+									var br2nl = function(varTest){
+							            return varTest.replace("<br/>", "\n");
+							         };
+									
+									var str = '';
+									var str1 = '';
+									var rep = '';
+									if(data1 != 0){
+										rep ='<div class="review" style="margin-bottom:20px; border:1px solid #ccc; padding:10px">'
+												+ '<div>'
+													+ '<span class="glyphicon glyphicon-bullhorn" aria-hidden="true" style="margin:0 10px 0 20px"></span>'
+													+ '<label>사장님 답글</label>'
+												+ '</div>'
+												+ '<div style="margin-left:30px">'
+													+ data1.rep_content
+												+ '</div>'
+											+ '</div>'
+									}
+									
+									for(var j=0; j<data[i].rsv_cmt_point; j++){
+										str = str+'<p class="on">★</p>';
+									}
+									for(var k=0; k<5-data[i].rsv_cmt_point; k++){
+										str1 = str1+'<p>★</p>';
+									}
 								
-								+ '<label>작성자</label>'+data[i].rsv_cmt_writer+''
-								+ '<label>사용일</label>'+data[i].rsv_day+''
-							+ '<div>'+data[i].rsv_cmt_content+'</div>'
-						+ '</div>'
-						);
+									$('#review').append(
+										'<div class="review" style="margin-bottom:10px; border:1px solid #ccc; padding:10px">'
+											+ '<div class="row">'
+												+ '<div class="col-md-8">'
+													+ '<div style="display:inline-block; margin-right:50px; padding-left:10px" class="star_rating">'
+														+ str
+														+ str1
+													+ '</div>'
+													+ '<code>'+data[i].rsv_cmt_taste+'</code>'
+													+ '<code>'+data[i].rsv_cmt_service+'</code>'
+													+ '<code>'+data[i].rsv_cmt_price+'</code>'
+												+ '</div>'
+												+ '<div class="col-md-4" align="right" style="padding-right:50px">'
+													+ '<label>작성자</label> - '+data[i].rsv_cmt_writer+' / '
+													+ '<label>사용일</label> - '+data[i].rsv_day+''
+												+ '</div>'
+											+ '</div>'
+											+ '<div style="margin-left:20px">'
+												+ br2nl(data[i].rsv_cmt_content)
+											+ '</div>'
+										+ '</div>'
+										+ rep
+										+ '<hr />'
+									).trigger("create");
+							
+								}
+							});
+						}
 					}
-				}, 'json');
+				});
 			}
 		});
 		

@@ -125,5 +125,18 @@
 		UPDATE `reply` SET rep_delete=0 WHERE rep_no=#{rep_no}
 	</update>
 	
+	<select id="selectBizCmtCount" parameterType="V1_Comment" resultType="int">
+		SELECT COUNT(*) AS cnt FROM `store` s
+		INNER JOIN
+			(SELECT c.rsv_cmt_content, c.rsv_cmt_writer, c.rsv_cmt_delete, c.rsv_no, r.str_number FROM `rsv_comment` c
+            INNER JOIN `reservation` r
+            ON c.rsv_no = r.rsv_no)cr
+		ON s.str_number = cr.str_number
+        WHERE s.str_number=#{str_number} AND cr.rsv_cmt_delete=1 AND ${type} LIKE CONCAT('%', #{text}, '%')
+	</select>
+	
+	<select id="selectMyStoreCount" parameterType="V1_Store" resultType="int">
+		SELECT COUNT(*) AS cnt FROM `store` WHERE mb_id=#{mb_id} AND str_name LIKE CONCAT('%', #{text}, '%')
+	</select>
 	
 </mapper>

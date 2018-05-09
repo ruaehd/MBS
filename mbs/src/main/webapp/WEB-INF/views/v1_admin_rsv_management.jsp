@@ -64,13 +64,14 @@
 				 	<c:forEach var="tmp" items="${list}" varStatus="i">
 						<tr>
 					 		<td>
-						 		<a href="" class="rsv_info">${tmp.rsv_no}</a>
+						 		<a href="#" class="rsv_info">${tmp.rsv_no}</a>
 					 		</td>
 					 		<td>${tmp.rsv_code_chk}</td>
 					 		<td>
 					 			<a href="usr_content.do?str_number=${tmp.str_number}">${tmp.str_name}</a>
 					 			<input type="hidden" value="${tmp.str_delete}" id="chk_${i.index}"/>
 					 			<input type="hidden" value="${tmp.str_number}" id="no_${i.index}"/>
+					 			<input type="hidden" value="${tmp.rsv_no}" id="rsv_no_${i.index}"/>
 					 		</td>
 					 		<td>
 					 			<a href="#">${tmp.rsv_sub_id}</a>
@@ -123,7 +124,7 @@
 			$('.rsv_info').click(function(){
 				//class로 지정란 버튼의 위치 얻기(0부터 시작함)
 				var idx = $(this).index('.rsv_info');
-				var no = $('#no_'+idx).val();
+				var no = $('#rsv_no_'+idx).val();
 				console.log(no);
 				window.open('biz_rsv_info.do?rsv_no='+no,'','width=800, height=700, left=650, top=100');
 			});

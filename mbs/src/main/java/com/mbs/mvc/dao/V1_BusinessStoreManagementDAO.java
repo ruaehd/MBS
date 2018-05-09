@@ -70,5 +70,13 @@ public class V1_BusinessStoreManagementDAO {
 		return sqlsession.update("V1_BizStrMgt.deleteReply", rep_no);
 	}
 	
+	public int selectBizCmtCount(V1_Comment vo) {
+		return sqlsession.selectOne("V1_BizStrMgt.selectBizCmtCount", vo);
+		
+	}
+	
+	public int selectMyStoreCount(V1_Store vo) {
+		return sqlsession.selectOne("V1_BizStrMgt.selectMyStoreCount", vo);
+	}
 	
 }

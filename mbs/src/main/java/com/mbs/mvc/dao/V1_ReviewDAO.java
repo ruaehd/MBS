@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.mbs.mvc.vo.V1_Comment;
+import com.mbs.mvc.vo.V1_Reply;
 import com.mbs.mvc.vo.V1_Reservation;
 import com.mbs.mvc.vo.V1_Store;
 import com.mbs.mvc.vo.V1_TourComment;
@@ -91,7 +92,9 @@ public class V1_ReviewDAO {
 		return sqlsession.update("V1_Review.deleteReview", rsv_cmt_no);
 	}
 	
-	
+	public V1_Reply selectReplyList(int rsv_cmt_no) {
+		return sqlsession.selectOne("V1_Review.selectReplyList", rsv_cmt_no);
+	}
 	public int deleteTourReview(int tour_cmt_no) {
 		return sqlsession.update("V1_Review.deleteTourReview", tour_cmt_no);
 	}

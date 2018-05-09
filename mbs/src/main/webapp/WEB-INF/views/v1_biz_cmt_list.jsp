@@ -31,7 +31,7 @@
 			<h2>예약목록</h2>
 			<hr />
 			<div class="row">
-				<div class="col-md-6">
+				<div class="col-md-6" style="margin-bottom:10px">
 					<c:if test="${fn:length(param.text) ne 0}">
 						<a href="biz_cmt_list.do?str_number=${param.str_number}" class="btn btn-success">전체보기</a>
 						검색어 : <strong>${param.text}</strong>
@@ -146,7 +146,7 @@
 
 			
 			$('#pagination').twbsPagination({
-				totalPages: 5,
+				totalPages: ${tot},
 				visiblePage:10,
 				href:'?str_number=${param.str_number}&page={{number}}&type=${param.type}&text='+encodeURIComponent('${param.text}')
 			});

@@ -43,11 +43,13 @@
 							<div class="item active">
 								<img src="get_blob_img.do?str_number=${vo.str_number}&idx=0" style="width: 100%; height: 350px"/>
 							</div>
-							<c:forEach var="i" begin="1" end="${cnt}">
-								<div class="item">
-									<img src="get_blob_img.do?str_number=${vo.str_number}&idx=${i}" style="width: 100%; height: 350px"/>
-								</div>
-							</c:forEach>
+							<c:if test="${cnt > 1}">
+								<c:forEach var="i" begin="1" end="${cnt}">
+									<div class="item">
+										<img src="get_blob_img.do?str_number=${vo.str_number}&idx=${i}" style="width: 100%; height: 350px"/>
+									</div>
+								</c:forEach>
+							</c:if>
 						</div>
 						
 						<!-- Controls -->
@@ -135,7 +137,7 @@
 							</div>
 							<div class="form-inline" style="margin-bottom:10px">
 								<label style="width:100px">대표자명</label>
-								<input type="text" class="form-control" name="" id="" />
+								${vo.mb_name}
 							</div>
 							<div class="form-inline" style="margin-bottom:10px">
 								<label style="width:100px">소재지</label>
@@ -150,10 +152,10 @@
 					
 					<div style="margin-bottom:10px">
 						<input type="hidden" value="${vo.str_delete}" id="schk"/>
-						<c:if test="${sessionScope._gr > 1}">
+						<c:if test="${sessionScope._gr > 2}">
 							<a href="admin_rsv_management.do?rsv_code=0" class="btn btn-primary">목록</a>
 						</c:if>
-						<c:if test="${sessionScope._gr == 1}">
+						<c:if test="${sessionScope._gr < 3}">
 							<c:choose>
 								<c:when test="${vo.rsv_code == 1}">
 									<a href="usr_rsv_edit.do?str_number=${vo.str_number}&rsv_no=${vo.rsv_no}" class="btn btn-success">예약 변경</a>
