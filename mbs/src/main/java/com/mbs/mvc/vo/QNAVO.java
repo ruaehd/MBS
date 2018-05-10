@@ -10,7 +10,39 @@ public class QNAVO {
 	private byte[] qst_img = null;
 	private String qst_code = null;
 	private int qst_open = 0;
+
+	/*search*/
+	private String qst_type = null;
+	private String qst_text = null;
+	private String qst_sel_type = null;
+	private int qst_page = 0;
 	
+	
+	
+	public int getQst_page() {
+		return qst_page;
+	}
+	public void setQst_page(int qst_page) {
+		this.qst_page = qst_page;
+	}
+	public String getQst_sel_type() {
+		return qst_sel_type;
+	}
+	public void setQst_sel_type(String qst_sel_type) {
+		this.qst_sel_type = qst_sel_type;
+	}
+	public String getQst_type() {
+		return qst_type;
+	}
+	public void setQst_type(String qst_type) {
+		this.qst_type = qst_type;
+	}
+	public String getQst_text() {
+		return qst_text;
+	}
+	public void setQst_text(String qst_text) {
+		this.qst_text = qst_text;
+	}
 	public int getQst_open() {
 		return qst_open;
 	}

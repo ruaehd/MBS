@@ -48,14 +48,14 @@
         <div class="title">QNA관리</div>
             <div class="row">
            <div class=" col-md-offset-8 col-md-4 form-inline" style="margin-bottom:10px;">
-                 <select class="form-control">
-                 	<option>전체</option>
-                    <option>질문</option>
-                    <option>내용</option>
-                    <option>아이디</option>
+                 <select class="form-control" id="search_type">
+                 	<option value="all">전체</option>
+                    <option value="qst_title">질문</option>
+                    <option value="qst_content">내용</option>
+                    <option value="mb_id">아이디</option>
                  </select>
-                 <input type="text" class="form-control"/>
-                 <button type="button" class="form-control btn-success">검색</button>
+                 <input type="text" class="form-control" id="search_text" />
+                 <button type="button" class="form-control btn-success" id="search_btn">검색</button>
               </div>
            </div>
            <table class="table">
@@ -64,22 +64,22 @@
                  <th style="vertical-align:middle">질문</th>
                  <th style="vertical-align:middle">내용</th>
                  <th style="vertical-align:middle">이미지</th>
-                 <th style="vertical-align:middle">
-                	<select class="form-control w3-dark-gray w3-border-dark-gray">
-                    <option>유형</option>
-                    <option>예약</option>
-                    <option>결재</option>
-                    <option>환불</option>
-                    <option>리뷰</option>
-                    <option>서비스</option>
-                    <option>기타</option>
+                 <th style="vertical-align:middle; width:120px">
+                	<select class="form-control w3-dark-gray w3-border-dark-gray" id="sel_code">
+                    <option ${param.sel_code == '유형' ? 'selected="selected"':''}>유형</option>
+                    <option ${param.sel_code == '예약' ? 'selected="selected"':''}>예약</option>
+                    <option ${param.sel_code == '결재' ? 'selected="selected"':''}>결재</option>
+                    <option ${param.sel_code == '환불' ? 'selected="selected"':''}>환불</option>
+                    <option ${param.sel_code == '리뷰' ? 'selected="selected"':''}>리뷰</option>
+                    <option ${param.sel_code == '서비스' ? 'selected="selected"':''}>서비스</option>
+                    <option ${param.sel_code == '기타' ? 'selected="selected"':''}>기타</option>
                  </select>
                  </th>
-                 <th>
-                 <select class="form-control w3-dark-gray w3-border-dark-gray">
-                    <option>답변여부</option>
-                    <option>미답변</option>
-                    <option>답변</option>
+                 <th style="width:120px">
+                 <select class="form-control w3-dark-gray w3-border-dark-gray" id="sel_type">
+                    <option value="all" ${param.sel_type == 'all' ? 'selected="selected"':''}>답변여부</option>
+                    <option value="0" ${param.sel_type == '0' ? 'selected="selected"':''}>미답변</option>
+                    <option value="1" ${param.sel_type == '1' ? 'selected="selected"':''}>답변완료</option>
                  </select>
                  </th>
                  <th style="vertical-align:middle">아이디</th>
@@ -90,7 +90,7 @@
                     <td class="count qst_no">${vo.qst_no}</td>
                     <td class="qst_title">${vo.qst_title}</td>
                     <td style="width:300px" class="qst_content">${vo.qst_content}</td>
-                    <td style="width:300px">1</td>
+                    <td style="width:300px"><img src="qnaImg.do?qst_no=${vo.qst_no}" width="300px" height="60px" /></td>
                     <td>${vo.qst_code}</td>
                     <td>
                     <c:if test="${vo.qst_open==0}">
@@ -180,6 +180,38 @@
 		</form:form>
    <script>
       $(function() {
+    	  $('.pagination').twbsPagination({
+              totalPages:'${totPage}',
+              visiblePages:10,
+              href:'?type=${param.type}&text='+encodeURIComponent('${param.text}')+'&sel_code='+encodeURIComponent('${param.sel_code}')+'&sel_type=${param.sel_type}&page={{number}}'
+           });
+    	  
+    	  	$('#sel_type').change(function(){
+	  	  		var sty = $(this).val();
+	  	  		window.location.href="admin_qna.do?type=${param.type}&text=${param.text}&sel_code=${param.sel_code}&sel_type="+sty+"&page=1";
+ 	  		});
+    	  
+    	  	var func = function(){
+				var ty = $('#search_type').val();
+				var tx = encodeURIComponent($('#search_text').val());
+				window.location.href="admin_qna.do?type="+ty+"&text="+tx+"&sel_code=${param.sel_code}&sel_type=${param.sel_type}&page=1";
+			};
+			
+			$('#search_btn').click(function(){
+					func();
+			});
+	
+			$('#search_text').keyup(function(event){
+				if(event.which == 13){
+					func();
+				}
+			});
+    	  
+    		$('#sel_code').change(function(){
+	  	  		var sty = $(this).val();
+	  	  		window.location.href="admin_qna.do?type=${param.type}&text=${param.text}&sel_code="+sty+"&sel_type=${param.sel_type}&page=1";
+	  		});
+    	  
     	  	$('.btn_update').click(function(){
 	     		var idx = $(this).index('.btn_common');
 	     		var qst_no = $('.qst_no').eq(idx).text();
@@ -199,12 +231,6 @@
 	     		$('#qst_content').val($('.qst_content').eq(idx).text());
 				$('#insertmodal').modal('show');	
 			});	
-    	  	
-            $('.pagination').twbsPagination({
-               totalPages:15,
-               visiblePages:10,
-               href:'#'
-            });
             
             $('.navbar-toggle').click(function () {
                  $('.navbar-nav').toggleClass('slide-in');

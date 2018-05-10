@@ -304,7 +304,7 @@
             $('.pagination').twbsPagination({
             	totalPages:'${totPage}',
                 visiblePages:10,
-                href:'?type=${param.type}&text=${param.text}&sel_code=${param.sel_code}&sel_type=${param.sel_type}&page={{number}}'
+                href:'?type=${param.type}&text='+encodeURIComponent('${param.text}')+'&sel_code=${param.sel_code}&sel_type=${param.sel_type}&page={{number}}'
             });
             
             $('.navbar-toggle').click(function () {

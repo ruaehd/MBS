@@ -12,8 +12,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import com.mbs.mvc.dao.FNADAO;
 import com.mbs.mvc.dao.QNADAO;
 import com.mbs.mvc.dao.ServiceDAO;
+import com.mbs.mvc.vo.FNAVO;
 import com.mbs.mvc.vo.NoticeVO;
 import com.mbs.mvc.vo.QNAVO;
 
@@ -25,6 +27,9 @@ public class ServiceController {
 	
 	@Autowired
 	private QNADAO qDAO = null;
+	
+	@Autowired
+	private FNADAO fDAO = null;
 	
 	@RequestMapping(value="/notice.do", method= RequestMethod.GET)
 	public String notice(Model model, @RequestParam(value="page", defaultValue="1") int page1) {
@@ -75,8 +80,6 @@ public class ServiceController {
 	
 	@RequestMapping(value="/qna.do", method= RequestMethod.POST)
 	public String qna(Model model, @ModelAttribute("vo") QNAVO vo, MultipartHttpServletRequest request) {
-		
-	
 			try {
 				MultipartFile tmp = request.getFile("qst_img1");
 				vo.setQst_img(tmp.getBytes());
@@ -89,12 +92,20 @@ public class ServiceController {
 	}
 	
 	@RequestMapping(value="/fna.do", method= RequestMethod.GET)
-	public String qna1() {
+	public String qna1(Model model, @RequestParam(value = "code", defaultValue="0") int fna_code, 
+			@RequestParam(value = "text", defaultValue="") String text) {
+		FNAVO vo = new FNAVO();
+		vo.setFna_code(fna_code);
+		vo.setFna_sc_text(text);
+		List<FNAVO> list = fDAO.FnaList(vo);
+		model.addAttribute("list", list);
 		return "user_custcenter_faq";
 	}
 	@RequestMapping(value="/service_main.do", method= RequestMethod.GET)
 	public String qna2(Model model) {
 		List<NoticeVO> list = sDAO.mainNoticeList();
+		List<FNAVO> list1 = fDAO.FnaListMain();
+		model.addAttribute("list1", list1);
 		model.addAttribute("list", list);
 		
 		return "user_custcenter_main";
