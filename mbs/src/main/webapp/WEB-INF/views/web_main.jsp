@@ -105,9 +105,7 @@
 								
 								
 								var st1 = datalist[i].starttime.substring(0,2);
-								var st2 = datalist[i].starttime.substring(2,4);
 								var et1 = datalist[i].endtime.substring(0,2);
-								var et2 = datalist[i].endtime.substring(2,4);
 								var dis = datalist[i].distance.substring(0,4);
 								if(datalist[i].tel.length == 10){
 									var tel1 = datalist[i].tel.substring(0,3);
@@ -119,8 +117,6 @@
 									var tel2 = datalist[i].tel.substring(3,7);
 									var tel3 = datalist[i].tel.substring(7,11);	
 								}
-								
-								//============================리스트 내용 수정 중 ============================
 								$('#contentlist').append(
 									'<div class="w3-white" style="padding:10px;margin-bottom:20px;width:100%">' +
 										'<h4><b>'+datalist[i].name+'</b></h4>'+
@@ -130,25 +126,25 @@
 									'</div>'+
 										'<div class="row" >'+
 											'<div class="col-md-4">'+
-												'<img class="'+datalist[i].number+'"src="getBlobImg.do?no='+ datalist[i].number +'" align="left" style="width:100%;height:150px;z-index:1;"/>'+
+												'<img class="'+datalist[i].number+'"src="getBlobImg.do?no='+ datalist[i].number +'" align="left" style="width:100%;height:170px;z-index:1;"/>'+
 												'<a href="user_content.do?no='+datalist[i].number+'" style="width:100%"><button class="w3-button btn_con" style="width:100%">예약하기</button></a>'+								
 												'</div>'+
 											'<div class="col-md-8">'+
 												'<div class="w3-round bar_con" style="margin-bottom:20px;padding:5px">'+cate+'</div>'+
 												'<div style="width:100px;float:left">대표메뉴 :</div>'+datalist[i].menu+' - '+datalist[i].menu_price+'<hr/>'+
-												'<div style="width:100px;float:left">예약가능시간 :</div>'+st1+':'+st2+' ~ '+et1+':'+et2+'<hr/>'+
+												'<div style="width:100px;float:left">예약가능시간 :</div>'+st1+'시 ~ '+et1+'시<hr/>'+
 												'<div style="width:100px;float:left">전화번호 :</div>'+tel1+'-'+tel2+'-'+tel3+
 											'</div>'+
 										'</div>'+
 									'</div>'
 									);
 								if(datalist[i].category == 1){
-									$('.btn_con').addClass('w3-green w3-hover-green');
-									$('.bar_con').addClass('w3-green');
+									$('.btn_con').eq(i).addClass('w3-green w3-hover-green');
+									$('.bar_con').eq(i).addClass('w3-green');
 								}
 								else if(datalist[i].category == 2){
-									$('.btn_con').addClass('w3-blue w3-hover-blue');
-									$('.bar_con').addClass('w3-blue');
+									$('.btn_con').eq(i).addClass('w3-blue w3-hover-blue');
+									$('.bar_con').eq(i).addClass('w3-blue');
 								}
 								}
 							
@@ -174,17 +170,17 @@ body{
 </style>
 <div style="margin: 68px auto; width: 80%" class="row">
 	<div class="col-md-4">
-		<div class="w3-dark-gray w3-white w3-border-black	" style="padding:10px">
+		<div class="w3-dark-gray w3-white w3-border-black" style="padding:10px">
 		<div align="center">
 			<h4 style="margin-top:20px">검색</h4>
 			<hr />
 		</div>
 		<div class="container">
 			<div class="form-inline" style="margin-bottom: 20px">
-				<div class="form-group"
-					style="width: 70px; vertical-align: middle;" align="center">
-					카테고리</div>
-				<div class="form-inline" align="center" style="width:200px"> 
+				<div class="form-group" style="width: 70px; vertical-align: middle;" align="center">
+					카테고리
+				</div>
+				<div class="form-group form-inline" align="center" style="width:30%"> 
 					<input type="button" style="width: 80px; height: 30px;margin-right:20px;padding:5px"
 						class="select_category w3-button w3-round w3-pale-green w3-hover-green"
 						value="관광지" id="travel" /> <input type="button"
@@ -197,14 +193,14 @@ body{
 				<div class="form-group" style="width: 70px;" align="center" >주소</div>
 				<div class="form-group" style="width: 80%">
 					<input type="text" id="sample4_roadAddress" class="w3-dark-gray"
-						onclick="sample4_execDaumPostcode()" style="width: 20%; border: 0"
+						onclick="sample4_execDaumPostcode()" style="width: 30%; border: 0"
 						value="부산시 강서구 가달1로 7 (생곡동)" placeholder="주소를 입력해주세요" readonly/>
 				</div>
 			</div>
 			<div class="form-inline" style="margin-bottom: 20px">
 				<div class="form-group" style="width: 70px" align="center">예약일</div>
 				<div class="form-group" style="width:80%">
-					<input type="text" style="width: 20%; border: 0;" id="datepicker" class="w3-dark-gray"
+					<input type="text" style="width: 30%; border:0;" id="datepicker" class="w3-dark-gray"
 						placeholder="예약일을 정해주세요" readonly/>
 				</div>
 			</div>
@@ -231,7 +227,7 @@ body{
 				</div>
 				</div>
 			
-			<div id="slider-range" style="margin-bottom: 10px; width: 23%"></div>
+			<div id="slider-range" style="margin-bottom: 10px; width:38%"></div>
 		</div>
 		<div align="center">
 			<input type="button" id="search_panel_button"

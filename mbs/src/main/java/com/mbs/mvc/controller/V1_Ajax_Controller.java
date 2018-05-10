@@ -15,7 +15,8 @@ import com.mbs.mvc.vo.V1_Store;
 @RestController
 public class V1_Ajax_Controller {
 
-	@Autowired private V1_ReviewDAO reDAO = null;
+	@Autowired 
+	private V1_ReviewDAO reDAO = null;
 	
 	@RequestMapping(value="/ajax_reviewlist.do", method = RequestMethod.GET)
 	public List<V1_Comment> reviewlist(@RequestParam(value="page", defaultValue="1") int page) {

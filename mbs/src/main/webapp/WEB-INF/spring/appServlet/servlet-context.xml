@@ -15,6 +15,7 @@
 	<interceptors>
 		<interceptor>
 			<mapping path="/**"/>
+			<exclude-mapping path="/user_joinsuc.do"/>
 			<exclude-mapping path="/user_login.do"/>
 			<exclude-mapping path="/user_join.do"/>
 			<exclude-mapping path="/user_logout.do"/>
