@@ -15,6 +15,7 @@
 	<interceptors>
 		<interceptor>
 			<mapping path="/**"/>
+			<exclude-mapping path="/user_joinsuc.do"/>
 			<exclude-mapping path="/user_login.do"/>
 			<exclude-mapping path="/user_join.do"/>
 			<exclude-mapping path="/user_logout.do"/>
@@ -45,7 +46,7 @@
 	
 	<context:component-scan base-package="com.mbs.mvc.controller" />
 	<context:component-scan base-package="com.mbs.mvc.dao" />
-	
+	<context:component-scan base-package="com.mbs.mvc.interceptor" />
 	
 	
 </beans:beans>

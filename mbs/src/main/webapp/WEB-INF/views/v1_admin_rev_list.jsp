@@ -2,7 +2,11 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %> 
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> 
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%
+	pageContext.setAttribute("br", "<br/>");
+	pageContext.setAttribute("cn", "\n");
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -68,8 +72,8 @@
 							 		</c:if>
 							 		<td>${tmp.point}</td>
 							 		<td>
-										<div style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap; width: 300px;" title="${tmp.content}">
-											${tmp.content}
+										<div class="con" style=" width:300px; word-wrap: break-word">
+											${fn:replace(tmp.content, cn, br)}
 										</div>
 							 		</td>
 							 		<td>${tmp.writer}</td>
@@ -105,8 +109,43 @@
 	<script src="resources/js/jquery.twbsPagination.min.js"></script>
 	<script src="resources/js/sweetalert.min.js"></script>
 	<script>
+	$(function () {
+	    $('.con').each(function () {
+	        $(this).html(formatWords($(this).html(), 0));
+	        $(this).children('span').hide();
+	    }).click(function () {
+	        var more_text = $(this).children('span.more_text');
+	        var more_link = $(this).children('a.more_link');
+	        if (more_text.hasClass('hide')) {
+	            more_text.show();
+	            more_link.html(' &raquo; hide'); 
+	            more_text.removeClass('hide');
+	        } else {
+	            more_text.hide();
+	            more_link.html(' &laquo; more');            
+	            more_text.addClass('hide');
+	        }
+	        return false;
+	        
+	    });
+	});
+
+	function formatWords(sentence, show) {
+	    var words = sentence.split(' ');
+	    var new_sentence = '';
+	    for (i = 0; i < words.length; i++) {
+	        if (i <= show) {
+	            new_sentence += words[i] + ' ';
+	        } else {
+	            if (i == (show + 1)) new_sentence += '... <span class="more_text hide">';        
+	            new_sentence += words[i] + ' ';
+	            if (words[i+1] == null) new_sentence += '</span><a href="#" class="more_link"> &raquo; more</a>';
+	        }         
+	    }
+	    return new_sentence;
+	}
+	
 		$(function(){
-			
 			var func = function(){
 				var ty = $('#search_type').val();
 				var tx = encodeURIComponent( $('#search_text').val() );

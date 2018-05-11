@@ -8,8 +8,8 @@
 <style>
 .map_wrap, .map_wrap * {margin:0;padding:0;font-family:'Malgun Gothic',dotum,'돋움',sans-serif;font-size:12px;}
 .map_wrap a, .map_wrap a:hover, .map_wrap a:active{color:#000;text-decoration: none;}
-.map_wrap {position:relative;width:100%;height:500px;}
-#menu_wrap {position:absolute;top:0;left:0;bottom:0;width:350px;margin:10px 0 30px 10px;padding:5px;overflow-y:auto;background:rgba(255, 255, 255, 0.7);z-index: 1;font-size:12px;border-radius: 10px;}
+.map_wrap {position:relative;width:100%;height:70vh;}
+#menu_wrap {position:absolute;top:0;left:0;bottom:0;width:350px;margin:10px 0 30px 10px;padding:5px;overflow-y:auto;background:rgba(255, 255, 255, 0.7);z-index: 1;font-size:12px;border-radius: 10px;overflow-x:hidden;}
 .bg_white {background:#fff;}
 #menu_wrap hr {display: block; height: 1px;border: 0; border-top: 2px solid #5F5F5F;margin:3px 0;}
 #menu_wrap .option{text-align: center;}
@@ -45,7 +45,7 @@
 li{list-style-type:none;}
 </style>
 	<div class="map_wrap" style="margin-top:58px">
-    <div id="map" style="width:100%;height:90vh;position:relative;overflow:hidden;"></div>
+    <div id="map" style="width:100%;height:93vh;position:relative;"></div>
 	
     <div id="menu_wrap" class="bg_white">
         <div class="option">
@@ -53,13 +53,13 @@ li{list-style-type:none;}
 				<form onsubmit="searchPlaces(); return false;">
 				<input type="button" id="search_button" class="form-control" value="검색옵션 열기"/>
 				<div id="search_panel">
-					<div class="form-inline" align="center" >
-						<input type="button" style="width:50%;height:30px"
-							class="select_category w3-button w3-round w3-border w3-pale-green w3-hover-green"
-							value="관광지" id="travel"/> 
-							<input type="button" style="width:50%;height:30px"
-							class="select_category w3-button w3-round w3-border w3-pale-blue w3-hover-blue"
-							value="음식점" id="food"/>
+					<div class="row" align="center" style="margin-top:10px;" >
+						<div class="col-md-6">
+							<input type="button" class="select_category form-control w3-button w3-round w3-border w3-pale-green w3-hover-green" value="관광지" id="travel"/>
+						</div>
+						<div class="col-md-6"> 
+							<input type="button" class="select_category form-control w3-button w3-round w3-border w3-pale-blue w3-hover-blue" value="음식점" id="food"/>
+						</div>
 					</div>
 					
 					<div class="row">

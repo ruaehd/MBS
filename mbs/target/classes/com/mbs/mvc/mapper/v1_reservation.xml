@@ -7,15 +7,16 @@
 		INSERT INTO `reservation` (rsv_day, rsv_time, rsv_personnel, rsv_sub_id, rsv_sub_name, rsv_sub_tel, rsv_sub_email, rsv_sub_request, str_number, rsv_date)
 		VALUES(#{rsv_day}, #{rsv_time}, #{rsv_personnel}, #{rsv_sub_id}, #{rsv_sub_name}, #{rsv_sub_tel}, #{rsv_sub_email}, #{rsv_sub_request}, #{str_number}, NOW());
 		
-		<selectKey resultType="int" keyProperty="rsv_no" order="BEFORE">	
-			SELECT IFNULL(MAX(rsv_no), 0)+1 FROM `reservation`
+   		<selectKey resultType="int" keyProperty="rsv_no" order="AFTER">	
+			SELECT LAST_INSERT_ID()
    		</selectKey>
-
+	</insert>
+	
+	<insert id="insertMenuReservation" parameterType="V1_Reservation">
 		<foreach item="tmp" collection="rmlist" separator=" ">
 			INSERT INTO `rsv_menu` (rsv_mn_name, rsv_mn_cnt, rsv_mn_price, rsv_mn_date, rsv_mn_idx, rsv_no)
 			VALUES(#{tmp.rsv_mn_name}, #{tmp.rsv_mn_cnt}, #{tmp.rsv_mn_price}, NOW(), #{tmp.rsv_mn_idx}, #{rsv_no});
 		</foreach>
-		 
 	</insert>
 	
 	<select id="selectRsvList" parameterType="V1_Reservation" resultType="V1_Reservation">
@@ -40,7 +41,7 @@
 	<select id="selectRsvOne" parameterType="V1_Reservation" resultType="V1_Reservation">
 		SELECT ms.*, r.rsv_no, DATE_FORMAT(r.rsv_day, '%Y-%m-%d %H:%i') AS rsv_day, r.rsv_personnel, r.rsv_sub_id, r.rsv_sub_name, r.rsv_sub_tel, r.rsv_sub_email, r.rsv_sub_request, r.str_number, r.rsv_delete, r.rsv_code FROM `reservation` r 
 			INNER JOIN 
-				(SELECT s.str_number, s.str_name, s.str_tel, s.str_address, s.str_begintime, s.str_endtime, s.str_personnel, m.mb_id, m.mb_email, m.mb_name FROM `member` m
+				(SELECT s.str_number, s.str_name, s.str_tel, s.str_address, s.str_begintime, s.str_endtime, s.str_personnel, s.str_delete, m.mb_id, m.mb_email, m.mb_name FROM `member` m
 				INNER JOIN `store` s
 				ON m.mb_id = s.mb_id) ms
 			ON r.str_number = ms.str_number

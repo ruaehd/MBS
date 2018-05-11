@@ -38,8 +38,15 @@ public class V1_Store {
 	private String mb_name = null;
 	
 	private int str_category = 0;
+	private String str_document = null;
 	
 	
+	public String getStr_document() {
+		return str_document;
+	}
+	public void setStr_document(String str_document) {
+		this.str_document = str_document;
+	}
 	public int getStr_category() {
 		return str_category;
 	}

@@ -1,6 +1,11 @@
 <%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> 
+<%
+	pageContext.setAttribute("br", "<br/>");
+	pageContext.setAttribute("cn", "\n");
+%>
 <%@ page session="true"%>
 <!DOCTYPE html>
 <html>
@@ -66,24 +71,6 @@
 		.star_rating p.on {
 			color:#EDD200;
 		}
-		
-		/* .star_rating1 {
-			font-size:0; letter-spacing:-4px;
-		}
-		.star_rating1 a {
-		    font-size:22px;
-		    letter-spacing:0;
-		    display:inline-block;
-		    margin-left:5px;
-		    color:#ccc;
-		    text-decoration:none;
-		}
-		.star_rating1 a:first-child {
-			margin-left:0;
-		}
-		.star_rating1 a.on {
-			color:#777;
-		} */
 	</style>
 </head>
 <body>
@@ -107,7 +94,7 @@
 						</div>
 						<c:forEach var="i" begin="1" end="${cnt}">
 							<div class="item">
-								<img src="get_blob_img.do?str_number=${vo.str_number}&idx=${i}" style="width: 100%; height: 500px"/>
+								<img src="get_blob_img.do?str_number=${svo.str_number}&idx=${i}" style="width: 100%; height: 500px"/>
 							</div>
 						</c:forEach>
 					</div>
@@ -153,7 +140,9 @@
 					</div>
 					<div class="form-inline">
 						<label>소개</label>
-						소개글
+						<div class="form-group intro">
+							${fn:replace(vo.str_document, cn, br)}
+						</div>
 					</div>
 				</div>
 		
@@ -167,10 +156,10 @@
 							</h3>
 						</div>
 						<div class="col-md-4" align="right">
-							<c:if test="${sessionScope._gr > 1}">
+							<c:if test="${sessionScope._gr > 2}">
 								<input type="button" class="btn btn-success disabled" value="후기 작성" onClick="writeComment()" />
 							</c:if>
-							<c:if test="${sessionScope._gr == 1}">
+							<c:if test="${sessionScope._gr < 3}">
 								<c:if test="${chk == 0}">
 									<input type="button" class="btn btn-success" value="후기 작성" onClick="writeComment()" />
 								</c:if>	
@@ -217,6 +206,7 @@
 	<script src="resources/js/circle-progress.js"></script>
 	<script type="text/javascript" src="resources/js/jquery.twbsPagination.min.js"></script>
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=66e7156b3899e012effaa62fd20217d4&libraries=services"></script>
+	<script src="resources/js/readmore.min.js"></script>
 	<script>
 	function writeComment() {
 		window.open('usr_tour_comment.do?str_number=${param.str_number}','한줄평 작성','width=800, height=700, left=650, top=100');
@@ -228,6 +218,14 @@
 	$(function() {
 		$('.carousel').carousel({
 			interval : 2000
+		});
+		
+		$('.intro').readmore({
+			blockCSS: 'margin-right:100px; display: inline-block;',
+			speed: 75,
+			collapsedHeight: 110,
+			moreLink: '<a href="#"><span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span>펼치기</a>',
+			lessLink: '<a href="#"><span class="glyphicon glyphicon-triangle-top" aria-hidden="true"></span>접기</a>'
 		});
 		
 		$( ".star_rating1 a" ).click(function() {
@@ -249,6 +247,10 @@
 					var len = data.length;
 					for(var i=0; i<len; i++){
 						
+						var br2nl = function(varTest){
+				            return varTest.replace(/\n/gi, "<br>");
+				         };
+						
 						var str = '';
 						var str1 = '';
 						
@@ -260,17 +262,33 @@
 						}
 						
 						$('#review').append(
-							'<div class="review" style="margin-bottom:10px; border:1px solid #ccc">'
-								+ '<div style="display:inline-block; margin-right:10px" class="star_rating">'
-									+ str
-									+ str1
+							'<div class="review" style="margin-bottom:10px; border:1px solid #ccc; padding:10px">'
+								+ '<div class="row">'
+									+ '<div class="col-md-10">'
+										+ '<div style="display:inline-block; padding-left:10px" class="star_rating">'
+											+ str
+											+ str1
+										+ '</div>'
+										+ '<div class="con" style="padding:0 50px; width:90%; word-wrap: break-word">'
+											+ br2nl(data[i].tour_cmt_content)
+										+ '</div>'
+									+ '</div>'
+									+ '<div class="col-md-2" align="left" style="border-left:1px solid #ccc">'
+										+ '<label>작성자</label> - '+data[i].tour_cmt_writer+'<br />'
+										+ '<label>사용일</label> - '+data[i].tour_cmt_day+'<br />'
+										+ '<label>사용일</label> - '+data[i].tour_cmt_date.substr(0,11)
+									+ '</div>'
 								+ '</div>'
-																
-								+ '<label>작성자</label>'+data[i].tour_cmt_writer+''
-								+ '<label>사용일</label>'+data[i].tour_cmt_day+''
-							+ '<div>'+data[i].tour_cmt_content+'</div>'
-						+ '</div>'
-						);
+							+ '</div>'
+						).trigger("create");
+						
+						$('.con').readmore({
+							blockCSS: 'display: inline-block;',
+							speed: 75,
+							collapsedHeight: 40,
+							moreLink: '<a href="#"><span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span>펼치기</a>',
+							lessLink: '<a href="#"><span class="glyphicon glyphicon-triangle-top" aria-hidden="true"></span>접기</a>'
+						});	
 					}
 				}, 'json');
 			}

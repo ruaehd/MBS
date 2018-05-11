@@ -1,7 +1,7 @@
 <%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
-<%@ page session="false"%>
+<%@ page session="true"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -79,21 +79,24 @@
 					<div class="form-group">
 						<div class="form-inline" style="margin-bottom:10px">
 							<label style="width:70px">맛</label>
-							<div style="display:inline-block; width:120px"><form:radiobutton path="rsv_cmt_taste" value="맛은 별로에요" />별로에요</div>
-							<div style="display:inline-block; width:120px"><form:radiobutton path="rsv_cmt_taste" value="맛은 보통이에요" />보통이에요</div>
-							<div style="display:inline-block; width:120px"><form:radiobutton path="rsv_cmt_taste" value="맛있어요" />맛있어요</div>
+							<div style="display:inline-block; width:120px"><form:radiobutton class="rsv_cmt_taste" path="rsv_cmt_taste" value="맛은 별로에요" />별로에요</div>
+							<div style="display:inline-block; width:120px"><form:radiobutton class="rsv_cmt_taste" path="rsv_cmt_taste" value="맛은 보통이에요" />보통이에요</div>
+							<div style="display:inline-block; width:120px"><form:radiobutton class="rsv_cmt_taste" path="rsv_cmt_taste" value="맛있어요" />맛있어요</div>
+							<form:input type="hidden" path="rsv_cmt_taste_p" id="rsv_cmt_taste_p"/>
 						</div>
 						<div class="form-inline" style="margin-bottom:10px">
 							<label style="width:70px">서비스</label>
-							<div style="display:inline-block; width:120px"><form:radiobutton path="rsv_cmt_service" value="서비스는 불친절해요" />불친절해요</div>
-							<div style="display:inline-block; width:120px"><form:radiobutton path="rsv_cmt_service" value="서비스는 보통이에요" />보통이에요</div>
-							<div style="display:inline-block; width:120px"><form:radiobutton path="rsv_cmt_service" value="서비스는 친절해요" />친절해요</div>
+							<div style="display:inline-block; width:120px"><form:radiobutton class="rsv_cmt_service" path="rsv_cmt_service" value="서비스는 불친절해요" />불친절해요</div>
+							<div style="display:inline-block; width:120px"><form:radiobutton class="rsv_cmt_service" path="rsv_cmt_service" value="서비스는 보통이에요" />보통이에요</div>
+							<div style="display:inline-block; width:120px"><form:radiobutton class="rsv_cmt_service" path="rsv_cmt_service" value="서비스는 친절해요" />친절해요</div>
+							<form:input type="hidden" path="rsv_cmt_service_p" id="rsv_cmt_service_p"/>
 						</div>
 						<div class="form-inline" style="margin-bottom:10px">
 							<label style="width:70px">가격</label>
-							<div style="display:inline-block; width:120px"><form:radiobutton path="rsv_cmt_price" value="가격은 비싸요" />비싸요</div>
-							<div style="display:inline-block; width:120px"><form:radiobutton path="rsv_cmt_price" value="가격은 적절해요" />적절해요</div>
-							<div style="display:inline-block; width:120px"><form:radiobutton path="rsv_cmt_price" value="가격은 저렴해요" />저렴해요</div>
+							<div style="display:inline-block; width:120px"><form:radiobutton class="rsv_cmt_price" path="rsv_cmt_price" value="가격은 비싸요" />비싸요</div>
+							<div style="display:inline-block; width:120px"><form:radiobutton class="rsv_cmt_price" path="rsv_cmt_price" value="가격은 적절해요" />적절해요</div>
+							<div style="display:inline-block; width:120px"><form:radiobutton class="rsv_cmt_price" path="rsv_cmt_price" value="가격은 저렴해요" />저렴해요</div>
+							<form:input type="hidden" path="rsv_cmt_price_p" id="rsv_cmt_price_p"/>
 						</div>
 					</div>
 				</div>
@@ -101,7 +104,7 @@
 				<div class="form-inline" style="margin-bottom:20px">
 					<div class="form-group">
 						<label style="width:100px">예약 후기</label>
-						<form:textarea rows="6" path="rsv_cmt_content" style="resize:none; width:400px" value="${vo.rsv_cmt_content}"></form:textarea>
+						<form:textarea rows="6" path="rsv_cmt_content" style="resize:none; width:400px" value="${vo.rsv_cmt_content}" onkeyup="fnChkByte(this)"></form:textarea>
 					</div>
 				</div>
 				<hr />
@@ -132,8 +135,90 @@
 			$('#btn_cancel').click(function() {
 				close();
 			});
+			
+			$(".rsv_cmt_taste").click(function() {
+				var p = $(this).val();
+				if(p == "맛은 별로에요"){
+					$('#rsv_cmt_taste_p').val(1);
+					console.log($('#rsv_cmt_taste_p').val());
+				}
+				else if(p == "맛은 보통이에요"){
+					$('#rsv_cmt_taste_p').val(2);
+					console.log($('#rsv_cmt_taste_p').val());
+				}
+				else if(p == "맛있어요"){
+					$('#rsv_cmt_taste_p').val(3);
+					console.log($('#rsv_cmt_taste_p').val());
+				}
+			});
+			
+			$(".rsv_cmt_service").click(function() {
+				var p = $(this).val();
+				if(p == "서비스는 불친절해요"){
+					$('#rsv_cmt_service_p').val(1);
+					console.log($('#rsv_cmt_service_p').val());
+				}
+				else if(p == "서비스는 보통이에요"){
+					$('#rsv_cmt_service_p').val(2);
+					console.log($('#rsv_cmt_service_p').val());
+				}
+				else if(p == "서비스는 친절해요"){
+					$('#rsv_cmt_service_p').val(3);
+					console.log($('#rsv_cmt_service_p').val());
+				}
+			});
+			
+			$(".rsv_cmt_price").click(function() {
+				var p = $(this).val();
+				if(p == "가격은 비싸요"){
+					$('#rsv_cmt_price_p').val(1);
+					console.log($('#rsv_cmt_price_p').val());
+				}
+				else if(p == "가격은 적절해요"){
+					$('#rsv_cmt_taste_p').val(2);
+					console.log($('#rsv_cmt_price_p').val());
+				}
+				else if(p == "가격은 저렴해요"){
+					$('#rsv_cmt_price_p').val(3);
+					console.log($('#rsv_cmt_price_p').val());
+				}
+			});
+			
 	    });
 		
+		function fnChkByte(obj) {
+		    var maxByte = 500;
+		    var str = obj.value;
+		    var str_len = str.length;
+		 
+		    var rbyte = 0;
+		    var rlen = 0;
+		    var one_char = "";
+		    var str2 = "";
+		 
+		    for (var i = 0; i < str_len; i++) {
+		        one_char = str.charAt(i);
+		 
+		        if (escape(one_char).length > 4) {
+		            rbyte += 2;
+		        } else {
+		            rbyte++;
+		        }
+		 
+		        if (rbyte <= maxByte) {
+		            rlen = i + 1;
+		        }
+		    }
+		 
+		    if (rbyte > maxByte) {
+		        alert("최대 한글 " + (maxByte / 2) + "자 / 영문 " + maxByte + "자 까지 작성 가능합니다.");
+		        str2 = str.substr(0, rlen);
+		        obj.value = str2;
+		        fnChkByte(obj, maxByte);
+		    } else {
+		        document.getElementById('byteInfo').innerText = rbyte;
+		    }
+		}
 	</script>
 
 </body>

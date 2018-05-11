@@ -32,7 +32,7 @@
 				</c:if>
 			</div>
 		<div class="container" style="padding:10px">
-		<h3 style="margin-left:20px">문의 내역</h3>
+		<h3>문의 내역</h3>
 		<c:if test="${empty qlist}">
 				<div style="margin-top:80px">
 					<h1 style="margin-left:100px">내가 문의한 항목이 존재하지 않습니다</h1>
@@ -44,21 +44,21 @@
 		<c:if test="${!empty qlist}">
 		<c:forEach items="${qlist}" var="qvo">
 		<div class="form-inline" style="padding:20px;height:80px;margin:0px 30px">
-			<div class="form-group" style="width:70%">
-			<div class="w3-row">
-				<div class="w3-col" style="width:60%">
+			<div class="form-group" style="width:100%">
+			<div class="row">
+				<div class="col-md-10">
 					<p style="color:red;float:left;width:70px" class="openval">${qvo.qst_open}</p>
 					<p><b><a href="user_question" style="color:black">${qvo.qst_title}</a></b>
 					<font color="gray" style="font-size:10px;">[문의번호:${qvo.qst_no}]</font></p>
 				</div>
-				<div class="w3-rest" align="right" style="vertical-align:bottom"><p style="font-size:12px;color:gray">${qvo.qst_date}<p></div>
-				</div>
+				<div class="col-md-2" align="right" style="vertical-align:bottom"><p style="font-size:12px;color:gray">${qvo.qst_date}<p></div>
+			</div>
 				<p>${qvo.qst_content}</p>
 			</div>
 		</div>
-		<div style="width:70%; height:5px; margin:5px 30px; border-bottom:1px solid #aaaaaa"></div>
+		<div style="width:100%; height:5px; margin:5px 30px; border-bottom:1px solid #aaaaaa"></div>
 		</c:forEach>
-		<div style="width:70%;margin-top:50px" align="right">
+		<div style="width:100%;margin-top:50px" align="right">
 			<a href="user_question.do"><button class="btn btn-default">문의내역 모두보기</button></a>
 		</div>
 		</c:if>

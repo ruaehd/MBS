@@ -61,12 +61,22 @@
 				 		<th>예약일</th>
 				 		<th style="text-align:center">비고</th>
 				 	</tr>
-				 	<c:forEach var="tmp" items="${list}">
+				 	<c:forEach var="tmp" items="${list}" varStatus="i">
 						<tr>
-					 		<td>${tmp.rsv_no}</td>
+					 		<td>
+						 		<a href="#" class="rsv_info">${tmp.rsv_no}</a>
+					 		</td>
 					 		<td>${tmp.rsv_code_chk}</td>
-					 		<td><a href="usr_content.do?str_number=${tmp.str_number}">${tmp.str_name}</a></td>
-					 		<td><a href="#">${tmp.rsv_sub_id}</a></td>
+					 		<td>
+					 			<a href="usr_content.do?str_number=${tmp.str_number}">${tmp.str_name}</a>
+					 			<input type="hidden" value="${tmp.str_delete}" id="chk_${i.index}"/>
+					 			<input type="hidden" value="${tmp.str_number}" id="no_${i.index}"/>
+					 			<input type="hidden" value="${tmp.rsv_no}" id="rsv_no_${i.index}"/>
+					 		</td>
+					 		<td>
+					 			<a href="#">${tmp.rsv_sub_id}</a>
+					 			<input type="hidden" value="${tmp.rsv_sub_id}" id="id_${i.index}"/>
+					 		</td>
 					 		<td>${tmp.rsv_day}</td>
 					 		<td>${tmp.rsv_date}</td>
 					 		<td style="text-align:center">
@@ -75,10 +85,10 @@
 									<a href="usr_rsv_cancel.do?rsv_no=${tmp.rsv_no}" class="btn btn-xs btn-danger">예약취소</a>
 								</c:if>
 								<c:if test="${tmp.rsv_code_chk eq '이용완료'}">
-					 				<a href="usr_content_pay.do?str_number=${tmp.str_number}&rsv_id=${tmp.rsv_sub_id}" class="btn btn-xs btn-warning">추가예약</a>
+					 				<a href="#" class="btn btn-xs btn-warning new_rsv">추가예약</a>
 								</c:if>
 								<c:if test="${tmp.rsv_code_chk eq '예약취소'}">
-					 				<a href="usr_rsv_edit.do?str_number=${tmp.str_number}&rsv_no=${tmp.rsv_no}" class="btn btn-xs btn-success">신규예약</a>
+					 				<a href="#" class="btn btn-xs btn-success new_rsv">신규예약</a>
 								</c:if>
 								
 					 		</td>
@@ -107,8 +117,43 @@
 	<script src="resources/js/jquery-1.11.1.js"></script>
 	<script src="resources/js/bootstrap.min.js"></script>
 	<script src="resources/js/jquery.twbsPagination.min.js"></script>
+	<script src="resources/js/sweetalert.min.js"></script>
 	<script>
 		$(function(){
+			
+			$('.rsv_info').click(function(){
+				//class로 지정란 버튼의 위치 얻기(0부터 시작함)
+				var idx = $(this).index('.rsv_info');
+				var no = $('#rsv_no_'+idx).val();
+				console.log(no);
+				window.open('biz_rsv_info.do?rsv_no='+no,'','width=800, height=700, left=650, top=100');
+			});
+			
+			$('.new_rsv').click(function(){
+				//class로 지정란 버튼의 위치 얻기(0부터 시작함)
+				var idx = $(this).index('.new_rsv');
+				var chk = $('#chk_'+idx).val();
+				var no = $('#no_'+idx).val();
+				var id = $('#id_'+idx).val();
+				
+				console.log("no"+no);
+				console.log("chk"+chk);
+				console.log("id"+id);
+				if(chk == 0){
+					swal({
+					  title: "운영중단",
+					  text: "운영이 중단된 업체입니다.",
+					  icon: "warning",
+					  button: "확인",
+					});
+				}
+				if(chk == 1){
+					window.location.href="usr_content_pay.do?str_number="+no+"&rsv_id="+id;
+				}
+				
+			});
+			
+			
 			
 			var func = function(){
 				var ty = $('#search_type').val();

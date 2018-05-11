@@ -48,4 +48,8 @@ public class V1_ReservationDAO {
 	public List<V1_RsvMenu> selectRsvMenuList(int rsv_no){
 		return sqlsession.selectList("V1_Reservation.selectRsvMenuList", rsv_no);
 	}
+	
+	public int insertMenuReservation(V1_Reservation vo) {
+		return sqlsession.insert("V1_Reservation.insertMenuReservation", vo);
+	}
 }

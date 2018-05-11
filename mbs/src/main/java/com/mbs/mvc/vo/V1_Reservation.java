@@ -45,8 +45,18 @@ public class V1_Reservation {
 	private String mb_name = null;
 	private String mb_email = null;
 	
+	private int str_delete = 0;
 	
 	
+	
+	public int getStr_delete() {
+		return str_delete;
+	}
+
+	public void setStr_delete(int str_delete) {
+		this.str_delete = str_delete;
+	}
+
 	public String getMb_name() {
 		return mb_name;
 	}

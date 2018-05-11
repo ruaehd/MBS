@@ -6,14 +6,9 @@
 <html>
 <head>
 	<meta charset="UTF-8" />
-	<title>Google Nexus Website Menu</title>
-	<link rel="shortcut icon" href="../favicon.ico">
-	<link rel="stylesheet" type="text/css" href="resources/css/normalize.css" />
-	<link rel="stylesheet" type="text/css" href="resources/css/demo.css" />
-	<link rel="stylesheet" type="text/css" href="resources/css/component.css" />
+	<title>후기 수정</title>
 	<link rel="stylesheet" type="text/css" href="resources/css/bootstrap.css" />
 	<link rel="stylesheet" type="text/css" href="resources/css/w3.css"/>
-	<link rel="stylesheet" type="text/css" href="resources/css/footer.css" />
 	<link rel="stylesheet" type="text/css" href="resources/css/jquery-ui.min.css" />
 	<link rel="stylesheet" type="text/css" href="resources/css/jquery-ui-timepicker-addon.css" />
 	<style>
@@ -69,7 +64,7 @@
 				<div class="form-inline" style="margin-bottom:20px">
 					<div class="form-group">
 						<label style="width:100px">후기 작성</label>
-						<form:textarea rows="3" path="tour_cmt_content" style="resize:none; width:400px"></form:textarea>
+						<form:textarea rows="3" path="tour_cmt_content" style="resize:none; width:400px" onkeyup="fnChkByte(this)"></form:textarea>
 					</div>
 				</div>
 				<hr />
@@ -115,6 +110,40 @@
 		});
 		
 	});
+	
+	function fnChkByte(obj) {
+	    var maxByte = 500;
+	    var str = obj.value;
+	    var str_len = str.length;
+	 
+	    var rbyte = 0;
+	    var rlen = 0;
+	    var one_char = "";
+	    var str2 = "";
+	 
+	    for (var i = 0; i < str_len; i++) {
+	        one_char = str.charAt(i);
+	 
+	        if (escape(one_char).length > 4) {
+	            rbyte += 2;
+	        } else {
+	            rbyte++;
+	        }
+	 
+	        if (rbyte <= maxByte) {
+	            rlen = i + 1;
+	        }
+	    }
+	 
+	    if (rbyte > maxByte) {
+	        alert("최대 한글 " + (maxByte / 2) + "자 / 영문 " + maxByte + "자 까지 작성 가능합니다.");
+	        str2 = str.substr(0, rlen);
+	        obj.value = str2;
+	        fnChkByte(obj, maxByte);
+	    } else {
+	        document.getElementById('byteInfo').innerText = rbyte;
+	    }
+	}
 	</script>
 
 </body>
