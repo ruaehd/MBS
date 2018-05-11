@@ -49,88 +49,34 @@
 				<h4><b>자주하는질문</b></h4>
 				</div>
 				<div class="form-group" style="margin-right:10px">
-				<input type="text" class="w3-input w3-border w3-round" style="width:400px" placeholder="궁금하신 내용을 입력하세요."/>
+				<input type="text" class="w3-input w3-border w3-round" style="width:400px" placeholder="궁금하신 내용을 입력하세요." id="search_text" />
 			</div>
 			<div class="form-group">
-				<input type="submit" class="w3-button w3-black w3-round " value="검색"/>
+				<input type="submit" class="w3-button w3-black w3-round " value="검색" id="search_btn"/>
 			</div>
 		</div>
 	</div>
 	<div class="container" style="margin:0px auto">
-	<table class="w3-table w3-bordered" style="width:100%">
-		<tr class="content-head">
-			<td style="width:10%; vertical-align:middle"><img src="resources/imgs/many-question.png" style="width:20px; height:20px"/></td>
-			<td width="10%"><h4>예약</h4></td>
-			<td style="width:80%;vertical-align:middle">예약은 어떻게 하는건가요 ?</td>
-		</tr>
-		<tr class="content-body w3-light-gray">
-			<td colspan="2"></td>
-			<td>예약은 컨텐츠 진입 후 예약하기 버튼으로 하시면 됩니다.</td>
-		</tr>
-		<tr class="content-head">
-			<td style="width:10%; vertical-align:middle"><img src="resources/imgs/many-question.png" style="width:20px; height:20px"/></td>
-			<td width="10%"><h4>결제</h4></td>
-			<td style="width:80%;vertical-align:middle">결제가 안될때는 어떻게 하나요?</td>
-		</tr>
-		<tr class="content-body w3-light-gray">
-			<td colspan="2"></td>
-			<td>결제가 안될 시에는 홈페이지에서 제공하는 결제방법을 확인하시고 안되신다면 1:1문의로 도와드리겠습니다.</td>
-		</tr>
-		<tr class="content-head">
-			<td style="width:10%; vertical-align:middle"><img src="resources/imgs/many-question.png" style="width:20px; height:20px"/></td>
-			<td width="10%"><h4>결제</h4></td>
-			<td style="width:80%;vertical-align:middle">결제 수단에는 어떤게 있나요 ?</td>
-		</tr>
-		<tr class="content-body w3-light-gray">
-			<td colspan="2"></td>
-			<td>결제 수단에는 카드,문화상품권,핸드폰결제,무통장 입금 이 있습니다.</td>
-		</tr>
-		<tr class="content-head">
-			<td style="width:10%; vertical-align:middle"><img src="resources/imgs/many-question.png" style="width:20px; height:20px"/></td>
-			<td width="10%"><h4>환불</h4></td>
-			<td style="width:80%;vertical-align:middle">환불 과정이 어떻게 되나요?</td>
-		</tr>
-		<tr class="content-body w3-light-gray">
-			<td colspan="2"></td>
-			<td>환불은 3일이전으로 예약취소 할 경우 바로 환불이 되고 3일 이내일 경우 하루 30%씩 차감되어 자동으로 환불됩니다</td>
-		</tr>
-		<tr class="content-head">
-			<td style="width:10%; vertical-align:middle"><img src="resources/imgs/many-question.png" style="width:20px; height:20px"/></td>
-			<td width="10%"><h4>결제</h4></td>
-			<td style="width:80%;vertical-align:middle">온라인 결제를 했는데 정확한 가맹점명은 어떻게 확인하나요 ?</td>
-		</tr>
-		<tr class="content-body w3-light-gray">
-			<td colspan="2"></td>
-			<td>결제를 진행 한 뒤 가맹점 명이 생각이 안나실때엔 <a href="user_main.do">마이페이지</a>의 현재 예약중인 항목을 확인해주세요. </td>
-		</tr>
-		<tr class="content-head">
-			<td style="width:10%; vertical-align:middle"><img src="resources/imgs/many-question.png" style="width:20px; height:20px"/></td>
-			<td width="10%"><h4>환불</h4></td>
-			<td style="width:80%;vertical-align:middle">예약 후 언제까지 취소해야 환불 받을 수 있나요 ?</td>
-		</tr>
-		<tr class="content-body w3-light-gray">
-			<td colspan="2"></td>
-			<td>예약취소는 예약 1일전 까지 가능합니다.</td>
-		</tr>
-		<tr class="content-head">
-			<td style="width:10%; vertical-align:middle"><img src="resources/imgs/many-question.png" style="width:20px; height:20px"/></td>
-			<td width="10%"><h4>리뷰</h4></td>
-			<td style="width:80%;vertical-align:middle">글을 보는 도중에 부적절한 리뷰를 봤습니다. 삭제요청은 어떻게 하나요 ?</td>
-		</tr>
-		<tr class="content-body w3-light-gray">
-			<td colspan="2"></td>
-			<td>1:1문의로 연락주시면 도와드리겠습니다.</td>
-		</tr>
-		<tr class="content-head">
-			<td style="width:10%; vertical-align:middle"><img src="resources/imgs/many-question.png" style="width:20px; height:20px"/></td>
-			<td width="10%"><h4>리뷰</h4></td>
-			<td style="width:80%;vertical-align:middle">해당 리뷰가 마음에듭니다. 추천을 하고싶은데 어떻게 하나요 ?</td>
-		</tr>
-		<tr class="content-body w3-light-gray">
-			<td colspan="2"></td>
-			<td>해당 리뷰 오른편 추천하기 버튼으로 가능합니다.</td>
-		</tr>
-	</table>
+		<c:forEach var="vo" items="${list1}">
+		<table class="w3-table w3-bordered" style="width:100%">
+			<tr class="content-head">
+				<td style="width:10%; vertical-align:middle"><img src="resources/imgs/many-question.png" style="width:20px; height:20px"/></td>
+				<td width="10%"><h4>
+				<c:if test="${vo.fna_code == 1}">예약</c:if>
+				<c:if test="${vo.fna_code == 2}">결재</c:if>
+				<c:if test="${vo.fna_code == 3}">환불</c:if>
+				<c:if test="${vo.fna_code == 4}">리뷰</c:if>
+				<c:if test="${vo.fna_code == 5}">회원</c:if>
+				<c:if test="${vo.fna_code == 6}">서비스</c:if> 
+				</h4></td>
+				<td style="width:80%;vertical-align:middle">${vo.fna_title}</td>
+			</tr>
+			<tr class="content-body w3-light-gray">
+				<td colspan="2"></td>
+				<td>${vo.fna_content}</td>
+			</tr>
+		</table>
+		</c:forEach>
 	<div class="row" style="margin-top:20px;border-top:2px solid #cccccc">
 		<div class="col-md-6">
 		<table class="w3-table w3-bordered" style="margin:25px 0px">
@@ -163,8 +109,25 @@
 </div>
 <script>
 	$(function(){
+		var func = function(){
+			var tx = encodeURIComponent($('#search_text').val());
+			window.location.href="fna.do?text="+tx;
+		};
+		
+		$('#search_btn').click(function(){
+				func();
+		});
+
+		$('#search_text').keyup(function(event){
+			if(event.which == 13){
+				func();
+			}
+		});
+		
+		
 		$('.content-body').hide();
 		$('.content-head').click(function(){
+			$('.content-body').hide();
 			var ch = $(this).index('.content-head');
 			$('.content-body').eq(ch).toggle(100);
 		});

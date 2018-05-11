@@ -8,6 +8,34 @@ public class NoticeVO {
 	private int ntc_delete = 0;
 	private String ntc_date = null;
 	private String mb_id = null;
+	private String ntc_sc_type = null;
+	private String ntc_sc_text = null;
+	private int ntc_page = 0;
+	private String sel_type = null;
+	public String getSel_type() {
+		return sel_type;
+	}
+	public void setSel_type(String sel_type) {
+		this.sel_type = sel_type;
+	}
+	public String getNtc_sc_type() {
+		return ntc_sc_type;
+	}
+	public void setNtc_sc_type(String ntc_sc_type) {
+		this.ntc_sc_type = ntc_sc_type;
+	}
+	public String getNtc_sc_text() {
+		return ntc_sc_text;
+	}
+	public void setNtc_sc_text(String ntc_sc_text) {
+		this.ntc_sc_text = ntc_sc_text;
+	}
+	public int getNtc_page() {
+		return ntc_page;
+	}
+	public void setNtc_page(int ntc_page) {
+		this.ntc_page = ntc_page;
+	}
 	public int getNtc_no() {
 		return ntc_no;
 	}

@@ -1,5 +1,7 @@
 package com.mbs.mvc.vo;
 
+import java.util.Arrays;
+
 public class EventVO {
 	private int evt_no = 0;
 	private String evt_title = null;
@@ -10,7 +12,46 @@ public class EventVO {
 	private String evt_date = null;
 	private String mb_id = null;
 	private int evt_delete = 0;
+	/* search */
+	private String sel_type = null;
+	private String evt_sc_type = null;
+	private String evt_sc_text = null;
+	private int evt_page = 0;
 	
+	
+	
+	@Override
+	public String toString() {
+		return "EventVO [evt_no=" + evt_no + ", evt_title=" + evt_title + ", evt_content="
+				+ Arrays.toString(evt_content) + ", evt_image=" + Arrays.toString(evt_image) + ", evt_begintime="
+				+ evt_begintime + ", evt_endtime=" + evt_endtime + ", evt_date=" + evt_date + ", mb_id=" + mb_id
+				+ ", evt_delete=" + evt_delete + ", sel_type=" + sel_type + ", evt_sc_type=" + evt_sc_type
+				+ ", evt_sc_text=" + evt_sc_text + ", evt_page=" + evt_page + "]";
+	}
+	public int getEvt_page() {
+		return evt_page;
+	}
+	public void setEvt_page(int evt_page) {
+		this.evt_page = evt_page;
+	}
+	public String getEvt_sc_type() {
+		return evt_sc_type;
+	}
+	public void setEvt_sc_type(String evt_sc_type) {
+		this.evt_sc_type = evt_sc_type;
+	}
+	public String getEvt_sc_text() {
+		return evt_sc_text;
+	}
+	public void setEvt_sc_text(String evt_sc_text) {
+		this.evt_sc_text = evt_sc_text;
+	}
+	public String getSel_type() {
+		return sel_type;
+	}
+	public void setSel_type(String sel_type) {
+		this.sel_type = sel_type;
+	}
 	public int getEvt_delete() {
 		return evt_delete;
 	}

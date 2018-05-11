@@ -54,7 +54,7 @@
            </div>
        </div>
        
-      <div  class="container setup-content" style="width:80%;padding:30px;margin:0px auto"  align="center" id="step-2">
+      <div class="container setup-content" style="width:100%;padding:30px;margin:0px auto"  align="center" id="step-2">
       <form:form action="user_edit.do" method="post" modelAttribute="vo" id="form">
          <div style="margin:0px auto">
             <div align="left">
@@ -64,62 +64,66 @@
                    <div style="border:1px solid #cccccc; width:100%;margin:0px auto;margin-bottom:50px">
                   </div>
                   <div class="container">
-            <div class="form-inline menu"  style="margin-bottom:20px">
-               <div class="form-group" style="width:100px">
+            <div class="row menu"  style="margin-bottom:20px">
+               <div class="col-md-offset-3 col-md-3" style="width:100px">
                   아이디
                </div>
-               <div class="form-group">
+               <div class="col-md-5">
                   <form:input type="text" path="mb_id" id="mb_id" class="w3-input w3-round w3-border form-control" readonly="true"/>
                </div>
             </div>
-            <div class="form-inline menu"  style="margin-bottom:20px">
-               <div class="form-group" style="width:100px">
+            <div class="row menu"  style="margin-bottom:20px">
+               <div class="col-md-offset-3 col-md-3" style="width:100px">
                이름
                </div>
-               <div class="form-group">
+               <div class="col-md-5">
                   <form:input type="text" path="mb_name" id="mb_name" class="w3-input w3-round w3-border form-control" />
                </div>
             </div>
-            <div class="form-inline menu"  style="margin-bottom:20px">
-               <div class="form-group" style="width:100px">
+            <div class="row menu"  style="margin-bottom:20px">
+               <div class="col-md-offset-3 col-md-3" style="width:100px">
                   성별
                </div>
-               <div class="form-group">
-                  <button type="button" id="man" class="w3-button w3-round w3-border form-control gender">남성</button>
-                  <button type="button" id="woman" class="w3-button w3-round w3-border form-control gender">여성</button>
-                  <form:input type="hidden" path="mb_gender" value="" id="gender"/>
-               </div>
+               <div class="col-md-5 row">
+               	  <div class="col-md-6">
+                  	<button type="button" id="man" class="w3-button w3-round w3-border form-control gender">남성</button>
+                  </div>
+                  <div class="col-md-6">
+                 	 <button type="button" id="woman" class="w3-button w3-round w3-border right form-control gender">여성</button>
+                  </div>
+               <form:input type="hidden" path="mb_gender" value="" id="gender"/>
             </div>
-            <div class="form-inline menu"  style="margin-bottom:20px">
-               <div class="form-group" style="width:100px">
+            </div>
+            <div class="row menu"  style="margin-bottom:20px">
+               <div class="col-md-offset-3 col-md-3" style="width:100px">
                   생년월일
                </div>
-               <div class="form-group">
+               <div class="col-md-5">
                   <form:input type="text" path="mb_birth" id="mb_brith" value="" class="w3-input w3-round w3-border form-control w3-white" readonly="true"/>
                </div>
             </div>
-            <div class="form-inline menu"  style="margin-bottom:20px">
-               <div class="form-group" style="width:100px">
+            <div class="row menu"  style="margin-bottom:20px">
+               <div class="col-md-offset-3 col-md-3" style="width:100px">
                   이메일
                </div>
-               <div class="form-group">
+               <div class="col-md-5">
                   <form:input type="text" path="mb_email" id="mb_email" class="w3-input w3-round w3-border form-control" readonly="true"/>
                </div>
             </div>
-            <div class="form-inline menu"  style="margin-bottom:20px">
-               <div class="form-group" style="width:100px">
+            <div class="row menu"  style="margin-bottom:20px">
+               <div class="col-md-offset-3 col-md-3" style="width:100px">
                   전화번호
                </div>
-               <div class="form-group">
+               <div class="form-inline col-md-5">
                   <input type="text" id="tel1" class="w3-input w3-round w3-border form-control" maxlength="3" style="width:50px"/>-
                   <input type="text" id="tel2"class="w3-input w3-round w3-border form-control" maxlength="4" style="width:70px"/>-
                   <input type="text" id="tel3"class="w3-input w3-round w3-border form-control" maxlength="4" style="width:70px"/>
                   <form:input type="hidden" path="mb_tel" value=""/>
                </div>
          </div>
-          <div align="left" style="margin-bottom:20px;margin-top:50px; margin-left:200px">
-                  <button type="button" id="abc" class="btn btn-primary" style="width:300px">회원수정</button>
-               </div>
+          <div align="left" class="col-md-offset-5 col-md-3" style="margin-bottom:20px;margin-top:50px;">
+                  <button type="button" id="abc" class="btn btn-primary form-control">회원수정</button>
+          </div>
          </div>  
    		</form:form> 
       </div>

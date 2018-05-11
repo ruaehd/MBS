@@ -19,15 +19,14 @@
 				
 			</div>
 			<div class="form-group">
-				<select class="w3-select w3-border w3-round" style="width:100px" id="sel1">
+				<form:select class="w3-select w3-border w3-round" style="width:100px" id="sel1" path="qst_code">
 					<option>예약</option>
-					<option>결제</option>
+					<option>결재</option>
 					<option>환불</option>
 					<option>리뷰</option>
 					<option>서비스</option>
 					<option>기타</option>
-				</select>
-				<form:input type="hidden" path="qst_code" id="code" />
+				</form:select>
 			</div></div>
 			<div class="form-inline">
 				<div class="form-group">
@@ -72,12 +71,7 @@
 
 <script>
 	$(function() {
-		$('#sel1').change(function(){
-			var s1 = $('#sel1').val();
-			$('#code').val(s1);
-		});
 		
-	
 	});
 </script>
 <jsp:include page="footer.jsp"></jsp:include>

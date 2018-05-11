@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Admin_Event">
+	<update id="UpdateEvent" parameterType="com.mbs.mvc.vo.EventVO">
+		UPDATE `event` SET evt_title=#{evt_title}, evt_begintime=#{evt_begintime}, evt_endtime=#{evt_endtime}, 
+		evt_content=#{evt_content, jdbcType=BLOB}, evt_image=#{evt_image, jdbcType=BLOB} WHERE evt_no=#{evt_no} 
+	</update>
+
+	<update id="EventDelete" parameterType="com.mbs.mvc.vo.EventVO">
+		UPDATE `event` SET evt_delete=#{evt_delete} WHERE evt_no=#{evt_no} 
+	</update>
+	
+	<select id="Amind_EventImgList" parameterType="com.mbs.mvc.vo.EventVO" resultType="com.mbs.mvc.vo.EventVO">
+		SELECT evt_no, evt_title, evt_begintime, evt_endtime, evt_delete, evt_date FROM `event`
+			<if test="sel_type != 'all' and evt_begintime == 'null'">
+				WHERE evt_delete=#{sel_type} 
+			</if>  
+			<if test="evt_begintime != 'null' and sel_type == 'all'">
+				WHERE evt_begintime <![CDATA[ >= ]]> #{evt_begintime} AND evt_endtime <![CDATA[ <= ]]> #{evt_endtime} 
+			</if>  
+			<if test="sel_type != 'all' and evt_begintime != 'null'">
+				WHERE evt_delete=#{sel_type} AND evt_begintime <![CDATA[ >= ]]> #{evt_begintime} AND evt_endtime <![CDATA[ <= ]]> #{evt_endtime} 
+			</if>
+			<if test="sel_type == 'all' and evt_begintime == 'null'">
+				WHERE evt_title LIKE CONCAT('%', #{evt_sc_text}, '%') 
+			</if> 
+			<if test="sel_type != 'all' or evt_begintime != 'null'">
+				AND evt_title LIKE CONCAT('%', #{evt_sc_text}, '%') 
+			</if> 
+			ORDER BY evt_date DESC LIMIT #{evt_page}, 10
+	</select>
+	
+	<select id="EventPage" parameterType="com.mbs.mvc.vo.EventVO" resultType="int">
+		SELECT COUNT(*) FROM `event` 
+			<if test="sel_type != 'all' and evt_begintime == 'null'">
+				WHERE evt_delete=#{sel_type} 
+			</if>  
+			<if test="evt_begintime != 'null' and sel_type == 'all'">
+				WHERE evt_begintime <![CDATA[ >= ]]> #{evt_begintime} AND evt_endtime <![CDATA[ <= ]]> #{evt_endtime} 
+			</if>  
+			<if test="sel_type != 'all' and evt_begintime != 'null'">
+				WHERE evt_delete=#{sel_type} AND evt_begintime <![CDATA[ >= ]]> #{evt_begintime} AND evt_endtime <![CDATA[ <= ]]> #{evt_endtime} 
+			</if>
+			<if test="sel_type == 'all' and evt_begintime == 'null'">
+				WHERE evt_title LIKE CONCAT('%', #{evt_sc_text}, '%') 
+			</if> 
+			<if test="sel_type != 'all' or evt_begintime != 'null'">
+				AND evt_title LIKE CONCAT('%', #{evt_sc_text}, '%') 
+			</if> 
+	</select>
+	
+		
+	<insert id="insertEvent" parameterType="com.mbs.mvc.vo.EventVO">
+		INSERT INTO event(evt_title, evt_content, evt_image, evt_begintime, evt_endtime, evt_date, mb_id, evt_delete) 
+		VALUES(#{evt_title}, #{evt_content, jdbcType=BLOB}, #{evt_image, jdbcType=BLOB}, #{evt_begintime}, #{evt_endtime}, NOW(), #{mb_id}, #{evt_delete})	
+	</insert>
+		
+</mapper>
