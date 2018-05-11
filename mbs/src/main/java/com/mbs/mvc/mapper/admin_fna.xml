@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Admin_Fna">
+	<update id="FnaUpdate" parameterType="com.mbs.mvc.vo.FNAVO">
+		UPDATE `fna` SET fna_title=#{fna_title}, fna_content=#{fna_content}, fna_code=#{fna_code} WHERE fna_no=#{fna_no}
+	</update>
+
+	<update id="FnaDelete" parameterType="com.mbs.mvc.vo.FNAVO">
+		UPDATE `fna` SET fna_delete=#{fna_delete} WHERE fna_no=#{fna_no} 
+	</update>
+
+	<select id="FnaList" parameterType="com.mbs.mvc.vo.FNAVO" resultType="com.mbs.mvc.vo.FNAVO">
+		SELECT * FROM `fna` 
+		<if test="fna_sc_type == 'all'">
+			WHERE (fna_title LIKE CONCAT('%', #{fna_sc_text}, '%') OR fna_content LIKE CONCAT('%', #{fna_sc_text}, '%'))  
+		</if>
+		<if test="fna_sc_type != 'all'">
+			WHERE ${fna_sc_type} LIKE CONCAT('%', #{fna_sc_text}, '%')  
+		</if>
+		<if test="fna_code != 0">
+		AND fna_code=#{fna_code} 
+		</if>
+		<if test="fna_delete != 2">
+		AND fna_delete=#{fna_delete} 
+		</if>
+		ORDER BY fna_no DESC LIMIT #{fna_page}, 10
+	</select>
+	
+	<select id="FnaPage" parameterType="com.mbs.mvc.vo.FNAVO" resultType="int">
+		SELECT COUNT(*) FROM `fna` 
+			<if test="fna_sc_type == 'all'">
+			WHERE (fna_title LIKE CONCAT('%', #{fna_sc_text}, '%') OR fna_content LIKE CONCAT('%', #{fna_sc_text}, '%'))  
+			</if>
+			<if test="fna_sc_type != 'all'">
+			WHERE ${fna_sc_type} LIKE CONCAT('%', #{fna_sc_text}, '%')  
+			</if>
+			<if test="fna_code != 0">
+			AND fna_code=#{fna_code} 
+			</if>
+			<if test="fna_delete != 2">
+			AND fna_delete=#{fna_delete} 
+			</if>
+	</select>
+	
+	<insert id="FnaInsert" parameterType="com.mbs.mvc.vo.FNAVO">
+		INSERT INTO `fna`(fna_title, fna_content, fna_code, fna_delete, fna_date, mb_id) VALUES(#{fna_title},#{fna_content},#{fna_code}, 1, NOW(), #{mb_id})
+	</insert>
+</mapper>
