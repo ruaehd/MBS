@@ -169,16 +169,16 @@ public class V1_ReservationController {
 	 * 예약내용
 	 */
 	@RequestMapping(value="/usr_rsv_content.do", method = RequestMethod.GET)
-	public String userReservationContent(Model model,
+	public String userReservationContent(Model model, HttpSession httpSession,
 			@RequestParam("rsv_no") int rsv_no, 
 			@RequestParam("str_number") int str_number) {
 		
 		try {
 			V1_Reservation vo = new V1_Reservation();
 			vo.setRsv_no(rsv_no);
-			
+			String id = (String)httpSession.getAttribute("_id");
 			V1_Comment revo = new V1_Comment();
-			revo.setRsv_cmt_writer("user");
+			revo.setRsv_cmt_writer(id);
 			revo.setRsv_no(rsv_no);
 			
 			V1_Reservation rvo = rDAO.selectRsvOne(vo);

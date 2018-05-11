@@ -28,8 +28,30 @@ public class V1_Comment {
 	private String rep_date = null;
 	private int rep_delete = 0;
 	
+	private int rsv_cmt_taste_p = 0;
+	private int rsv_cmt_service_p = 0;
+	private int rsv_cmt_price_p = 0;
 	
 	
+	
+	public int getRsv_cmt_taste_p() {
+		return rsv_cmt_taste_p;
+	}
+	public int getRsv_cmt_service_p() {
+		return rsv_cmt_service_p;
+	}
+	public int getRsv_cmt_price_p() {
+		return rsv_cmt_price_p;
+	}
+	public void setRsv_cmt_taste_p(int rsv_cmt_taste_p) {
+		this.rsv_cmt_taste_p = rsv_cmt_taste_p;
+	}
+	public void setRsv_cmt_service_p(int rsv_cmt_service_p) {
+		this.rsv_cmt_service_p = rsv_cmt_service_p;
+	}
+	public void setRsv_cmt_price_p(int rsv_cmt_price_p) {
+		this.rsv_cmt_price_p = rsv_cmt_price_p;
+	}
 	public int getRep_no() {
 		return rep_no;
 	}

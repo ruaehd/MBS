@@ -2,6 +2,10 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> 
+<%
+	pageContext.setAttribute("br", "<br/>");
+	pageContext.setAttribute("cn", "\n");
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -28,7 +32,7 @@
 		<jsp:include page="v1_header.jsp"></jsp:include>
 		<div class="container" style="margin-top:100px">
 			
-			<h2>예약목록</h2>
+			<h2>후기목록</h2>
 			<hr />
 			<div class="row">
 				<div class="col-md-6" style="margin-bottom:10px">
@@ -67,8 +71,8 @@
 					 		</td>
 					 		<td>${tmp.rsv_cmt_point}</td>
 					 		<td>
-					 			<div style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap; width: 300px;" title="${tmp.rsv_cmt_content}">
-									${tmp.rsv_cmt_content}
+					 			<div class="con" style="width:400px; word-wrap: break-word">
+									${fn:replace(tmp.rsv_cmt_content, cn, br)}
 								</div>
 					 		</td>
 					 		<td>${tmp.rsv_cmt_writer}</td>
@@ -109,8 +113,18 @@
 	<script src="resources/js/bootstrap.min.js"></script>
 	<script src="resources/js/jquery.twbsPagination.min.js"></script>
 	<script src="resources/js/sweetalert.min.js"></script>
+	<script src="resources/js/readmore.min.js"></script>
+	
 	<script>
 		$(function(){
+			
+			$('.con').readmore({
+				blockCSS: 'display: inline-block;',
+				speed: 75,
+				collapsedHeight: 20,
+				moreLink: '<a href="#"><span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span>펼치기</a>',
+				lessLink: '<a href="#"><span class="glyphicon glyphicon-triangle-top" aria-hidden="true"></span>접기</a>'
+			});
 			
 			$('.rsv_info').click(function(){
 				//class로 지정란 버튼의 위치 얻기(0부터 시작함)

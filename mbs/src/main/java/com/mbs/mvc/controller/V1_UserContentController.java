@@ -43,7 +43,7 @@ public class V1_UserContentController {
 			HttpSession httpSession) {
 		try{
 			httpSession.setAttribute("_gr",1);
-			httpSession.setAttribute("_id", "user");
+			httpSession.setAttribute("_id", "test9");
 			
 			//파람
 			V1_Store vo = ucDAO.selectStoreOne(str_number);

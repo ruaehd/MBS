@@ -11,7 +11,8 @@
 	</select>
 	
 	<insert id="insertComment" parameterType="V1_Comment">
-		INSERT INTO `rsv_comment` (rsv_cmt_content, rsv_cmt_point, rsv_cmt_writer, rsv_cmt_date, rsv_no, rsv_cmt_taste, rsv_cmt_service, rsv_cmt_price) VALUES(#{rsv_cmt_content}, #{rsv_cmt_point}, #{rsv_cmt_writer}, NOW(), #{rsv_no}, #{rsv_cmt_taste}, #{rsv_cmt_service}, #{rsv_cmt_price})
+		INSERT INTO `rsv_comment` (rsv_cmt_content, rsv_cmt_point, rsv_cmt_writer, rsv_cmt_date, rsv_no, rsv_cmt_taste, rsv_cmt_service, rsv_cmt_price, rsv_cmt_taste_p, rsv_cmt_service_p, rsv_cmt_price_p) 
+		VALUES(#{rsv_cmt_content}, #{rsv_cmt_point}, #{rsv_cmt_writer}, NOW(), #{rsv_no}, #{rsv_cmt_taste}, #{rsv_cmt_service}, #{rsv_cmt_price}, #{rsv_cmt_taste_p}, #{rsv_cmt_service_p}, #{rsv_cmt_price_p})
 	</insert>
 	
 	<select id="selectReviewChk" parameterType="V1_Comment" resultType="int">
@@ -23,7 +24,7 @@
 	</select>
 	
 	<update id="updateComment" parameterType="V1_Comment">
-		UPDATE `rsv_comment` SET rsv_cmt_content=#{rsv_cmt_content}, rsv_cmt_point=#{rsv_cmt_point}, rsv_cmt_taste=#{rsv_cmt_taste}, rsv_cmt_service=#{rsv_cmt_service}, rsv_cmt_price=#{rsv_cmt_price} WHERE rsv_cmt_no=#{rsv_cmt_no}
+		UPDATE `rsv_comment` SET rsv_cmt_content=#{rsv_cmt_content}, rsv_cmt_point=#{rsv_cmt_point}, rsv_cmt_taste=#{rsv_cmt_taste}, rsv_cmt_service=#{rsv_cmt_service}, rsv_cmt_price=#{rsv_cmt_price}, rsv_cmt_taste_p=#{rsv_cmt_taste_p}, rsv_cmt_service_p=#{rsv_cmt_service_p}, rsv_cmt_price_p=#{rsv_cmt_price_p} WHERE rsv_cmt_no=#{rsv_cmt_no}
 	</update>
 	
 	<select id="selectCmtList" parameterType="V1_Store" resultType="V1_Comment">

@@ -40,10 +40,11 @@ public class V1_ReviewController {
 	}
 	
 	@RequestMapping(value="/usr_rsv_comment.do", method = RequestMethod.POST)
-	public String usrRsvComment(Model model, @RequestParam("rsv_no") int rsv_no, @ModelAttribute("vo") V1_Comment vo) {
+	public String usrRsvComment(Model model, HttpSession httpSession, @RequestParam("rsv_no") int rsv_no, @ModelAttribute("vo") V1_Comment vo) {
 		try {
 			vo.setRsv_no(rsv_no);
-			vo.setRsv_cmt_writer("user");
+			String id = (String)httpSession.getAttribute("_id");
+			vo.setRsv_cmt_writer(id);
 			reDAO.insertComment(vo);
 			
 			model.addAttribute("message", "후기가 작성되었습니다.");
@@ -62,14 +63,15 @@ public class V1_ReviewController {
 	}
 	
 	@RequestMapping(value="/usr_rsv_comment_edit.do", method = RequestMethod.GET)
-	public String usrRsvCommentEdit(Model model, @RequestParam("rsv_no") int rsv_no) {
+	public String usrRsvCommentEdit(Model model, HttpSession httpSession, @RequestParam("rsv_no") int rsv_no) {
 		
 		try {
 			V1_Comment vo1 = reDAO.selectPreReview(rsv_no); 
 			V1_Comment vo = new V1_Comment();
+			String id = (String)httpSession.getAttribute("_id");
 			
 			vo.setRsv_no(rsv_no);
-			vo.setRsv_cmt_writer("user");
+			vo.setRsv_cmt_writer(id);
 			
 			V1_Comment rvo = reDAO.selectReviewOne(vo);
 			rvo.setStr_name(vo1.getStr_name());

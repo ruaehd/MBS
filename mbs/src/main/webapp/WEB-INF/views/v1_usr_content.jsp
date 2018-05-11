@@ -70,11 +70,31 @@
 		.star_rating p.on {
 			color:#EDD200;
 		}
-		code{
-			color:#353535;
-			background-color:#EAEAEA; 
-			margin-right:5px
+		code1{
+			color:#fff;
+			background-color:#EA4335;
+			margin-right:5px;
+			padding: 2px 4px;
+			border-radius: 4px;
+			font-size: 90%;
 		}
+		code2{
+			color:#fff;
+			background-color:#34A853;
+			margin-right:5px;
+			padding: 2px 4px;
+			border-radius: 4px;
+			font-size: 90%;
+		}
+		code3{
+			color:#fff;
+			background-color:#4285F4;
+			margin-right:5px;
+			padding: 2px 4px;
+			border-radius: 4px;
+			font-size: 90%;
+		}
+		
 	</style>
 </head>
 <body>
@@ -164,7 +184,9 @@
 					</div>
 					<div class="form-inline">
 						<label>소개</label>
-						${vo.str_document}
+						<div class="form-group intro">
+							${fn:replace(vo.str_document, cn, br)}
+						</div>
 					</div>
 				</div>
 		
@@ -221,7 +243,6 @@
 				<div id="map" style="width:100%;height:350px;"></div>
 			</div>
 		</div>
-		
 		<jsp:include page="v1_footer.jsp"></jsp:include>
 	</div>
 	
@@ -230,6 +251,7 @@
 	<script src="resources/js/circle-progress.js"></script>
 	<script type="text/javascript" src="resources/js/jquery.twbsPagination.min.js"></script>
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=66e7156b3899e012effaa62fd20217d4&libraries=services"></script>
+	<script src="resources/js/readmore.min.js"></script>
 	<script>
 	
 	$(function() {
@@ -237,7 +259,6 @@
 			interval : 2000
 		});
 		
-	
 		$('#circle1').circleProgress({
 		    value: '${taste}'
 		  }).on('circle-animation-progress', function(event, progress) {
@@ -254,6 +275,14 @@
 		    $(this).find('strong').html(Math.round(100 * progress) + '<i>%</i>');
 		  });
 		
+		$('.intro').readmore({
+			blockCSS: 'margin-right:100px; display: inline-block;',
+			speed: 75,
+			collapsedHeight: 110,
+			moreLink: '<a href="#"><span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span>펼치기</a>',
+			lessLink: '<a href="#"><span class="glyphicon glyphicon-triangle-top" aria-hidden="true"></span>접기</a>'
+		});
+		
 		$('#pagination').twbsPagination({
 			totalPages:${totPage},
 			visiblePage:10,
@@ -266,9 +295,7 @@
 					cache:false,
 					async: false,
 					success:function(data){
-				
 						$('#review').empty();
-						
 						var len = data.length;
 						for(var i=0; i<len; i++){
 							
@@ -281,22 +308,31 @@
 								success:function(data1){
 									
 									var br2nl = function(varTest){
-							            return varTest.replace("<br/>", "\n");
+							            return varTest.replace(/\n/gi, "<br>");
 							         };
 									
 									var str = '';
 									var str1 = '';
 									var rep = '';
 									if(data1 != 0){
-										rep ='<div class="review" style="margin-bottom:20px; border:1px solid #ccc; padding:10px">'
-												+ '<div>'
-													+ '<span class="glyphicon glyphicon-bullhorn" aria-hidden="true" style="margin:0 10px 0 20px"></span>'
-													+ '<label>사장님 답글</label>'
+										rep =
+											'<div class="review" style="margin-bottom:20px; padding:10px; background:#eee">'
+											+ '<div class="row">'
+												+ '<div class="col-md-10">'
+													+ '<div>'
+														+ '<span class="glyphicon glyphicon-bullhorn" aria-hidden="true" style="margin:0 10px 0 20px"></span>'
+														+ '<label>사장님 답글</label>'
+													+ '</div>'
+													+ '<div class="con" style="padding:0 50px; width:90%; word-wrap: break-word">'
+														+ br2nl(data1.rep_content)
+													+ '</div>'
 												+ '</div>'
-												+ '<div style="margin-left:30px">'
-													+ data1.rep_content
+												+ '<div class="col-md-2" style="border-left:1px solid #ccc">'
+													+ '<label>작성일</label> - '+data1.rep_date.substr(0,11)
 												+ '</div>'
 											+ '</div>'
+										+ '</div>'
+											
 									}
 									
 									for(var j=0; j<data[i].rsv_cmt_point; j++){
@@ -305,32 +341,81 @@
 									for(var k=0; k<5-data[i].rsv_cmt_point; k++){
 										str1 = str1+'<p>★</p>';
 									}
+									
+									if(data[i].rsv_cmt_taste_p == 1){
+										var var1 = '<code1>'+data[i].rsv_cmt_taste+'</code1>';
+									}
+									else if(data[i].rsv_cmt_taste_p == 2){
+										var var1 = '<code2>'+data[i].rsv_cmt_taste+'</code2>';
+									}
+									else if(data[i].rsv_cmt_taste_p == 3){
+										var var1 = '<code3>'+data[i].rsv_cmt_taste+'</code3>';
+									}
+									
+									if(data[i].rsv_cmt_service_p == 1){
+										var var2 = '<code1>'+data[i].rsv_cmt_service+'</code1>';
+									}
+									else if(data[i].rsv_cmt_service_p == 2){
+										var var2 = '<code2>'+data[i].rsv_cmt_service+'</code2>';
+									}
+									else if(data[i].rsv_cmt_service_p == 3){
+										var var2 = '<code3>'+data[i].rsv_cmt_service+'</code3>';
+									}
+									
+									if(data[i].rsv_cmt_price_p == 1){
+										var var3 = '<code1>'+data[i].rsv_cmt_price+'</code1>';
+									}
+									else if(data[i].rsv_cmt_price_p == 2){
+										var var3 = '<code2>'+data[i].rsv_cmt_price+'</code2>';
+									}
+									else if(data[i].rsv_cmt_price_p == 3){
+										var var3 = '<code3>'+data[i].rsv_cmt_price+'</code3>';
+									}
 								
 									$('#review').append(
 										'<div class="review" style="margin-bottom:10px; border:1px solid #ccc; padding:10px">'
 											+ '<div class="row">'
-												+ '<div class="col-md-8">'
-													+ '<div style="display:inline-block; margin-right:50px; padding-left:10px" class="star_rating">'
-														+ str
-														+ str1
+												+ '<div class="col-md-10">'
+													+ '<div class="row">'
+														+ '<div class=col-md-4>'
+															+ '<div style="display:inline-block; padding-left:10px" class="star_rating">'
+																+ str
+																+ str1
+															+ '</div>'
+														+ '</div>'
+														+ '<div class=col-md-8>'
+															+ '<div align:"right">'
+																+ var1
+																+ var2
+																+ var3
+															+ '</div>'
+														+ '</div>'
 													+ '</div>'
-													+ '<code>'+data[i].rsv_cmt_taste+'</code>'
-													+ '<code>'+data[i].rsv_cmt_service+'</code>'
-													+ '<code>'+data[i].rsv_cmt_price+'</code>'
+													+ '<div class="con" style="padding:0 50px; width:90%; word-wrap: break-word">'
+														+ br2nl(data[i].rsv_cmt_content)
+													+ '</div>'
+													
 												+ '</div>'
-												+ '<div class="col-md-4" align="right" style="padding-right:50px">'
-													+ '<label>작성자</label> - '+data[i].rsv_cmt_writer+' / '
-													+ '<label>사용일</label> - '+data[i].rsv_day+''
+												+ '<div class="col-md-2" align="left" style="border-left:1px solid #ccc">'
+													+ '<label>작성자</label> - '+data[i].rsv_cmt_writer+' <br /> '
+													+ '<label>사용일</label> - '+data[i].rsv_day+' <br /> '
+													+ '<label>작성일</label> - '+data[i].rsv_cmt_date.substr(0,11)
 												+ '</div>'
 											+ '</div>'
-											+ '<div style="margin-left:20px">'
-												+ br2nl(data[i].rsv_cmt_content)
-											+ '</div>'
+											
 										+ '</div>'
 										+ rep
 										+ '<hr />'
 									).trigger("create");
-							
+									
+									$('.con').readmore({
+										blockCSS: 'display: inline-block;',
+										speed: 75,
+										collapsedHeight: 40,
+										moreLink: '<a href="#"><span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span>펼치기</a>',
+										lessLink: '<a href="#"><span class="glyphicon glyphicon-triangle-top" aria-hidden="true"></span>접기</a>'
+									});	
+									
 								}
 							});
 						}
