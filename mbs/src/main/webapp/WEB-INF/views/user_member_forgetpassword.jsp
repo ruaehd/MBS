@@ -37,7 +37,6 @@
    </div>
    
    <div class="row setup-content" id="step-1">
-           <div class="col-xs-12">
                <div class="col-md-12" style="width:100%;margin:0px auto">
                   <div style="margin-left:20%">
                       <h1>본인확인</h1>
@@ -45,17 +44,16 @@
                    <div style="border:1px solid #cccccc; width:64%;margin:0px auto;margin-bottom:50px">
                     </div>
                       <div class="form-inline" style="margin-left:20%">
-                     <label class="col-sm-2 control-label" for="email">아이디</label>
+                     <label class="col-sm-offset-2 col-sm-2 control-label" for="email">아이디</label>
                      <div class="col-sm-5">
                            <input type="text" style="width:300px" class="form-control" id="id" placeholder="아이디를 입력하세요" />
-                     </div>      
+                     </div>
                   </div>
-                   <div align="center" style="margin-bottom:20px;margin-top:50px">
-                   	  <a href="user_main.do"><button class="btn btn-primary">마이페이지</button></a>
+                   </div> 
+                   <div align="center"  style="margin-top:50px">
+                   	  <a href="user_main.do" ><button class="btn btn-primary">마이페이지</button></a>
                       <button id="next-2" class="btn btn-primary">다음단계로</button>
-                  </div>
-            </div>   
-           </div>
+                      </div>
        </div>
    
        <div class="row setup-content" id="step-2">

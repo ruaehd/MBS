@@ -14,7 +14,7 @@
             <img src="resources/imgs/join.png" style="width:200px; height:100%"/><br/>
          </div>
       </div>
-      <div class="container" style="width:80%;height:100px">
+      <div class="container" style="width:64%;height:100px">
       <div class="row form-group">
          <div class="col-xs-12">
             <ul class="nav nav-pills nav-justified thumbnail setup-panel">
@@ -36,10 +36,10 @@
    </div>
    <div class="row setup-content" id="step-1">
            <div class="col-xs-12">
-               <div style="width:64%; margin:0px auto">
+               <div style="width:80%; margin:0px auto">
                   <h1> 회원약관</h1>
                   <div style="border:1px solid #cccccc; width:100%;margin:0px auto;margin-bottom:50px"></div>
-                   <div class="wrapper" style="width:600px; margin:10px auto">
+                   <div class="wrapper" style="width:800px; margin:10px auto">
                       <div style="margin-bottom:10px">
                          <div class="row" style="margin-bottom:10px">
                             <div class="col-md-6">
@@ -238,82 +238,86 @@
                    <div style="border:1px solid #cccccc; width:100%;margin:0px auto;margin-bottom:50px">
                   </div>
                   <div class="container">
-            <div class="form-inline menu"  style="margin-bottom:20px">
-               <div class="form-group" style="width:100px">
+            <div class="row menu"  style="margin-bottom:20px">
+               <div class="col-md-offset-3 col-md-3" style="width:100px">
                   아이디
                </div>
-               <div class="form-group">
+               <div class="col-md-4">
                   <form:input type="text" path="mb_id" id="mb_id" class="w3-input w3-round w3-border form-control" />
                </div>
             
-               <div class="form-group" style="margin-left:20px">
+               <div class="col-md-1" style="margin-left:20px">
                   <input type="button" id="idcheck" class="btn btn-info w3-red" value="중복확인"/>
                </div>
             </div>
-            <div class="form-inline menu" style="margin-bottom:20px">
-               <div class="form-group" style="width:100px">
+            <div class="row menu" style="margin-bottom:20px">
+               <div class="col-md-offset-3 col-md-3" style="width:100px">
                   암호
                </div>
-               <div class="form-group">
+               <div class="col-md-4">
                   <form:input type="password" path="mb_pw" id="mb_pw" maxlength="16" class="w3-input w3-round w3-border form-control" />
                </div>
                <div id="exp"></div>
             </div>
-            <div class="form-inline menu"  style="margin-bottom:20px">
-               <div class="form-group" style="width:100px">
-                  암호 재확인
+            <div class="row menu"  style="margin-bottom:20px">
+               <div class="col-md-offset-3 col-md-3" style="width:100px">
+                  암호재확인
                </div>
-               <div class="form-group">
+               <div class="col-md-4">
                   <input type="password" id="mb_repw"  size="16" class="w3-input w3-round w3-border form-control" />
                </div>
                <div id="reexp"></div>
             </div>
-            <div class="form-inline menu"  style="margin-bottom:20px">
-               <div class="form-group" style="width:100px">
+            <div class="row menu"  style="margin-bottom:20px">
+               <div class="col-md-offset-3 col-md-3" style="width:100px">
                이름
                </div>
-               <div class="form-group">
+               <div class="col-md-4">
                   <form:input type="text" path="mb_name" id="mb_name" class="w3-input w3-round w3-border form-control" />
                </div>
             </div>
-            <div class="form-inline menu"  style="margin-bottom:20px">
-               <div class="form-group" style="width:100px">
+            <div class="row menu"  style="margin-bottom:20px">
+               <div class="col-md-offset-3 col-md-3" style="width:100px">
                   성별
                </div>
-               <div class="form-group">
+               <div class="col-md-4 row">
+               	<div class="col-md-6">
                   <button type="button" id="man" class="w3-button w3-round w3-border form-control gender">남성</button>
+                </div>
+                <div class="col-md-6">
                   <button type="button" id="woman" class="w3-button w3-round w3-border form-control gender">여성</button>
+                </div>
                   <form:input type="hidden" path="mb_gender" value="" id="gender"/>
                </div>
             </div>
-            <div class="form-inline menu"  style="margin-bottom:20px">
-               <div class="form-group" style="width:100px">
+            <div class="row menu"  style="margin-bottom:20px">
+               <div class="col-md-offset-3 col-md-3" style="width:100px">
                   생년월일
                </div>
-               <div class="form-group">
+               <div class="col-md-4">
                   <form:input type="text" path="mb_birth" id="mb_brith" value="" class="w3-input w3-round w3-border form-control w3-white" readonly="true"/>
                </div>
             </div>
-            <div class="form-inline menu"  style="margin-bottom:20px">
-               <div class="form-group" style="width:100px">
+            <div class="row menu"  style="margin-bottom:20px">
+               <div class="col-md-offset-3 col-md-3" style="width:100px">
                   이메일
                </div>
-               <div class="form-group">
+               <div class="col-md-4">
                   <form:input type="text" path="mb_email" id="mb_email" class="w3-input w3-round w3-border form-control" readonly="true"/>
                </div>
             </div>
-            <div class="form-inline menu"  style="margin-bottom:20px">
-               <div class="form-group" style="width:100px">
+            <div class="row menu"  style="margin-bottom:20px">
+               <div class="col-md-offset-3 col-md-3" style="width:100px">
                   전화번호
                </div>
-               <div class="form-group">
-                  <input type="text" id="tel1" class="w3-input w3-round w3-border form-control" maxlength="3" style="width:50px"/>-
-                  <input type="text" id="tel2"class="w3-input w3-round w3-border form-control" maxlength="4" style="width:70px"/>-
-                  <input type="text" id="tel3"class="w3-input w3-round w3-border form-control" maxlength="4" style="width:70px"/>
+               <div class="form-inline col-md-5">
+                  <input type="text" id="tel1" class="w3-input w3-round w3-border form-control" maxlength="3" style="width:70px"/>-
+                  <input type="text" id="tel2"class="w3-input w3-round w3-border form-control" maxlength="4" style="width:90px"/>-
+                  <input type="text" id="tel3"class="w3-input w3-round w3-border form-control" maxlength="4" style="width:90px"/>
                   <form:input type="hidden" path="mb_tel" value=""/>
                </div>
          </div>
-         <div align="left" style="margin-bottom:20px;margin-top:50px; margin-left:200px">
+         <div style="margin:50px auto">
                   <button type="button" id="abc" class="btn btn-primary" style="width:300px">회원가입</button>
                </div>
          </div>  

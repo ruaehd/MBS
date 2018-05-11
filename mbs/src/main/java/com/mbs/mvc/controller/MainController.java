@@ -1,12 +1,10 @@
 package com.mbs.mvc.controller;
 
-import java.awt.PageAttributes.MediaType;
-import java.io.InputStream;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
-import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -30,7 +28,8 @@ public class MainController {
 	}
 	
 	@RequestMapping(value="/map_main.do", method= RequestMethod.GET)
-	public String map_main() {
+	public String map_main(HttpSession httpsession) {
+		System.out.println(httpsession.getAttribute("Mem_Grade"));
 		return "map_main";
 	}
 	
@@ -41,7 +40,6 @@ public class MainController {
 	
 	@RequestMapping(value="/getBlobImg.do",method = {RequestMethod.GET,RequestMethod.POST})
 	public ResponseEntity<byte[]> getBlobImg(@RequestParam(value="no") int no,HttpServletRequest request) {
-		
 		
 		Map<String,Object> map= maDAO.selectImgOne(no);
 		byte[] imgData = null;
@@ -55,10 +53,5 @@ public class MainController {
 			System.out.println(e.getMessage());
 			return null;
 		}
-		
-		
-		
-		 
-		
 	}
 }
