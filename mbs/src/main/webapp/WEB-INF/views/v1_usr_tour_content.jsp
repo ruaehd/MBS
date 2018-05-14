@@ -75,7 +75,7 @@
 </head>
 <body>
 	<div id="wrapper">
-		<jsp:include page="v1_header.jsp"></jsp:include>
+		<jsp:include page="header.jsp"></jsp:include>
 		<div id="main">
 			<div class="container" style="margin-top:100px ">
 				
