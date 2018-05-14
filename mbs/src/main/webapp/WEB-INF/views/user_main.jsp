@@ -3,24 +3,34 @@
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="UTF-8" />
-		<title>Google Nexus Website Menu</title>
-		<link rel="shortcut icon" href="../favicon.ico">
-		<link rel="stylesheet" type="text/css" href="resources/css/normalize.css" />
-		<link rel="stylesheet" type="text/css" href="resources/css/demo.css" />
-		<link rel="stylesheet" type="text/css" href="resources/css/component.css" />
-		<link rel="stylesheet" type="text/css" href="resources/css/bootstrap.css" />
-		<link rel="stylesheet" type="text/css" href="resources/css/w3.css"/>
-		<link rel="stylesheet" type="text/css" href="resources/css/footer.css" />
-	</head>
+<head>
+	<meta charset="UTF-8" />
+	<title>Google Nexus Website Menu</title>
+	<link rel="shortcut icon" href="../favicon.ico">
+	<link rel="stylesheet" type="text/css" href="resources/css/normalize.css" />
+	<link rel="stylesheet" type="text/css" href="resources/css/demo.css" />
+	<link rel="stylesheet" type="text/css" href="resources/css/component.css" />
+	<link rel="stylesheet" type="text/css" href="resources/css/bootstrap.css" />
+	<link rel="stylesheet" type="text/css" href="resources/css/w3.css"/>
+	<link rel="stylesheet" type="text/css" href="resources/css/footer.css" />
+	<link rel="stylesheet" type="text/css" href="resources/css/jquery-ui.min.css" />
+	<link rel="stylesheet" type="text/css" href="resources/css/jquery-ui-timepicker-addon.css" />
+	<style>
+		.container{
+			z-index:2;
+		}
+		.gn-menu-main{
+			z-index:10;
+		}
+	</style>
+</head>
 <body>
-	<div id="wrapper">
+	<div class="wrapper">
 		<jsp:include page="v1_header.jsp"></jsp:include>
 		<div id="main">
 			<div class="row" style="margin-top: 68px; border-bottom: 1px solid #cccccc; width: 100%">
-				<div class="col-md-9"
-					style="border-right: 1px solid #cccccc; padding: 10px">
+
+				<div class="col-md-9" style="border-right: 1px solid #cccccc; padding: 10px">
 					<div class="container w3-round" id="imgcon"
 						style="border: 1px solid #cccccc; width: 100%; height: 300px;white-space:nowrap;overflow-x:auto;overflow-y:hidden">
 						<h3>현재 예약중인 항목</h3>
@@ -134,95 +144,94 @@
 		</div>
 		<jsp:include page="v1_footer.jsp"></jsp:include>
 	</div>
-
-   	<div class="modal fade" id="questionlist">
+      	<div class="modal fade" id="questionlist">
 		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<div class="row">
-						<div class="col-md-4">
-						<font class="modal-title">문의내역</font>
-						</div>
-						<div align="right" class="form-group" style="margin-right:10px">
-						<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+				<div class="modal-content">
+					<div class="modal-header">
+						<div class="row">
+							<div class="col-md-4">
+							<font class="modal-title">문의내역</font>
+							</div>
+							<div align="right" class="form-group" style="margin-right:10px">
+							<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+							</div>
 						</div>
 					</div>
+					<div class="modal-body" id="questionbody">
+						
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+					</div>
 				</div>
-				<div class="modal-body" id="questionbody">
-					
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
-				</div>
-			</div>
-		</div>       	
-   	</div>
-   	<script type="text/javascript" src="resources/js/bootstrap.min.js"></script>
-	<script type="text/javascript" src="resources/js/jquery-1.11.1.js"></script>
-	<script>
-		$(function(){
-			$('#allque').click(function(){
-				$.post('ajax_memberquestion.do',{mb_id:'${sessionScope.Mem_Id}'},function(list){
-					for(var i=0;i<list.length;i++){
-						if(list[i].qst_open == 0){
-							var open = '<p style="color:red;float:left;width:70px">열람안함</p>';
-						}
-						if(list[i].qst_open == 1){
-							var open = '<p style="color:green;float:left;width:70px">답변완료</p>';
-						}
-					$('#questionbody').append(
-							'<div class="form-inline" style="padding:20px;height:80px;margin:0px 30px">'+
-								'<div class="form-group" style="width:100%">'+
-								'<div class="row">'+
-									'<div class="col-md-9">'+open+''+
-										'<b><a href="user_question" style="color:black">'+list[i].qst_title+'</a></b>'+
-										'<font color="gray" style="font-size:10px;">[문의번호:'+list[i].qst_no+']</font>'+
-									'</div>'+
-									'<div class="col-md-3" align="right" style="vertical-align:bottom"><p style="font-size:12px;color:gray">'+list[i].qst_date+'</div>'+
-								'</div>'+
-									'<p>'+list[i].qst_content+'</p>'+
-								'</div>'+
-							'</div>'+
-							'<div style="width:90%; height:5px; margin:5px 30px; border-bottom:1px solid #aaaaaa"></div>'
-					);
+			</div>       	
+      	</div>
+      	<script src="resources/js/jquery-1.11.1.js"></script>
+	<script src="resources/js/bootstrap.min.js"></script>
+<script>
+	$(function(){
+		$('#allque').click(function(){
+			$.post('ajax_memberquestion.do',{mb_id:'${sessionScope.Mem_Id}'},function(list){
+				for(var i=0;i<list.length;i++){
+					if(list[i].qst_open == 0){
+						var open = '<p style="color:red;float:left;width:70px">열람안함</p>';
 					}
-				});
-				$('#questionlist').modal('show');
+					if(list[i].qst_open == 1){
+						var open = '<p style="color:green;float:left;width:70px">답변완료</p>';
+					}
+				$('#questionbody').append(
+						'<div class="form-inline" style="padding:20px;height:80px;margin:0px 30px">'+
+							'<div class="form-group" style="width:100%">'+
+							'<div class="row">'+
+								'<div class="col-md-9">'+open+''+
+									'<b><a href="user_question" style="color:black">'+list[i].qst_title+'</a></b>'+
+									'<font color="gray" style="font-size:10px;">[문의번호:'+list[i].qst_no+']</font>'+
+								'</div>'+
+								'<div class="col-md-3" align="right" style="vertical-align:bottom"><p style="font-size:12px;color:gray">'+list[i].qst_date+'</div>'+
+							'</div>'+
+								'<p>'+list[i].qst_content+'</p>'+
+							'</div>'+
+						'</div>'+
+						'<div style="width:90%; height:5px; margin:5px 30px; border-bottom:1px solid #aaaaaa"></div>'
+				);
+				}
 			});
-			
-			var len = $('.openval').length;
-			for(var i=0;i<len;i++){
-			if($('.openval').eq(i).text() == 0){
-				$('.openval').eq(i).css("color","red");
-				$('.openval').eq(i).text("[열람안함]");
-			}
-			else if($('.openval').eq(i).text() == 1){
-				$('.openval').eq(i).css("color","green");
-				$('.openval').eq(i).text("[문의완료]");
-			}
-			}
-			var mb_bir = $('#mbbir').text();
-			var biry = mb_bir.substring(0,4);
-			var birm = mb_bir.substring(5,7);
-			var bird = mb_bir.substring(8,10);
-			
-			$('#mbbir').text(biry+"년 "+birm+"월 "+bird+"일");
-			var mb_tel = $('#mbtel').text();
-			console.log(mb_tel)	
-			if(mb_tel.length == 10){
-				var tel1 = mb_tel.substring(0,3);
-				var tel2 = mb_tel.substring(3,6);
-				var tel3 = mb_tel.substring(6,10);
-				$('#mbtel').text(tel1+'-'+tel2+'-'+tel3);
-			}
-			if(mb_tel.length == 11){
-				var tel1 = mb_tel.substring(0,3);
-				var tel2 = mb_tel.substring(3,7);
-				var tel3 = mb_tel.substring(7,11);
-				$('#mbtel').text(tel1+'-'+tel2+'-'+tel3);
-			}
-			
+			$('#questionlist').modal('show');
 		});
-	</script>
+		
+		var len = $('.openval').length;
+		for(var i=0;i<len;i++){
+		if($('.openval').eq(i).text() == 0){
+			$('.openval').eq(i).css("color","red");
+			$('.openval').eq(i).text("[열람안함]");
+		}
+		else if($('.openval').eq(i).text() == 1){
+			$('.openval').eq(i).css("color","green");
+			$('.openval').eq(i).text("[문의완료]");
+		}
+		}
+		var mb_bir = $('#mbbir').text();
+		var biry = mb_bir.substring(0,4);
+		var birm = mb_bir.substring(5,7);
+		var bird = mb_bir.substring(8,10);
+		
+		$('#mbbir').text(biry+"년 "+birm+"월 "+bird+"일");
+		var mb_tel = $('#mbtel').text();
+		console.log(mb_tel)	
+		if(mb_tel.length == 10){
+			var tel1 = mb_tel.substring(0,3);
+			var tel2 = mb_tel.substring(3,6);
+			var tel3 = mb_tel.substring(6,10);
+			$('#mbtel').text(tel1+'-'+tel2+'-'+tel3);
+		}
+		if(mb_tel.length == 11){
+			var tel1 = mb_tel.substring(0,3);
+			var tel2 = mb_tel.substring(3,7);
+			var tel3 = mb_tel.substring(7,11);
+			$('#mbtel').text(tel1+'-'+tel2+'-'+tel3);
+		}
+		
+	});
+</script>
 </body>
 </html>

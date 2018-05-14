@@ -45,8 +45,8 @@ public class V1_UserContentController {
 			/*httpSession.setAttribute("Mem_Grade",1);
 			httpSession.setAttribute("Mem_Id", "test9");*/
 			
-			/*System.out.println(httpSession.getAttribute("Mem_Grade"));
-			System.out.println(httpSession.getAttribute("Mem_Id"));*/
+			System.out.println("AAAAAAAAAAAAAA"+httpSession.getAttribute("Mem_Grade"));
+			System.out.println("BBBBBBBBBBBBBB"+httpSession.getAttribute("Mem_Id"));
 			
 			//파람
 			V1_Store vo = ucDAO.selectStoreOne(str_number);

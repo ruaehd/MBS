@@ -2,6 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@ page session="false" %>
+<<<<<<< HEAD
 <!DOCTYPE html>
 <html>
 	<head>
@@ -47,6 +48,91 @@
 					            </ul>
 							</div>
 						</div>
+=======
+<jsp:include page="header.jsp"></jsp:include>
+   <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+   <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+   <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+
+<div style="margin-top:78px">
+   <div class="container" style="width:80%; height:800px">
+      <div class="w3-display-container" style="height:200px;">
+         <div class="w3-display-middle" align="center">
+            <img src="resources/imgs/sou.jpg" style="width:200px; height:100%"/><br/>
+            <h1>비밀번호 변경</h1>
+         </div>
+      </div>
+      <div class="container" style="width:80%;height:100px;margin-top:40px">
+      <div class="row form-group">
+         <div class="col-xs-12">
+            <ul class="nav nav-pills nav-justified thumbnail setup-panel">
+               <li><a href="#step-1">
+                     <h4 class="list-group-item-heading">본인확인</h4>
+                     <p class="list-group-item-text">Second step description</p>
+               </a></li>
+               <li class="disabled"><a href="#step-2">
+                     <h4 class="list-group-item-heading">암호 변경</h4>
+                     <p class="list-group-item-text">Third step description</p>
+               </a></li>
+            </ul>
+         </div>
+      </div>
+   </div>
+       <div class="row setup-content" id="step-1">
+           <div class="col-xs-12">
+               <div class="col-md-12" style="width:100%;margin:0px auto">
+                  <div style="margin-left:20%">
+                      <h1>본인확인</h1>
+                      </div>
+                   <div style="border:1px solid #cccccc; width:64%;margin:0px auto;margin-bottom:50px">
+                    </div>
+                   <form name="auth" class="form-horizontal" action="emailAuth.do" target="emailAuth">
+                      <div class="form-group">
+                     <label class="col-sm-4 control-label" for="email">본인확인</label>
+                     <div class="col-sm-5">
+                        <div class="form-inline">
+                           <input type="text" class="form-control" id="email" name="email" placeholder="이메일 주소를 입력하세요" />
+                           <input type="button" class="btn btn-info" value="이메일 인증" onClick="openAuth()" style="margin-left:20px">
+                        </div>
+                     </div>
+                  </div>
+                  <div class="form-group">
+                     <label class="col-sm-4 control-label"></label>
+                     <div class="col-sm-5">
+                        <input type="text" class="form-control" name="emailauth" readonly>
+                     </div>
+                  </div>
+                  <div class="form-group">
+                     <label class="col-sm-4 control-label">자동가입 방지</label>
+                     <div class="col-sm-5">
+                        <div class="g-recaptcha" id ="grecaptcha" data-sitekey="6LdfiEoUAAAAANEiw_ZLNO_1pmL3fj-Ttt1rX44c"></div>
+                     </div>
+                  </div>
+                   </form>
+                   <div align="center" style="margin-top:50px">
+                   	  <a href="user_main.do"><button class="btn btn-primary">마이페이지</button></a>
+                      <button id="next-2" class="btn btn-primary">다음단계로</button>
+                  </div>
+            </div>   
+           </div>
+       </div>
+      
+      
+      <div  class="container setup-content" style="width:80%;padding:30px;margin:0px auto"  align="center" id="step-2">
+         <div style="margin:0px auto">
+            <div align="left">
+                  <h1>비밀번호변경</h1>
+               </div>
+           </div>
+                   <div style="border:1px solid #cccccc; width:100%;margin:0px auto;margin-bottom:50px">
+                  </div>
+			<form action="user_changepw.do" method="post" id="form">
+				<div class="row" style="width: 60%; margin: 0px auto">
+					<label class="col-sm-4 control-label" for="email">새 암호</label>
+					<div class="col-sm-8">
+						<input type="password" class="form-control" name="mb_pw" id="mb_pw" placeholder="새 암호를 입력하세요" />
+						<div id="exp" style="height:40px"></div>
+>>>>>>> branch 'final_lkh' of https://github.com/ruaehd/MBS.git
 					</div>
 					<div class="row setup-content" id="step-1">
 						<div class="col-xs-12">

@@ -123,15 +123,15 @@
 								<div class="form-inline" style="margin-bottom:10px">
 									<label style="width:100px">이름</label>
 									<input type="hidden" name="mb_id" value="${mvo.mb_id}"/>
-									<form:input type="text" class="form-control" path="rsv_sub_name" id="" value="${mvo.mb_name}"/>
+									<form:input type="text" class="form-control" path="rsv_sub_name" value="${mvo.mb_name}"/>
 								</div>
 								<div class="form-inline" style="margin-bottom:10px">
 									<label style="width:100px">전화번호</label>
-									<form:input type="text" class="form-control" path="rsv_sub_tel" id="" value="${mvo.mb_tel}"/>
+									<form:input type="text" class="form-control" path="rsv_sub_tel" value="${mvo.mb_tel}"/>
 								</div>
 								<div class="form-inline" style="margin-bottom:10px">
 									<label style="width:100px">이메일주소</label>
-									<form:input type="text" class="form-control" path="rsv_sub_email" id="" value="${mvo.mb_email}"/>
+									<form:input type="text" class="form-control" path="rsv_sub_email" value="${mvo.mb_email}" />
 								</div>
 								<div class="form-inline" style="margin-bottom:10px">
 									<label style="width:100px">요청사항</label>

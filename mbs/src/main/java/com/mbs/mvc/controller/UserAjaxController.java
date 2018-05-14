@@ -1,5 +1,7 @@
 package com.mbs.mvc.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -8,12 +10,19 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.mbs.mvc.dao.UserDAO;
 import com.mbs.mvc.vo.MemberVO;
+import com.mbs.mvc.vo.QuestionVO;
 
 @RestController
 public class UserAjaxController {
 	
 	@Autowired
 	private UserDAO uDAO = null;
+	
+	@RequestMapping(value="/ajax_memberquestion.do",method = {RequestMethod.GET,RequestMethod.POST})
+	public List<QuestionVO> ajax_memberquestion(@RequestParam(value="mb_id",required=false)String mb_id) {
+		List<QuestionVO> list = uDAO.selectMemberQuestionList(mb_id);
+		return list;
+	}
 	
 	@RequestMapping(value="/ajax_memberPwCheck.do",method = {RequestMethod.GET,RequestMethod.POST})
 	public MemberVO ajax_memberPwCheck(
