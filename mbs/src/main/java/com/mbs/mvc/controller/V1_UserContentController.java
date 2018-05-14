@@ -169,12 +169,11 @@ public class V1_UserContentController {
 	
 		try {
 			V1_Member mvo = new V1_Member();
-			
-			if((Integer)httpSession.getAttribute("Mem_Grade")>2) {	//관리자라면
+			if(Integer.valueOf((String)httpSession.getAttribute("Mem_Grade"))>2) {	//관리자라면
 				mvo = ucDAO.selectMemberOne(rsv_id);
 			}
 			else {
-				String user_id = (String)httpSession.getAttribute("Mem_Id");
+				String user_id = String.valueOf((String)httpSession.getAttribute("Mem_Id"));
 				mvo = ucDAO.selectMemberOne(user_id);	//관리자가 아니라면
 			}
 			

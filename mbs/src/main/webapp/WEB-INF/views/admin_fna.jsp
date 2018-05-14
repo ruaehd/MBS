@@ -2,47 +2,45 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%> <!-- // 반복문 c:forEach c:if-->
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %> <!-- // model and view -->
 <%@ page session="false" %>
+<!DOCTYPE html>
 <html>
 <head>
-   <title>자주하는질문</title>
-   <link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-   <link rel="stylesheet" href="resources/css/v1_adminside.css" />
-   <link rel="stylesheet" href="resources/css/w3.css" />
+	<meta charset="UTF-8">
+	<title>자주하는질문</title>
+	<link rel="stylesheet" href="resources/css/bootstrap.css" />
+	<link rel="stylesheet" href="resources/css/v1_adminside.css" />
+	<link rel="stylesheet" href="resources/css/w3.css" />
+	<style>
+		.modal-backdrop.in {
+	         z-index:auto;
+	   }
+	   .table-head{
+	      font-color:white;
+	   }
+	   .title{
+	      margin-top:50px;
+	      margin-bottom:20px;
+	      font-size:50px
+	   }
+	   .count{
+	      width:100px;
+	      align:center
+	   }
+	   .btn_add{
+	      margin-bottom:10px
+	   }
+	   .select{
+	      width:50px;
+	      vertical-align:middle
+	   }
+	</style>
 </head>
-<style>
-	.modal-backdrop.in {
-         z-index:auto;
-   }
-   .table-head{
-      font-color:white;
-   }
-   .title{
-      margin-top:50px;
-      margin-bottom:20px;
-      font-size:50px
-   }
-   .count{
-      width:100px;
-      align:center
-   }
-   .btn_add{
-      margin-bottom:10px
-   }
-   .select{
-      width:50px;
-      vertical-align:middle
-   }
-</style>
+
 <body>
-   <script type="text/javascript" src="resources/js/jquery-1.11.1.js"></script>
-   <script type="text/javascript" src="resources/js/bootstrap.min.js"></script>
-   <script type="text/javascript" src="resources/js/jquery.twbsPagination-1.3.1.js"></script>
+   
 
 <div class="row">
     <jsp:include page="v1_admin_header.jsp"></jsp:include>
-</div>
-
-    <!-- Main Content -->
     <div class="container-fluid">
         <div class="side-body">
         <div class="title"> 자주하는질문 </div>
@@ -121,6 +119,10 @@
          </div>
         </div>
     </div>
+</div>
+
+    <!-- Main Content -->
+    
 
 	<form:form action="admin_fna.do" modelAttribute="vo" method="post">
 	<div class="modal fade" id="insertmodal">
@@ -222,7 +224,10 @@
 				</div>
 			</div>
 		</form:form>
-
+		
+	<script type="text/javascript" src="resources/js/jquery-1.11.1.js"></script>
+   <script type="text/javascript" src="resources/js/bootstrap.min.js"></script>
+   <script type="text/javascript" src="resources/js/jquery.twbsPagination-1.3.1.js"></script>
    <script>
       $(function() {
     		var func = function(){

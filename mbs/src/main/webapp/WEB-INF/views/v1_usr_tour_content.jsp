@@ -197,7 +197,6 @@
 				<div id="map" style="width:100%;height:350px;"></div>
 			</div>
 		</div>
-		
 		<jsp:include page="v1_footer.jsp"></jsp:include>
 	</div>
 	

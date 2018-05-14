@@ -5,11 +5,17 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="UTF-8">
-	<title>Insert title here</title>
+	<meta charset="UTF-8" />
+	<title>Google Nexus Website Menu</title>
+	<link rel="shortcut icon" href="../favicon.ico">
+	<link rel="stylesheet" type="text/css" href="resources/css/normalize.css" />
+	<link rel="stylesheet" type="text/css" href="resources/css/demo.css" />
+	<link rel="stylesheet" type="text/css" href="resources/css/component.css" />
 	<link rel="stylesheet" type="text/css" href="resources/css/bootstrap.css" />
 	<link rel="stylesheet" type="text/css" href="resources/css/w3.css"/>
 	<link rel="stylesheet" type="text/css" href="resources/css/footer.css" />
+	<link rel="stylesheet" type="text/css" href="resources/css/jquery-ui.min.css" />
+	<link rel="stylesheet" type="text/css" href="resources/css/jquery-ui-timepicker-addon.css" />
 	<style>
 		.container{
 			z-index:2;
@@ -22,87 +28,88 @@
 <body>
 	<div class="row">
 		<jsp:include page="v1_header.jsp"></jsp:include>
-		<div class="container" style="margin-top:100px">
-			
-			<h2>예약목록</h2>
-			<hr />
-			<div class="row">
-				<div class="col-md-6">
-					<c:if test="${fn:length(param.text) ne 0}">
-						<a href="biz_rsv_management.do?str_number=${param.str_number}" class="btn btn-success">전체보기</a>
-						검색어 : <strong>${param.text}</strong>
-					</c:if>
-				</div>
-				<div class="col-md-6">
-					<div align="right" class="form-inline">
-						<div class="btn-group" role="group" aria-label="..."  style="margin-bottom:10px">
-							<c:forEach var="tmp" items="${map}" varStatus="i">
-						  		<c:if test="${param.rsv_code == i.index}">
-							  		<a class="btn btn-primary" href="biz_rsv_management.do?str_number=${param.str_number}&rsv_code=${i.index}&type=${param.type}&text=${param.text}">
-										${tmp.key} : <strong>${tmp.value}</strong>
-									</a>
-								</c:if>
-								<c:if test="${param.rsv_code != i.index}">
-									<a class="btn btn-default" href="biz_rsv_management.do?str_number=${param.str_number}&rsv_code=${i.index}&type=${param.type}&text=${param.text}">
-										${tmp.key} : <strong>${tmp.value}</strong>
-									</a>
-								</c:if>
-						  	</c:forEach>
+		<div id="main">
+			<div class="container" style="margin-top:100px">
+				<h2>예약목록</h2>
+				<hr />
+				<div class="row">
+					<div class="col-md-6">
+						<c:if test="${fn:length(param.text) ne 0}">
+							<a href="biz_rsv_management.do?str_number=${param.str_number}" class="btn btn-success">전체보기</a>
+							검색어 : <strong>${param.text}</strong>
+						</c:if>
+					</div>
+					<div class="col-md-6">
+						<div align="right" class="form-inline">
+							<div class="btn-group" role="group" aria-label="..."  style="margin-bottom:10px">
+								<c:forEach var="tmp" items="${map}" varStatus="i">
+							  		<c:if test="${param.rsv_code == i.index}">
+								  		<a class="btn btn-primary" href="biz_rsv_management.do?str_number=${param.str_number}&rsv_code=${i.index}&type=${param.type}&text=${param.text}">
+											${tmp.key} : <strong>${tmp.value}</strong>
+										</a>
+									</c:if>
+									<c:if test="${param.rsv_code != i.index}">
+										<a class="btn btn-default" href="biz_rsv_management.do?str_number=${param.str_number}&rsv_code=${i.index}&type=${param.type}&text=${param.text}">
+											${tmp.key} : <strong>${tmp.value}</strong>
+										</a>
+									</c:if>
+							  	</c:forEach>
+							</div>
 						</div>
 					</div>
 				</div>
-			</div>
-			
-			<c:if test="${fn:length(list) eq 0 }">
-				<div style="text-align:center; vertical-align:middle;">
-					<h3>검색결과가 없습니다</h3>
+				
+				<c:if test="${fn:length(list) eq 0 }">
+					<div style="text-align:center; vertical-align:middle;">
+						<h3>검색결과가 없습니다</h3>
+					</div>
+				</c:if>
+				<c:if test="${fn:length(list) ne 0 }">
+					<table class="table">
+					 	<tr>
+					 		<th>예약번호</th>
+					 		<th>상태</th>
+					 		<th>예약자</th>
+					 		<th>예약자명</th>
+					 		<th>사용예정일</th>
+					 		<th>예약일</th>
+					 		<th>예약확인</th>
+					 	</tr>
+					 	<c:forEach var="tmp" items="${list}" varStatus="i">
+							<tr>
+						 		<td>
+						 			<input type="hidden" id="no_${i.index}" value="${tmp.rsv_no}" />
+						 			${tmp.rsv_no}
+						 		</td>
+						 		<td>${tmp.rsv_code_chk}</td>
+						 		<td><a href="#">${tmp.rsv_sub_id}</a></td>
+						 		<td>${tmp.rsv_sub_name}</td>
+						 		<td>${tmp.rsv_day}</td>
+						 		<td>${tmp.rsv_date}</td>
+						 		<td>
+						 			<a href="#" class="btn btn-success btn-xs rsv_info">내용확인</a>
+						 		</td>
+					 		</tr>
+					 	</c:forEach>
+					 </table>
+				 </c:if>
+				 <hr/>
+	
+				 <div class="form-inline" align="right" style="margin-top:5px; margin-bottom:5px">
+					<select class="form-control" id="search_type" >
+						<option value="rsv_no">예약번호</option>
+						<option value="rsv_sub_name">예약자명</option>
+					</select>
+					<input type="text" id="search_text" class="form-control" />
+					<input type="button" id="search_btn" class="btn btn-default" value="검색" />
 				</div>
-			</c:if>
-			<c:if test="${fn:length(list) ne 0 }">
-				<table class="table">
-				 	<tr>
-				 		<th>예약번호</th>
-				 		<th>상태</th>
-				 		<th>예약자</th>
-				 		<th>예약자명</th>
-				 		<th>사용예정일</th>
-				 		<th>예약일</th>
-				 		<th>예약확인</th>
-				 	</tr>
-				 	<c:forEach var="tmp" items="${list}" varStatus="i">
-						<tr>
-					 		<td>
-					 			<input type="hidden" id="no_${i.index}" value="${tmp.rsv_no}" />
-					 			${tmp.rsv_no}
-					 		</td>
-					 		<td>${tmp.rsv_code_chk}</td>
-					 		<td><a href="#">${tmp.rsv_sub_id}</a></td>
-					 		<td>${tmp.rsv_sub_name}</td>
-					 		<td>${tmp.rsv_day}</td>
-					 		<td>${tmp.rsv_date}</td>
-					 		<td>
-					 			<a href="#" class="btn btn-success btn-xs rsv_info">내용확인</a>
-					 		</td>
-				 		</tr>
-				 	</c:forEach>
-				 </table>
-			 </c:if>
-			 <hr/>
-
-			 <div class="form-inline" align="right" style="margin-top:5px; margin-bottom:5px">
-				<select class="form-control" id="search_type" >
-					<option value="rsv_no">예약번호</option>
-					<option value="rsv_sub_name">예약자명</option>
-				</select>
-				<input type="text" id="search_text" class="form-control" />
-				<input type="button" id="search_btn" class="btn btn-default" value="검색" />
-			</div>
-			 
-			<div align="center">
-				<ul id="pagination" class="pagination"></ul>
-			</div>
-			
-		 </div>
+				 
+				<div align="center">
+					<ul id="pagination" class="pagination"></ul>
+				</div>
+				
+			 </div>
+		</div>
 		 <jsp:include page="v1_footer.jsp"></jsp:include>
 	</div>
 

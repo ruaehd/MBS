@@ -15,7 +15,7 @@
 	</head>
 <body>
 	<div id="wrapper">
-		<jsp:include page="header.jsp"></jsp:include>
+		<jsp:include page="v1_header.jsp"></jsp:include>
 		<div id="main">
 			<div style="margin-top:68px;">
 			  	<div class="container" style="margin:0px auto">

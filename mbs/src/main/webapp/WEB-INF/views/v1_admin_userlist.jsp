@@ -175,6 +175,7 @@
 
 <script src="resources/js/bootstrap.min.js"></script>
 <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<script src="resources/js/jquery.twbsPagination.min.js"></script>
 
 <script>
 	$(function(){

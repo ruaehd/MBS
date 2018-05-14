@@ -604,4 +604,5 @@
             $('ul.setup-panel li a[href="#step-1"]').trigger('click');
         });
     </script>
-<jsp:include page="footer.jsp"></jsp:include>
+</body>
+</html>

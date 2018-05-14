@@ -36,7 +36,7 @@ public class V1_BusinessStoreManagementController {
 			) {
 		
 		try{
-			String id = (String)httpSession.getAttribute("Mem_Id");
+			String id = String.valueOf((String)httpSession.getAttribute("Mem_Id"));
 			
 			V1_Store vo = new V1_Store();
 			

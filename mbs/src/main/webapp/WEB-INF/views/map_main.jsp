@@ -4,6 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<meta charset="UTF-8" />
 	<link rel="shortcut icon" href="../favicon.ico">
 	<link rel="stylesheet" type="text/css" href="resources/css/normalize.css" />
 	<link rel="stylesheet" type="text/css" href="resources/css/demo.css" />
@@ -76,7 +77,7 @@
 								
 								<div class="row">
 									<div class="col-md-6">
-										예약일 <input type="text" class="form-control w3-white" value="" placeholder="예약일을 선택해주세요" readonly size="15" id="`ker"/>
+										예약일 <input type="text" class="form-control w3-white" value="" placeholder="예약일을 선택해주세요" readonly size="15" id="datepicker"/>
 									</div>
 									<div class="col-md-6">
 										<div align="center">가격</div>
