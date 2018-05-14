@@ -107,6 +107,7 @@
 			</div>
 			
 		 </div>
+		 <jsp:include page="v1_footer.jsp"></jsp:include>
 	</div>
 
 	<script src="resources/js/jquery-1.11.1.js"></script>

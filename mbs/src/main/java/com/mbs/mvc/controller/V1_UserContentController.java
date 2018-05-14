@@ -42,8 +42,11 @@ public class V1_UserContentController {
 			@RequestParam("str_number") int str_number,
 			HttpSession httpSession) {
 		try{
-			httpSession.setAttribute("_gr",1);
-			httpSession.setAttribute("_id", "test9");
+			/*httpSession.setAttribute("Mem_Grade",1);
+			httpSession.setAttribute("Mem_Id", "test9");*/
+			
+			/*System.out.println(httpSession.getAttribute("Mem_Grade"));
+			System.out.println(httpSession.getAttribute("Mem_Id"));*/
 			
 			//파람
 			V1_Store vo = ucDAO.selectStoreOne(str_number);
@@ -133,7 +136,7 @@ public class V1_UserContentController {
 				
 				V1_TourComment vo1 = new V1_TourComment();
 				vo1.setStr_number(str_number);
-				vo1.setTour_cmt_writer((String)httpSession.getAttribute("_id"));
+				vo1.setTour_cmt_writer((String)httpSession.getAttribute("Mem_Id"));
 				
 				
 				int chk = reDAO.selectTourReviewChk(vo1);
@@ -167,11 +170,11 @@ public class V1_UserContentController {
 		try {
 			V1_Member mvo = new V1_Member();
 			
-			if((Integer)httpSession.getAttribute("_gr")>2) {	//관리자라면
+			if((Integer)httpSession.getAttribute("Mem_Grade")>2) {	//관리자라면
 				mvo = ucDAO.selectMemberOne(rsv_id);
 			}
 			else {
-				String user_id = (String)httpSession.getAttribute("_id");
+				String user_id = (String)httpSession.getAttribute("Mem_Id");
 				mvo = ucDAO.selectMemberOne(user_id);	//관리자가 아니라면
 			}
 			

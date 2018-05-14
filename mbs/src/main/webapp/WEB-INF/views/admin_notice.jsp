@@ -40,7 +40,7 @@
    <script type="text/javascript" src="resources/js/jquery.twbsPagination-1.3.1.js"></script>
 
 <div class="row">
-    <jsp:include page="admin_header.jsp"></jsp:include>
+    <jsp:include page="v1_admin_header.jsp"></jsp:include>
 </div>
 
     <!-- Main Content -->
@@ -201,7 +201,6 @@
 	 /*   function nl2br(str){  
 		    return str.replace(/\n/g, "<br />");  
 		}   */
-
 	
 	$(function() {
 			var br2nl = function(varTest){
@@ -289,7 +288,6 @@
                  $('.navbar-nav').toggleClass('slide-in');
                  $('.side-body').toggleClass('body-slide-in');
                  $('#search').removeClass('in').addClass('collapse').slideUp(200);
-
                  /// uncomment code for absolute positioning tweek see top comment in css
                  //$('.absolute-wrapper').toggleClass('slide-in');
                  
@@ -299,10 +297,8 @@
             $('#search-trigger').click(function () {
                  $('.navbar-nav').removeClass('slide-in');
                  $('.side-body').removeClass('body-slide-in');
-
                  /// uncomment code for absolute positioning tweek see top comment in css
                  //$('.absolute-wrapper').removeClass('slide-in');
-
              });
       });
    </script>   

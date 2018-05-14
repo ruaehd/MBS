@@ -54,11 +54,11 @@ public class V1_ReservationController {
 		
 		try{
 			//세션아이디
-			if((Integer)httpSession.getAttribute("_gr")>2) {	//관리자라면
+			if((Integer)httpSession.getAttribute("Mem_Grade")>2) {	//관리자라면
 				vo.setRsv_sub_id(mb_id);
 			}
 			else {	//관리자가 아니라면
-				vo.setRsv_sub_id((String)httpSession.getAttribute("_id"));
+				vo.setRsv_sub_id((String)httpSession.getAttribute("Mem_Id"));
 			}
 			vo.setStr_number(str_number);
 			System.out.println(vo.getRsv_day());
@@ -95,7 +95,7 @@ public class V1_ReservationController {
 			model.addAttribute("message", "신규 예약이 완료 되었습니다.");
 			model.addAttribute("title", "예약 완료");
 			
-			if((Integer)httpSession.getAttribute("_gr")>2) {	//관리자라면
+			if((Integer)httpSession.getAttribute("Mem_Grade")>2) {	//관리자라면
 				model.addAttribute("url", "admin_rsv_management.do");
 			}
 			else {	//관리자가 아니라면
@@ -126,7 +126,7 @@ public class V1_ReservationController {
 			if(rsv_code == -1) {	//menu값이 없을 경우
 				return "redirect:usr_rsv_list.do?rsv_code=0";
 			}
-			String rsv_id = (String)httpSession.getAttribute("_id");
+			String rsv_id = (String)httpSession.getAttribute("Mem_Id");
 			
 			//세션아이디
 			V1_Reservation vo = new V1_Reservation();
@@ -176,7 +176,7 @@ public class V1_ReservationController {
 		try {
 			V1_Reservation vo = new V1_Reservation();
 			vo.setRsv_no(rsv_no);
-			String id = (String)httpSession.getAttribute("_id");
+			String id = (String)httpSession.getAttribute("Mem_Id");
 			V1_Comment revo = new V1_Comment();
 			revo.setRsv_cmt_writer(id);
 			revo.setRsv_no(rsv_no);

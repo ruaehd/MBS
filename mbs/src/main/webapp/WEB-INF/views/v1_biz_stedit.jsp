@@ -2,232 +2,257 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@ page session="false" %>
-<jsp:include page="header.jsp"></jsp:include>
-   <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-    <link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+	<link rel="shortcut icon" href="../favicon.ico">
+	<link rel="stylesheet" type="text/css" href="resources/css/normalize.css" />
+	<link rel="stylesheet" type="text/css" href="resources/css/demo.css" />
+	<link rel="stylesheet" type="text/css" href="resources/css/component.css" />
+	<link rel="stylesheet" type="text/css" href="resources/css/bootstrap.css" />
+	<link rel="stylesheet" type="text/css" href="resources/css/w3.css"/>
+	<link rel="stylesheet" type="text/css" href="resources/css/footer.css" />
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+	<style>
+		.container{
+			z-index:2;
+		}
+		.gn-menu-main{
+			z-index:10;
+		}
+	</style>
+</head>
+<body>
+	<div id="wrapper">
+		<jsp:include page="v1_header.jsp"></jsp:include>
+		<div id="main">
+			<div class="container" style="margin-top:150px; min-height:600px">
+		      <div class="row form-group">
+		      <div class="col-xs-12">
+		      <div align="center" style="margin-bottom:50px">
+					<h1 style="font-size:56px">
+						<b>사업체 수정</b>
+					</h1>
+				</div>
+		               <ul class="nav nav-pills nav-justified thumbnail setup-panel">
+		                   <li class="active"><a href="#step-1">
+		                       <h4 class="list-group-item-heading">사업자 정보</h4>
+		                       <p class="list-group-item-text">First step description</p>
+		                   </a></li>
+		                   <li class="disabled"><a href="#step-2">
+		                       <h4 class="list-group-item-heading">운영 정보</h4>
+		                       <p class="list-group-item-text">Second step description</p>
+		                   </a></li>
+		               </ul>
+		           </div>
+		      
+				
+		      </div>
+		      
+		      
+		      <form:form action="biz_stedit.do?no=${vo.company_num}" id="form" class="form-horizontal" enctype="multipart/form-data" modelAttribute="vo" method="post" >
+		       <div class="row setup-content" id="step-1">
+		           <div class="col-xs-12">
+		            
+		               <div class="col-md-12">
+		                   <h2>사업자정보</h2>
+		                   <hr />
+		                  
+		                  <div class="form-group">
+		                     <label class="col-sm-4 control-label" for="company_name">상호명</label>
+		                     <div class="col-sm-5">
+		                     <form:input type="text" class="form-control" id="company_name" path="company_name" placeholder="예)MBS 프로젝트" />
+		                  </div>
+		                     
+		                  </div>
+		                  <div class="form-group">
+		                     <label class="col-sm-4 control-label">사업자분류</label>
+		                     <div class="col-sm-5">
+		                        <div class="form-inline">
+		                           <input type="radio" id="one" name="company_class" value="개인" checked="checked" /> 개인
+		                           <input type="radio" id="group" name="company_class" value="법인"/> 법인
+		                           <form:input type="hidden" path="company_class" id="company_class"/>
+		                        </div>
+		                     </div>
+		                  </div>
+		                  <div class="form-group">
+		                     <label class="col-sm-4 control-label">사업자 등록번호</label>
+		                     <div class="col-sm-5">
+		                        <form:input type="text" class="form-control" id="company_num" path="company_num" placeholder="예)000-00-00000" />
+		                     </div>
+		                  </div>
+		                  <div class="form-group">
+		                     <label class="col-sm-4 control-label" >업태</label>
+		                     <div class="col-sm-5">
+		                        <form:input type="text" class="form-control" id="company_conditions" path="company_conditions" placeholder="업태를 입력하세요" />
+		                     </div>
+		                  </div>
+		                  <div class="form-group">
+		                     <label class="col-sm-4 control-label" >대표 전화 번호</label>
+		                     <div class="col-sm-5">
+		                        <form:input type="text" class="form-control" id="company_tel" path="company_tel" placeholder="예)02-000-0000" />
+		                     </div>
+		                  </div>
+		                  <div class="form-group">
+		                     <label class="col-sm-4 control-label" >사업체 주소</label>
+		                     <div class="col-sm-5">
+		                        <form:input type="text" path="company_add" class="form-control w3-white" onclick="sample4_execDaumPostcode()" id="sample4_roadAddress"  placeholder="예) 부산시 강서구 가나다" readonly="true"/>
+		                        <form:input type="hidden" path="company_lat" id="lat"/>
+		                        <form:input type="hidden" path="company_lng" id="lng"/>
+		                     </div>
+		                  </div>
+		                 <div class="form-group">
+		                     <label class="col-sm-4 control-label">사업자 등록증</label>
+		                     <div class="col-sm-5">
+		                     <input type="file" class="filestyle"  id="business_file" name="business_file" data-btnClass="btn-primary" data-placeholder="${vo.filename}" data-text="파일 찾기">
+		                     </div>
+		                  </div>
+		                  
+		                   <div align="center">
+		                      <button type="button" id="prev" class="btn btn-info btn-lg">뒤로</button>
+		                       <button type="button" id="next-2" class="btn btn-primary btn-lg">다음 단계로</button>
+		                   </div>
+		               </div>
+		               
+		           </div>
+		       </div>
+		       <div class="row setup-content" id="step-2">
+		           <div class="col-xs-12">
+		               <div class="col-md-12">
+		                   <h1>운영 정보</h1>
+		                   <hr />
+		                 <div class="form-group">
+		                     <label class="col-sm-4 control-label" for="time">영업시간</label>
+		                      <div class="col-sm-5">
+			                     <div class="row">
+				                     <div class="col-md-5">
+				                        <form:input type="text" path="stime" class="form-control" id="stime" placeholder="예)08:00" />
+				                     </div>
+				                     <div class="col-md-1">
+				                        <b>~</b>
+				                     </div>
+				                     <div class="col-md-5">
+				                        <form:input type="text" path="etime" class="form-control" id="etime" placeholder="예)21:00" />
+				                     </div>
+			                     </div>
+		                     </div>
+		                  </div>
+		                  <div class="form-group">
+		                     <label class="col-sm-4 control-label" for="intro">예약 최대인원</label>
+		                     <div class="col-sm-5">
+		                        <form:input class="form-control" id="company_personnel" path="company_personnel" placeholder="예) 5"/>
+		                     </div>
+		                  </div>
+		                 
+		                  <div class="form-group">
+		                     <label class="col-sm-4 control-label" for="intro">소개글</label>
+		                     <div class="col-sm-5">
+		                        <form:textarea class="form-control" rows="6" style="resize:none" id="str_document" path="str_document"></form:textarea>
+		                     </div>
+		                  </div>
+		                  
+		                   <div class="form-group">
+		                     <label class="col-sm-4 control-label" for="menu">메뉴</label>
+		                     <div class="col-sm-5">
+		                        <div class="buttons">      
+		                           <div class="form-inline" style="margin-bottom:5px">
+		                                   <input type="text" class="form-control mname" id="mu" style="width:40%" name="aaa">
+		                                   <input type="text" class="form-control price" id="pr" style="width:40%" name="bbb">
+		                                   <input type="button" class="btnAdd btn btn-success" value="추가">
+		                                </div>        
+		                          </div>
+		                     </div>
+		                  </div>
+		                  
+		                  
+		                  <div class="form-group">
+		                     <label class="col-sm-4 control-label" for="time">이미지</label>
+		                     <div class="col-sm-5">
+		                     	<div class="row well imgcon">
+		                     		<div class="col-md-4 "><img src="resources/imgs/no-image.png" class="oldimgs_0" style="width:100%;height:114px"/></div>
+		                     		<div class="col-md-4 "><img src="resources/imgs/no-image.png" class="oldimgs_1" style="width:100%;height:114px"/></div>
+		                     		<div class="col-md-4 "><img src="resources/imgs/no-image.png" class="oldimgs_2" style="width:100%;height:114px"/></div>
+		                     		<div class="col-md-4 " style="margin-top:20px">
+		                     		<img src="resources/imgs/no-image.png" class="oldimgs_3" style="width:100%;height:114px"/></div>
+		                     		<div class="col-md-4 " style="margin-top:20px">
+		                     			<img src="resources/imgs/no-image.png" class="oldimgs_4" style="width:100%;height:114px"/></div>
+		                     		<div class="col-md-4 " style="margin-top:20px">
+		                     			<button type="button" class="btn btn-default btn-block" id="btn_img" style="height:114px;">이미지<br/>수정하기</button>
+		                     		</div>
+		                     	</div>
+		                     </div>
+		                  </div>
+		               <div align="center">
+		                      <button type="button" id="prev-1" class="btn btn-primary btn-lg">이전 단계로</button>
+		                      <button type="button" id="next-3" class="btn btn-primary btn-lg">사업체 등록</button>
+		                  </div>
+		               </div>
+		              
+		           </div>
+		       </div>
+		      
+		        	<div class="modal fade" id="imgform">
+						<div class="modal-dialog">
+								<div class="modal-content">
+									<div class="modal-header">
+										<div class="row">
+											<div class="col-md-4">
+											<font style="font-size:20px">이미지 수정</font>
+											</div>
+											<div align="right" class="form-group">
+											<button type="button" class="close" data-dismiss="modal" style="margin-right:30px"><span aria-hidden="true">&times;</span></button>
+											</div>
+										</div>
+									</div>
+									<div class="modal-body">
+										<div class="form-group">
+		                     <label class="col-sm-2 control-label" for="time">이미지</label>
+		                     <div class="col-sm-9">
+		                     	<div class="row imgcon">
+		                     		<div class="col-md-4 ">
+		                     			<a class="imgs"><img src="resources/imgs/no-image.png" class="imgs_0" style="width:100%;height:114px"/></a>
+		                     			<input type="file" style="display:none"  name="imgs_0" class="fileload_0"/>
+		                     		</div>
+		                     		<div class="col-md-4 ">
+		                     			<a class="imgs"><img src="resources/imgs/no-image.png" class="imgs_1" style="width:100%;height:114px"/></a>
+		                     			<input type="file" style="display:none"  name="imgs_1" class="fileload_1"/>
+		                     		</div>
+		                     		<div class="col-md-4 ">
+		                     			<a class="imgs"><img src="resources/imgs/no-image.png" class="imgs_2" style="width:100%;height:114px"/></a>
+		                     			<input type="file" style="display:none"  name="imgs_2" class="fileload_2"/>
+		                     		</div>
+		                     		<div class="col-md-offset-2 col-md-4 " style="margin-top:20px">
+		                     			<a class="imgs"><img src="resources/imgs/no-image.png" class="imgs_3" style="width:100%;height:114px"/></a>
+		                     			<input type="file" style="display:none"  name="imgs_3" class="fileload_3"/>
+		                     		</div>
+		                     		<div class="col-md-4 " style="margin-top:20px">
+		                     			<a class="imgs"><img src="resources/imgs/no-image.png" class="imgs_4" style="width:100%;height:114px"/></a>
+		                     			<input type="file" style="display:none"  name="imgs_4" class="fileload_4"/>
+		                     		</div>
+		                     	</div>
+		                     </div>
+		                  </div>
+									</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-primary btn-edit">이미지 수정</button>
+										<button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+									</div>
+								</div>
+							</div>       	
+		        	</div>
+		        	 </form:form>
+		   </div>
+		</div>
+		<jsp:include page="v1_footer.jsp"></jsp:include>
+	</div>
+   <script src="resources/js/bootstrap.min.js"></script>
    <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
    <script src="//code.jquery.com/jquery-1.10.2.js"></script>
    <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=66e7156b3899e012effaa62fd20217d4&libraries=services"></script>
-   
-  <div class="container" style="margin-top:150px; min-height:600px">
-      <div class="row form-group">
-      <div class="col-xs-12">
-      <div align="center" style="margin-bottom:50px">
-			<h1 style="font-size:56px">
-				<b>사업체 수정</b>
-			</h1>
-		</div>
-               <ul class="nav nav-pills nav-justified thumbnail setup-panel">
-                   <li class="active"><a href="#step-1">
-                       <h4 class="list-group-item-heading">사업자 정보</h4>
-                       <p class="list-group-item-text">First step description</p>
-                   </a></li>
-                   <li class="disabled"><a href="#step-2">
-                       <h4 class="list-group-item-heading">운영 정보</h4>
-                       <p class="list-group-item-text">Second step description</p>
-                   </a></li>
-               </ul>
-           </div>
-      
-		
-      </div>
-      
-      
-      <form:form action="biz_stedit.do?no=${vo.company_num}" id="form" class="form-horizontal" enctype="multipart/form-data" modelAttribute="vo" method="post" >
-       <div class="row setup-content" id="step-1">
-           <div class="col-xs-12">
-            
-               <div class="col-md-12">
-                   <h2>사업자정보</h2>
-                   <hr />
-                  
-                  <div class="form-group">
-                     <label class="col-sm-4 control-label" for="company_name">상호명</label>
-                     <div class="col-sm-5">
-                     <form:input type="text" class="form-control" id="company_name" path="company_name" placeholder="예)MBS 프로젝트" />
-                  </div>
-                     
-                  </div>
-                  <div class="form-group">
-                     <label class="col-sm-4 control-label">사업자분류</label>
-                     <div class="col-sm-5">
-                        <div class="form-inline">
-                           <input type="radio" id="one" name="company_class" value="개인" checked="checked" /> 개인
-                           <input type="radio" id="group" name="company_class" value="법인"/> 법인
-                           <form:input type="hidden" path="company_class" id="company_class"/>
-                        </div>
-                     </div>
-                  </div>
-                  <div class="form-group">
-                     <label class="col-sm-4 control-label">사업자 등록번호</label>
-                     <div class="col-sm-5">
-                        <form:input type="text" class="form-control" id="company_num" path="company_num" placeholder="예)000-00-00000" />
-                     </div>
-                  </div>
-                  <div class="form-group">
-                     <label class="col-sm-4 control-label" >업태</label>
-                     <div class="col-sm-5">
-                        <form:input type="text" class="form-control" id="company_conditions" path="company_conditions" placeholder="업태를 입력하세요" />
-                     </div>
-                  </div>
-                  <div class="form-group">
-                     <label class="col-sm-4 control-label" >대표 전화 번호</label>
-                     <div class="col-sm-5">
-                        <form:input type="text" class="form-control" id="company_tel" path="company_tel" placeholder="예)02-000-0000" />
-                     </div>
-                  </div>
-                  <div class="form-group">
-                     <label class="col-sm-4 control-label" >사업체 주소</label>
-                     <div class="col-sm-5">
-                        <form:input type="text" path="company_add" class="form-control w3-white" onclick="sample4_execDaumPostcode()" id="sample4_roadAddress"  placeholder="예) 부산시 강서구 가나다" readonly="true"/>
-                        <form:input type="hidden" path="company_lat" id="lat"/>
-                        <form:input type="hidden" path="company_lng" id="lng"/>
-                     </div>
-                  </div>
-                 <div class="form-group">
-                     <label class="col-sm-4 control-label">사업자 등록증</label>
-                     <div class="col-sm-5">
-                     <input type="file" class="filestyle"  id="business_file" name="business_file" data-btnClass="btn-primary" data-placeholder="${vo.filename}" data-text="파일 찾기">
-                     </div>
-                  </div>
-                  
-                   <div align="center">
-                      <button type="button" id="prev" class="btn btn-info btn-lg">뒤로</button>
-                       <button type="button" id="next-2" class="btn btn-primary btn-lg">다음 단계로</button>
-                   </div>
-               </div>
-               
-           </div>
-       </div>
-       <div class="row setup-content" id="step-2">
-           <div class="col-xs-12">
-               <div class="col-md-12">
-                   <h1>운영 정보</h1>
-                   <hr />
-                 <div class="form-group">
-                     <label class="col-sm-4 control-label" for="time">영업시간</label>
-                      <div class="col-sm-5">
-	                     <div class="row">
-		                     <div class="col-md-5">
-		                        <form:input type="text" path="stime" class="form-control" id="stime" placeholder="예)08:00" />
-		                     </div>
-		                     <div class="col-md-1">
-		                        <b>~</b>
-		                     </div>
-		                     <div class="col-md-5">
-		                        <form:input type="text" path="etime" class="form-control" id="etime" placeholder="예)21:00" />
-		                     </div>
-	                     </div>
-                     </div>
-                  </div>
-                  <div class="form-group">
-                     <label class="col-sm-4 control-label" for="intro">예약 최대인원</label>
-                     <div class="col-sm-5">
-                        <form:input class="form-control" id="company_personnel" path="company_personnel" placeholder="예) 5"/>
-                     </div>
-                  </div>
-                 
-                  <div class="form-group">
-                     <label class="col-sm-4 control-label" for="intro">소개글</label>
-                     <div class="col-sm-5">
-                        <form:textarea class="form-control" rows="6" style="resize:none" id="str_document" path="str_document"></form:textarea>
-                     </div>
-                  </div>
-                  
-                   <div class="form-group">
-                     <label class="col-sm-4 control-label" for="menu">메뉴</label>
-                     <div class="col-sm-5">
-                        <div class="buttons">      
-                           <div class="form-inline" style="margin-bottom:5px">
-                                   <input type="text" class="form-control mname" id="mu" style="width:40%" name="aaa">
-                                   <input type="text" class="form-control price" id="pr" style="width:40%" name="bbb">
-                                   <input type="button" class="btnAdd btn btn-success" value="추가">
-                                </div>        
-                          </div>
-                     </div>
-                  </div>
-                  
-                  
-                  <div class="form-group">
-                     <label class="col-sm-4 control-label" for="time">이미지</label>
-                     <div class="col-sm-5">
-                     	<div class="row well imgcon">
-                     		<div class="col-md-4 "><img src="resources/imgs/no-image.png" class="oldimgs_0" style="width:100%;height:114px"/></div>
-                     		<div class="col-md-4 "><img src="resources/imgs/no-image.png" class="oldimgs_1" style="width:100%;height:114px"/></div>
-                     		<div class="col-md-4 "><img src="resources/imgs/no-image.png" class="oldimgs_2" style="width:100%;height:114px"/></div>
-                     		<div class="col-md-4 " style="margin-top:20px">
-                     		<img src="resources/imgs/no-image.png" class="oldimgs_3" style="width:100%;height:114px"/></div>
-                     		<div class="col-md-4 " style="margin-top:20px">
-                     			<img src="resources/imgs/no-image.png" class="oldimgs_4" style="width:100%;height:114px"/></div>
-                     		<div class="col-md-4 " style="margin-top:20px">
-                     			<button type="button" class="btn btn-default btn-block" id="btn_img" style="height:114px;">이미지<br/>수정하기</button>
-                     		</div>
-                     	</div>
-                     </div>
-                  </div>
-               <div align="center">
-                      <button type="button" id="prev-1" class="btn btn-primary btn-lg">이전 단계로</button>
-                      <button type="button" id="next-3" class="btn btn-primary btn-lg">사업체 등록</button>
-                  </div>
-               </div>
-              
-           </div>
-       </div>
-      
-        	<div class="modal fade" id="imgform">
-				<div class="modal-dialog">
-						<div class="modal-content">
-							<div class="modal-header">
-								<div class="row">
-									<div class="col-md-4">
-									<font style="font-size:20px">이미지 수정</font>
-									</div>
-									<div align="right" class="form-group">
-									<button type="button" class="close" data-dismiss="modal" style="margin-right:30px"><span aria-hidden="true">&times;</span></button>
-									</div>
-								</div>
-							</div>
-							<div class="modal-body">
-								<div class="form-group">
-                     <label class="col-sm-2 control-label" for="time">이미지</label>
-                     <div class="col-sm-9">
-                     	<div class="row imgcon">
-                     		<div class="col-md-4 ">
-                     			<a class="imgs"><img src="resources/imgs/no-image.png" class="imgs_0" style="width:100%;height:114px"/></a>
-                     			<input type="file" style="display:none"  name="imgs_0" class="fileload_0"/>
-                     		</div>
-                     		<div class="col-md-4 ">
-                     			<a class="imgs"><img src="resources/imgs/no-image.png" class="imgs_1" style="width:100%;height:114px"/></a>
-                     			<input type="file" style="display:none"  name="imgs_1" class="fileload_1"/>
-                     		</div>
-                     		<div class="col-md-4 ">
-                     			<a class="imgs"><img src="resources/imgs/no-image.png" class="imgs_2" style="width:100%;height:114px"/></a>
-                     			<input type="file" style="display:none"  name="imgs_2" class="fileload_2"/>
-                     		</div>
-                     		<div class="col-md-offset-2 col-md-4 " style="margin-top:20px">
-                     			<a class="imgs"><img src="resources/imgs/no-image.png" class="imgs_3" style="width:100%;height:114px"/></a>
-                     			<input type="file" style="display:none"  name="imgs_3" class="fileload_3"/>
-                     		</div>
-                     		<div class="col-md-4 " style="margin-top:20px">
-                     			<a class="imgs"><img src="resources/imgs/no-image.png" class="imgs_4" style="width:100%;height:114px"/></a>
-                     			<input type="file" style="display:none"  name="imgs_4" class="fileload_4"/>
-                     		</div>
-                     	</div>
-                     </div>
-                  </div>
-							</div>
-							<div class="modal-footer">
-								<button type="button" class="btn btn-primary btn-edit">이미지 수정</button>
-								<button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
-							</div>
-						</div>
-					</div>       	
-        	</div>
-        	 </form:form>
-   </div>
  <script src="resources/js/jquery-3.2.1.min.js"></script>
-   <script src="resources/js/bootstrap.min.js"></script>
    <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
    <script src="resources/js/bootstrap-filestyle.min.js"> </script>
    <script>

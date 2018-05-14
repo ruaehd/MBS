@@ -36,7 +36,7 @@
 </style>
 <body>
 <div class="row">
-    <jsp:include page="admin_header.jsp"></jsp:include>
+    <jsp:include page="v1_admin_header.jsp"></jsp:include>
 </div>
 
     <!-- Main Content -->
@@ -311,7 +311,6 @@
 	 	$('#search_btn').click(function(){
 				func();
 		});
-
 		$('#search_text').keyup(function(event){
 			if(event.which == 13){
 				func();
@@ -461,7 +460,6 @@
 				     "endDate": "${vo.evt_endtime}" 
 				});
 	  		</c:forEach> */
-
             $('.pagination').twbsPagination({
                totalPages:'${totPage}',
                visiblePages:10,
@@ -472,7 +470,6 @@
                  $('.navbar-nav').toggleClass('slide-in');
                  $('.side-body').toggleClass('body-slide-in');
                  $('#search').removeClass('in').addClass('collapse').slideUp(200);
-
                  /// uncomment code for absolute positioning tweek see top comment in css
                  //$('.absolute-wrapper').toggleClass('slide-in');
                  
@@ -482,10 +479,8 @@
             $('#search-trigger').click(function () {
                  $('.navbar-nav').removeClass('slide-in');
                  $('.side-body').removeClass('body-slide-in');
-
                  /// uncomment code for absolute positioning tweek see top comment in css
                  //$('.absolute-wrapper').removeClass('slide-in');
-
              });
       });
    </script>   

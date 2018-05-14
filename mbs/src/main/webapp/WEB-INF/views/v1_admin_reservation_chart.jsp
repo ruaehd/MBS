@@ -6,15 +6,19 @@
 <head>
    <meta charset="UTF-8">
    <title>예약통계</title>
+   <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+   	<link rel="stylesheet" href="resources/css/bootstrap.css" />
+	<link rel="stylesheet" href="resources/css/v1_adminside.css" />
+	<link rel="stylesheet" href="resources/css/w3.css" />
+	<style>
+	   .title{
+	      margin-top:50px;
+	      margin-bottom:20px;
+	      font-size:50px
+	   }
+	</style>
 </head>
-<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<style>
-   .title{
-      margin-top:50px;
-      margin-bottom:20px;
-      font-size:50px
-   }
-</style>
+
 
 <body>
 	<div class="row">
@@ -59,9 +63,12 @@
 			</div>
 		</div>
 	</div>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
-<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
-<script type="text/javascript" src="resources/js/Chart.bundle.js"></script>
+	<script src="resources/js/jquery-1.11.1.js"></script>
+	<script src="resources/js/bootstrap.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+	<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+	<script type="text/javascript" src="resources/js/Chart.bundle.js"></script>
+
 <script>
 	$(function(){
 		$('#linecanvas').hide();

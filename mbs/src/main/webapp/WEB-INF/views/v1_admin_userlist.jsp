@@ -6,43 +6,47 @@
 <head>
    <meta charset="UTF-8">
    <title>회원관리</title>
+   <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+   	<link rel="stylesheet" href="resources/css/bootstrap.css" />
+	<link rel="stylesheet" href="resources/css/v1_adminside.css" />
+	<link rel="stylesheet" href="resources/css/w3.css" />
+	<style>
+	   .table-head{
+	      font-color:white;
+	   }
+	   .title{
+	      margin-top:50px;
+	      margin-bottom:20px;
+	      font-size:50px
+	   }
+	   .count{
+	      width:100px;
+	      align:center
+	   }
+	   .btn_add{
+	      margin-bottom:10px
+	   }
+	   .w3-border-dark-gray{
+	   	  width:100px
+	   }
+	   .modal-backdrop.in {
+	   		z-index:auto;
+	   }
+	   .modal-title{
+	   	font-size:20px
+	   }
+	   .modal-namespace{
+	   	margin-bottom:10px
+	   }
+	   .name-label{
+	   	width:100px
+	   }
+	   .mb_shorttext{
+	   	width:150px
+	   }
+	</style>
 </head>
-<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<style>
-   .table-head{
-      font-color:white;
-   }
-   .title{
-      margin-top:50px;
-      margin-bottom:20px;
-      font-size:50px
-   }
-   .count{
-      width:100px;
-      align:center
-   }
-   .btn_add{
-      margin-bottom:10px
-   }
-   .w3-border-dark-gray{
-   	  width:100px
-   }
-   .modal-backdrop.in {
-   		z-index:auto;
-   }
-   .modal-title{
-   	font-size:20px
-   }
-   .modal-namespace{
-   	margin-bottom:10px
-   }
-   .name-label{
-   	width:100px
-   }
-   .mb_shorttext{
-   	width:150px
-   }
-</style>
+
 
 <body>
    <div class="row">
@@ -169,7 +173,9 @@
     </div>
 </div>
 
+<script src="resources/js/bootstrap.min.js"></script>
 <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+
 <script>
 	$(function(){
 		var secls = ${param.searchcol};
