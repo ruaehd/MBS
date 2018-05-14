@@ -10,15 +10,15 @@
 	</update>
 
 	<select id="selectMemberLogin" parameterType="com.mbs.mvc.vo.MemberVO" resultType="com.mbs.mvc.vo.MemberVO">
-		SELECT mb_id FROM member WHERE mb_id=#{mb_id} AND mb_pw=SHA1(#{mb_pw}) AND 
+		SELECT mb_id, mb_name, mb_grade FROM member WHERE mb_id=#{mb_id} AND mb_pw=SHA1(#{mb_pw}) AND 
 		mb_delete = 1
 	</select>
 
 	<insert id="insertMemberJoin" parameterType="com.mbs.mvc.vo.MemberVO">
 		INSERT INTO 
-		member (mb_id, mb_pw, mb_name, mb_gender, mb_birth, mb_email, mb_tel, mb_delete, mb_date)
+		member (mb_id, mb_pw, mb_name, mb_gender, mb_birth, mb_email, mb_tel, mb_delete, mb_date,mb_grade)
 		VALUES
-		(#{mb_id},SHA1(#{mb_pw}),#{mb_name},#{mb_gender},#{mb_birth},#{mb_email},#{mb_tel},1,NOW())
+		(#{mb_id},SHA1(#{mb_pw}),#{mb_name},#{mb_gender},#{mb_birth},#{mb_email},#{mb_tel},1,NOW(),1)
 	</insert>
 
 	<select id="selectMemberCheck" parameterType="String" resultType="int">

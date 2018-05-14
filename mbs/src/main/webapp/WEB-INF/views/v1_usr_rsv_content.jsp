@@ -1,6 +1,6 @@
 <%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ page session="false"%>
+<%@ page session="true"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -41,13 +41,15 @@
 						<!-- Wrapper for slides -->
 						<div class="carousel-inner" id="back_imgs">
 							<div class="item active">
-								<img src="get_blob_img.do?idx=1" style="width: 100%; height: 350px"/>
+								<img src="get_blob_img.do?str_number=${vo.str_number}&idx=0" style="width: 100%; height: 350px"/>
 							</div>
-							<c:forEach var="i" begin="2" end="${cnt}">
-								<div class="item">
-									<img src="get_blob_img.do?idx=${i}" style="width: 100%; height: 350px"/>
-								</div>
-							</c:forEach>
+							<c:if test="${cnt > 1}">
+								<c:forEach var="i" begin="1" end="${cnt}">
+									<div class="item">
+										<img src="get_blob_img.do?str_number=${vo.str_number}&idx=${i}" style="width: 100%; height: 350px"/>
+									</div>
+								</c:forEach>
+							</c:if>
 						</div>
 						
 						<!-- Controls -->
@@ -135,7 +137,7 @@
 							</div>
 							<div class="form-inline" style="margin-bottom:10px">
 								<label style="width:100px">대표자명</label>
-								<input type="text" class="form-control" name="" id="" />
+								${vo.mb_name}
 							</div>
 							<div class="form-inline" style="margin-bottom:10px">
 								<label style="width:100px">소재지</label>
@@ -149,25 +151,31 @@
 					</div>
 					
 					<div style="margin-bottom:10px">
-						<c:choose>
-							<c:when test="${vo.rsv_code == 1}">
-								<a href="usr_rsv_edit.do?rsv_no=${vo.rsv_no}&str_num=${vo.str_number}" class="btn btn-success">예약 변경</a>
-								<a href="usr_rsv_cancel.do?rsv_no=${vo.rsv_no}" class="btn btn-danger">예약 취소</a>
-							</c:when>
-							<c:when test="${vo.rsv_code == 2}">
-								<c:if test="${chk != 0}">
-									<input type="button" class="btn btn-success" value="후기 수정" onClick="editComment()" />
-								</c:if>
-								<c:if test="${chk == 0}">
-									<input type="button" class="btn btn-success" value="후기 작성" onClick="writeComment()" />	
-								</c:if>
-								
-							</c:when>
-							<c:when test="${vo.rsv_code == 3}">
-								<a href="usr_rsv_edit.do?rsv_no=${vo.rsv_no}&str_num=${vo.str_number}" class="btn btn-info">다시 예약 하기</a>
-							</c:when>
-						</c:choose>
-						<a href="usr_rsv_list.do?rsv_code=0" class="btn btn-primary">목록</a>
+						<input type="hidden" value="${vo.str_delete}" id="schk"/>
+						<c:if test="${sessionScope._gr > 2}">
+							<a href="admin_rsv_management.do?rsv_code=0" class="btn btn-primary">목록</a>
+						</c:if>
+						<c:if test="${sessionScope._gr < 3}">
+							<c:choose>
+								<c:when test="${vo.rsv_code == 1}">
+									<a href="usr_rsv_edit.do?str_number=${vo.str_number}&rsv_no=${vo.rsv_no}" class="btn btn-success">예약 변경</a>
+									<a href="usr_rsv_cancel.do?rsv_no=${vo.rsv_no}" class="btn btn-danger">예약 취소</a>
+								</c:when>
+								<c:when test="${vo.rsv_code == 2}">
+									<c:if test="${chk != 0}">
+										<input type="button" class="btn btn-success" value="후기 수정" onClick="editComment()" />
+									</c:if>
+									<c:if test="${chk == 0}">
+										<input type="button" class="btn btn-success" value="후기 작성" onClick="writeComment()" />	
+									</c:if>
+									<a href="#"  class="btn btn-info new_rsv">추가 예약 하기</a>
+								</c:when>
+								<c:when test="${vo.rsv_code == 3}">
+									<a href="#"  class="btn btn-info new_rsv">신규 예약 하기</a>
+								</c:when>
+							</c:choose>
+							<a href="usr_rsv_list.do?rsv_code=0" class="btn btn-primary">목록</a>
+						</c:if>
 					</div>
 					
 				</div>
@@ -182,6 +190,7 @@
 	<script src="resources/js/jquery-1.11.1.js"></script>
 	<script src="resources/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=66e7156b3899e012effaa62fd20217d4&libraries=services"></script>
+	<script src="resources/js/sweetalert.min.js"></script>
 	<script>
 		function writeComment() {
 			window.open('usr_rsv_comment.do?rsv_no=${param.rsv_no}','한줄평 작성','width=800, height=700, left=650, top=100');
@@ -191,6 +200,28 @@
 		}
 		
 		$(function() {
+			
+			$('.new_rsv').click(function(){
+				
+				var chk = $('#schk').val();
+				
+				console.log("chk"+chk);
+				
+				if(chk == 0){
+					swal({
+					  title: "운영중단",
+					  text: "운영이 중단된 업체입니다.",
+					  icon: "warning",
+					  button: "확인",
+					});
+				}
+				if(chk == 1){
+					window.location.href="usr_content_pay.do?str_number=${vo.str_number}";
+				}
+				
+			});
+			
+			
 			var mapContainer = document.getElementById('map'),
 		    mapOption = {
 		        center: new daum.maps.LatLng(33.450701, 126.570667),

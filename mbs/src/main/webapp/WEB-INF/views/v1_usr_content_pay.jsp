@@ -1,7 +1,7 @@
 <%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ page session="false"%>
+<%@ page session="true"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -44,13 +44,15 @@
 							<!-- Wrapper for slides -->
 							<div class="carousel-inner" id="back_imgs">
 								<div class="item active">
-									<img src="get_blob_img.do?idx=1" style="width: 100%; height: 350px"/>
+									<img src="get_blob_img.do?str_number=${svo.str_number}&idx=0" style="width: 100%; height: 350px"/>
 								</div>
-								<c:forEach var="i" begin="2" end="${cnt}">
-									<div class="item">
-										<img src="get_blob_img.do?idx=${i}" style="width: 100%; height: 350px"/>
-									</div>
-								</c:forEach>
+								<c:if test="${cnt > 1}">
+									<c:forEach var="i" begin="1" end="${cnt}">
+										<div class="item">
+											<img src="get_blob_img.do?str_number=${svo.str_number}&idx=${i}" style="width: 100%; height: 350px"/>
+										</div>
+									</c:forEach>
+								</c:if>
 							</div>
 							
 							<!-- Controls -->
@@ -67,6 +69,7 @@
 						<div id="select" style="margin-bottom:20px">
 							<h3>예약 정보</h3>
 							<hr />
+							<input type="hidden" name="str_number" value="${param.str_number}" />
 							<div class="form-inline" style="margin-bottom:10px">
 								<label style="width:100px">날짜</label>
 								<form:input type="text" class="form-control" path="rsv_day" id="date1"/>
@@ -119,6 +122,7 @@
 							<div>
 								<div class="form-inline" style="margin-bottom:10px">
 									<label style="width:100px">이름</label>
+									<input type="hidden" name="mb_id" value="${mvo.mb_id}"/>
 									<form:input type="text" class="form-control" path="rsv_sub_name" id="" value="${mvo.mb_name}"/>
 								</div>
 								<div class="form-inline" style="margin-bottom:10px">
@@ -140,13 +144,14 @@
 							<h3>판매자 정보</h3>
 							<hr />
 							<div>
+								<input type="hidden" name="str_email" value="${svo.mb_email}"/>
 								<div class="form-inline" style="margin-bottom:10px">
 									<label style="width:100px">상호</label>
 									${svo.str_name}
 								</div>
 								<div class="form-inline" style="margin-bottom:10px">
 									<label style="width:100px">대표자명</label>
-									<input type="text" class="form-control" name="" id="" />
+									${svo.mb_name}
 								</div>
 								<div class="form-inline" style="margin-bottom:10px">
 									<label style="width:100px">소재지</label>
@@ -161,7 +166,7 @@
 						
 						<div style="margin-bottom:10px">
 							<input type="submit" id="rsv_button" class="btn btn-success" value="예약하기"	/>
-							<a href="usr_content.do" class="btn btn-info">뒤로가기</a>
+							<a href="${url}" class="btn btn-info">뒤로가기</a>
 						</div>
 						
 					</div>
@@ -212,7 +217,7 @@
 			var map = new daum.maps.Map(mapContainer, mapOption); 
 			var geocoder = new daum.maps.services.Geocoder();
 			
-			geocoder.addressSearch('${vo.str_address}', function(result, status) {
+			geocoder.addressSearch('${svo.str_address}', function(result, status) {
 			
 			     if (status === daum.maps.services.Status.OK) {
 			
@@ -224,7 +229,7 @@
 			        });
 			
 			        var infowindow = new daum.maps.InfoWindow({
-			            content: '<div style="text-align:center;padding:6px 0;">${vo.str_name}</div>'
+			            content: '<div style="text-align:center;padding:6px 0;">${svo.str_name}</div>'
 			        });
 			        infowindow.open(map, marker);
 			
