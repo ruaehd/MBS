@@ -59,7 +59,7 @@
 		<div style="width:100%; height:5px; margin:5px 30px; border-bottom:1px solid #aaaaaa"></div>
 		</c:forEach>
 		<div style="width:100%;margin-top:50px" align="right">
-			<a href="user_question.do"><button class="btn btn-default">문의내역 모두보기</button></a>
+			<button class="btn btn-default" id="allque">문의내역 모두보기</button>
 		</div>
 		</c:if>
 		</div>
@@ -118,10 +118,59 @@
 		</div>
 	</div>
 </div>
+        	<div class="modal fade" id="questionlist">
+				<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<div class="row">
+									<div class="col-md-4">
+									<font class="modal-title">문의내역</font>
+									</div>
+									<div align="right" class="form-group" style="margin-right:10px">
+									<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+									</div>
+								</div>
+							</div>
+							<div class="modal-body" id="questionbody">
+								
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+							</div>
+						</div>
+					</div>       	
+        	</div>
 <script>
 	$(function(){
-		
-		
+
+		$('#allque').click(function(){
+			$.post('ajax_memberquestion.do',{mb_id:'${sessionScope.Mem_Id}'},function(list){
+				for(var i=0;i<list.length;i++){
+					if(list[i].qst_open == 0){
+						var open = '<p style="color:red;float:left;width:70px">열람안함</p>';
+					}
+					if(list[i].qst_open == 1){
+						var open = '<p style="color:green;float:left;width:70px">답변완료</p>';
+					}
+				$('#questionbody').append(
+						'<div class="form-inline" style="padding:20px;height:80px;margin:0px 30px">'+
+							'<div class="form-group" style="width:100%">'+
+							'<div class="row">'+
+								'<div class="col-md-10">'+open+'</p>'+
+									'<p><b><a href="user_question" style="color:black">'+list[i].qst_title+'</a></b>'+
+									'<font color="gray" style="font-size:10px;">[문의번호:'+list[i].qst_no+']</font></p>'+
+								'</div>'+
+								'<div class="col-md-2" align="right" style="vertical-align:bottom"><p style="font-size:12px;color:gray">'+list[i].qst_date+'<p></div>'+
+							'</div>'+
+								'<p>'+list[i].qst_content+'</p>'+
+							'</div>'+
+						'</div>'+
+						'<div style="width:80%; height:5px; margin:5px 30px; border-bottom:1px solid #aaaaaa"></div>'
+				);
+				}
+			});
+			$('#questionlist').modal('show');
+		});
 		
 		var len = $('.openval').length;
 		for(var i=0;i<len;i++){

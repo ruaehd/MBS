@@ -88,7 +88,7 @@
 			</div>
 		</div>
 		
-		<jsp:include page="v1_footer.jsp"></jsp:include>
+		<jsp:include page="footer.jsp"></jsp:include>
 	
 	</div>
 	<script src="resources/js/jquery.twbsPagination.min.js"></script>
