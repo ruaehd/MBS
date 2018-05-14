@@ -21,7 +21,7 @@
 						<div class="w3-white w3-round-xlarge"
 							style="padding: 10px; width: 200px; height: 220px; border: 1px solid #cccccc; margin-right:20px;display:inline-block">
 							<div style="width: 100%; height: 140px; border: 1px solid #cccccc">
-							<a href="user_content.do" id="img">
+							<a href="usr_rsv_content.do?rsv_no=${rvo.rsv_no}&str_number=${rvo.str_number}" id="img">
 							<img src="getBlobImg.do?no=${rvo.str_number}" style="width:100%;height:100%"/>
 							</a>
 							</div>
