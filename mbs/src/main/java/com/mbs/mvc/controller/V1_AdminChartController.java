@@ -28,7 +28,7 @@ public class V1_AdminChartController {
 	@Autowired
 	private V1_AdminReservationDAO arDAO = null;
 	
-	@RequestMapping(value="admin_memberchart.do",method=RequestMethod.GET)
+	@RequestMapping(value="/admin_memberchart.do",method=RequestMethod.GET)
 	public String adminmemberchart(Model model,V1_Admin_SearchVO asvo) {
 		V1_AgeVO vo = acDAO.selectOldManCount();
 		V1_AgeVO vo1 = acDAO.selectOldWomanCount();
@@ -43,7 +43,7 @@ public class V1_AdminChartController {
 		return "v1_admin_member_chart";
 	}
 	
-	@RequestMapping(value="admin_storechart.do",method=RequestMethod.GET)
+	@RequestMapping(value="/admin_storechart.do",method=RequestMethod.GET)
 	public String adminstorechart(Model model) {
 		List<V1_MonthChart> list = acDAO.selectStoreMonthChartCount();
 		V1_AdminStoreChartVO vo1 = acDAO.selectPriceCount1();
@@ -67,7 +67,7 @@ public class V1_AdminChartController {
 		return "v1_admin_store_chart";
 	}
 	
-	@RequestMapping(value="admin_reservationchart.do",method=RequestMethod.GET)
+	@RequestMapping(value="/admin_reservationchart.do",method=RequestMethod.GET)
 	public String adminreservationchart(Model model) {
 		int allcount = arDAO.selectReservationAllCount();
 		int nowcount = arDAO.selectReservationNowCount();

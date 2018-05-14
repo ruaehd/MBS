@@ -6,13 +6,7 @@
 <html lang="en" class="no-js">
 	<head>
 		<meta charset="UTF-8" />
-		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
-		<meta name="viewport" content="width=device-width, initial-scale=1"> 
-		<title>Google Nexus Website Menu</title>
-		<meta name="description" content="A sidebar menu as seen on the Google Nexus 7 website" />
-		<meta name="keywords" content="google nexus 7 menu, css transitions, sidebar, side menu, slide out menu" />
-		<meta name="author" content="Codrops" />
-		<link rel="shortcut icon" href="../favicon.ico">
+		<title>Mbs</title>
 		<link rel="stylesheet" type="text/css" href="resources/css/bootstrap.min.css"/>
 		<link rel="stylesheet" type="text/css" href="resources/css/w3.css"/>
 		<link rel="stylesheet" type="text/css" href="resources/css/normalize.css" />
@@ -21,9 +15,9 @@
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 		<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-		<script src="//code.jquery.com/jquery-1.9.1.min.js"></script>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    
+		<script src="resources/js/bootstrap.min.js"></script>
+		<script src="resources/js/jquery-1.11.1.js"></script>
 		<style>
 		.map{
 		z-index:2;
@@ -47,11 +41,11 @@
 								<li>
 									<a class="gn-icon gn-icon-help sub_main1">고객센터</a>
 									<ul class="gn-submenu sub_1" >
-										<li><a class="gn-icon gn-icon-illustrator" href="user_custcenter_main.do">고객센터 메인</a></li>
-										<li><a class="gn-icon gn-icon-photoshop" href="user_custcenter_notice.do">공지사항</a></li>
-										<li><a class="gn-icon gn-icon-photoshop" href="user_custcenter_event.do">이벤트</a></li>
-										<li><a class="gn-icon gn-icon-photoshop" href="user_custcenter_question.do">1:1문의</a></li>
-										<li><a class="gn-icon gn-icon-photoshop" href="user_custcenter_faq.do">자주하는질문</a></li>
+										  <li><a class="gn-icon gn-icon-illustrator" href="service_main.do">고객센터 메인</a></li>
+			                              <li><a class="gn-icon gn-icon-photoshop" href="notice.do">공지사항</a></li>
+			                              <li><a class="gn-icon gn-icon-photoshop" href="event.do">이벤트</a></li>
+			                              <li><a class="gn-icon gn-icon-photoshop" href="qna.do">1:1문의</a></li>
+			                              <li><a class="gn-icon gn-icon-photoshop" href="fna.do">자주하는질문</a></li>
 									</ul>
 								</li>
 								<li><a class="gn-icon gn-icon-cog sub_main2" >사용자관리</a>
@@ -59,8 +53,9 @@
 										<li><a class="gn-icon gn-icon-illustrator" href="user_main.do">마이페이지</a></li>
 										<li><a class="gn-icon gn-icon-illustrator" href="user_changepw.do">비밀번호변경</a></li>
 										<li><a class="gn-icon gn-icon-photoshop" href="user_edit.do">회원정보수정</a></li>
-										<li><a class="gn-icon gn-icon-photoshop" href="user_question.do">내 문의내역</a></li>
 									</ul>
+								</li>
+										<li><a class="gn-icon gn-icon-illustrator" href="usr_rsv_list.do">예약목록</a></li>
 								</li>
 								<c:if test="${sessionScope.Mem_Grade eq 2}">
 									<li><a class="gn-icon gn-icon-cog sub_main3" >사업자관리</a>

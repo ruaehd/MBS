@@ -43,7 +43,7 @@
 </head>
 <body>
 	<div class="row">
-		<jsp:include page="v1_header.jsp"></jsp:include>
+		<jsp:include page="header.jsp"></jsp:include>
 		<div class="container" style="margin-top:100px">
 			<h2>리뷰관리</h2>
 			<hr />

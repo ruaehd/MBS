@@ -12,11 +12,6 @@
 <head>
 	<meta charset="UTF-8" />
 	<title>Google Nexus Website Menu</title>
-	<link rel="shortcut icon" href="../favicon.ico">
-	<link rel="stylesheet" type="text/css" href="resources/css/normalize.css" />
-	<link rel="stylesheet" type="text/css" href="resources/css/demo.css" />
-	<link rel="stylesheet" type="text/css" href="resources/css/component.css" />
-	<link rel="stylesheet" type="text/css" href="resources/css/bootstrap.css" />
 	<link rel="stylesheet" type="text/css" href="resources/css/w3.css"/>
 	<link rel="stylesheet" type="text/css" href="resources/css/footer.css" />
 	
@@ -99,7 +94,7 @@
 </head>
 <body>
 	<div id="wrapper">
-		<jsp:include page="v1_header.jsp"></jsp:include>
+		<jsp:include page="header.jsp"></jsp:include>
 		<div id="main">
 			<div class="container" style="margin-top:100px ">
 				
@@ -243,7 +238,7 @@
 				<div id="map" style="width:100%;height:350px;"></div>
 			</div>
 		</div>
-		<jsp:include page="v1_footer.jsp"></jsp:include>
+		<jsp:include page="footer.jsp"></jsp:include>
 	</div>
 	
 	<script src="resources/js/jquery-1.11.1.js"></script>

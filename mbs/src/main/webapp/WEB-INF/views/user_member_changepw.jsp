@@ -62,7 +62,7 @@
                      </div>
                   </div>
                    </form>
-                   <div align="center" style="margin-bottom:20px;margin-top:50px">
+                   <div align="center" style="margin-top:50px">
                    	  <a href="user_main.do"><button class="btn btn-primary">마이페이지</button></a>
                       <button id="next-2" class="btn btn-primary">다음단계로</button>
                   </div>

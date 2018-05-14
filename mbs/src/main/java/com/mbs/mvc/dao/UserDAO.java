@@ -60,4 +60,8 @@ public class UserDAO {
 	public List<User_EventVO> selectEventList(){
 		return sqlsession.selectList("User.selectEventList");
 	}
+	
+	public List<QuestionVO> selectMemberQuestionList(String mb_id){
+		return sqlsession.selectList("User.selectMemberQuestionList",mb_id);
+	}
 }

@@ -154,7 +154,7 @@ li{list-style-type:none;}
 		            			'<img class="'+datalist.number+'" src="getBlobImg.do?no='+ datalist.number +'" align="left" style="width:100%;height:90px;z-index:1;"/>'+
 		            			'</div>'+
 		            			'<div class="col-md-8" style="padding:10px">'+
-		            			'<div style="font-size:15px"><a href="user_content.do?no='+datalist.number+'"><font style="font-size:15px;font-family:"Malgun Gothic","dotum","돋움"">'+datalist.name+'</font></a></div>'+
+		            			'<div style="font-size:15px"><a href="usr_content.do?str_number='+datalist.number+'"><font style="font-size:15px;font-family:"Malgun Gothic","dotum","돋움"">'+datalist.name+'</font></a></div>'+
 		            						'<div style="color:gray">'+datalist.address+'</div>'+
 		            			'</div>'+
 		            		'</div>'+
@@ -314,7 +314,7 @@ li{list-style-type:none;}
 			            					'<img class="'+datalist.number+'" src="getBlobImg.do?no='+ datalist.number +'" align="left" style="width:100%;height:90px;z-index:1;"/>'+
 			            			'</div>'+
 			            			'<div class="col-md-8" style="padding:10px">'+
-			            			'<div style="font-size:15px"><a href="user_content.do?no='+datalist.number+'"><font style="font-size:15px;font-family:"Malgun Gothic","dotum","돋움"">'+datalist.name+'</font></a></div>'+
+			            			'<div style="font-size:15px"><a href="usr_content.do?str_number='+datalist.number+'"><font style="font-size:15px;font-family:"Malgun Gothic","dotum","돋움"">'+datalist.name+'</font></a></div>'+
 			            						'<div style="color:gray">'+datalist.address+'</div>'+
 			            			'</div>'+
 			            		'</div>'+
@@ -454,7 +454,7 @@ li{list-style-type:none;}
 				            					'<img class="'+datalist.number+'" src="getBlobImg.do?no='+ datalist.number +'" align="left" style="width:100%;height:90px;z-index:1;"/>'+
 				            			'</div>'+
 				            			'<div class="col-md-8" style="padding:10px">'+
-				            			'<div style="font-size:15px"><a href="user_content.do?no='+datalist.number+'"><font style="font-size:15px;font-family:"Malgun Gothic","dotum","돋움"">'+datalist.name+'</font></a></div>'+
+				            			'<div style="font-size:15px"><a href="usr_content.do?str_number='+datalist.number+'"><font style="font-size:15px;font-family:"Malgun Gothic","dotum","돋움"">'+datalist.name+'</font></a></div>'+
 				            						'<div style="color:gray">'+datalist.address+'</div>'+
 				            			'</div>'+
 				            		'</div>'+
@@ -517,7 +517,7 @@ li{list-style-type:none;}
 				            					'<img class="'+datalist.number+'" src="getBlobImg.do?no='+ datalist.number +'" align="left" style="width:100%;height:90px;z-index:1;"/>'+
 				            			'</div>'+
 				            			'<div class="col-md-8" style="padding:10px">'+
-				            			'<div style="font-size:15px"><a href="user_content.do?no='+datalist.number+'"><font style="font-size:15px;font-family:"Malgun Gothic","dotum","돋움"">'+datalist.name+'</font></a></div>'+
+				            			'<div style="font-size:15px"><a href="usr_content.do?str_number='+datalist.number+'"><font style="font-size:15px;font-family:"Malgun Gothic","dotum","돋움"">'+datalist.name+'</font></a></div>'+
 				            						'<div style="color:gray">'+datalist.address+'</div>'+
 				            			'</div>'+
 				            		'</div>'+

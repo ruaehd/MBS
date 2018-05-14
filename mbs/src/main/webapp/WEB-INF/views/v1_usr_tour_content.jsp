@@ -75,7 +75,7 @@
 </head>
 <body>
 	<div id="wrapper">
-		<jsp:include page="v1_header.jsp"></jsp:include>
+		<jsp:include page="header.jsp"></jsp:include>
 		<div id="main">
 			<div class="container" style="margin-top:100px ">
 				
@@ -198,7 +198,7 @@
 			</div>
 		</div>
 		
-		<jsp:include page="v1_footer.jsp"></jsp:include>
+		<jsp:include page="footer.jsp"></jsp:include>
 	</div>
 	
 	<script src="resources/js/jquery-1.11.1.js"></script>
