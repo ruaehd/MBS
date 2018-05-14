@@ -11,7 +11,6 @@ public class UserLoginInterceptor extends HandlerInterceptorAdapter{
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response,Object handler) throws Exception {
 		String path = request.getServletPath();
-		System.out.println(path);
 		String query = request.getQueryString();
 		
 		HttpSession httpsession = request.getSession();

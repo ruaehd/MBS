@@ -1,7 +1,7 @@
 <%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> 
-<%@ page session="false"%>
+<%@ page session="true"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -82,7 +82,7 @@
 						<c:forEach var="tmp" items="${rlist}">
 							<tr>
 								<td>${tmp.rsv_code_chk}</td>
-								<td><a href="usr_rsv_content.do?rsv_no=${tmp.rsv_no}">${tmp.str_name}</a></td>
+								<td><a href="usr_rsv_content.do?rsv_no=${tmp.rsv_no}&str_number=${tmp.str_number}">${tmp.str_name}</a></td>
 								<td>${tmp.rsv_day}</td>
 							</tr>
 						</c:forEach>
@@ -117,7 +117,7 @@
 				totpage = (${map.get("이용완료")}-1)/10+1
 			}
 			else if (${param.rsv_code} == 3){
-				totpage = (${map.get("취소환불")}-1)/10+1
+				totpage = (${map.get("예약취소")}-1)/10+1
 			}
 			
 			$('#pagination').twbsPagination({

@@ -21,7 +21,7 @@ public class V1_TestController {
 	
 	@RequestMapping(value="/test.do", method = RequestMethod.GET)
 	public String test(Model model) {
-		return "test";
+		return "v1_test";
 	}
 	
 	@RequestMapping(value="/test.do", method = RequestMethod.POST)
@@ -35,7 +35,7 @@ public class V1_TestController {
 			for (int i = 0; i < ilist.size(); i++) {
 				MultipartFile tmp = ilist.get(i);
 				if (tmp != null && !tmp.getOriginalFilename().equals("")) {
-					vo.setStr_image_idx(i+1);
+					vo.setStr_image_idx(i);
 					vo.setStr_image(tmp.getBytes());
 					ucDAO.insertImgs(vo);
 				}

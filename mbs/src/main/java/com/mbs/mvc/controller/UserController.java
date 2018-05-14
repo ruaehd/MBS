@@ -27,7 +27,10 @@ public class UserController {
 	
 	@Autowired
 	private UserDAO uDAO;
-
+	@RequestMapping(value="/user_joinsuc.do",method=RequestMethod.GET)
+	public String userjoinsuc() {
+		return "v1_user_joinsuccess";
+	}
 	
 	@RequestMapping(value="/user_forgetpw.do",method=RequestMethod.GET)
 	public String user_forgetpw(Model model,MemberVO vo) {
@@ -109,9 +112,7 @@ public class UserController {
 		try {
 		int ret = uDAO.insertMemberJoin(vo);
 			if(ret == 1) {
-				model.addAttribute("message", "회원가입이 정상적으로 완료되었습니다 ! 해당 아이디로 로그인해주세요");
-				model.addAttribute("url", "user_login.do");
-				return "alert";
+				return "redirect:user_joinsuc.do";
 			}
 			else {
 				model.addAttribute("message", "회원가입이 실패하셨습니다 다시 시도해주세요");

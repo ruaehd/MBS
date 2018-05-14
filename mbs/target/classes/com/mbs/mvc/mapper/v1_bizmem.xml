@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="BizMem">
+	
+	<insert id="insertBizImage" parameterType="com.mbs.mvc.vo.V1_BizJoin">
+		INSERT INTO str_image (str_image, str_img_delete, str_img_date, str_number,str_image_idx) 
+		VALUES (#{imgs,jdbcType=BLOB}, 1, NOW(), #{company_num},#{str_img_idx}) 
+	</insert>
+	
+	<insert id="insertBizMember" parameterType="com.mbs.mvc.vo.V1_BizJoin">
+		INSERT INTO store (
+			str_number,str_category,str_class,str_name,str_conditions,str_address,str_tel,str_file,str_begintime,
+			str_endtime,str_lng,str_lat,str_document,str_date,mb_id,str_personnel,str_delete) 
+		VALUES ( 
+			#{company_num}, 2,#{company_class}, #{company_name}, #{company_conditions}, #{company_add}, #{company_tel},
+			 #{file,jdbcType=BLOB},#{stime},#{etime}, #{company_lat}, #{company_lng}, #{str_document},NOW(),#{ceo_name},#{company_personnel},1)
+	</insert>
+	
+	<update id="updateMemberBiz" parameterType="com.mbs.mvc.vo.V1_BizJoin">
+		UPDATE member SET mb_grade = 2 WHERE mb_id = #{ceo_name}
+	</update>
+	
+	<insert id="insertBizMenu" parameterType="com.mbs.mvc.vo.V1_BizJoin">
+		INSERT INTO str_menu (mn_name, mn_price, mn_date, mn_idx, str_number) VALUES (#{menu_name}, #{menu_price}, NOW(), #{menu_idx}, #{company_num})
+	</insert>
+	
+	<select id="selectStoreOne" parameterType="int" resultType="com.mbs.mvc.vo.V1_BizJoin">
+		SELECT str_number company_num,str_class company_class, str_name company_name,str_filename filename, str_conditions company_conditions,
+		 str_address company_add,str_document, str_tel company_tel, str_begintime stime, str_endtime etime,str_personnel company_personnel 
+		 FROM store WHERE str_number = #{no} AND str_delete = 1
+	</select>
+	
+	<select id="selectImgCount" parameterType="int" resultType="int">
+		SELECT count(*) FROM str_image WHERE str_number = #{no} AND str_img_delete = 1
+	</select>
+	
+	<select id="selectImgOne" parameterType="com.mbs.mvc.vo.V1_BizJoin" resultType="java.util.Map">
+		SELECT str_image FROM str_image WHERE str_number = ${company_num} AND str_image_idx = ${str_img_idx} AND str_img_delete = 1
+	</select>
+	
+	<select id="selectMenuCount" parameterType="int" resultType="com.mbs.mvc.vo.V1_BizJoin">
+		SELECT  mn_name menu_name, mn_price menu_price FROM str_menu WHERE str_number = #{no} AND mn_delete = 1
+	</select>
+	
+	<update id="updateBizMember" parameterType="com.mbs.mvc.vo.V1_BizJoin">
+		UPDATE store SET 
+		str_class = #{company_class}, str_name = #{company_name}, str_conditions = #{company_conditions}, str_address = #{company_add},
+		str_tel = #{company_tel}, str_file = #{file,jdbcType=BLOB}, str_filename = #{filename}, str_begintime = #{stime}, str_endtime = #{etime} ,
+		str_lng = #{company_lat}, str_lat = #{company_lng},str_document = #{str_document}, str_personnel = #{company_personnel} 
+		WHERE str_number = #{company_num}
+	</update>
+	
+	<update id="updateBizMenu" parameterType="com.mbs.mvc.vo.V1_BizJoin">
+		call mbs.MenuUpdateProcedure(
+			#{menu_name, mode=IN, jdbcType=VARCHAR, javaType=string},
+			#{menu_price, mode=IN},
+			#{company_num, mode=IN},
+			#{menu_idx, mode=IN}
+		)
+	</update>
+	
+	<insert id="updateBizImage" parameterType="com.mbs.mvc.vo.V1_BizJoin">
+		call mbs.ImgUpdateProcedure(
+			#{imgs, mode=IN, jdbcType=BLOB},
+			#{company_num, mode=IN},
+			#{str_img_idx, mode=IN}
+		)
+	</insert>
+</mapper>
