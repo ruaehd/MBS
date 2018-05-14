@@ -6,13 +6,7 @@
 <html lang="en" class="no-js">
 	<head>
 		<meta charset="UTF-8" />
-		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
-		<meta name="viewport" content="width=device-width, initial-scale=1"> 
-		<title>Google Nexus Website Menu</title>
-		<meta name="description" content="A sidebar menu as seen on the Google Nexus 7 website" />
-		<meta name="keywords" content="google nexus 7 menu, css transitions, sidebar, side menu, slide out menu" />
-		<meta name="author" content="Codrops" />
-		<link rel="shortcut icon" href="../favicon.ico">
+		<title>Mbs</title>
 		<link rel="stylesheet" type="text/css" href="resources/css/bootstrap.min.css"/>
 		<link rel="stylesheet" type="text/css" href="resources/css/w3.css"/>
 		<link rel="stylesheet" type="text/css" href="resources/css/normalize.css" />
@@ -21,8 +15,8 @@
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 		<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-		<script src="//code.jquery.com/jquery-1.9.1.min.js"></script>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+		<script src="resources/js/bootstrap.min.js"></script>
     
 		<style>
 		.map{
@@ -60,6 +54,12 @@
 										<li><a class="gn-icon gn-icon-illustrator" href="user_changepw.do">비밀번호변경</a></li>
 										<li><a class="gn-icon gn-icon-photoshop" href="user_edit.do">회원정보수정</a></li>
 										<li><a class="gn-icon gn-icon-photoshop" href="user_question.do">내 문의내역</a></li>
+									</ul>
+								</li>
+								<li><a class="gn-icon gn-icon-cog sub_main4" >예약관리</a>
+									<ul class="gn-submenu sub_4"  >
+										<li><a class="gn-icon gn-icon-illustrator" href="usr_rsv_list.do">예약목록</a></li>
+										<li><a class="gn-icon gn-icon-illustrator" href="usr_content.do">업소정보</a></li>
 									</ul>
 								</li>
 								<c:if test="${sessionScope.Mem_Grade eq 2}">
