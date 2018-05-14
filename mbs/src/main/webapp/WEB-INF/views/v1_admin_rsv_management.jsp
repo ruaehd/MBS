@@ -13,7 +13,7 @@
 </head>
 <body>
 	<div class="row">
-		<jsp:include page="v1_admin_nav.jsp"></jsp:include>
+		<jsp:include page="v1_admin_header.jsp"></jsp:include>
 		<div class="container" style="margin-top:20px">
 			
 			<h2>예약목록</h2>

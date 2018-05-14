@@ -13,7 +13,7 @@
 			<h3>현재 예약중인 항목</h3>
 				<c:if test="${empty rlist}">
 				<div style="margin-top:80px">
-					<h1  style="margin-left:100px">예약중인 항목이 존재하지 않습니다.</h1>
+					<h1  style="margin-left:200px">예약중인 항목이 존재하지 않습니다.</h1>
 					</div>
 				</c:if>
 				<c:if test="${!empty rlist}">
@@ -34,11 +34,11 @@
 		<div class="container" style="padding:10px">
 		<h3>문의 내역</h3>
 		<c:if test="${empty qlist}">
-				<div style="margin-top:80px">
-					<h1 style="margin-left:100px">내가 문의한 항목이 존재하지 않습니다</h1>
-					<div style="margin-top:50px">
-					<a href="qna.do" style="margin-left:350px"><button class="btn btn-default">문의하러 가기</button></a>
-					</div>
+				<div style="margin-top:80px;height:400px">
+					<h1 style="margin-left:100px;">내가 문의한 항목이 존재하지 않습니다</h1>
+						<div style="margin-top:50px">
+							<a href="qna.do" style="margin-left:350px"><button class="btn btn-default">문의하러 가기</button></a>
+						</div>
 					</div>
 				</c:if>
 		<c:if test="${!empty qlist}">
@@ -94,7 +94,7 @@
 			</tr>
 			<c:forEach var="nvo" items="${nlist}">
 				<tr>
-					<td><a href="#">${nvo.ntc_title}</a></td>
+					<td><a href="notice_content.do?ntc_no=${nvo.ntc_no}">${nvo.ntc_title}</a></td>
 					<td colspan="2" align="right"><font color="gray" style="font-size:10px">${nvo.ntc_date}</font></td>
 				</tr>
 			</c:forEach>
@@ -107,7 +107,7 @@
 			</tr>
 			<c:forEach var="evo" items="${elist}">
 				<tr>
-					<td><a href="#">${evo.evt_title}</a></td>
+					<td><a href="event_content.do?evt_no=${evo.evt_no}">${evo.evt_title}</a></td>
 					<td colspan="2" align="right">
 						<font color="gray" style="font-size:10px">${evo.evt_endtime}까지</font>
 					</td>
@@ -156,16 +156,16 @@
 						'<div class="form-inline" style="padding:20px;height:80px;margin:0px 30px">'+
 							'<div class="form-group" style="width:100%">'+
 							'<div class="row">'+
-								'<div class="col-md-10">'+open+'</p>'+
-									'<p><b><a href="user_question" style="color:black">'+list[i].qst_title+'</a></b>'+
-									'<font color="gray" style="font-size:10px;">[문의번호:'+list[i].qst_no+']</font></p>'+
+								'<div class="col-md-9">'+open+''+
+									'<b><a href="user_question" style="color:black">'+list[i].qst_title+'</a></b>'+
+									'<font color="gray" style="font-size:10px;">[문의번호:'+list[i].qst_no+']</font>'+
 								'</div>'+
-								'<div class="col-md-2" align="right" style="vertical-align:bottom"><p style="font-size:12px;color:gray">'+list[i].qst_date+'<p></div>'+
+								'<div class="col-md-3" align="right" style="vertical-align:bottom"><p style="font-size:12px;color:gray">'+list[i].qst_date+'</div>'+
 							'</div>'+
 								'<p>'+list[i].qst_content+'</p>'+
 							'</div>'+
 						'</div>'+
-						'<div style="width:80%; height:5px; margin:5px 30px; border-bottom:1px solid #aaaaaa"></div>'
+						'<div style="width:90%; height:5px; margin:5px 30px; border-bottom:1px solid #aaaaaa"></div>'
 				);
 				}
 			});

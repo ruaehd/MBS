@@ -92,7 +92,13 @@ public class UserController {
 			httpsession.setAttribute("Mem_Id", vo1.getMb_id());
 			httpsession.setAttribute("Mem_Name", vo1.getMb_name());
 			httpsession.setAttribute("Mem_Grade", vo1.getMb_grade());
+			
+			if(vo1.getMb_grade() == "3") {
+			return "redirect:admin_user.do";
+			}
+			else {
 			return "redirect:"+tmp;
+			}
 		}
 		else {
 			model.addAttribute("message","아이디 또는 암호가 틀립니다.");

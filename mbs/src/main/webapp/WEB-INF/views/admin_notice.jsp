@@ -40,7 +40,7 @@
    <script type="text/javascript" src="resources/js/jquery.twbsPagination-1.3.1.js"></script>
 
 <div class="row">
-    <jsp:include page="admin_header.jsp"></jsp:include>
+    <jsp:include page="v1_admin_header.jsp"></jsp:include>
 </div>
 
     <!-- Main Content -->
