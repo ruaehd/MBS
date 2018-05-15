@@ -69,9 +69,13 @@ public class UserController {
 	
 	@RequestMapping(value="/user_logout.do",method=RequestMethod.GET)
 	public String user_logout(HttpSession session,Model model,HttpServletRequest request) {
+		String url = null;
+		url = (String)request.getHeader("REFERER");
+		if((Integer)session.getAttribute("Mem_Grade") == 3) {
+			url = "map_main.do";
+		}
 		session.invalidate();
 		model.addAttribute("message", "로그아웃 되었습니다");
-		String url = (String)request.getHeader("REFERER");
 		model.addAttribute("url", url);
 		return "alert";
 	}
@@ -84,21 +88,19 @@ public class UserController {
 			HttpServletRequest request,
 			Model model){
 		MemberVO vo1 = uDAO.selectMemberLogin(vo);
+		
 		if(vo1 != null){
 			String tmp = (String)httpsession.getAttribute("back_url");
+			if(vo1.getMb_grade() == 3) {
+				tmp = "admin_user.do";
+			}
 			if(tmp == null) {
 				tmp = "map_main.do";
 			}
 			httpsession.setAttribute("Mem_Id", vo1.getMb_id());
 			httpsession.setAttribute("Mem_Name", vo1.getMb_name());
 			httpsession.setAttribute("Mem_Grade", vo1.getMb_grade());
-			
-			if(vo1.getMb_grade() == "3") {
-			return "redirect:admin_user.do";
-			}
-			else {
 			return "redirect:"+tmp;
-			}
 		}
 		else {
 			model.addAttribute("message","아이디 또는 암호가 틀립니다.");
@@ -217,17 +219,12 @@ public class UserController {
 			HttpServletRequest request
 			) {
 		try {
-		String mb_id = (String)httpsession.getAttribute("Mem_Id");
-		if(mb_id == null) {
-			return "redirect:user_login.do";
-		}
-		else {
 
 		List<User_ResoverVO> rvo = new ArrayList<User_ResoverVO>();
 		List<NoticeVO> nvo = new ArrayList<NoticeVO>();
 		List<QuestionVO> qvo = new ArrayList<QuestionVO>();
 		List<User_EventVO> evo = new ArrayList<User_EventVO>();
-		
+		String mb_id = (String) httpsession.getAttribute("Mem_Id");
 		mvo = uDAO.selectMemberOne(mb_id);
 		rvo = uDAO.selectResoverList(mb_id);
 		qvo = uDAO.selectQuestionList(mb_id);
@@ -240,7 +237,6 @@ public class UserController {
 		model.addAttribute("nlist", nvo);
 		model.addAttribute("elist", evo);
 		return "user_main";
-		}
 	}
 	catch(Exception e) {
 		System.out.println(e.getMessage());

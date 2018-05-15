@@ -48,18 +48,20 @@
 			                              <li><a class="gn-icon gn-icon-photoshop" href="fna.do">자주하는질문</a></li>
 									</ul>
 								</li>
-								<li><a class="gn-icon gn-icon-cog sub_main2" >사용자관리</a>
-									<ul class="gn-submenu sub_2"  >
-										<li><a class="gn-icon gn-icon-illustrator" href="user_main.do">마이페이지</a></li>
-										<li><a class="gn-icon gn-icon-illustrator" href="user_changepw.do">비밀번호변경</a></li>
-										<li><a class="gn-icon gn-icon-photoshop" href="user_edit.do">회원정보수정</a></li>
-									</ul>
-								</li>
-										<li><a class="gn-icon gn-icon-illustrator" href="usr_rsv_list.do">예약목록</a></li>
+								<c:if test="${sessionScope.Mem_Id ne null}">
+									<li><a class="gn-icon gn-icon-cog sub_main2" >사용자관리</a>
+										<ul class="gn-submenu sub_2"  >
+											<li><a class="gn-icon gn-icon-illustrator" href="user_main.do">마이페이지</a></li>
+											<li><a class="gn-icon gn-icon-illustrator" href="user_changepw.do">비밀번호변경</a></li>
+											<li><a class="gn-icon gn-icon-photoshop" href="user_edit.do">회원정보수정</a></li>
+											<li><a class="gn-icon gn-icon-illustrator" href="usr_rsv_list.do">내 예약목록</a></li>
+										</ul>
+									</li>
+								</c:if>
 								</li>
 								<c:if test="${sessionScope.Mem_Grade eq 2}">
 									<li><a class="gn-icon gn-icon-cog sub_main3" >사업자관리</a>
-										<ul class="gn-submenu sub_3"  >
+										<ul class="gn-submenu sub_3" >
 											<li><a class="gn-icon gn-icon-illustrator" href="user_main.do">내 업체목록</a></li>
 										</ul>
 									</li>

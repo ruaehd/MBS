@@ -86,7 +86,7 @@ public class V1_BizUser_Controller {
 		vo.setFile(file.getBytes());
 		bmDAO.insertBizMember(vo);
 		bmDAO.updateMemberBiz(vo);
-		
+		httpsession.setAttribute("Mem_Grade","2");
 		//menu 등록 sql
 		for(int k=0;k<aaa.length;k++) {
 			vo.setMenu_name(aaa[k]);

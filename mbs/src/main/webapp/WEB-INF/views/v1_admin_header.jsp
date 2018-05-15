@@ -1,4 +1,7 @@
 <%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%> 
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
+<%@ page session="true" %>
 <!DOCTYPE html> 
  <link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
    <link rel="stylesheet" href="resources/css/v1_adminside.css" />
@@ -23,9 +26,13 @@
 
             <!-- Brand -->
             <div class="brand-name-wrapper">
-                <a class="navbar-brand" href="#">
-                       관리자 페이지
-                </a>
+                <a class="navbar-brand" href="#">관리자 페이지</a>
+                <c:if test="${sessionScope.Mem_Id eq null}">
+                <a class="navbar-brand" style="margin-left:70px" href="user_login.do"><font style="font-size:15px">로그인</font></a>
+                </c:if>
+                <c:if test="${sessionScope.Mem_Id ne null}">
+                <a class="navbar-brand" style="margin-left:50px" href="user_logout.do"><font style="font-size:15px">로그아웃</font></a>
+                </c:if>
             </div>
         </div>
     </div>

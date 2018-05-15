@@ -181,14 +181,14 @@
 				//각각의 한번마다 30번씩 배열 돌림
 				for (var j=datelist.length-1;j>-1;j--) {
 					var val = 0;
-					for(var i=0;i<mlist.length;i++){
+					for(var k=0;k<mlist.length;k++){
 						
 					//만약 30번의 배열중 12번도는 배열의 값과 일치할경우
-					if(datelist[j] == mlist[i].member){
+					if(datelist[j] == mlist[k].member){
 						//monthdata 배열에 카운트 추가
-						val += mlist[i].count;
+						val = mlist[k].count;
 						var moco = 0;
-						moco += parseInt(monthcount) + parseInt(mlist[i].count);
+						moco += parseInt(monthcount) + parseInt(mlist[k].count);
 						monthcount = moco;
 					}
 				}

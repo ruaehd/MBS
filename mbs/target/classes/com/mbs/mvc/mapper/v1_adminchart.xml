@@ -38,41 +38,41 @@
 	<select id="selectPriceCount1" parameterType="int" resultType="com.mbs.mvc.vo.V1_AdminStoreChartVO">
 		SELECT 
 			(SELECT count(ifnull(sm.mn_price,0))
-			FROM store s INNER JOIN str_menu sm WHERE sm.mn_price BETWEEN 0 AND 5000 AND s.str_category = '1' AND s.str_delete = 1) as price_0,
+			FROM store s INNER JOIN str_menu sm ON s.str_number = sm.str_number WHERE sm.mn_price BETWEEN 0 AND 5000 AND s.str_category = '1' AND s.str_delete = 1) as price_0,
 			(SELECT count(ifnull(sm.mn_price,0))
-			FROM store s INNER JOIN str_menu sm WHERE sm.mn_price BETWEEN 5000 AND 15000 AND s.str_category = '1' AND s.str_delete = 1) as price_1,
+			FROM store s INNER JOIN str_menu sm ON s.str_number = sm.str_number WHERE sm.mn_price BETWEEN 5000 AND 15000 AND s.str_category = '1' AND s.str_delete = 1) as price_1,
 			(SELECT count(ifnull(sm.mn_price,0))
-			FROM store s INNER JOIN str_menu sm WHERE sm.mn_price BETWEEN 15000 AND 25000 AND s.str_category = '1' AND s.str_delete = 1) as price_2,
+			FROM store s INNER JOIN str_menu sm ON s.str_number = sm.str_number WHERE sm.mn_price BETWEEN 15000 AND 25000 AND s.str_category = '1' AND s.str_delete = 1) as price_2,
 			(SELECT count(ifnull(sm.mn_price,0))
-			FROM store s INNER JOIN str_menu sm WHERE sm.mn_price BETWEEN 25000 AND 35000 AND s.str_category = '1' AND s.str_delete = 1) as price_3,
+			FROM store s INNER JOIN str_menu sm ON s.str_number = sm.str_number WHERE sm.mn_price BETWEEN 25000 AND 35000 AND s.str_category = '1' AND s.str_delete = 1) as price_3,
 			(SELECT count(ifnull(sm.mn_price,0))
-			FROM store s INNER JOIN str_menu sm WHERE sm.mn_price BETWEEN 35000 AND 45000 AND s.str_category = '1' AND s.str_delete = 1) as price_4,
+			FROM store s INNER JOIN str_menu sm ON s.str_number = sm.str_number WHERE sm.mn_price BETWEEN 35000 AND 45000 AND s.str_category = '1' AND s.str_delete = 1) as price_4,
 			(SELECT count(ifnull(sm.mn_price,0))
-			FROM store s INNER JOIN str_menu sm WHERE sm.mn_price BETWEEN 45000 AND 55000 AND s.str_category = '1' AND s.str_delete = 1) as price_5,
+			FROM store s INNER JOIN str_menu sm ON s.str_number = sm.str_number WHERE sm.mn_price BETWEEN 45000 AND 55000 AND s.str_category = '1' AND s.str_delete = 1) as price_5,
 			(SELECT count(ifnull(sm.mn_price,0))
-			FROM store s INNER JOIN str_menu sm WHERE sm.mn_price BETWEEN 55000 AND 70000 AND s.str_category = '1' AND s.str_delete = 1) as price_6,
+			FROM store s INNER JOIN str_menu sm ON s.str_number = sm.str_number WHERE sm.mn_price BETWEEN 55000 AND 70000 AND s.str_category = '1' AND s.str_delete = 1) as price_6,
 			(SELECT count(ifnull(sm.mn_price,0))
-			FROM store s INNER JOIN str_menu sm WHERE sm.mn_price > 70000 AND s.str_category = '1' AND s.str_delete = 1) as price_7
+			FROM store s INNER JOIN str_menu sm ON s.str_number = sm.str_number WHERE sm.mn_price > 70000 AND s.str_category = '1' AND s.str_delete = 1) as price_7
 	</select>
 	
 	<select id="selectPriceCount2" resultType="com.mbs.mvc.vo.V1_AdminStoreChartVO">
 		SELECT 
 			(SELECT count(ifnull(sm.mn_price,0))
-			FROM store s INNER JOIN str_menu sm WHERE sm.mn_price BETWEEN 0 AND 5000 AND s.str_category = '2' AND s.str_delete = 1) as price_0,
+			FROM store s INNER JOIN str_menu sm ON s.str_number = sm.str_number WHERE sm.mn_price BETWEEN 0 AND 5000 AND s.str_category = '2' AND s.str_delete = 1) as price_0,
 			(SELECT count(ifnull(sm.mn_price,0))
-			FROM store s INNER JOIN str_menu sm WHERE sm.mn_price BETWEEN 5000 AND 15000 AND s.str_category = '2' AND s.str_delete = 1) as price_1,
+			FROM store s INNER JOIN str_menu sm ON s.str_number = sm.str_number WHERE sm.mn_price BETWEEN 5000 AND 15000 AND s.str_category = '2' AND s.str_delete = 1) as price_1,
 			(SELECT count(ifnull(sm.mn_price,0))
-			FROM store s INNER JOIN str_menu sm WHERE sm.mn_price BETWEEN 15000 AND 25000 AND s.str_category = '2' AND s.str_delete = 1) as price_2,
+			FROM store s INNER JOIN str_menu sm ON s.str_number = sm.str_number WHERE sm.mn_price BETWEEN 15000 AND 25000 AND s.str_category = '2' AND s.str_delete = 1) as price_2,
 			(SELECT count(ifnull(sm.mn_price,0))
-			FROM store s INNER JOIN str_menu sm WHERE sm.mn_price BETWEEN 25000 AND 35000 AND s.str_category = '2' AND s.str_delete = 1) as price_3,
+			FROM store s INNER JOIN str_menu sm ON s.str_number = sm.str_number WHERE sm.mn_price BETWEEN 25000 AND 35000 AND s.str_category = '2' AND s.str_delete = 1) as price_3,
 			(SELECT count(ifnull(sm.mn_price,0))
-			FROM store s INNER JOIN str_menu sm WHERE sm.mn_price BETWEEN 35000 AND 45000 AND s.str_category = '2' AND s.str_delete = 1) as price_4,
+			FROM store s INNER JOIN str_menu sm ON s.str_number = sm.str_number WHERE sm.mn_price BETWEEN 35000 AND 45000 AND s.str_category = '2' AND s.str_delete = 1) as price_4,
 			(SELECT count(ifnull(sm.mn_price,0))
-			FROM store s INNER JOIN str_menu sm WHERE sm.mn_price BETWEEN 45000 AND 55000 AND s.str_category = '2' AND s.str_delete = 1) as price_5,
+			FROM store s INNER JOIN str_menu sm ON s.str_number = sm.str_number WHERE sm.mn_price BETWEEN 45000 AND 55000 AND s.str_category = '2' AND s.str_delete = 1) as price_5,
 			(SELECT count(ifnull(sm.mn_price,0))
-			FROM store s INNER JOIN str_menu sm WHERE sm.mn_price BETWEEN 55000 AND 70000 AND s.str_category = '2' AND s.str_delete = 1) as price_6,
+			FROM store s INNER JOIN str_menu sm ON s.str_number = sm.str_number WHERE sm.mn_price BETWEEN 55000 AND 70000 AND s.str_category = '2' AND s.str_delete = 1) as price_6,
 			(SELECT count(ifnull(sm.mn_price,0))
-			FROM store s INNER JOIN str_menu sm WHERE sm.mn_price > 70000 AND s.str_category = '2' AND s.str_delete = 1) as price_7
+			FROM store s INNER JOIN str_menu sm ON s.str_number = sm.str_number WHERE sm.mn_price > 70000 AND s.str_category = '2' AND s.str_delete = 1) as price_7
 	</select>
 	
 	<select id="selectStoreCount" resultType="int" parameterType="int">
