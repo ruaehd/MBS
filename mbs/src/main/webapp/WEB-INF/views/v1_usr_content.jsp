@@ -12,6 +12,11 @@
 <head>
 	<meta charset="UTF-8" />
 	<title>Google Nexus Website Menu</title>
+	<link rel="shortcut icon" href="../favicon.ico">
+	<link rel="stylesheet" type="text/css" href="resources/css/normalize.css" />
+	<link rel="stylesheet" type="text/css" href="resources/css/demo.css" />
+	<link rel="stylesheet" type="text/css" href="resources/css/component.css" />
+	<link rel="stylesheet" type="text/css" href="resources/css/bootstrap.css" />
 	<link rel="stylesheet" type="text/css" href="resources/css/w3.css"/>
 	<link rel="stylesheet" type="text/css" href="resources/css/footer.css" />
 	
@@ -94,7 +99,7 @@
 </head>
 <body>
 	<div id="wrapper">
-		<jsp:include page="header.jsp"></jsp:include>
+		<jsp:include page="v1_header.jsp"></jsp:include>
 		<div id="main">
 			<div class="container" style="margin-top:100px ">
 				
@@ -137,10 +142,10 @@
 						<h1>${vo.str_name}</h1>
 						<hr/>
 						<div>
-							<c:if test="${sessionScope._gr > 2 || sessionScope._id == vo.mb_id}">
+							<c:if test="${sessionScope.Mem_Grade > 2 || sessionScope.Mem_Id == vo.mb_id}">
 								<a href="usr_content_pay.do?str_number=${vo.str_number}" class="btn btn-info disabled">예약하기</a>
 							</c:if>
-							<c:if test="${sessionScope._gr < 3 && sessionScope._id != vo.mb_id}">
+							<c:if test="${sessionScope.Mem_Grade < 3 && sessionScope.Mem_Id != vo.mb_id}">
 								<a href="usr_content_pay.do?str_number=${vo.str_number}" class="btn btn-info">예약하기</a>
 							</c:if>
 							<a href="#commnet" class="btn btn-primary">후기보기</a>
@@ -238,7 +243,7 @@
 				<div id="map" style="width:100%;height:350px;"></div>
 			</div>
 		</div>
-		<jsp:include page="footer.jsp"></jsp:include>
+		<jsp:include page="v1_footer.jsp"></jsp:include>
 	</div>
 	
 	<script src="resources/js/jquery-1.11.1.js"></script>

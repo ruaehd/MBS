@@ -16,22 +16,24 @@
         <link rel="stylesheet" href="resources/css/jquery.fullPage.css"/>
         <link rel="stylesheet" href="resources/css/bootstrap.min.css"/>
         <link rel="stylesheet" href="resources/css/w3.css"/>
+        
+        <style>
+			.section{
+				text-align:center;
+				align:center;
+				margin:0px auto;
+			}
+			
+			#section1{
+				background-image:url(resources/imgs/title.png);
+				background-size:100% 100vh;
+			}
+			#section2{
+				background-color:powderblue;
+			}
+			</style>
     </head>
-<style>
-.section{
-	text-align:center;
-	align:center;
-	margin:0px auto;
-}
 
-#section1{
-	background-image:url(resources/imgs/title.png);
-	background-size:100% 100vh;
-}
-#section2{
-	background-color:powderblue;
-}
-</style>
     <body>
 		<div id="fullpage">
 			<div class="section" id="section1">

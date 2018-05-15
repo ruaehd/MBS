@@ -27,7 +27,7 @@
 </head>
 <body>
 	<div class="wrapper">
-		<jsp:include page="header.jsp"></jsp:include>
+		<jsp:include page="v1_header.jsp"></jsp:include>
 		
 		<div class="container" style="margin-top:100px; padding:10px">
 			<div class="row">
@@ -178,7 +178,7 @@
 			</div>
 		</div>
 		
-		<jsp:include page="footer.jsp"></jsp:include>
+		<jsp:include page="v1_footer.jsp"></jsp:include>
 	
 	</div>
 	

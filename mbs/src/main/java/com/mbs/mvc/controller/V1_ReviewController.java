@@ -43,7 +43,7 @@ public class V1_ReviewController {
 	public String usrRsvComment(Model model, HttpSession httpSession, @RequestParam("rsv_no") int rsv_no, @ModelAttribute("vo") V1_Comment vo) {
 		try {
 			vo.setRsv_no(rsv_no);
-			String id = (String)httpSession.getAttribute("_id");
+			String id = (String)httpSession.getAttribute("Mem_Id");
 			vo.setRsv_cmt_writer(id);
 			reDAO.insertComment(vo);
 			
@@ -68,7 +68,7 @@ public class V1_ReviewController {
 		try {
 			V1_Comment vo1 = reDAO.selectPreReview(rsv_no); 
 			V1_Comment vo = new V1_Comment();
-			String id = (String)httpSession.getAttribute("_id");
+			String id = (String)httpSession.getAttribute("Mem_Id");
 			
 			vo.setRsv_no(rsv_no);
 			vo.setRsv_cmt_writer(id);
@@ -130,7 +130,7 @@ public class V1_ReviewController {
 	public String usrTourComment(Model model, @ModelAttribute("vo") V1_TourComment vo, HttpSession httpSession) {
 		
 		try {
-			vo.setTour_cmt_writer((String)httpSession.getAttribute("_id"));
+			vo.setTour_cmt_writer((String)httpSession.getAttribute("Mem_Id"));
 			reDAO.insertTourCmt(vo);
 			
 			model.addAttribute("message", "후기 작성이 완료되었습니다.");
@@ -153,7 +153,7 @@ public class V1_ReviewController {
 			V1_Store vo1 = reDAO.selectTourPreReview(str_number);
 			V1_TourComment vo = new V1_TourComment();
 			vo.setStr_number(vo1.getStr_number());
-			vo.setTour_cmt_writer((String) httpSession.getAttribute("_id"));
+			vo.setTour_cmt_writer((String) httpSession.getAttribute("Mem_Id"));
 			
 			V1_TourComment rvo = reDAO.selectTourReviewOne(vo);
 			rvo.setStr_name(vo1.getStr_name());

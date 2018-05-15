@@ -2,245 +2,242 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%> <!-- // 반복문 c:forEach c:if-->
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %> <!-- // model and view -->
 <%@ page session="false" %>
+<!DOCTYPE html>
 <html>
 <head>
-   <title>관리자1</title>
-   <link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-   <link rel="stylesheet" href="resources/css/v1_adminside.css" />
-   <link rel="stylesheet" href="resources/css/w3.css" />
-   <link rel="stylesheet" href="resources/css/daterangepicker.css" />
+	<meta charset="UTF-8">
+  	<title>이벤트 관리</title>
+  	<link rel="stylesheet" href="resources/css/bootstrap.css" />
+   	<link rel="stylesheet" href="resources/css/v1_adminside.css" />
+   	<link rel="stylesheet" href="resources/css/w3.css" />
+   	<link rel="stylesheet" href="resources/css/daterangepicker.css" />
+   	<style>
+		.modal-backdrop.in {
+	         z-index:auto;
+	   }
+	   .table-head{
+	      font-color:white;
+	   }
+	   .title{
+	      margin-top:50px;
+	      margin-bottom:20px;
+	      font-size:50px
+	   }
+	   .count{
+	      width:100px;
+	      align:center
+	   }
+	   .btn_add{
+	      margin-bottom:10px
+	   }
+	   .select{
+	      width:50px;
+	      vertical-align:middle
+	   }
+	</style>
 </head>
-<style>
-	.modal-backdrop.in {
-         z-index:auto;
-   }
-   .table-head{
-      font-color:white;
-   }
-   .title{
-      margin-top:50px;
-      margin-bottom:20px;
-      font-size:50px
-   }
-   .count{
-      width:100px;
-      align:center
-   }
-   .btn_add{
-      margin-bottom:10px
-   }
-   .select{
-      width:50px;
-      vertical-align:middle
-   }
-</style>
 <body>
-<div class="row">
-    <jsp:include page="v1_admin_header.jsp"></jsp:include>
-</div>
-
-    <!-- Main Content -->
-    <div class="container-fluid">
-        <div class="side-body">
-        <div class="title"> 관리명 </div>
-            <div class="row">
-           <div class="col-md-2">
-              <button type="button" id="btn_insert" class="btn btn-primary btn_add">추가하기</button>
-           </div>
-           <div class=" col-md-offset-6 col-md-4 form-inline">
-                 <select class="form-control" id="search_type">
-                    <option value="evt_title">제목</option>
-                 </select>
-                 <input type="text" class="form-control" id="search_text" />
-                 <button type="button" class="form-control btn-success" id="search_btn">검색</button>
-              </div>
-           </div>
-          
-           <table class="table">
-              <tr class="w3-dark-gray table-head">
-                 <th style="vertical-align:middle">번호</th>
-                 <th style="vertical-align:middle">제목</th>
-                 <th style="vertical-align:middle">이미지</th>
-                 <th style="vertical-align:middle">내용</th>
-                 <th style="vertical-align:middle">
-            	  <select class="form-control w3-dark-gray w3-border-dark-gray" id="date_sel">
-                 	<option style="display:none">이벤트기간</option>
-                 </select>
-                 </th>
-                 <th style="width:120px">
-                 <select id="sel_type" class="form-control w3-dark-gray w3-border-dark-gray">
-                    <option value="all" ${param.sel_type eq all ? 'selected="selected"':''}>전체</option>
-                    <option value="1" ${param.sel_type == '1' ? 'selected="selected"':''}>진행</option>
-                    <option value="2" ${param.sel_type == '2' ? 'selected="selected"':''}>대기</option>
-                    <option value="3" ${param.sel_type == '3' ? 'selected="selected"':''}>종료</option>
-                    <option value="0" ${param.sel_type == '0' ? 'selected="selected"':''}>삭제</option>	
-                 </select>
-                 </th>
-                 <th style="vertical-align:middle">등록날짜</th>
-                 <th style="vertical-align:middle">비고</th>
-              </tr>
-              <c:forEach var="vo" items="${list}">
-                 <tr>
-	              	<td>${vo.evt_no}</td>
-	                <td style="width:200px">${vo.evt_title}</td>
-	                <td style="width:300px"><img src="eventImgList.do?evt_no=${vo.evt_no}" width="300px" height="60px" class="checkimg" /></td>
-	                <td style="width:300px"><img src="eventImgContent.do?evt_no=${vo.evt_no}" width="300px" height="60px" class="checkimg1" /></td>
-	                <td style="width:225px">${vo.evt_begintime}~${vo.evt_endtime}</td>
-	                <td>
-	                	<c:if test="${vo.evt_delete==3}">종료</c:if>
-	                	<c:if test="${vo.evt_delete==2}">대기</c:if>
-	                	<c:if test="${vo.evt_delete==1}">진행</c:if>
-                    	<c:if test="${vo.evt_delete==0}">삭제</c:if>
-                    </td>
-	                <td style="width:50px">${vo.evt_date}</td>	
-	                <td>
-	                <a href="#" class="btn btn-xs btn-warning">수정</a>
-	                <c:if test="${vo.evt_delete!=0}">
-                    <a href="#" class="btn btn-xs btn-danger btn-delete">삭제</a>
-                    </c:if>
-                    <c:if test="${vo.evt_delete==0}">
-                    <a href="#" class="btn btn-xs btn-primary btn-delete">복원</a>
-                    </c:if>
-	                </td>
-                </tr>
-              </c:forEach>
-           </table>
-           
-           
-           <div align="center">
-            <ul class="pagination"></ul>
-         </div>
-        </div>
-    </div>
+	<div class="row">
+	    <jsp:include page="v1_admin_header.jsp"></jsp:include>
+	    <div class="container-fluid">
+	        <div class="side-body">
+	        <div class="title"> 관리명 </div>
+	            <div class="row">
+	           <div class="col-md-2">
+	              <button type="button" id="btn_insert" class="btn btn-primary btn_add">추가하기</button>
+	           </div>
+	           <div class=" col-md-offset-6 col-md-4 form-inline">
+	                 <select class="form-control" id="search_type">
+	                    <option value="evt_title">제목</option>
+	                 </select>
+	                 <input type="text" class="form-control" id="search_text" />
+	                 <button type="button" class="form-control btn-success" id="search_btn">검색</button>
+	              </div>
+	           </div>
+	          
+	           <table class="table">
+	              <tr class="w3-dark-gray table-head">
+	                 <th style="vertical-align:middle">번호</th>
+	                 <th style="vertical-align:middle">제목</th>
+	                 <th style="vertical-align:middle">이미지</th>
+	                 <th style="vertical-align:middle">내용</th>
+	                 <th style="vertical-align:middle">
+	            	  <select class="form-control w3-dark-gray w3-border-dark-gray" id="date_sel">
+	                 	<option style="display:none">이벤트기간</option>
+	                 </select>
+	                 </th>
+	                 <th style="width:120px">
+	                 <select id="sel_type" class="form-control w3-dark-gray w3-border-dark-gray">
+	                    <option value="all" ${param.sel_type eq all ? 'selected="selected"':''}>전체</option>
+	                    <option value="1" ${param.sel_type == '1' ? 'selected="selected"':''}>진행</option>
+	                    <option value="2" ${param.sel_type == '2' ? 'selected="selected"':''}>대기</option>
+	                    <option value="3" ${param.sel_type == '3' ? 'selected="selected"':''}>종료</option>
+	                    <option value="0" ${param.sel_type == '0' ? 'selected="selected"':''}>삭제</option>	
+	                 </select>
+	                 </th>
+	                 <th style="vertical-align:middle">등록날짜</th>
+	                 <th style="vertical-align:middle">비고</th>
+	              </tr>
+	              <c:forEach var="vo" items="${list}">
+	                 <tr>
+		              	<td>${vo.evt_no}</td>
+		                <td style="width:200px">${vo.evt_title}</td>
+		                <td style="width:300px"><img src="eventImgList.do?evt_no=${vo.evt_no}" width="300px" height="60px" class="checkimg" /></td>
+		                <td style="width:300px"><img src="eventImgContent.do?evt_no=${vo.evt_no}" width="300px" height="60px" class="checkimg1" /></td>
+		                <td style="width:225px">${vo.evt_begintime}~${vo.evt_endtime}</td>
+		                <td>
+		                	<c:if test="${vo.evt_delete==3}">종료</c:if>
+		                	<c:if test="${vo.evt_delete==2}">대기</c:if>
+		                	<c:if test="${vo.evt_delete==1}">진행</c:if>
+	                    	<c:if test="${vo.evt_delete==0}">삭제</c:if>
+	                    </td>
+		                <td style="width:50px">${vo.evt_date}</td>	
+		                <td>
+		                <a href="#" class="btn btn-xs btn-warning">수정</a>
+		                <c:if test="${vo.evt_delete!=0}">
+	                    <a href="#" class="btn btn-xs btn-danger btn-delete">삭제</a>
+	                    </c:if>
+	                    <c:if test="${vo.evt_delete==0}">
+	                    <a href="#" class="btn btn-xs btn-primary btn-delete">복원</a>
+	                    </c:if>
+		                </td>
+	                </tr>
+	              </c:forEach>
+	           </table>
+	           
+	           
+	           <div align="center">
+	            <ul class="pagination"></ul>
+	         </div>
+	        </div>
+	    </div>
+	</div>
 	
 	<form:form action="admin_event.do" method="post" modelAttribute="vo" enctype="multipart/form-data">
-	<div class="modal fade" id="insertmodal">
-		<div class="modal-dialog">
-			<div class="modal-content" style="width:700px">
-				<div class="modal-header">
-					<h4>이벤트등록</h4>
-				</div>
-				<div class="modal-body">
-					<div class="form-inline" style="margin-top:3px; margin-bottom:3px">
-						<label style="width:120px">제목</label>
-						<form:input type="text" style="width:500px" path="evt_title" class="form-control" />
+		<div class="modal fade" id="insertmodal">
+			<div class="modal-dialog">
+				<div class="modal-content" style="width:700px">
+					<div class="modal-header">
+						<h4>이벤트등록</h4>
 					</div>
-					
-					<div class="form-inline" style="margin-top:3px; margin-bottom:3px">
-						<label style="width:120px">메인이미지</label>
-						<input type="file" name="evt_image1" class="form-control" />
+					<div class="modal-body">
+						<div class="form-inline" style="margin-top:3px; margin-bottom:3px">
+							<label style="width:120px">제목</label>
+							<form:input type="text" style="width:500px" path="evt_title" class="form-control" />
+						</div>
+						
+						<div class="form-inline" style="margin-top:3px; margin-bottom:3px">
+							<label style="width:120px">메인이미지</label>
+							<input type="file" name="evt_image1" class="form-control" />
+						</div>
+						
+						<div class="form-inline" style="margin-top:3px; margin-bottom:3px">
+							<label style="width:120px">내용이미지</label>
+							<input type="file" name="evt_content1" class="form-control" />
+						</div>
+						
+						<div class="form-inline" style="margin-top:3px; margin-bottom:3px">
+							<label style="width:120px">기간</label>
+								<input type="text" style="width:500px" id="date_insert" class="form-control" />
+								<form:input type="hidden" path="evt_begintime" id="event_begin" />
+								<form:input type="hidden" path="evt_endtime" id="event_end" />
+						</div>
 					</div>
-					
-					<div class="form-inline" style="margin-top:3px; margin-bottom:3px">
-						<label style="width:120px">내용이미지</label>
-						<input type="file" name="evt_content1" class="form-control" />
+					<div class="modal-footer">
+						<input type="submit" class="btn btn-success" value="등록" />
+						<button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
 					</div>
-					
-					<div class="form-inline" style="margin-top:3px; margin-bottom:3px">
-						<label style="width:120px">기간</label>
-							<input type="text" style="width:500px" id="date_insert" class="form-control" />
-							<form:input type="hidden" path="evt_begintime" id="event_begin" />
-							<form:input type="hidden" path="evt_endtime" id="event_end" />
-					</div>
-				</div>
-				<div class="modal-footer">
-					<input type="submit" class="btn btn-success" value="등록" />
-					<button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
 				</div>
 			</div>
 		</div>
-	</div>
 	</form:form>
 	
 	<form action="event_delete.do" method="get" enctype="multipart/form-data">
-			<div class="modal fade" id="deletemodal">
-				<div class="modal-dialog">
-					<div class="modal-content">
-						<div class="modal-header">
-							<h2>이벤트삭제</h2>
-						</div>
-						<div class="modal-body">
-							<input type="hidden" name="evt_no" id="evt_delete_no" />
-							<input type="hidden" name="evt_delete" id="delete_no">
-							<label style="font-size:30px">제목 : </label>
-							<label style="font-size:30px" id="delete_title"></label><br />
-							<label style="" id="delete_name"></label>
-							<label>하시겠습니까?</label>
-						</div>
-						<div class="modal-footer">
-							<input type="submit" class="btn btn-success" value="삭제" />
-							<button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
-						</div>
+		<div class="modal fade" id="deletemodal">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h2>이벤트삭제</h2>
 					</div>
-				</div>
-			</div>
-		</form>
-
-	<form:form action="event_update.do" method="post" modelAttribute="vo" enctype="multipart/form-data">
-			<div class="modal fade" id="updatemodal">
-				<div class="modal-dialog">
-					<div class="modal-content" style="width:700px">
-						<div class="modal-header">
-							<h2>이벤트수정</h2>
-						</div>
-						<div class="modal-body">
-							<div class="form-inline" style="margin-top:3px; margin-bottom:3px">
-								<form:input type="hidden" class="form-control" id="update_evt_no" path="evt_no" />
-								<label style="width:120px">이벤트제목</label>
-								<form:input type="text" class="form-control" style="width:500px;" id="update_evt_title" path="evt_title" />
-							</div>
-							<div class="form-inline" style="margin-top:3px; margin-bottom:3px">
-								<label style="width:120px">이벤트메인</label>
-								<img src="" width="500px" height="180px" id="evt_img" />
-								<input type="file" name="evt_image1" style="display:none" id="evt_img1" />
-							</div>
-							<div class="form-inline" style="margin-top:3px; margin-bottom:3px">
-								<label style="width:120px">이벤트내용</label>
-								<img src="" width="500px" height="180px" id="evt_content" />
-								<input type="file" name="evt_content1" style="display:none" id="evt_content1" />
-							</div>
-							<div class="form-inline" style="margin-top:3px; margin-bottom:3px">
-								<label style="width:120px">이벤트기간</label>
-								<input type="text" style="width:500px" class="form-control" id="date_update">
-								<form:input type="hidden" id="event_update_begin" path="evt_begintime" />
-								<form:input type="hidden" id="event_update_end" path="evt_endtime" />
-							</div>
+					<div class="modal-body">
+						<input type="hidden" name="evt_no" id="evt_delete_no" />
+						<input type="hidden" name="evt_delete" id="delete_no">
+						<label style="font-size:30px">제목 : </label>
+						<label style="font-size:30px" id="delete_title"></label><br />
+						<label style="" id="delete_name"></label>
+						<label>하시겠습니까?</label>
 					</div>
 					<div class="modal-footer">
-						<input type="submit" class="btn btn-success" value="수정" />
+						<input type="submit" class="btn btn-success" value="삭제" />
 						<button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
-				</div>
 					</div>
 				</div>
 			</div>
-		</form:form>
-		
-		<div class="modal fade" id="checkmodal">
-				<div class="modal-dialog">
-					<div class="modal-content" style="width:700px">
-						<div class="modal-header">
-							<h2>사진확인</h2>
-						</div>
-						<div class="modal-body">
-							<div class="form-inline" style="margin-top:3px; margin-bottom:3px">
-								<img src="" width="650px" height="650px" id="check_img"/>
-							</div>
-						</div>
-						<div class="modal-footer">
-							<button type="button" class="btn btn-success" data-dismiss="modal">확인</button>
-						</div>
-					</div>
-				</div>
-			</div>
+		</div>
+	</form>
 
+	<form:form action="event_update.do" method="post" modelAttribute="vo" enctype="multipart/form-data">
+		<div class="modal fade" id="updatemodal">
+			<div class="modal-dialog">
+				<div class="modal-content" style="width:700px">
+					<div class="modal-header">
+						<h2>이벤트수정</h2>
+					</div>
+					<div class="modal-body">
+						<div class="form-inline" style="margin-top:3px; margin-bottom:3px">
+							<form:input type="hidden" class="form-control" id="update_evt_no" path="evt_no" />
+							<label style="width:120px">이벤트제목</label>
+							<form:input type="text" class="form-control" style="width:500px;" id="update_evt_title" path="evt_title" />
+						</div>
+						<div class="form-inline" style="margin-top:3px; margin-bottom:3px">
+							<label style="width:120px">이벤트메인</label>
+							<img src="" width="500px" height="180px" id="evt_img" />
+							<input type="file" name="evt_image1" style="display:none" id="evt_img1" />
+						</div>
+						<div class="form-inline" style="margin-top:3px; margin-bottom:3px">
+							<label style="width:120px">이벤트내용</label>
+							<img src="" width="500px" height="180px" id="evt_content" />
+							<input type="file" name="evt_content1" style="display:none" id="evt_content1" />
+						</div>
+						<div class="form-inline" style="margin-top:3px; margin-bottom:3px">
+							<label style="width:120px">이벤트기간</label>
+							<input type="text" style="width:500px" class="form-control" id="date_update">
+							<form:input type="hidden" id="event_update_begin" path="evt_begintime" />
+							<form:input type="hidden" id="event_update_end" path="evt_endtime" />
+						</div>
+				</div>
+				<div class="modal-footer">
+					<input type="submit" class="btn btn-success" value="수정" />
+					<button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
+			</div>
+				</div>
+			</div>
+		</div>
+	</form:form>
+		
+	<div class="modal fade" id="checkmodal">
+			<div class="modal-dialog">
+				<div class="modal-content" style="width:700px">
+					<div class="modal-header">
+						<h2>사진확인</h2>
+					</div>
+					<div class="modal-body">
+						<div class="form-inline" style="margin-top:3px; margin-bottom:3px">
+							<img src="" width="650px" height="650px" id="check_img"/>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-success" data-dismiss="modal">확인</button>
+					</div>
+				</div>
+			</div>
+		</div>
 
 	<script type="text/javascript" src="resources/js/jquery-1.11.1.js"></script>
    <script type="text/javascript" src="resources/js/bootstrap.min.js"></script>
    <script type="text/javascript" src="resources/js/jquery.twbsPagination-1.3.1.js"></script>
 	<script type="text/javascript" src="resources/js/moment.js"></script>
 	<script type="text/javascript" src="resources/js/daterangepicker.js"></script>
-
-
 
    <script>
 	$(function() {
@@ -311,7 +308,6 @@
 	 	$('#search_btn').click(function(){
 				func();
 		});
-
 		$('#search_text').keyup(function(event){
 			if(event.which == 13){
 				func();
@@ -461,7 +457,6 @@
 				     "endDate": "${vo.evt_endtime}" 
 				});
 	  		</c:forEach> */
-
             $('.pagination').twbsPagination({
                totalPages:'${totPage}',
                visiblePages:10,
@@ -472,7 +467,6 @@
                  $('.navbar-nav').toggleClass('slide-in');
                  $('.side-body').toggleClass('body-slide-in');
                  $('#search').removeClass('in').addClass('collapse').slideUp(200);
-
                  /// uncomment code for absolute positioning tweek see top comment in css
                  //$('.absolute-wrapper').toggleClass('slide-in');
                  
@@ -482,10 +476,8 @@
             $('#search-trigger').click(function () {
                  $('.navbar-nav').removeClass('slide-in');
                  $('.side-body').removeClass('body-slide-in');
-
                  /// uncomment code for absolute positioning tweek see top comment in css
                  //$('.absolute-wrapper').removeClass('slide-in');
-
              });
       });
    </script>   

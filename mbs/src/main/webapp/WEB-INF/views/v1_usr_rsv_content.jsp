@@ -25,7 +25,7 @@
 </head>
 <body>
 	<div class="wrapper">
-		<jsp:include page="header.jsp"></jsp:include>
+		<jsp:include page="v1_header.jsp"></jsp:include>
 			
 		<div class="container" style="margin-top:100px; padding:10px">
 			<div class="row">
@@ -152,10 +152,10 @@
 					
 					<div style="margin-bottom:10px">
 						<input type="hidden" value="${vo.str_delete}" id="schk"/>
-						<c:if test="${sessionScope._gr > 2}">
+						<c:if test="${sessionScope.Mem_Grade > 2}">
 							<a href="admin_rsv_management.do?rsv_code=0" class="btn btn-primary">목록</a>
 						</c:if>
-						<c:if test="${sessionScope._gr < 3}">
+						<c:if test="${sessionScope.Mem_Grade < 3}">
 							<c:choose>
 								<c:when test="${vo.rsv_code == 1}">
 									<a href="usr_rsv_edit.do?str_number=${vo.str_number}&rsv_no=${vo.rsv_no}" class="btn btn-success">예약 변경</a>
