@@ -2,7 +2,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@ page session="false" %>
-<<<<<<< HEAD
 <!DOCTYPE html>
 <html>
 	<head>
@@ -22,7 +21,7 @@
 		<jsp:include page="v1_header.jsp"></jsp:include>
 		<div id="main">
 			<div style="margin-top:78px">
-			   <div class="container" style="width:80%; height:800px">
+			   <div class="container">
 			      <div class="w3-display-container" style="height:200px;">
 			         <div class="w3-display-middle" align="center">
 			            <img src="resources/imgs/sou.jpg" style="width:200px; height:100%"/><br/>
@@ -88,13 +87,7 @@
 			                  <div class="form-group">
 			                     <label class="col-sm-4 control-label"></label>
 			                     <div class="col-sm-5">
-			                        <input type="text" class="form-control" name="emailauth" readonly>
-			                     </div>
-			                  </div>
-			                  <div class="form-group">
-			                     <label class="col-sm-4 control-label">자동가입 방지</label>
-			                     <div class="col-sm-5">
-			                        <div class="g-recaptcha" id ="grecaptcha" data-sitekey="6LdfiEoUAAAAANEiw_ZLNO_1pmL3fj-Ttt1rX44c"></div>
+			                        <input type="text" class="form-control" id="email_ckh" name="emailauth" readonly>
 			                     </div>
 			                  </div>
 			                   </form>
@@ -237,17 +230,44 @@
 	            
 	         });
 	         $('#next-3').on('click',function(e) {
-	        	 var em = $('#email').val();
-	        	 $('#mb_email').val(em);
 	        	 
-	        	 //이메일 인증 유효성검사 확인 필요
-	            $('ul.setup-panel li:eq(2)').removeClass('disabled');
-	            $('ul.setup-panel li a[href="#step-3"]').trigger('click');
+	        	 if($('#email_ckh').val() == '인증완료'){
+	        		 var em = $('#email').val();
+	             	$('#mb_email').val(em);
+	             	 
+	             	 //이메일 인증 유효성검사 확인 필요
+	                 $('ul.setup-panel li:eq(2)').removeClass('disabled');
+	                 $('ul.setup-panel li a[href="#step-3"]').trigger('click');
+	        	 }
+	        	 else{
+	        		 alert("본인인증을 해주세요");
+	        		 return null;
+	        	 }
 	         });
 	         $('#prev-1').on('click',function(e) {
 	            $('ul.setup-panel li a[href="#step-1"]').trigger('click');
 	         });
 	      });
+				
+		function openAuth() {
+			var email = $('#email').val();
+			var mb_id = $('#id').val();
+			console.log(mb_id);
+			$.ajax({
+				type: 'POST',
+				url: 'ajax_emailcheck.do',
+				data: {email:email, mb_id:mb_id},
+				success:function(data){
+					if(data == 1){
+						window.open('emailAuth.do?email='+email,'emailAuth','width=500,height=300, left=650, top=100');			
+					}
+					else{
+						alert("회원정보에 입력된 이메일과 일치하지 않습니다");
+						return false;
+					}
+				}
+			});
+		}		
 	</script>
 </body>
 </html>

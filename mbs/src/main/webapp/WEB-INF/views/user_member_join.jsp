@@ -223,7 +223,7 @@
 			                  <div class="form-group">
 			                     <label class="col-sm-4 control-label"></label>
 			                     <div class="col-sm-5">
-			                        <input type="text" class="form-control" name="emailauth" readonly>
+			                        <input type="text" class="form-control" id="email_ckh" name="emailauth" readonly>
 			                     </div>
 			                  </div>
 			                  <div class="form-group">
@@ -490,8 +490,8 @@
          // DEMO ONLY //
          $('#next-2').on('click',function(e) {
         	 if($('input[name="chk[]"]:checked').length == 2){
-            $('ul.setup-panel li:eq(1)').removeClass('disabled');
-            $('ul.setup-panel li a[href="#step-2"]').trigger('click');
+	            $('ul.setup-panel li:eq(1)').removeClass('disabled');
+	            $('ul.setup-panel li a[href="#step-2"]').trigger('click');
         	 }
         	 else{
         		 alert("필수항목을 모두 체크해주세요");
@@ -499,17 +499,29 @@
         	 }
          });
          $('#next-3').on('click',function(e) {
-        	 var em = $('#email').val();
-        	 $('#mb_email').val(em);
-        	 
-        	 //이메일 인증 유효성검사 확인 필요
-            $('ul.setup-panel li:eq(2)').removeClass('disabled');
-            $('ul.setup-panel li a[href="#step-3"]').trigger('click');
+        	
+        	 if($('#email_ckh').val() == '인증완료'){
+        		 var em = $('#email').val();
+             	$('#mb_email').val(em);
+             	 
+             	 //이메일 인증 유효성검사 확인 필요
+                 $('ul.setup-panel li:eq(2)').removeClass('disabled');
+                 $('ul.setup-panel li a[href="#step-3"]').trigger('click');
+        	 }
+        	 else{
+        		 alert("본인인증을 해주세요");
+        		 return null;
+        	 }
          });
          $('#prev-1').on('click',function(e) {
             $('ul.setup-panel li a[href="#step-1"]').trigger('click');
          });
       });
+  
+	  function openAuth() {
+		  var email = $('#email').val()
+			window.open('emailAuth.do?email='+email,'emailAuth','width=500,height=300, left=650, top=100');
+		}
   </script>
   <script>
   $(function(){

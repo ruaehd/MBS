@@ -14,7 +14,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
+import com.mbs.mvc.conf.V1_AuthEmail;
+import com.mbs.mvc.conf.V1_RandomNumber;
 import com.mbs.mvc.dao.UserDAO;
 import com.mbs.mvc.vo.MemberVO;
 import com.mbs.mvc.vo.NoticeVO;
@@ -168,7 +171,8 @@ public class UserController {
 	@RequestMapping(value="/user_changepw.do",method=RequestMethod.GET)
 	public String userChangePw(Model model,HttpSession session,MemberVO vo) {
 		try {
-		vo.setMb_id((String) session.getAttribute("Mem_Id"));
+			
+			vo.setMb_id((String) session.getAttribute("Mem_Id"));
 			MemberVO vo1 = uDAO.selectMemberOne(vo.getMb_id());
 			model.addAttribute("vo", vo1);
 			return "user_member_changepw";
@@ -184,7 +188,8 @@ public class UserController {
 		try {
 			vo.setMb_id((String)httpsession.getAttribute("Mem_Id"));
 			vo.setMb_pw(mb_pw);
-		int ret = uDAO.userChangePw(vo);
+			int ret = uDAO.userChangePw(vo);
+			
 			if(ret == 1) {
 			model.addAttribute("message", "비밀번호 변경이 완료되었습니다");
 			model.addAttribute("url", "user_main.do");
@@ -211,34 +216,50 @@ public class UserController {
 			HttpServletRequest request
 			) {
 		try {
-		String mb_id = (String)httpsession.getAttribute("Mem_Id");
-		if(mb_id == null) {
-			return "redirect:user_login.do";
+			String mb_id = (String)httpsession.getAttribute("Mem_Id");
+			if(mb_id == null) {
+				return "redirect:user_login.do";
+			}
+			else {
+	
+			List<User_ResoverVO> rvo = new ArrayList<User_ResoverVO>();
+			List<NoticeVO> nvo = new ArrayList<NoticeVO>();
+			List<QuestionVO> qvo = new ArrayList<QuestionVO>();
+			List<User_EventVO> evo = new ArrayList<User_EventVO>();
+			
+			mvo = uDAO.selectMemberOne(mb_id);
+			rvo = uDAO.selectResoverList(mb_id);
+			qvo = uDAO.selectQuestionList(mb_id);
+			nvo = uDAO.selectNoticeList();
+			evo = uDAO.selectEventList();
+			
+			model.addAttribute("mvo",mvo);
+			model.addAttribute("rlist", rvo);
+			model.addAttribute("qlist", qvo);
+			model.addAttribute("nlist", nvo);
+			model.addAttribute("elist", evo);
+			return "user_main";
+			}
 		}
-		else {
-
-		List<User_ResoverVO> rvo = new ArrayList<User_ResoverVO>();
-		List<NoticeVO> nvo = new ArrayList<NoticeVO>();
-		List<QuestionVO> qvo = new ArrayList<QuestionVO>();
-		List<User_EventVO> evo = new ArrayList<User_EventVO>();
-		
-		mvo = uDAO.selectMemberOne(mb_id);
-		rvo = uDAO.selectResoverList(mb_id);
-		qvo = uDAO.selectQuestionList(mb_id);
-		nvo = uDAO.selectNoticeList();
-		evo = uDAO.selectEventList();
-		
-		model.addAttribute("mvo",mvo);
-		model.addAttribute("rlist", rvo);
-		model.addAttribute("qlist", qvo);
-		model.addAttribute("nlist", nvo);
-		model.addAttribute("elist", evo);
-		return "user_main";
+		catch(Exception e) {
+			System.out.println(e.getMessage());
 		}
-	}
-	catch(Exception e) {
-		System.out.println(e.getMessage());
-	}
 		return null;
 	}
+	
+	@RequestMapping(value="emailAuth.do", method = RequestMethod.GET)
+	public String emailAuth(HttpServletResponse response, HttpServletRequest request, Model model) throws Exception {
+		
+		String email = request.getParameter("email");
+		String authNum = "";
+		
+		authNum = V1_RandomNumber.RandomNum();
+		V1_AuthEmail.authEmail(email.toString(), authNum);
+		
+		System.out.println(authNum);
+		model.addAttribute("email", email);
+		model.addAttribute("authNum", authNum);
+		return "emailAuth";
+	}
+	
 }

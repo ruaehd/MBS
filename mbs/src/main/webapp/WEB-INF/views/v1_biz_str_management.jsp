@@ -46,7 +46,7 @@
 		<jsp:include page="v1_header.jsp"></jsp:include>
 		<div id="main">
 			<div class="container" style="margin-top:100px">
-				<h2>리뷰관리</h2>
+				<h2>내 업체관리</h2>
 				<hr />
 				
 				<section id="team" class="pb-5">
@@ -102,6 +102,7 @@
 				                                    	
 				                                    </div>
 													<hr />
+													<a href="biz_stedit.do?no=${tmp.str_number}" class="btn btn-info">업체수정</a>
 													<c:if test="${tmp.str_delete == 1 }">
 				                                   		<a href="#" class="btn btn-danger operate">운영중지</a>
 				                                   	</c:if>

@@ -122,42 +122,47 @@ public class V1_ReservationController {
 			@RequestParam(value="page", defaultValue="1") int page,
 			HttpSession httpSession) {
 		try {
-		
-			if(rsv_code == -1) {	//menu값이 없을 경우
-				return "redirect:usr_rsv_list.do?rsv_code=0";
+			if(httpSession.getAttribute("Mem_Id") == null) {
+				return "redirect:user_login.do";
 			}
-			String rsv_id = (String)httpSession.getAttribute("Mem_Id");
-			
-			//세션아이디
-			V1_Reservation vo = new V1_Reservation();
-			vo.setRsv_sub_id(rsv_id);
-			vo.setPage((page-1)*10);
-			vo.setRsv_code(rsv_code);
-			Map<String, Integer> map = rDAO.countRsvTot(vo);
-			Map<String, Integer> map1 = new LinkedHashMap<String, Integer>();
-			
-			if(map.get("exp") == null) {
-				map.put("exp", 0);
-				map.put("com", 0);
-				map.put("can", 0);
+			else {
+				if(rsv_code == -1) {	//menu값이 없을 경우
+					return "redirect:usr_rsv_list.do?rsv_code=0";
+				}
+				String rsv_id = (String)httpSession.getAttribute("Mem_Id");
+				
+				//세션아이디
+				V1_Reservation vo = new V1_Reservation();
+				vo.setRsv_sub_id(rsv_id);
+				vo.setPage((page-1)*10);
+				vo.setRsv_code(rsv_code);
+				Map<String, Integer> map = rDAO.countRsvTot(vo);
+				Map<String, Integer> map1 = new LinkedHashMap<String, Integer>();
+				
+				if(map.get("exp") == null) {
+					map.put("exp", 0);
+					map.put("com", 0);
+					map.put("can", 0);
+				}
+				
+				int tot = Integer.parseInt(String.valueOf(map.get("exp")))
+						+Integer.parseInt(String.valueOf(map.get("com")))
+						+Integer.parseInt(String.valueOf(map.get("can")));
+				
+				map1.put("전체", tot);
+				map1.put("이용예정", Integer.parseInt(String.valueOf(map.get("exp"))));
+				map1.put("이용완료", Integer.parseInt(String.valueOf(map.get("com"))));
+				map1.put("예약취소", Integer.parseInt(String.valueOf(map.get("can"))));
+				
+				
+				model.addAttribute("map", map1);
+				
+				List<V1_Reservation> rlist = rDAO.selectRsvList(vo);
+				model.addAttribute("rlist", rlist);
+				
+				return "v1_usr_rsv_list";
 			}
 			
-			int tot = Integer.parseInt(String.valueOf(map.get("exp")))
-					+Integer.parseInt(String.valueOf(map.get("com")))
-					+Integer.parseInt(String.valueOf(map.get("can")));
-			
-			map1.put("전체", tot);
-			map1.put("이용예정", Integer.parseInt(String.valueOf(map.get("exp"))));
-			map1.put("이용완료", Integer.parseInt(String.valueOf(map.get("com"))));
-			map1.put("예약취소", Integer.parseInt(String.valueOf(map.get("can"))));
-			
-			
-			model.addAttribute("map", map1);
-			
-			List<V1_Reservation> rlist = rDAO.selectRsvList(vo);
-			model.addAttribute("rlist", rlist);
-			
-			return "v1_usr_rsv_list";
 		}
 		catch(Exception e){
 			System.out.println(e.getMessage());
