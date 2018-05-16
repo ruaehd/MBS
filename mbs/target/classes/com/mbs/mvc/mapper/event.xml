@@ -2,15 +2,6 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="Event">
-
-	<select id="eventCountEnd" resultType="int">
-	SELECT count(*) FROM `event` WHERE evt_delete=0
-	</select>
-
-	<select id="eventCountBegin" resultType="int">
-	SELECT count(*) FROM `event` WHERE evt_begintime <![CDATA[ <= ]]> CURDATE() AND evt_endtime <![CDATA[ >= ]]> CURDATE() AND evt_delete=1
-	</select>
-
 	<resultMap type="com.mbs.mvc.vo.EventVO" id="resultEventContent">
 		<result column ="evt_no" property="evt_no" />
 		<result column ="evt_content" property="evt_content" jdbcType="BLOB" />
@@ -36,7 +27,9 @@
 	</select>
 	
 	<update id="autodelete">
-	UPDATE `event` SET evt_delete=0 WHERE evt_endtime <![CDATA[ < ]]> CURDATE(); 
+		UPDATE `event` SET evt_delete=3 WHERE evt_endtime <![CDATA[ < ]]> CURDATE() AND evt_delete=2;
+		UPDATE `event` SET evt_delete=1 WHERE evt_begintime <![CDATA[ <= ]]> CURDATE() AND evt_delete=2;
+		UPDATE `event` SET evt_delete=3 WHERE evt_endtime <![CDATA[ < ]]> CURDATE() AND evt_delete=1; 
 	</update>
 	
 </mapper>

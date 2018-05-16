@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.mbs.mvc.dao.Admin_EventDAO;
+import com.mbs.mvc.dao.EventDAO;
 import com.mbs.mvc.vo.EventVO;
 
 @Controller
@@ -20,16 +21,27 @@ public class Admin_EventController {
 	@Autowired
 	private Admin_EventDAO aeDAO = null;
 	
+	@Autowired
+	private EventDAO eDAO = null;
+	
 	@RequestMapping(value="/event_update.do", method= RequestMethod.POST)
-	public String event_update(@ModelAttribute("vo") EventVO vo, MultipartHttpServletRequest request) {
+	public String event_update(@ModelAttribute("vo") EventVO vo, MultipartHttpServletRequest request, 
+			@RequestParam(value = "type") String type, @RequestParam(value = "text") String text, 
+			@RequestParam(value = "sel_type") String sel_type, @RequestParam(value = "begin") String begin, 
+			@RequestParam(value = "end") String end, @RequestParam(value = "page") int page) {
 		try {
 			MultipartFile tmp = request.getFile("evt_image1");
 			MultipartFile tmp1 = request.getFile("evt_content1");
-			vo.setEvt_image(tmp.getBytes());
-			vo.setEvt_content(tmp1.getBytes());
+			if(tmp != null && !tmp.getOriginalFilename().equals("")) {
+				vo.setEvt_image(tmp.getBytes());
+			}
+			if(tmp1 != null && !tmp1.getOriginalFilename().equals("")) {
+				vo.setEvt_content(tmp1.getBytes());
+			}
+			System.out.println(vo.getEvt_image());
 			aeDAO.Update_Event(vo);
 		
-			return "redirect:admin_event.do";
+			return "redirect:admin_event.do?type="+type+"&text="+text+"&sel_type="+sel_type+"&begin="+begin+"&end="+end+"&page="+page;
 		
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
@@ -55,11 +67,16 @@ public class Admin_EventController {
 	public String adminEvent(Model model, @RequestParam(value = "sel_type", defaultValue="all") String sel_type, 
 			@RequestParam(value = "begin", defaultValue="null") String begin, @RequestParam(value = "end", defaultValue="") String end, 
 			@RequestParam(value = "type", defaultValue="all") String type, @RequestParam(value = "text", defaultValue="") String text, 
-			@RequestParam(value = "page", defaultValue="1") int page1) {
+			@RequestParam(value = "page", defaultValue="-1") int page1) {
+		
+		if(page1 == -1) {
+			return "redirect:admin_event.do?type=all&text=&sel_type=all&begin=null&end=&page=1";
+		}
+		eDAO.eventAutoDelete();
 		EventVO vo = new EventVO();
 		int page = (page1-1)*10;
 		vo.setEvt_page(page);
-		vo.setEvt_sc_text(text);
+		vo.setEvt_sc_text(text);	
 		vo.setEvt_sc_type(type);
 		vo.setEvt_begintime(begin);
 		vo.setEvt_endtime(end);

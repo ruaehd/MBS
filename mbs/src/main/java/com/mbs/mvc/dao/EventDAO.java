@@ -16,14 +16,6 @@ public class EventDAO {
 	@Resource(name="sqlSession")
 	private SqlSession sqlsession = null;
 	
-	public int eventCountEnd() {
-		return sqlsession.selectOne("Event.eventCountEnd");
-	}
-	
-	public int eventCountBegin() {
-		return sqlsession.selectOne("Event.eventCountBegin");
-	}
-	
 	public EventVO selectEventContent(int evt_no) {
 		return sqlsession.selectOne("Event.selectEventContent", evt_no);
 	}

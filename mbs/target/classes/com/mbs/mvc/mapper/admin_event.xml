@@ -3,8 +3,14 @@
 
 <mapper namespace="Admin_Event">
 	<update id="UpdateEvent" parameterType="com.mbs.mvc.vo.EventVO">
-		UPDATE `event` SET evt_title=#{evt_title}, evt_begintime=#{evt_begintime}, evt_endtime=#{evt_endtime}, 
-		evt_content=#{evt_content, jdbcType=BLOB}, evt_image=#{evt_image, jdbcType=BLOB} WHERE evt_no=#{evt_no} 
+		UPDATE `event` SET evt_title=#{evt_title}, evt_begintime=#{evt_begintime}, evt_endtime=#{evt_endtime}
+		<if test="evt_content != null">
+			, evt_content=#{evt_content, jdbcType=BLOB}
+		</if>
+		<if test="evt_image != null">
+			, evt_image=#{evt_image, jdbcType=BLOB}
+		</if>
+		WHERE evt_no=#{evt_no} 
 	</update>
 
 	<update id="EventDelete" parameterType="com.mbs.mvc.vo.EventVO">

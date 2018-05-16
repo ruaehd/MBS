@@ -49,7 +49,7 @@
         <div class="title">공지관리</div>
             <div class="row">
            <div class="col-md-2">
-              <button type="button" class="btn btn-info btn_add" id="btn_insert">추가하기</button>
+              <button type="button" class="btn btn-primary btn_add" id="btn_insert">추가하기</button>
            </div>
            <div class=" col-md-offset-6 col-md-4 form-inline">
                  <select class="form-control" id="search_type">

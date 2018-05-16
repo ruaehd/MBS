@@ -1,9 +1,11 @@
 package com.mbs.mvc.controller;
 
+import java.io.InputStream;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -32,13 +34,11 @@ public class EventController {
 	@RequestMapping(value="/event.do", method= RequestMethod.GET)
 	public String event(Model model) {
 		eDAO.eventAutoDelete();
-		int eventbegin = eDAO.eventCountBegin();
-		int eventend = eDAO.eventCountEnd();
 		List<EventVO> list_begin = eDAO.selectEventImgBegin();
 		List<EventVO> list_end = eDAO.selectEventImgEnd();
 		
-		model.addAttribute("eventend", eventend);
-		model.addAttribute("eventbegin", eventbegin);
+		model.addAttribute("eventend", list_end.size());
+		model.addAttribute("eventbegin", list_begin.size());
 		model.addAttribute("list_begin", list_begin);
 		model.addAttribute("list_end", list_end);
 		return "user_custcenter_event";
@@ -46,11 +46,14 @@ public class EventController {
 	
 	@RequestMapping(value = "/eventImgList.do", method = RequestMethod.GET)
 	public ResponseEntity<byte[]> selectEventImg(@RequestParam("evt_no") int evt_no, HttpServletRequest request){
-		
 		EventVO vo = eDAO.selectEventImg(evt_no);
 		byte[] eventImg = null;
-		eventImg = vo.getEvt_image();
 		try {
+			InputStream is= request.getSession().getServletContext().getResourceAsStream("/resources/imgs/default.jpg");
+			eventImg = IOUtils.toByteArray(is);	
+			if(vo.getEvt_image() != null) {
+				eventImg = vo.getEvt_image();
+			}
 			final HttpHeaders headers = new HttpHeaders();
 			headers.setContentType(MediaType.IMAGE_JPEG);
 			
@@ -68,8 +71,15 @@ public class EventController {
 		vo1.setEvt_no(evt_no);
 		EventVO vo = eDAO.selectEventContent(evt_no);
 		byte[] eventContent = null;
-		eventContent = vo.getEvt_content();
+		
+		
+		
 		try {
+			InputStream is= request.getSession().getServletContext().getResourceAsStream("/resources/imgs/default.jpg");
+			eventContent = IOUtils.toByteArray(is);	
+			if(vo.getEvt_content() != null) {
+				eventContent = vo.getEvt_content();
+			}
 			final HttpHeaders headers = new HttpHeaders();
 			headers.setContentType(MediaType.IMAGE_JPEG);
 			
