@@ -11,7 +11,7 @@
 		<jsp:include page="v1_header.jsp"></jsp:include>
 		<div class="col-md-9"
 			style="border-right: 1px solid #cccccc; padding: 10px">
-			<div class="w3-round" id="imgcon" style="border: 1px solid #cccccc; width: 100%; height: 300px;white-space:nowrap;overflow-x:auto;overflow-y:hidden">
+			<div class="w3-round w3-light-gray" id="imgcon" style="border: 1px solid #cccccc; width: 100%; height: 300px;white-space:nowrap;overflow-x:auto;overflow-y:hidden">
 				<h3>현재 예약중인 항목</h3>
 					<c:if test="${empty rlist}">
 					<div style="margin-top:80px">

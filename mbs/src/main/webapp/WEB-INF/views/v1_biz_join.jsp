@@ -111,7 +111,7 @@
 			                  </div>
 			                  
 			                   <div align="center">
-			                      <button type="button" id="prev" class="btn btn-info btn-lg">뒤로</button>
+			                      <a href="map_main.do"><button type="button" class="btn btn-info btn-lg">메인페이지로</button></a>
 			                       <button type="button" id="next-2" class="btn btn-primary btn-lg">다음 단계로</button>
 			                   </div>
 			               </div> 

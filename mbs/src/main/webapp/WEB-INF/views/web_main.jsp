@@ -15,8 +15,8 @@
 		.gn-menu-main{
 			z-index:10;
 		}
-		body{
-			background-color:#eeeeee
+		.wrapper{
+		background-image: url("resources/imgs/dust_scratches.png")
 		}
 	</style>
 </head>
@@ -93,15 +93,16 @@
 						</div>
 					</div>
 				</div>
-				<div class="col-md-offset-1 col-md-7" style="height:100vh; overflow:auto">
-				<div id="contentlist"></div>
-				<div id="joincontent">
-					<div  class="w3-white " align="center" style="height:50vh;padding:30px">
+				<div class="col-md-offset-1 col-md-7">
+				
+				<div id="joincontent" >
+					<div  class="w3-border w3-white" align="center" style="height:50vh;padding:30px">
 					<img src="resources/imgs/glass.png" style="width:25%; height:20vh;margin-bottom:10px"/>
 					<h3>입력하신 주소를 기준으로<br/><br/>검색범위만큼 검색합니다</h3>
 					</div>
 				</div>
-				
+				<div id="contenthead"></div>
+				<div id="contentlist" style="height:80vh;overflow-x:hidden;overflow-y:auto"></div> 
 				</div>
 			</div>
 		</div>
@@ -163,6 +164,7 @@
 			 });
 			$('#search_panel_button').click(function(){
 				$('#joincontent').empty();
+				$('#contenthead').empty();
 				$('#contentlist').empty();
 					var tr = 0;
 					var fo = 0;
@@ -201,14 +203,14 @@
 						$.post("ajax_web_main_search.do",	{"tr":tr,"fo":fo,"addr":addr,"date":date,"ps":ps,"pe":pe,"lat":lat,"lng":lng,"ra":ra},function(datalist){
 								if(datalist.length == 0 || datalist.length == null){
 								$('#contentlist').append(
-										'<div class="w3-white " align="center" style="height:22vh;padding:10px">'+
+										'<div class="w3-white" align="center" style="height:22vh;padding:10px">'+
 										'<h3>검색 결과가 존재하지 않습니다<br/><br/>검색 옵션을 확인해주세요</h3>'+
 										'</div>'
 										);
 								}
 								else{
-								$('#contentlist').append(
-										'<div class="w3-white" style="padding:10px;margin-bottom:20px;width:100%" align="center">' +
+								$('#contenthead').append(
+										'<div class="w3-white w3-border" style="padding:10px;margin-bottom:20px;width:100%" align="center">' +
 										'<font style="font-size:20px">'+addr+'</font>기준<br/><font style="font-size:20px">'+ra+'km</font> 내에 <br/>'+datalist.length+'개의 정보가 있습니다.</h4>'+
 										'</div>'
 										);
@@ -236,7 +238,7 @@
 										var tel3 = datalist[i].tel.substring(7,11);	
 									}
 									$('#contentlist').append(
-										'<div class="w3-white" style="padding:10px;margin-bottom:20px;width:100%">' +
+										'<div class="w3-border w3-white" style="padding:10px;margin-bottom:20px;width:100%">' +
 											'<h4><b>'+datalist[i].name+'</b></h4>'+
 										'<div class="row" style="width:100%">'+
 											'<div class="col-md-10"><span color="gray" style="margin-bottom:10px">'+datalist[i].address+'</span></div>'+
@@ -244,7 +246,7 @@
 										'</div>'+
 											'<div class="row" >'+
 												'<div class="col-md-4">'+
-													'<img class="'+datalist[i].number+'"src="getBlobImg.do?no='+ datalist[i].number +'" align="left" style="width:100%;height:170px;z-index:1;"/>'+
+													'<img class="'+datalist[i].number+'"src="getBlobImg.do?no='+ datalist[i].number +'" align="left" style="width:100%;height:170px;z-index:1;border:1px solid #cccccc"/>'+
 													'<a href="usr_content.do?str_number='+datalist[i].number+'" style="width:100%"><button class="w3-button btn_con" style="width:100%">예약하기</button></a>'+								
 													'</div>'+
 												'<div class="col-md-8">'+
@@ -275,54 +277,59 @@
 	</script>
 
 <script>
-    //본 예제에서는 도로명 주소 표기 방식에 대한 법령에 따라, 내려오는 데이터를 조합하여 올바른 주소를 구성하는 방법을 설명합니다.
-    function sample4_execDaumPostcode() {
-        new daum.Postcode({
-            oncomplete: function(data) {
-                // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+function sample4_execDaumPostcode() {
+	$('#sample4_roadAddress').val("");
+	new daum.Postcode(
+			{
+				oncomplete : function(data) {
 
-                // 도로명 주소의 노출 규칙에 따라 주소를 조합한다.
-                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
-                var fullRoadAddr = data.roadAddress; // 도로명 주소 변수
-                var extraRoadAddr = ''; // 도로명 조합형 주소 변수
+					// 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
 
-                // 법정동명이 있을 경우 추가한다. (법정리는 제외)
-                // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
-                if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
-                    extraRoadAddr += data.bname;
-                }
-                // 건물명이 있고, 공동주택일 경우 추가한다.
-                if(data.buildingName !== '' && data.apartment === 'Y'){
-                   extraRoadAddr += (extraRoadAddr !== '' ? ', ' + data.buildingName : data.buildingName);
-                }
-                // 도로명, 지번 조합형 주소가 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
-                if(extraRoadAddr !== ''){
-                    extraRoadAddr = ' (' + extraRoadAddr + ')';
-                }
-                // 도로명, 지번 주소의 유무에 따라 해당 조합형 주소를 추가한다.
-                if(fullRoadAddr !== ''){
-                    fullRoadAddr += extraRoadAddr;
-                }
+					// 도로명 주소의 노출 규칙에 따라 주소를 조합한다.
+					// 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+					var fullRoadAddr = data.roadAddress; // 도로명 주소 변수
+					var extraRoadAddr = ''; // 도로명 조합형 주소 변수
 
-                // 우편번호와 주소 정보를 해당 필드에 넣는다.
-                $('#sample4_roadAddress').value = fullRoadAddr;
+					// 법정동명이 있을 경우 추가한다. (법정리는 제외)
+					// 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+					if (data.bname !== '' && /[동|로|가]$/g.test(data.bname)) {
+						extraRoadAddr += data.bname;
+					}
+					// 건물명이 있고, 공동주택일 경우 추가한다.
+					if (data.buildingName !== '' && data.apartment === 'Y') {
+						extraRoadAddr += (extraRoadAddr !== '' ? ', '
+								+ data.buildingName : data.buildingName);
+					}
+					// 도로명, 지번 조합형 주소가 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+					if (extraRoadAddr !== '') {
+						extraRoadAddr = ' (' + extraRoadAddr + ')';
+					}
+					// 도로명, 지번 주소의 유무에 따라 해당 조합형 주소를 추가한다.
+					if (fullRoadAddr !== '') {
+						fullRoadAddr += extraRoadAddr;
+					}
 
-                // 사용자가 '선택 안함'을 클릭한 경우, 예상 주소라는 표시를 해준다.
-                if(data.autoRoadAddress) {
-                    //예상되는 도로명 주소에 조합형 주소를 추가한다.
-                    var expRoadAddr = data.autoRoadAddress + extraRoadAddr;
-                    document.getElementById('guide').innerHTML = '(예상 도로명 주소 : ' + expRoadAddr + ')';
+					document.getElementById('sample4_roadAddress').value = fullRoadAddr;
 
-                } else if(data.autoJibunAddress) {
-                    var expJibunAddr = data.autoJibunAddress;
-                    document.getElementById('guide').innerHTML = '(예상 지번 주소 : ' + expJibunAddr + ')';
+					// 사용자가 '선택 안함'을 클릭한 경우, 예상 주소라는 표시를 해준다.
+					if (data.autoRoadAddress) {
+						//예상되는 도로명 주소에 조합형 주소를 추가한다.
+						var expRoadAddr = data.autoRoadAddress
+								+ extraRoadAddr;
+						document.getElementById('guide').innerHTML = '(예상 도로명 주소 : '
+								+ expRoadAddr + ')';
 
-                } else {
-                    document.getElementById('guide').innerHTML = '';
-                }
-            }
-        }).open();
-    }
+					} else if (data.autoJibunAddress) {
+						var expJibunAddr = data.autoJibunAddress;
+						document.getElementById('guide').innerHTML = '(예상 지번 주소 : '
+								+ expJibunAddr + ')';
+
+					} else {
+						document.getElementById('guide').innerHTML = '';
+					}
+				}
+			}).open();
+}
 </script>
 </body>
 </html>

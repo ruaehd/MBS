@@ -89,18 +89,17 @@
 				</div>
 			</div>
 			<div class="section">
-			<div class="row">
+			
+			<div class="row" style="height:100vh">
 				<div class="col-md-6">
-				<img src="resources/imgs/map_page.PNG" style="width:100%; height:100vh;z-index:1;top:0;left:0;position:absolute;opacity: 0.6"/>
-			   <a href="map_main.do" class="btn-none btn-round mr-3 btn-block"style="height:100vh;z-index:2;top:0;left:0;position:absolute">
-               <em class="fa fa-eye fa-fw" style="height:60px;padding:20px"></em>
-                <font style="margin-top:50vh">지도로 볼래요</font></a>
+				<h1>지도로 보기</h1>
+				<a href="map_main.do" class="btn-none btn-round mr-3 btn-block"style="height:90vh;z-index:2;left:0;position:absolute">
+				<img src="resources/imgs/map_page.PNG" style="width:100%; height:90vh;z-index:1;top:0;left:0;position:absolute;opacity: 0.8"/></a>
                 </div>
            		 <div class="col-md-6">
-               <a href="web_main.do"class="btn-default btn-round btn-block"  style="height:100vh">
-                 <em class="fa fa-eye fa-fw" style="height:60px;padding:20px"></em>
-                 <font style="margin-right:15px">자세히 볼래요</font>
-               </a>
+           		 <h1>검색범위로 보기</h1>
+               <a href="web_main.do" class="btn-none btn-round mr-3 btn-block"style="height:90vh;z-index:2;left:0;position:absolute">
+               <img src="resources/imgs/web_page.PNG" style="width:100%; height:90vh;z-index:1;top:0;left:10px;position:absolute;opacity: 0.8"/></a>
                </div>
                </div>
            </div>
