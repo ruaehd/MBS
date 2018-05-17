@@ -71,8 +71,8 @@
 			                     <label class="col-sm-4 control-label">사업자분류</label>
 			                     <div class="col-sm-5">
 			                        <div class="form-inline">
-			                           <input type="radio" id="one" name="company_class" value="개인" checked="checked" /> 개인
-			                           <input type="radio" id="group" name="company_class" value="법인"/> 법인
+			                           <input type="radio" id="one" name="company_class"/> 개인
+			                           <input type="radio" id="group" name="company_class"/> 법인
 			                           <form:input type="hidden" path="company_class" id="company_class"/>
 			                        </div>
 			                     </div>
@@ -82,6 +82,7 @@
 			                     <div class="col-sm-5">
 			                        <form:input type="text" class="form-control" id="company_num" path="company_num" placeholder="예)000-00-00000" />
 			                     </div>
+			                     	<font id="numfont" style="font-size:12px;color:red" ></font>
 			                  </div>
 			                  <div class="form-group">
 			                     <label class="col-sm-4 control-label" >업태</label>
@@ -226,6 +227,19 @@
    		 	$('.price').keyup(function(){
 		         $(this).val($(this).val().replace(/[^0-9]/g,""));
 		    }); 
+   		 	
+   		 	$('#company_num').keyup(function(event){
+   		 	 $(this).val($(this).val().replace(/^[ㄱ-ㅎ|가-힣|a-z|A-Z|\*]+$/,""));
+   		 		var num = $('#company_num').val();
+   		 		$.post('ajax_companynum',{"num":num},function(ret){
+   		 			if(ret != 0){
+   		 				$('#numfont').text('데이터베이스에 해당 테스트 값이 이미 존재합니다');
+   		 			}
+   		 			else{
+   		 			$('#numfont').empty();
+   		 			}
+   		 		});
+   		 	});
    		$('.imgs').click(function(){
    			var idx = $(this).index('.imgs');
    			$('.fileload_'+idx).trigger('click');
@@ -460,7 +474,7 @@
   			if($('#one:checked').length == 1){
   				$('#company_class').val("개인");
   			}
-  			else if($('#group:checked').length == 1){
+  			else{
   				$('#company_class').val("법인");
   			}
   			var company_num = $('#company_num').val();

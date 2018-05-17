@@ -183,7 +183,7 @@
 			function displayInfowindow(marker, datalist){
 				var content = '<div align="center" style="width:150px">'+
        		 '<a href="user_content.do?no='+datalist.number+'"><img class="'+datalist.number+'" src="getBlobImg.do?no='+ datalist.number + '" align="left" style="width:148px;height:100px;z-index:1;margin-top:0;margin-bottom:10px"/></a>' +
-    		 '<h4 style="margin-bottom:10px"><b>'+ datalist.name +'</b></h4>' +
+    		 '<p style="margin-bottom:10px"><b>'+ datalist.name +'</b></p>' +
     		 '</div>';
     		 infowindow.setContent(content);
     		 infowindow.open(map,marker);
@@ -332,7 +332,7 @@
 				function displayInfowindow(marker, datalist){
 					var content = '<div align="center" style="width:150px">'+
 	       		 '<a href="user_content.do?no='+datalist.number+'"><img class="'+datalist.number+'" src="getBlobImg.do?no='+ datalist.number + '" align="left" style="width:148px;height:100px;z-index:1;margin-top:0;margin-bottom:10px"/></a>' +
-	    		 '<h4 style="margin-bottom:10px"><b>'+ datalist.name +'</b></h4>' +
+	    		 '<p style="margin-bottom:10px"><b>'+ datalist.name +'</b></p>' +
 	    		 '</div>';
 	    		 infowindow.setContent(content);
 	    		 infowindow.open(map,marker);
@@ -464,7 +464,7 @@
 					function displayInfowindow(marker, datalist){
 						var content = '<div align="center" style="width:150px">'+
 		       		 '<a href="user_content.do?no='+datalist.number+'"><img class="'+datalist.number+'" src="getBlobImg.do?no='+ datalist.number + '" align="left" style="width:148px;height:100px;z-index:1;margin-top:0;margin-bottom:10px"/></a>' +
-		    		 '<h4 style="margin-bottom:10px"><b>'+ datalist.name +'</b></h4>' +
+		    		 '<p style="margin-bottom:10px"><b>'+ datalist.name +'</b></p>' +
 		    		 '</div>';
 		    		 infowindow.setContent(content);
 		    		 infowindow.open(map,marker);
@@ -524,7 +524,7 @@
 					function displayInfowindow(marker, datalist){
 						var content = '<div align="center" style="width:150px">'+
 		       		 '<a href="user_content.do?no='+datalist.number+'"><img class="'+datalist.number+'" src="getBlobImg.do?no='+ datalist.number + '" align="left" style="width:148px;height:100px;z-index:1;margin-top:0;margin-bottom:10px"/></a>' +
-		    		 '<h4 style="margin-bottom:10px"><b>'+ datalist.name +'</b></h4>' +
+		    		 '<p style="margin-bottom:10px"><b>'+ datalist.name +'</b></p>' +
 		    		 '</div>';
 		    		 infowindow.setContent(content);
 		    		 infowindow.open(map,marker);

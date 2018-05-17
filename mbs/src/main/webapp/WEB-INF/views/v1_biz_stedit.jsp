@@ -80,7 +80,7 @@
 		                  <div class="form-group">
 		                     <label class="col-sm-4 control-label">사업자 등록번호</label>
 		                     <div class="col-sm-5">
-		                        <form:input type="text" class="form-control" id="company_num" path="company_num" placeholder="예)000-00-00000" />
+		                        <form:input type="text" class="form-control" id="company_num" path="company_num" placeholder="예)000-00-00000" readonly="true"/>
 		                     </div>
 		                  </div>
 		                  <div class="form-group">
@@ -249,10 +249,8 @@
 	</div>
    <script src="resources/js/bootstrap.min.js"></script>
    <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
-   <script src="//code.jquery.com/jquery-1.10.2.js"></script>
    <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=66e7156b3899e012effaa62fd20217d4&libraries=services"></script>
- <script src="resources/js/jquery-3.2.1.min.js"></script>
    <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
    <script src="resources/js/bootstrap-filestyle.min.js"> </script>
    <script>

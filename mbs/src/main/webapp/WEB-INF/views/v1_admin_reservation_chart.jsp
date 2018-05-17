@@ -35,7 +35,7 @@
 								<b id="resercount">현재 ${nowcount}개의 예약이 진행중입니다</b>
 							</h2>
 							<h2 style="margin-top: 150px">
-							<b id="resernowcount">현재까지 ${allcount}개의 예약이 완료되었습니다</b>
+							<b id="resernowcount">현재까지 ${allcount}개의 예약이 <br/> 완료되었습니다</b>
 							
 							</h2>
 							
@@ -263,7 +263,7 @@
 					data: {
 						labels: datelist,
 						datasets: [{
-							label: '한달 간 총 예약수',
+							label: '한달 간 예약수',
 							data: monthdata,
 							backgroundColor: 'rgba(132, 132, 132, 0.4)',
 							type: 'line',

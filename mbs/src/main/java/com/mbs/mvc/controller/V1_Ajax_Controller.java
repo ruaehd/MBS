@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.mbs.mvc.dao.V1_BizMemDAO;
 import com.mbs.mvc.dao.V1_ReviewDAO;
 import com.mbs.mvc.vo.V1_Comment;
 import com.mbs.mvc.vo.V1_Reply;
@@ -19,6 +20,15 @@ public class V1_Ajax_Controller {
 
 	@Autowired 
 	private V1_ReviewDAO reDAO = null;
+	
+	@Autowired
+	private V1_BizMemDAO bmDAO = null;
+	
+	@RequestMapping(value="/ajax_companynum", method= {RequestMethod.GET,RequestMethod.POST})
+	public int ajaxcompanynum(@RequestParam("num")String num) {
+		int ret = bmDAO.selectCompanyNum(num);
+		return ret;
+	}
 	
 	@RequestMapping(value="/ajax_reviewlist.do", method = RequestMethod.GET)
 	public List<V1_Comment> reviewlist(@RequestParam(value="page", defaultValue="1") int page, @RequestParam("str_number") int str_number) {

@@ -18,6 +18,9 @@ public class V1_BizMemDAO {
 	@Resource(name="sqlSession")
 	private SqlSession sqlsession = null;
 	
+	public int selectCompanyNum(String num) {
+		return sqlsession.selectOne("BizMem.selectCompanyNum",num);
+	}
 	public int insertBizImage(V1_BizJoin vo) {
 		return sqlsession.insert("BizMem.insertBizImage",vo);
 	}

@@ -2,6 +2,10 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="BizMem">
+
+	<select id="selectCompanyNum" parameterType="String" resultType="int">
+		SELECT count(*) FROM store WHERE str_number = #{num}
+	</select>
 	
 	<insert id="insertBizImage" parameterType="com.mbs.mvc.vo.V1_BizJoin">
 		INSERT INTO str_image (str_image, str_img_delete, str_img_date, str_number,str_image_idx) 
