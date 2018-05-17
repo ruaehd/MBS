@@ -7,8 +7,8 @@
 	<meta charset="UTF-8">
 	<title>회원통계</title>
 	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-	<link rel="stylesheet" href="resources/css/bootstrap.css" />
 	<link rel="stylesheet" href="resources/css/v1_adminside.css" />
+	<link rel="stylesheet" href="resources/css/bootstrap.css" />
 	<link rel="stylesheet" href="resources/css/w3.css" />
 	<style>
 	   .title{
@@ -19,7 +19,7 @@
 	</style>
 </head>
 <body>
-	<div class="row">
+	<div class="row" style="width:100%;margin:0px auto">
 		<jsp:include page="v1_admin_header.jsp"></jsp:include>
 		<div class="container-fluid">
 			<div class="side-body">
@@ -97,11 +97,9 @@
 					responsive: true,
 					title: {
 						display: true,
-						}]
+						}
 					}
 				}
-			};
-			window.onload = function() {
 				var mlist = new Array();
 				<c:forEach items="${mlist}" var="vo">
 					var json = new Object();
@@ -154,11 +152,12 @@
 				var monthdata = new Array;
 				monthdata = [];
 				var monthcount = 0;
+				//날짜입력
 				for (var i=30;i>0;i--) {
 					datelist.push(moment().subtract(i, 'days').format('YYYY-MM-DD'));
 				}
-					//각각의 한번마다 30번씩 배열 돌림
-					for (var j=datelist.length-1;j>-1;j--) {
+					//30번 배열 돌림
+					for (var j=0;j<datelist.length;j++) {
 						var val = 0;
 						for(var i=0;i<mlist.length;i++){
 							
@@ -193,8 +192,7 @@
 					};
 				var Month_chart = new Chart(ctx2, cfg);
 			
-			};
-		});
+			});
 	</script>
 
 </body>

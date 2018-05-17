@@ -1,3 +1,7 @@
+<%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%> 
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
+<%@ page session="true" %>
 <!DOCTYPE html>
 <div class="side-menu" style="overflow: auto">
 	<nav class="navbar navbar-default" role="navigation">
@@ -10,7 +14,10 @@
 					<span class="icon-bar"></span>
 				</button>
 				<div class="brand-name-wrapper">
-					<a class="navbar-brand" href="#"> 관리자 페이지 </a>
+					<a class="navbar-brand" href="admin_user.do"> 관리자 페이지 </a>
+				<c:if test="${sessionScope.Mem_Id ne null}">
+					<a class="navbar-brand" href="user_logout.do"style="margin-left:50px">로그아웃</a>
+				</c:if>
 				</div>
 			</div>
 		</div>

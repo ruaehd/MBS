@@ -99,7 +99,8 @@
 	
 	<select id="selectReservationOne" parameterType="String" resultType="com.mbs.mvc.vo.V1_Reservation">
 		SELECT r.rsv_no,s.str_name, r.rsv_day, r.rsv_date, r.rsv_personnel, r.rsv_sub_id, r.rsv_sub_email, r.rsv_delete, r.rsv_code  
-		FROM store s INNER JOIN reservation r ON s.str_number = r.str_number WHERE s.str_name LIKE concat('%',#{name},'%') AND r.rsv_delete = 1
+		FROM store s INNER JOIN reservation r ON s.str_number = r.str_number WHERE s.str_name LIKE concat('%',#{name},'%') AND r.rsv_delete = 1 
+		ORDER BY r.rsv_date DESC
 	</select>
 	
 	<select id="selectReservationMonth" resultType="com.mbs.mvc.vo.V1_MonthChart">

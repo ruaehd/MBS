@@ -16,15 +16,31 @@
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 		<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 	</head>
+	<style>
+		.backimg{
+			position:absolute;
+			width:100%;
+			height:100vh;
+			z-index:1;
+			filter: blur(2px);
+		}
+		#wrapper{
+			position:absolute;
+			z-index:2;
+			top:0px;
+			left:0px;
+		}
+	</style>
 <body>
+	<img src="resources/imgs/login-back.jpg" class="backimg"></img>
 	<div id="wrapper">
 		<jsp:include page="v1_header.jsp"></jsp:include>
 		<div id="main">
 			<div style="margin-top:128px">
-		      <div class="container w3-border w3-round w3-white" style="width:40%;padding:30px;">
+		      <div class="w3-border w3-round" class="bgBlur" style="width:30%;padding:30px;background-color: rgba(255, 255, 255, 0.3);margin:30vh auto;">
 		       <h2 align="center"><b>로그인</b></h2>
 		       <div align="right">
-		      		<a href="user_forgetpw.do" style="font-size:12px">비밀번호를 잊으셨습니까?</a>
+		      		<a href="user_forgetpw.do" style="font-size:12px"><b>비밀번호를 잊으셨습니까?</b></a>
 		      	</div>
 		    	  <div class="row">
 		             <form:form action="user_login.do" id="form" method="post" modelAttribute="vo">
@@ -43,16 +59,15 @@
 		         	<div class="row" style="margin-top:10px;line-height:40px">
 		         		<div class="col-md-6">
 		      				<input type="checkbox" id="save" value="forget-password" style="margin-top:10px"/>
-		      				<font style="margin-top:10px;">아이디/ 암호 저장하기</font>
+		      				<b><font style="margin-top:10px;">아이디/ 암호 저장하기</font></b>
 		      			</div>
 		      			<div class="col-md-6" align="right">
-		      			<a href="user_join.do">회원가입</a>
+		      			<a href="user_join.do"><b>회원가입</b></a>
 		      			</div>
 	      			</div>
 		  		 </div>
 		   </div>
 		</div>
-		<jsp:include page="v1_footer.jsp"></jsp:include>
 	</div>
 	<script type="text/javascript" src="resources/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="resources/js/jquery-1.11.1.js"></script>
@@ -88,6 +103,11 @@
    		
    		$('#login_btn').click(function(){
    			$('#form').submit(); 
+   		});
+   		$('#pw').keyup(function(e) {
+   		    if (e.keyCode == 13){
+   		    	$('#form').submit(); 
+   		    };        
    		});
    	});
    </script>

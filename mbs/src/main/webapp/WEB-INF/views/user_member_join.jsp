@@ -7,14 +7,8 @@
 	<head>
 		<meta charset="UTF-8" />
 		<title>Google Nexus Website Menu</title>
-		<link rel="shortcut icon" href="../favicon.ico">
-		<link rel="stylesheet" type="text/css" href="resources/css/normalize.css" />
-		<link rel="stylesheet" type="text/css" href="resources/css/demo.css" />
-		<link rel="stylesheet" type="text/css" href="resources/css/component.css" />
-		<link rel="stylesheet" type="text/css" href="resources/css/bootstrap.css" />
-		<link rel="stylesheet" type="text/css" href="resources/css/w3.css"/>
-		<link rel="stylesheet" type="text/css" href="resources/css/footer.css" />
 		<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+		<link rel="stylesheet" href="resources/css/daterangepicker.css" />
 	</head>
 <body>
 	<div id="wrapper">
@@ -344,6 +338,8 @@
 	<script type="text/javascript" src="resources/js/bootstrap.min.js"></script>
 	<script src="//code.jquery.com/jquery-1.10.2.js"></script>
 	<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+	<script type="text/javascript" src="resources/js/moment.js"></script>
+	<script type="text/javascript" src="resources/js/daterangepicker.js"></script>
 	
   <script>
            
@@ -513,14 +509,18 @@
   </script>
   <script>
   $(function(){
-	  $('#mb_brith').datepicker({
-			dateFormat:"yy-mm-dd",
-			changeMonth: true,
-			changeYear: true,
-			dayNamesMin:['일','월','화','수','목','금','토'],
-			showMonthAfterYear:true
-		});
-});
+	  $('#mb_brith').daterangepicker({
+  		singleDatePicker: true,
+  	    showDropdowns: true,
+  	    locale: {
+          format: 'YYYY-MM-DD',
+          applyLabel: '적용',
+          cancelLabel: '취소',
+          monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+          daysOfWeek: ['일', '월', '화', '수', '목', '금', '토'],
+				  }
+	    });
+	});
   </script>
   </body>
   </html>

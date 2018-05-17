@@ -2,19 +2,11 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@ page session="false" %>
-<<<<<<< HEAD
 <!DOCTYPE html>
 <html>
 	<head>
 		<meta charset="UTF-8" />
 		<title>Google Nexus Website Menu</title>
-		<link rel="shortcut icon" href="../favicon.ico">
-		<link rel="stylesheet" type="text/css" href="resources/css/normalize.css" />
-		<link rel="stylesheet" type="text/css" href="resources/css/demo.css" />
-		<link rel="stylesheet" type="text/css" href="resources/css/component.css" />
-		<link rel="stylesheet" type="text/css" href="resources/css/bootstrap.css" />
-		<link rel="stylesheet" type="text/css" href="resources/css/w3.css"/>
-		<link rel="stylesheet" type="text/css" href="resources/css/footer.css" />
 		<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 	</head>
 <body>
@@ -22,10 +14,10 @@
 		<jsp:include page="v1_header.jsp"></jsp:include>
 		<div id="main">
 			<div style="margin-top:78px">
-			   <div class="container" style="width:80%; height:800px">
+			   <div class="container" style="width:80%;">
 			      <div class="w3-display-container" style="height:200px;">
 			         <div class="w3-display-middle" align="center">
-			            <img src="resources/imgs/sou.jpg" style="width:200px; height:100%"/><br/>
+			            <img src="resources/imgs/sou.jpg" style="width:200px; height:200px "/><br/>
 			            <h1>비밀번호 찾기</h1>
 			         </div>
 			      </div>

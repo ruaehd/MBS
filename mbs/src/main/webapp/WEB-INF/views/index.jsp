@@ -88,15 +88,16 @@
 					</div>
 				</div>
 			</div>
-			<div class="section" style="background-color:gray">
+			<div class="section">
 			<div class="row">
-				<div class="col-md-6" style="border-right:1px solid #FFFFFF">
-			   <a href="map_main.do" target="_blank" class="btn btn-white btn-round mr-3 col-md-6" style="opacity:0.9">
+				<div class="col-md-6">
+				<img src="resources/imgs/map_page.PNG" style="width:100%; height:100vh;z-index:1;top:0;left:0;position:absolute;opacity: 0.6"/>
+			   <a href="map_main.do" class="btn-none btn-round mr-3 btn-block"style="height:100vh;z-index:2;top:0;left:0;position:absolute">
                <em class="fa fa-eye fa-fw" style="height:60px;padding:20px"></em>
-                <font style="margin-right:15px;opacity:1.0">지도로 볼래요</font></a>
+                <font style="margin-top:50vh">지도로 볼래요</font></a>
                 </div>
-           		 <div class="col-md-6" >
-               <a href="web_main.do" target="_blank" class="btn btn-white btn-round" style="opacity:0.9">
+           		 <div class="col-md-6">
+               <a href="web_main.do"class="btn-default btn-round btn-block"  style="height:100vh">
                  <em class="fa fa-eye fa-fw" style="height:60px;padding:20px"></em>
                  <font style="margin-right:15px">자세히 볼래요</font>
                </a>
@@ -121,10 +122,7 @@
         			});
         		});
         		$('#fullpage').fullpage({
-        			slidesNavigation:true,
-        			navigation:true,
-        			navigationPosition:'right',
-        			navigationTooltips:['소개글','개발자소개','페이지이동']
+        			slidesNavigation:true
         		});
         	})
         </script>

@@ -5,17 +5,10 @@
 <html>
 <head>
 	<meta charset="UTF-8" />
-	<link rel="shortcut icon" href="../favicon.ico">
-	<link rel="stylesheet" type="text/css" href="resources/css/normalize.css" />
-	<link rel="stylesheet" type="text/css" href="resources/css/demo.css" />
-	<link rel="stylesheet" type="text/css" href="resources/css/component.css" />
-	<link rel="stylesheet" type="text/css" href="resources/css/bootstrap.css" />
-	<link rel="stylesheet" type="text/css" href="resources/css/w3.css"/>
-	<link rel="stylesheet" type="text/css" href="resources/css/footer.css" />
-	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"/>
+	<link rel="stylesheet" href="resources/css/daterangepicker.css" />
 	<style>
-		.map_wrap, .map_wrap * {margin:0;padding:0;font-family:'Malgun Gothic',dotum,'돋움',sans-serif;font-size:12px;}
+		.map_wrap, .map_wrap * {margin:0;padding:0;}
 		.map_wrap a, .map_wrap a:hover, .map_wrap a:active{color:#000;text-decoration: none;}
 		.map_wrap {position:relative;width:100%;height:70vh;}
 		#menu_wrap {position:absolute;top:0;left:0;bottom:0;width:350px;margin:10px 0 30px 10px;padding:5px;overflow-y:auto;background:rgba(255, 255, 255, 0.7);z-index: 1;font-size:12px;border-radius: 10px;overflow-x:hidden;}
@@ -77,7 +70,7 @@
 								
 								<div class="row">
 									<div class="col-md-6">
-										예약일 <input type="text" class="form-control w3-white" value="" placeholder="예약일을 선택해주세요" readonly size="15" id="datepicker"/>
+										예약일 <input type="text" class="form-control w3-white" value="" placeholder="예약일을 선택해주세요" readonly size="15"  id="datepicker"/>
 									</div>
 									<div class="col-md-6">
 										<div align="center">가격</div>
@@ -87,7 +80,7 @@
 									</div>
 								</div>
 								
-								<div id="slider-range" style="margin:10px 0px; width: 100%;"></div>
+								<div id="slider-range" style="margin:10px 0px 10px 5%; width: 90%;"></div>
 								<input type="button" class="form-control" id="search_submit" value="이 조건으로 검색하기"/>
 								
 							</div>
@@ -102,13 +95,21 @@
 	    </div>
     </div>
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=66e7156b3899e012effaa62fd20217d4&libraries=services"></script>
-    <script type="text/javascript" src="resources/js/jquery.form.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-	<script src="resources/js/bootstrap.min.js"></script>
-	<script src="resources/js/jquery-1.11.1.js"></script>
-	<script src="//code.jquery.com/jquery-1.10.2.js"></script>
 	<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+	<script type="text/javascript" src="resources/js/moment.js"></script>
+	<script type="text/javascript" src="resources/js/daterangepicker.js"></script>
     <script>
+    $('#datepicker').daterangepicker({
+    		singleDatePicker: true,
+    	    showDropdowns: true,
+    	    locale: {
+            format: 'YYYY-MM-DD',
+            applyLabel: '적용',
+            cancelLabel: '취소',
+            monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+            daysOfWeek: ['일', '월', '화', '수', '목', '금', '토'],
+  				  }
+      });
 		/* 가격 슬라이드  */
 		jQuery(function($) {
 			$ ("#slider-range").slider({
@@ -190,14 +191,7 @@
 			});
 			
 			
-			// 달력을 불러오는 스크팁트 jquery-ui 사용
-			$('#datepicker').datepicker({
-				dateFormat:"yy-mm-dd",
-				changeMonth: true,
-				changeYear: true,
-				dayNamesMin:['일','월','화','수','목','금','토'],
-				showMonthAfterYear:true
-			});
+			
 			//카테고리 버튼을 눌렀을시 색 추가 , 기본색 삭제 
 			 $('#travel').click(function(){
 					if($(this).hasClass('w3-white')){

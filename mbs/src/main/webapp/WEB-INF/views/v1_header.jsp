@@ -1,11 +1,17 @@
 <%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@ page session="true" %>
+<link rel="stylesheet" type="text/css" href="resources/css/component.css" />
+<link rel="stylesheet" type="text/css" href="resources/css/bootstrap.css" />
+<link rel="stylesheet" type="text/css" href="resources/css/w3.css"/>
+<link rel="stylesheet" type="text/css" href="resources/css/footer.css"/>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <!DOCTYPE html>
 		<div id="header">
 			<ul id="gn-menu" class="gn-menu-main">
 				<li class="gn-trigger">
-					<a class="gn-icon gn-icon-menu"><span>Menu</span></a>
+					<a class="gn-icon gn-icon-menu"><span>Menu</span></a> 
 					<nav class="gn-menu-wrapper">
 						<div class="gn-scroller">
 							<ul class="gn-menu">
@@ -32,8 +38,15 @@
 									<ul class="gn-submenu sub_3"  >
 										<li><a class="gn-icon gn-icon-cog sub_main4" href="biz_join.do" >업소등록</a></li>
 										<c:if test="${sessionScope.Mem_Grade eq 2}">
-											<li><a class="gn-icon gn-icon-illustrator" href="biz_str_management.do">내 업체목록</a></li>
-										</c:if>
+									<li><a class="gn-icon gn-icon-cog sub_main3" >사업자관리</a>
+										<ul class="gn-submenu sub_3" >
+											<li><a class="gn-icon gn-icon-illustrator" href="#?id=${sessionScope.Mem_Id ne null}">내 업체목록</a></li>
+										</ul>
+									</li>
+								</c:if>
+								<c:if test="${sessionScope.Mem_Grade eq 1}">
+									<li><a class="gn-icon gn-icon-cog sub_main4" href="biz_join.do" >사업자로 등록하기</a></li>
+								</c:if>
 									</ul>
 								</li>
 							</ul>

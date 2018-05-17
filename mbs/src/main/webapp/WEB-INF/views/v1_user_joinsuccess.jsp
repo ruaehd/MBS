@@ -42,7 +42,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="row">
+			<div class="row" style="margin-bottom:100px">
 				<div class="col-md-offset-1 col-md-5">
 					<a href="user_login.do" style="text-decoration:none"><button type="button" class="btn btn-info btn-lg btn-block" style="height:50vh"><h1>바로 둘러보기</h1></button></a>
 				</div>

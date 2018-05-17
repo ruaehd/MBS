@@ -53,4 +53,10 @@ public class MainController {
 			return null;
 		}
 	}
+	
+	@RequestMapping(value="/ad_alert.do",method = RequestMethod.GET)
+	public String alert(HttpSession httpsession) {
+		httpsession.invalidate();
+		return "v1_ad_alert";
+	}
 }

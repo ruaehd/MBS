@@ -9,8 +9,6 @@
 		<title>Mbs</title>
 		<link rel="stylesheet" type="text/css" href="resources/css/bootstrap.min.css"/>
 		<link rel="stylesheet" type="text/css" href="resources/css/w3.css"/>
-		<link rel="stylesheet" type="text/css" href="resources/css/normalize.css" />
-		<link rel="stylesheet" type="text/css" href="resources/css/demo.css" />
 		<link rel="stylesheet" type="text/css" href="resources/css/component.css" />	
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -62,7 +60,7 @@
 								<c:if test="${sessionScope.Mem_Grade eq 2}">
 									<li><a class="gn-icon gn-icon-cog sub_main3" >사업자관리</a>
 										<ul class="gn-submenu sub_3" >
-											<li><a class="gn-icon gn-icon-illustrator" href="user_main.do">내 업체목록</a></li>
+											<li><a class="gn-icon gn-icon-illustrator" href="#?id=${sessionScope.Mem_Id ne null}">내 업체목록</a></li>
 										</ul>
 									</li>
 								</c:if>

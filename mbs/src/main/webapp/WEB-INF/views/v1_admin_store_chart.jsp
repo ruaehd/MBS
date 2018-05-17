@@ -138,8 +138,6 @@
 				json.count="${vo.count}";
 				slist.push(json);
 			</c:forEach>
-			console.log(slist);
-			console.log(slist.length);
 			//convas
 			var ctx = document.getElementById('chart-area').getContext('2d');
 			//설정
