@@ -170,6 +170,12 @@
 							<h2>이벤트삭제</h2>
 						</div>
 						<div class="modal-body">
+							<input type="hidden" name="type" value="${param.type}">
+							<input type="hidden" name="text" value="${param.text}">
+							<input type="hidden" name="sel_type" value="${param.sel_type}">
+							<input type="hidden" name="begin" value="${param.begin}">
+							<input type="hidden" name="end" value="${param.end}">
+							<input type="hidden" name="page" value="${param.page}">
 							<input type="hidden" name="evt_no" id="evt_delete_no" />
 							<input type="hidden" name="evt_delete" id="delete_no">
 							<label style="font-size:30px">제목 : </label>

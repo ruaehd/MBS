@@ -82,7 +82,9 @@ public class ServiceController {
 	public String qna(Model model, @ModelAttribute("vo") QNAVO vo, MultipartHttpServletRequest request) {
 			try {
 				MultipartFile tmp = request.getFile("qst_img1");
-				vo.setQst_img(tmp.getBytes());
+				if(tmp != null && !tmp.getOriginalFilename().equals("")) {
+					vo.setQst_img(tmp.getBytes());
+				}
 				qDAO.insertQuestion(vo);
 				return "redirect:service_main.do";
 			} catch (Exception e) {

@@ -90,7 +90,7 @@
                     <td class="count qst_no">${vo.qst_no}</td>
                     <td class="qst_title">${vo.qst_title}</td>
                     <td style="width:300px" class="qst_content">${vo.qst_content}</td>
-                    <td style="width:300px"><img src="qnaImg.do?qst_no=${vo.qst_no}" width="300px" height="60px" /></td>
+                    <td style="width:300px"><img src="qnaImg.do?qst_no=${vo.qst_no}" width="300px" height="60px" class="checkimg" /></td>
                     <td>${vo.qst_code}</td>
                     <td>
                     <c:if test="${vo.qst_open==0}">
@@ -178,8 +178,39 @@
 				</div>
 			</div>
 		</form:form>
+		
+		<div class="modal fade" id="checkmodal">
+				<div class="modal-dialog">
+					<div class="modal-content" style="width:700px">
+						<div class="modal-header">
+							<h2>사진확인</h2>
+						</div>
+						<div class="modal-body">
+							<div class="form-inline" style="margin-top:3px; margin-bottom:3px">
+								<img src="" width="650px" height="650px" id="check_img"/>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-success" data-dismiss="modal">확인</button>
+						</div>
+					</div>
+				</div>
+			</div>
    <script>
       $(function() {
+    	  $('.checkimg').click(function(){
+  			var idx = $(this).index('.checkimg');
+  			var arr = new Array(); 
+  	  		<c:forEach var="vo" items="${list}">
+  	  			var arr1 = new Array()
+  	  			arr1.push("${vo.qst_no}");
+  	  			arr.push(arr1);
+  	  		</c:forEach>
+  	  	
+  	  		$('#check_img').attr('src', 'qnaImg.do?qst_no='+arr[idx][0]);
+  			$('#checkmodal').modal('show');
+	  	});
+    	  
     	  $('.pagination').twbsPagination({
               totalPages:'${totPage}',
               visiblePages:10,
