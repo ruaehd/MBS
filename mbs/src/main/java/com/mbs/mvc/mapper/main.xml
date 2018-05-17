@@ -70,7 +70,7 @@
 	</select>
 	
 	<select id="selectImgOne" parameterType="int" resultMap="imgBlob">
-		SELECT str_image FROM str_image WHERE str_number = #{no} AND str_image_idx = 1 
+		SELECT str_image FROM str_image WHERE str_number = #{no} AND str_image_idx = 0
 	</select>
 	
 	<resultMap id="imgBlob" type="java.util.Map">

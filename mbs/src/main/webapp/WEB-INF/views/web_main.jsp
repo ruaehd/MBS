@@ -249,9 +249,9 @@
 													'</div>'+
 												'<div class="col-md-8">'+
 													'<div class="w3-round bar_con" style="margin-bottom:20px;padding:5px">'+cate+'</div>'+
-													'<div style="width:100px;float:left">대표메뉴 :</div>'+datalist[i].menu+' - '+datalist[i].menu_price+'<hr/>'+
-													'<div style="width:100px;float:left">예약가능시간 :</div>'+st1+'시 ~ '+et1+'시<hr/>'+
-													'<div style="width:100px;float:left">전화번호 :</div>'+tel1+'-'+tel2+'-'+tel3+
+													'<div style="width:120px;float:left">대표메뉴 :</div>'+datalist[i].menu+' - '+datalist[i].menu_price+'<hr/>'+
+													'<div style="width:120px;float:left">예약가능시간 :</div>'+st1+'시 ~ '+et1+'시<hr/>'+
+													'<div style="width:120px;float:left">전화번호 :</div>'+tel1+tel2+tel3+
 												'</div>'+
 											'</div>'+
 										'</div>'
@@ -267,15 +267,7 @@
 									}
 								
 								}
-						},'json')
-						.error(function() {
-					    	   $('#contentlist').append(
-					    			   '<div class="w3-white " align="center" style="height:22vh;padding:10px">'+
-										'<h3>검색에 실패하셨습니다. 다시 시도해주세요</h3>'+
-										'</div>'
-					    			   );
-					       });
-				       
+						},'json');
 				     }
 				});		
 			}); 

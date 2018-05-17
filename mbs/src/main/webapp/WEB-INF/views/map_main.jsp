@@ -115,8 +115,8 @@
 			$ ("#slider-range").slider({
 				range: true,
 				min: 0,
-				max: 200000,
-				values: [ 0, 200000 ],
+				max: 100000,
+				values: [ 0, 100000 ],
 				slide: function( event, ui ) {
 					$( "#amount" ).val(  ui.values[ 0 ] + "원  ~ " + ui.values[ 1 ] + "원");
 				}
