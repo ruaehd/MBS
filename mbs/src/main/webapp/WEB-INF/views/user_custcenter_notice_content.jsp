@@ -39,11 +39,11 @@
 					<table class="w3-table w3-bordered" style="width:100%;border-top:1px solid #cccccc;border-bottom:1px solid #cccccc;margin-top:20px">
 						<tr>
 							<td style="width:10%;font-size:12px;vertical-align:middle">이전글</td>
-							<td style="vertical-align:middle"><a href="notice_content.do?ntc_no=${pno}">${pvo.ntc_content}</a></td>
+							<td style="vertical-align:middle"><a href="notice_content.do?ntc_no=${pno}">${pvo.ntc_title}</a></td>
 						</tr>
 						<tr>
 							<td style="width:10%;font-size:12px;vertical-align:middle">다음글</td>
-							<td style="vertical-align:middle"><a href="notice_content.do?ntc_no=${nno}">${nvo.ntc_content}</a></td>
+							<td style="vertical-align:middle"><a href="notice_content.do?ntc_no=${nno}">${nvo.ntc_title}</a></td>
 						</tr>
 						
 					</table>

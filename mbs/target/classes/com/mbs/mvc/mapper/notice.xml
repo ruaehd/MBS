@@ -3,15 +3,15 @@
 
 <mapper namespace="Notice">
 	<select id="mainNoticeList" resultType="com.mbs.mvc.vo.NoticeVO">
-		SELECT * FROM `notice` ORDER BY ntc_no DESC LIMIT 4
+		SELECT * FROM `notice` WHERE ntc_delete=1 ORDER BY ntc_no DESC LIMIT 4
 	</select>
 
 	<select id="selectNoticePage" resultType="int">
-		SELECT COUNT(*) FROM `notice`
+		SELECT COUNT(*) FROM `notice` WHERE ntc_delete=1
 	</select>
 
 	<select id="selectNoticeList" parameterType="int" resultType="com.mbs.mvc.vo.NoticeVO">
-		SELECT * FROM `notice` ORDER BY ntc_no DESC LIMIT #{page}, 10
+		SELECT * FROM `notice` WHERE ntc_delete=1 ORDER BY ntc_no DESC LIMIT #{page}, 10
 	</select>
 	
 	<select id="selectNoticeOne" parameterType="int" resultType="com.mbs.mvc.vo.NoticeVO">
@@ -19,11 +19,11 @@
 	</select>
 	
 	<select id="selectNoticePrev" parameterType="int" resultType="int">
-	SELECT ifnull(MAX(ntc_no), 0) FROM notice WHERE ntc_no <![CDATA[ < ]]> #{ntc_no}
+	SELECT ifnull(MAX(ntc_no), 0) FROM notice WHERE ntc_no <![CDATA[ < ]]> #{ntc_no} AND ntc_delete=1
 	</select>
 
 	<select id="selectNoticeNext" parameterType="int" resultType="int">
-	SELECT ifnull(MIN(ntc_no), 0) FROM notice WHERE ntc_no <![CDATA[ > ]]> #{ntc_no}
+	SELECT ifnull(MIN(ntc_no), 0) FROM notice WHERE ntc_no <![CDATA[ > ]]> #{ntc_no} AND ntc_delete=1
 	</select>
 	
 </mapper>
