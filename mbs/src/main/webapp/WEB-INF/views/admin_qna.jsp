@@ -37,7 +37,6 @@
 </head>
 
 <body>
-
 <div class="row">
     <jsp:include page="v1_admin_header.jsp"></jsp:include>
     <div class="container-fluid">
@@ -178,12 +177,6 @@
 				</div>
 			</div>
 		</form:form>
-		
-<<<<<<< HEAD
-	<script type="text/javascript" src="resources/js/jquery-1.11.1.js"></script>
-   <script type="text/javascript" src="resources/js/bootstrap.min.js"></script>
-   <script type="text/javascript" src="resources/js/jquery.twbsPagination-1.3.1.js"></script>
-=======
 		<div class="modal fade" id="checkmodal">
 				<div class="modal-dialog">
 					<div class="modal-content" style="width:700px">
@@ -201,7 +194,11 @@
 					</div>
 				</div>
 			</div>
->>>>>>> refs/remotes/origin/final_mjy
+   <script type="text/javascript" src="resources/js/jquery-1.9.1.min.js"></script>
+   <script type="text/javascript" src="resources/js/bootstrap.min.js"></script>
+   <script type="text/javascript" src="resources/js/readmore.min.js"></script>
+   <script type="text/javascript" src="resources/js/jquery.twbsPagination-1.3.1.js"></script>
+			
    <script>
       $(function() {
     	  $('.con').readmore({

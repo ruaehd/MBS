@@ -69,7 +69,6 @@
 		</form:form>
 	</div>
 </div>
-
 <script>
 	$(function() {
 		$('#qna_img').click(function(){
