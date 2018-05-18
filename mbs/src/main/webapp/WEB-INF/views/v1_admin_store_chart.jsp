@@ -178,7 +178,7 @@
 				datelist.push(moment().subtract(i, 'days').format('YYYY-MM-DD'));
 			}
 			//각각의 한번마다 30번씩 배열 돌림
-			for (var j=datelist.length-1;j>-1;j--) {
+			for (var j=0;j<datelist.length;j++) {
 				var val = 0;
 				for(var i=0;i<slist.length;i++){
 					

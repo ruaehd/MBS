@@ -18,7 +18,9 @@
 			<a href="#"><img src="eventImgContent.do?evt_no=${param.evt_no}"
 				style="width: 205%; height: 1500px"></a>
 		</div>
+
 	</div>
+
 </div>
 <div align="center">
 	<a href="event.do"><button style="width: 200px; height: 60px"
@@ -37,3 +39,4 @@
 	});
 </script>
 <jsp:include page="footer.jsp"></jsp:include>
+>>>>>>> refs/remotes/origin/final_mjy

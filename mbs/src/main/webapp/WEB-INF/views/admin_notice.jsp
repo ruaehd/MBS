@@ -37,7 +37,6 @@
 </head>
 
 <body>
-	
 <div class="row">
     <jsp:include page="v1_admin_header.jsp"></jsp:include>
     <div class="container-fluid">
@@ -77,7 +76,7 @@
                  <tr>
                     <td>${vo.ntc_no}</td>
                     <td>${vo.ntc_title}</td>
-                    <td style="width:800px;">${vo.ntc_content}</td>
+                    <td style="width:800px;"><div class="con">${vo.ntc_content}</div></td>
                     <td>
                     <c:if test="${vo.ntc_delete==1}">공개</c:if>
                     <c:if test="${vo.ntc_delete==0}">비공개</c:if>
@@ -202,8 +201,8 @@
 			</div>
 		</form:form>
 		
-		
-	<script type="text/javascript" src="resources/js/jquery-1.11.1.js"></script>
+   <script type="text/javascript" src="resources/js/jquery-1.9.1.min.js"></script>
+   <script type="text/javascript" src="resources/js/readmore.min.js"></script>
    <script type="text/javascript" src="resources/js/bootstrap.min.js"></script>
    <script type="text/javascript" src="resources/js/jquery.twbsPagination-1.3.1.js"></script>	
    <script>
@@ -215,6 +214,15 @@
 			var br2nl = function(varTest){
 				return varTest.replace(/<br>/g, "\n");
 			};
+			
+			$('.con').readmore({
+	            blockCSS: 'display: block;',
+	            speed: 75,
+	            collapsedHeight: 65,
+	            
+	            moreLink: '<a href="#" style="color:blue;"><span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span>자세히</a>',
+	            lessLink: '<a href="#" style="color:blue;"><span class="glyphicon glyphicon-triangle-top" aria-hidden="true"></span>숨김</a>'
+	         });
     	  
     		$('.btn-warning').click(function(){
     			var idx = $(this).index('.btn-warning');

@@ -1,7 +1,7 @@
 <%@page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
-<%@ page session="false" %>
+<%@ page session="true" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -67,7 +67,7 @@
 			                  <div class="form-group">
 			                     <label class="col-sm-4 control-label"></label>
 			                     <div class="col-sm-5">
-			                        <input type="text" class="form-control" name="emailauth" readonly>
+			                        <input type="text" class="form-control" id="email_ckh" name="emailauth" readonly>
 			                     </div>
 			                  </div>
 			                  <div class="form-group">
@@ -198,13 +198,43 @@
 		$('ul.setup-panel li a[href="#step-1"]').trigger('click');
 								// DEMO ONLY //
 			$('#next-2').on('click',function(e) {
-				$('ul.setup-panel li:eq(1)').removeClass('disabled');
-				$('ul.setup-panel li a[href="#step-2"]').trigger('click');
+				
+				if($('#email_ckh').val() == '인증완료'){
+	        		 var em = $('#email').val();
+	             	$('#mb_email').val(em);
+	             	 
+	             	$('ul.setup-panel li:eq(1)').removeClass('disabled');
+					$('ul.setup-panel li a[href="#step-2"]').trigger('click');
+	        	 }
+	        	 else{
+	        		 alert("본인인증을 해주세요");
+	        		 return null;
+	        	 }
 			});
+								
+								
 			$('#prev-1').on('click',function(e) {
 				$('ul.setup-panel li a[href="#step-1"]').trigger('click');
 			});
 		});
+			
+		function openAuth() {
+			var email = $('#email').val();
+			$.ajax({
+				type: 'POST',
+				url: 'ajax_emailcheck.do',
+				data: {email:email, mb_id:"${sessionScope.Mem_Id}"},
+				success:function(data){
+					if(data == 1){
+						window.open('emailAuth.do?email='+email,'emailAuth','width=500,height=300, left=650, top=100');			
+					}
+					else{
+						alert("회원정보에 입력된 이메일과 일치하지 않습니다");
+						return false;
+					}
+				}
+			});
+		}
 </script>
 </body>
 </html>

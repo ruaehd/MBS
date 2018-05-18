@@ -54,5 +54,9 @@
 	<select id="selectMemberQuestionList" parameterType="String" resultType="com.mbs.mvc.vo.QuestionVO">
 		SELECT qst_no, qst_title, qst_content, qst_open, qst_date FROM question WHERE mb_id = #{mb_id}
 	</select>
+	
+	<select id="selectEmailCheck" parameterType="com.mbs.mvc.vo.MemberVO" resultType="int">
+		SELECT COUNT(*) AS cnt FROM `member` WHERE mb_id=#{mb_id} AND mb_email=#{mb_email}
+	</select>
 
 </mapper>

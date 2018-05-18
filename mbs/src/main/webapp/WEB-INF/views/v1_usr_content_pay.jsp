@@ -282,6 +282,14 @@
 				$('#total').text(tot+'원');
 				
 			});
+			
+			var mb_id = "${sessionScope.Mem_Id}";
+			var mb_gr = ${sessionScope.Mem_Grade};
+			
+			if(mb_id == "${svo.mb_id}" || mb_gr == 3){
+				alert("본인소유 업체는 예약 할 수 없습니다.");
+				location.href="usr_content.do?str_number="+${svo.str_number}
+			}
 		});
 	</script>
 
