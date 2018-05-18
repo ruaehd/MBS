@@ -29,7 +29,7 @@ public class UserLoginInterceptor extends HandlerInterceptorAdapter{
 					return super.preHandle(request, response, handler);
 				}
 				else {
-					url = "/mvc/ad_alert.do";
+					url = "/mbs/ad_alert.do";
 				}
 			}
 		}
@@ -40,7 +40,7 @@ public class UserLoginInterceptor extends HandlerInterceptorAdapter{
 			else {
 				httpsession.setAttribute("back_url", path);
 			}
-			url = "/mvc/user_login.do";
+			url = "/mbs/user_login.do";
 		}
 		if(url == null) {
 		return super.preHandle(request, response, handler);
