@@ -35,20 +35,13 @@
 									</ul>
 								</li>
 								<li><a class="gn-icon gn-icon-cog sub_main3" >사업자관리</a>
-									<ul class="gn-submenu sub_3"  >
-										<li><a class="gn-icon gn-icon-cog sub_main4" href="biz_join.do" >업소등록</a></li>
-										<c:if test="${sessionScope.Mem_Grade eq 2}">
-									<li><a class="gn-icon gn-icon-cog sub_main3" >사업자관리</a>
-										<ul class="gn-submenu sub_3" >
-											<li><a class="gn-icon gn-icon-illustrator" href="#?id=${sessionScope.Mem_Id ne null}">내 업체목록</a></li>
-										</ul>
-									</li>
-								</c:if>
-								<c:if test="${sessionScope.Mem_Grade eq 1}">
-									<li><a class="gn-icon gn-icon-cog sub_main4" href="biz_join.do" >사업자로 등록하기</a></li>
-								</c:if>
-									</ul>
-								</li>
+                           <ul class="gn-submenu sub_3"  >
+                              <li><a class="gn-icon gn-icon-cog sub_main4" href="biz_join.do" >업소등록</a></li>
+                              <c:if test="${sessionScope.Mem_Grade eq 2}">
+                                 <li><a class="gn-icon gn-icon-illustrator" href="biz_str_management.do">내 업체목록</a></li>
+                              </c:if>
+                           </ul>
+                        </li>
 							</ul>
 						</div><!-- /gn-scroller -->
 					</nav>
