@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.mbs.mvc.dao.V1_BusinessStoreManagementDAO;
-import com.mbs.mvc.dao.V1_ReservationDAO;
 import com.mbs.mvc.vo.V1_Comment;
 import com.mbs.mvc.vo.V1_Reply;
 import com.mbs.mvc.vo.V1_Reservation;
