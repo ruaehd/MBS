@@ -120,32 +120,25 @@
 					<div class="modal-header">
 						<h4>이벤트등록</h4>
 					</div>
-					<div class="modal-body">
-						<div class="form-inline" style="margin-top:3px; margin-bottom:3px">
-							<label style="width:120px">제목</label>
-							<form:input type="text" style="width:500px" path="evt_title" class="form-control" />
+					
+					<div class="form-inline" style="margin-top:3px; margin-bottom:3px">
+						<div class="form-group">
+						<label style="width:120px">메인이미지</label>
 						</div>
-						
-						<div class="form-inline" style="margin-top:3px; margin-bottom:3px">
-							<label style="width:120px">메인이미지</label>
-							<input type="file" name="evt_image1" class="form-control" />
-						</div>
-						
-						<div class="form-inline" style="margin-top:3px; margin-bottom:3px">
-							<label style="width:120px">내용이미지</label>
-							<input type="file" name="evt_content1" class="form-control" />
-						</div>
-						
-						<div class="form-inline" style="margin-top:3px; margin-bottom:3px">
-							<label style="width:120px">기간</label>
-								<input type="text" style="width:500px" id="date_insert" class="form-control" />
-								<form:input type="hidden" path="evt_begintime" id="event_begin" />
-								<form:input type="hidden" path="evt_endtime" id="event_end" />
+						<div class="form-group">
+						<input type="file" name="evt_image1" class="form-control" id="insert_img" style="width:500px" /><br />
+						<img src="resources/imgs/default.jpg" width="500px" height="180px" id="insert_img1"   />
 						</div>
 					</div>
-					<div class="modal-footer">
-						<input type="submit" class="btn btn-success" value="등록" />
-						<button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
+					
+					<div class="form-inline" style="margin-top:3px; margin-bottom:3px">
+						<div class="form-group">
+						<label style="width:120px">내용이미지</label>
+						</div>
+						<div class="form-group">
+						<input type="file" name="evt_content1" class="form-control" id="insert_content" style="width:500px" /><br />
+						<img src="resources/imgs/default.jpg" width="500px" height="180px" id="insert_content1"/>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -153,19 +146,64 @@
 	</form:form>
 	
 	<form action="event_delete.do" method="get" enctype="multipart/form-data">
-		<div class="modal fade" id="deletemodal">
-			<div class="modal-dialog">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h2>이벤트삭제</h2>
+			<div class="modal fade" id="deletemodal">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h2>이벤트삭제</h2>
+						</div>
+						<div class="modal-body">
+							<input type="hidden" name="type" value="${param.type}">
+							<input type="hidden" name="text" value="${param.text}">
+							<input type="hidden" name="sel_type" value="${param.sel_type}">
+							<input type="hidden" name="begin" value="${param.begin}">
+							<input type="hidden" name="end" value="${param.end}">
+							<input type="hidden" name="page" value="${param.page}">
+							<input type="hidden" name="evt_no" id="evt_delete_no" />
+							<input type="hidden" name="evt_delete" id="delete_no">
+							<label style="font-size:30px">제목 : </label>
+							<label style="font-size:30px" id="delete_title"></label><br />
+							<label style="" id="delete_name"></label>
+							<label>하시겠습니까?</label>
+						</div>
+						<div class="modal-footer">
+							<input type="submit" class="btn btn-success" value="삭제" />
+							<button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
+						</div>
 					</div>
-					<div class="modal-body">
-						<input type="hidden" name="evt_no" id="evt_delete_no" />
-						<input type="hidden" name="evt_delete" id="delete_no">
-						<label style="font-size:30px">제목 : </label>
-						<label style="font-size:30px" id="delete_title"></label><br />
-						<label style="" id="delete_name"></label>
-						<label>하시겠습니까?</label>
+				</div>
+			</div>
+		</form>
+
+	<form:form action="event_update.do?type=${param.type}&text=${param.text}&sel_type=${param.sel_type}&begin=${param.begin}&end=${param.end}&page=${param.page}" method="post" modelAttribute="vo" enctype="multipart/form-data">
+			<div class="modal fade" id="updatemodal">
+				<div class="modal-dialog">
+					<div class="modal-content" style="width:700px">
+						<div class="modal-header">
+							<h2>이벤트수정</h2>
+						</div>
+						<div class="modal-body">
+							<div class="form-inline" style="margin-top:3px; margin-bottom:3px">
+								<form:input type="hidden" class="form-control" id="update_evt_no" path="evt_no" />
+								<label style="width:120px">이벤트제목</label>
+								<form:input type="text" class="form-control" style="width:500px;" id="update_evt_title" path="evt_title" />
+							</div>
+							<div class="form-inline" style="margin-top:3px; margin-bottom:3px">
+								<label style="width:120px">이벤트메인</label>
+								<img src="" width="500px" height="180px" id="evt_img" />
+								<input type="file" name="evt_image1" style="display:none" id="evt_img1" />
+							</div>
+							<div class="form-inline" style="margin-top:3px; margin-bottom:3px">
+								<label style="width:120px">이벤트내용</label>
+								<img src="" width="500px" height="180px" id="evt_content" />
+								<input type="file" name="evt_content1" style="display:none" id="evt_content1" />
+							</div>
+							<div class="form-inline" style="margin-top:3px; margin-bottom:3px">
+								<label style="width:120px">이벤트기간</label>
+								<input type="text" style="width:500px" class="form-control" id="date_update">
+								<form:input type="hidden" id="event_update_begin" path="evt_begintime" />
+								<form:input type="hidden" id="event_update_end" path="evt_endtime" />
+							</div>
 					</div>
 					<div class="modal-footer">
 						<input type="submit" class="btn btn-success" value="삭제" />
@@ -174,7 +212,7 @@
 				</div>
 			</div>
 		</div>
-	</form>
+	</form:form>
 
 	<form:form action="event_update.do" method="post" modelAttribute="vo" enctype="multipart/form-data">
 		<div class="modal fade" id="updatemodal">
@@ -241,6 +279,46 @@
 
    <script>
 	$(function() {
+		$('#insert_img').change(function(){
+			//현재 파일을 img변수에 넣음
+			var img = this;
+			//img변수에 값이 있다면, 파일을 선택했다면
+			if(img.files && img.files[0]){
+				//파일을 읽기위한 객체 생성
+				var reader = new FileReader();
+				//파일을 읽어 들임.
+				reader.onload = function(e){
+					//읽은 파일을 img src태그에 넣음
+					$('#insert_img1').attr('src',e.target.result);
+				};
+				//파일의 링크를 읽음
+				reader.readAsDataURL(img.files[0]);
+			}
+			/* else{	//파일을 선택하지 않았다면
+				$('#preview_img').attr('src','resources/imgs/dafault.jpg');
+			} */
+		});
+		
+		$('#insert_content').change(function(){
+			//현재 파일을 img변수에 넣음
+			var img = this;
+			//img변수에 값이 있다면, 파일을 선택했다면
+			if(img.files && img.files[0]){
+				//파일을 읽기위한 객체 생성
+				var reader = new FileReader();
+				//파일을 읽어 들임.
+				reader.onload = function(e){
+					//읽은 파일을 img src태그에 넣음
+					$('#insert_content1').attr('src',e.target.result);
+				};
+				//파일의 링크를 읽음
+				reader.readAsDataURL(img.files[0]);
+			}
+			/* else{	//파일을 선택하지 않았다면
+				$('#preview_img').attr('src','resources/imgs/dafault.jpg');
+			} */
+		});
+		
 		$('#evt_img1').change(function(){
 			//현재 파일을 img변수에 넣음
 			var img = this;
@@ -318,6 +396,15 @@
 	  	  		var sty = $(this).val();
 	  	  		window.location.href="admin_event.do?type=${param.type}&text=${param.text}&sel_type="+sty+"&begin=${param.begin}&end=${param.end}&page=1";
 	  	});
+		
+		$('#insert_img1').click(function(){
+			$('#insert_img').click();
+		})
+		
+		$('#insert_content1').click(function(){
+			$('#insert_content').click();
+		}) 
+		
 			
 		$('#evt_img').click(function(){
 			$('#evt_img1').click();

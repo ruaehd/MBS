@@ -88,7 +88,7 @@
                     <td class="count qst_no">${vo.qst_no}</td>
                     <td class="qst_title">${vo.qst_title}</td>
                     <td style="width:300px" class="qst_content">${vo.qst_content}</td>
-                    <td style="width:300px"><img src="qnaImg.do?qst_no=${vo.qst_no}" width="300px" height="60px" /></td>
+                    <td style="width:300px"><img src="qnaImg.do?qst_no=${vo.qst_no}" width="300px" height="60px" class="checkimg" /></td>
                     <td>${vo.qst_code}</td>
                     <td>
                     <c:if test="${vo.qst_open==0}">
@@ -179,12 +179,21 @@
 				</div>
 			</div>
 		</form:form>
-		
-	<script type="text/javascript" src="resources/js/jquery-1.11.1.js"></script>
-   <script type="text/javascript" src="resources/js/bootstrap.min.js"></script>
-   <script type="text/javascript" src="resources/js/jquery.twbsPagination-1.3.1.js"></script>
    <script>
       $(function() {
+    	  $('.checkimg').click(function(){
+  			var idx = $(this).index('.checkimg');
+  			var arr = new Array(); 
+  	  		<c:forEach var="vo" items="${list}">
+  	  			var arr1 = new Array()
+  	  			arr1.push("${vo.qst_no}");
+  	  			arr.push(arr1);
+  	  		</c:forEach>
+  	  	
+  	  		$('#check_img').attr('src', 'qnaImg.do?qst_no='+arr[idx][0]);
+  			$('#checkmodal').modal('show');
+	  	});
+    	  
     	  $('.pagination').twbsPagination({
               totalPages:'${totPage}',
               visiblePages:10,

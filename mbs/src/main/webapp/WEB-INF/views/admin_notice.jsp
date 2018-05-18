@@ -45,7 +45,7 @@
         <div class="title">공지관리</div>
             <div class="row">
            <div class="col-md-2">
-              <button type="button" class="btn btn-info btn_add" id="btn_insert">추가하기</button>
+              <button type="button" class="btn btn-primary btn_add" id="btn_insert">추가하기</button>
            </div>
            <div class=" col-md-offset-6 col-md-4 form-inline">
                  <select class="form-control" id="search_type">
@@ -150,6 +150,10 @@
 						<div class="modal-body">
 							<input type="hidden" name="ntc_no" id="ntc_delete_no" />
 							<input type="hidden" name="ntc_delete" id="delete_no">
+							<input type="hidden" name="type" value="${param.type}">
+							<input type="hidden" name="text" value="${param.text}">
+							<input type="hidden" name="sel_type" value="${param.sel_type}">
+							<input type="hidden" name="page" value="${param.page}">
 							<label style="font-size:30px">제목 : </label>
 							<label style="font-size:30px" id="delete_title"></label><br />
 							<label style="" id="delete_name"></label>
@@ -164,7 +168,7 @@
 			</div>
 		</form>
 		
-	<form:form action="notice_update.do" method="post" modelAttribute="vo">
+	<form:form action="notice_update.do?type=${param.type}&text=${param.text}&sel_type=${param.sel_type}&page=${param.page}" method="post" modelAttribute="vo">
 			<div class="modal fade" id="updatemodal">
 				<div class="modal-dialog">
 					<div class="modal-content">
