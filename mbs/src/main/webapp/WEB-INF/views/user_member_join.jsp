@@ -220,12 +220,6 @@
 			                        <input type="text" class="form-control" id="email_ckh" name="emailauth" readonly>
 			                     </div>
 			                  </div>
-			                  <div class="form-group">
-			                     <label class="col-sm-4 control-label">자동가입 방지</label>
-			                     <div class="col-sm-5">
-			                        <div class="g-recaptcha" id ="grecaptcha" data-sitekey="6LdfiEoUAAAAANEiw_ZLNO_1pmL3fj-Ttt1rX44c"></div>
-			                     </div>
-			                  </div>
 			                   </form>
 			                   <div align="center" style="margin-bottom:20px;margin-top:50px">
 			                      <button id="prev-1" class="btn btn-primary">이전단계로</button>
