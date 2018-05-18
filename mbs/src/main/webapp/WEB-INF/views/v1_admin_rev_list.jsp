@@ -108,26 +108,16 @@
 	<script src="resources/js/bootstrap.min.js"></script>
 	<script src="resources/js/jquery.twbsPagination.min.js"></script>
 	<script src="resources/js/sweetalert.min.js"></script>
+	<script src="resources/js/readmore.min.js"></script>
 	<script>
 	$(function () {
-	    $('.con').each(function () {
-	        $(this).html(formatWords($(this).html(), 0));
-	        $(this).children('span').hide();
-	    }).click(function () {
-	        var more_text = $(this).children('span.more_text');
-	        var more_link = $(this).children('a.more_link');
-	        if (more_text.hasClass('hide')) {
-	            more_text.show();
-	            more_link.html(' &raquo; hide'); 
-	            more_text.removeClass('hide');
-	        } else {
-	            more_text.hide();
-	            more_link.html(' &laquo; more');            
-	            more_text.addClass('hide');
-	        }
-	        return false;
-	        
-	    });
+		$('.con').readmore({
+			blockCSS: 'display: inline-block;',
+			speed: 75,
+			collapsedHeight: 20,
+			moreLink: '<a href="#"><span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span>펼치기</a>',
+			lessLink: '<a href="#"><span class="glyphicon glyphicon-triangle-top" aria-hidden="true"></span>접기</a>'
+		});
 	});
 
 	function formatWords(sentence, show) {
