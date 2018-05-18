@@ -4,7 +4,7 @@
 <mapper namespace="Admin_Qna">
 	<resultMap type="com.mbs.mvc.vo.QNAVO" id="resultQnaImg">
 		<result column ="qst_no" property="qst_no" />
-		<result column ="qst_image" property="qst_image" jdbcType="BLOB" />
+		<result column ="qst_img" property="qst_img" jdbcType="BLOB" />
 	</resultMap>
 	<select id="QnaImg" parameterType="int" resultMap="resultQnaImg">
 		SELECT qst_no, qst_img FROM `question` WHERE qst_no=#{qst_no} 

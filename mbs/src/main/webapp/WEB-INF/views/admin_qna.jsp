@@ -37,7 +37,6 @@
 </head>
 
 <body>
-   
 
 <div class="row">
     <jsp:include page="v1_admin_header.jsp"></jsp:include>
@@ -87,8 +86,8 @@
                  <tr>
                     <td class="count qst_no">${vo.qst_no}</td>
                     <td class="qst_title">${vo.qst_title}</td>
-                    <td style="width:300px" class="qst_content">${vo.qst_content}</td>
-                    <td style="width:300px"><img src="qnaImg.do?qst_no=${vo.qst_no}" width="300px" height="60px" /></td>
+                    <td style="width:300px" class="qst_content"><div class="con">${vo.qst_content}</div></td>
+                    <td style="width:300px"><img src="qnaImg.do?qst_no=${vo.qst_no}" width="300px" height="60px" class="checkimg" /></td>
                     <td>${vo.qst_code}</td>
                     <td>
                     <c:if test="${vo.qst_open==0}">
@@ -114,7 +113,7 @@
 
     
 
-	<form:form action="admin_qna.do" modelAttribute="vo" method="post">
+	<form:form action="admin_qna.do?type=${param.type}&text=${param.text}&sel_code=${param.sel_code}&sel_type=${param.sel_type}&page=${param.page}" modelAttribute="vo" method="post">
 	<div class="modal fade" id="insertmodal">
 		<div class="modal-dialog">
 			<div class="modal-content" style="width:700px; height:850px;">
@@ -145,7 +144,7 @@
 	</div>
 	</form:form>
 	
-	<form:form action="admin_qna_update.do" method="post" modelAttribute="vo">
+	<form:form action="admin_qna_update.do?type=${param.type}&text=${param.text}&sel_code=${param.sel_code}&sel_type=${param.sel_type}&page=${param.page}" method="post" modelAttribute="vo">
 			<div class="modal fade" id="updatemodal">
 				<div class="modal-dialog">
 					<div class="modal-content">
@@ -180,11 +179,53 @@
 			</div>
 		</form:form>
 		
+<<<<<<< HEAD
 	<script type="text/javascript" src="resources/js/jquery-1.11.1.js"></script>
    <script type="text/javascript" src="resources/js/bootstrap.min.js"></script>
    <script type="text/javascript" src="resources/js/jquery.twbsPagination-1.3.1.js"></script>
+=======
+		<div class="modal fade" id="checkmodal">
+				<div class="modal-dialog">
+					<div class="modal-content" style="width:700px">
+						<div class="modal-header">
+							<h2>사진확인</h2>
+						</div>
+						<div class="modal-body">
+							<div class="form-inline" style="margin-top:3px; margin-bottom:3px">
+								<img src="" width="650px" height="650px" id="check_img"/>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-success" data-dismiss="modal">확인</button>
+						</div>
+					</div>
+				</div>
+			</div>
+>>>>>>> refs/remotes/origin/final_mjy
    <script>
       $(function() {
+    	  $('.con').readmore({
+	            blockCSS: 'display: block;',
+	            speed: 75,
+	            collapsedHeight: 65,
+	            
+	            moreLink: '<a href="#" style="color:blue;"><span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span>자세히</a>',
+	            lessLink: '<a href="#" style="color:blue;"><span class="glyphicon glyphicon-triangle-top" aria-hidden="true"></span>숨김</a>'
+	       });
+    	  
+    	  $('.checkimg').click(function(){
+  			var idx = $(this).index('.checkimg');
+  			var arr = new Array(); 
+  	  		<c:forEach var="vo" items="${list}">
+  	  			var arr1 = new Array()
+  	  			arr1.push("${vo.qst_no}");
+  	  			arr.push(arr1);
+  	  		</c:forEach>
+  	  	
+  	  		$('#check_img').attr('src', 'qnaImg.do?qst_no='+arr[idx][0]);
+  			$('#checkmodal').modal('show');
+	  	});
+    	  
     	  $('.pagination').twbsPagination({
               totalPages:'${totPage}',
               visiblePages:10,

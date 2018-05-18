@@ -37,7 +37,6 @@
 </head>
 
 <body>
-	
 <div class="row">
     <jsp:include page="v1_admin_header.jsp"></jsp:include>
     <div class="container-fluid">
@@ -45,7 +44,7 @@
         <div class="title">공지관리</div>
             <div class="row">
            <div class="col-md-2">
-              <button type="button" class="btn btn-info btn_add" id="btn_insert">추가하기</button>
+              <button type="button" class="btn btn-primary btn_add" id="btn_insert">추가하기</button>
            </div>
            <div class=" col-md-offset-6 col-md-4 form-inline">
                  <select class="form-control" id="search_type">
@@ -77,7 +76,7 @@
                  <tr>
                     <td>${vo.ntc_no}</td>
                     <td>${vo.ntc_title}</td>
-                    <td style="width:800px;">${vo.ntc_content}</td>
+                    <td style="width:800px;"><div class="con">${vo.ntc_content}</div></td>
                     <td>
                     <c:if test="${vo.ntc_delete==1}">공개</c:if>
                     <c:if test="${vo.ntc_delete==0}">비공개</c:if>
@@ -150,6 +149,10 @@
 						<div class="modal-body">
 							<input type="hidden" name="ntc_no" id="ntc_delete_no" />
 							<input type="hidden" name="ntc_delete" id="delete_no">
+							<input type="hidden" name="type" value="${param.type}">
+							<input type="hidden" name="text" value="${param.text}">
+							<input type="hidden" name="sel_type" value="${param.sel_type}">
+							<input type="hidden" name="page" value="${param.page}">
 							<label style="font-size:30px">제목 : </label>
 							<label style="font-size:30px" id="delete_title"></label><br />
 							<label style="" id="delete_name"></label>
@@ -164,7 +167,7 @@
 			</div>
 		</form>
 		
-	<form:form action="notice_update.do" method="post" modelAttribute="vo">
+	<form:form action="notice_update.do?type=${param.type}&text=${param.text}&sel_type=${param.sel_type}&page=${param.page}" method="post" modelAttribute="vo">
 			<div class="modal fade" id="updatemodal">
 				<div class="modal-dialog">
 					<div class="modal-content">
@@ -211,6 +214,15 @@
 			var br2nl = function(varTest){
 				return varTest.replace(/<br>/g, "\n");
 			};
+			
+			$('.con').readmore({
+	            blockCSS: 'display: block;',
+	            speed: 75,
+	            collapsedHeight: 65,
+	            
+	            moreLink: '<a href="#" style="color:blue;"><span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span>자세히</a>',
+	            lessLink: '<a href="#" style="color:blue;"><span class="glyphicon glyphicon-triangle-top" aria-hidden="true"></span>숨김</a>'
+	         });
     	  
     		$('.btn-warning').click(function(){
     			var idx = $(this).index('.btn-warning');
