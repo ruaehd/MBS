@@ -42,13 +42,6 @@ public class V1_UserContentController {
 			@RequestParam("str_number") int str_number,
 			HttpSession httpSession) {
 		try{
-			/*httpSession.setAttribute("Mem_Grade",1);
-			httpSession.setAttribute("Mem_Id", "test9");*/
-			
-			System.out.println("AAAAAAAAAAAAAA"+httpSession.getAttribute("Mem_Grade"));
-			System.out.println("BBBBBBBBBBBBBB"+httpSession.getAttribute("Mem_Id"));
-			
-			//파람
 			V1_Store vo = ucDAO.selectStoreOne(str_number);
 			int cnt = ucDAO.selectImgCount(str_number);
 			
@@ -168,31 +161,36 @@ public class V1_UserContentController {
 			HttpServletRequest request) {
 	
 		try {
-			V1_Member mvo = new V1_Member();
-			if(Integer.valueOf((String)httpSession.getAttribute("Mem_Grade"))>2) {	//관리자라면
-				mvo = ucDAO.selectMemberOne(rsv_id);
+			if(httpSession.getAttribute("Mem_Id") == null) {
+				return "redirect:user_login.do";
 			}
 			else {
-				String user_id = String.valueOf((String)httpSession.getAttribute("Mem_Id"));
-				mvo = ucDAO.selectMemberOne(user_id);	//관리자가 아니라면
+				V1_Member mvo = new V1_Member();
+				if(Integer.valueOf((String)httpSession.getAttribute("Mem_Grade"))>2) {	//관리자라면
+					mvo = ucDAO.selectMemberOne(rsv_id);
+				}
+				else {
+					String user_id = String.valueOf((String)httpSession.getAttribute("Mem_Id"));
+					mvo = ucDAO.selectMemberOne(user_id);	//관리자가 아니라면
+				}
+				
+				V1_Reservation rvo = new V1_Reservation();
+				int cnt = ucDAO.selectImgCount(str_number);
+				V1_Store svo = ucDAO.selectStoreOne(str_number);
+				
+				List<V1_Menu> mlist = ucDAO.selectMenuList(str_number);
+				
+				String back_url = request.getHeader("REFERER");
+				
+				model.addAttribute("mlist", mlist);
+				model.addAttribute("cnt", cnt);
+				model.addAttribute("svo", svo);
+				model.addAttribute("mvo", mvo);
+				model.addAttribute("rvo", rvo);
+				model.addAttribute("url", back_url);
+				
+				return "v1_usr_content_pay";
 			}
-			
-			V1_Reservation rvo = new V1_Reservation();
-			int cnt = ucDAO.selectImgCount(str_number);
-			V1_Store svo = ucDAO.selectStoreOne(str_number);
-			
-			List<V1_Menu> mlist = ucDAO.selectMenuList(str_number);
-			
-			String back_url = request.getHeader("REFERER");
-			
-			model.addAttribute("mlist", mlist);
-			model.addAttribute("cnt", cnt);
-			model.addAttribute("svo", svo);
-			model.addAttribute("mvo", mvo);
-			model.addAttribute("rvo", rvo);
-			model.addAttribute("url", back_url);
-			
-			return "v1_usr_content_pay";
 		}
 		catch (Exception e) {
 			System.out.println(e.getMessage());

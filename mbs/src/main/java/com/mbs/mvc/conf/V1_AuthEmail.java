@@ -11,15 +11,16 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeUtility;
 
-public class V1_EmailConfigure {
-	public static void sendEmail(String email, String title, String text) {
+public class V1_AuthEmail {
+	public static void authEmail(String email, String authNum) {
 		// TODO Auto-generated method stub
 		String host = "smtp.naver.com";	//smtp 서버
-		String subject = title;
+		String subject = "인증번호 전달";
 		String fromName = "관리자";
 		String from = "ruaehdehddk@naver.com";	//보내는 메일
 		String to1 = email;
-		String content = text;
+		
+		String content = "인증번호 [" + authNum + "]";
 		
 		try {
 			Properties props = new Properties();
@@ -54,4 +55,5 @@ public class V1_EmailConfigure {
 			e.printStackTrace();
 		}
 	}
+	
 }
