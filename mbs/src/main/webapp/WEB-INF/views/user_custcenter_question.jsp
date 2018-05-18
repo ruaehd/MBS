@@ -13,12 +13,12 @@
 		</div>
 		<form:form action="qna.do" method="post" modelAttribute="vo" enctype="multipart/form-data">
 		<div class="w3-round" style="border:2px solid #cccccc;padding:30px; width:800px;">
-		<div class="form-inline" style="margin-bottom:20px">
-			<div class="form-group">
-				<div  style="width:100px">유형</div>
+		<div class="form-inline" style="margin-bottom:20px;">
+			<div class="form-group" >
+				<div style="width:100px">유형</div>
 			</div>
 			<div class="form-group">
-				<form:select class="w3-select w3-border w3-round" style="width:100px" id="sel1" path="qst_code">
+				<form:select class="w3-select w3-border w3-round" style="width:600px" id="sel1" path="qst_code">
 					<option>예약</option>
 					<option>결재</option>
 					<option>환불</option>

@@ -28,20 +28,32 @@ public class EventController {
 
 	@RequestMapping(value="/event_content.do", method= RequestMethod.GET)
 	public String event_content() {
-		return "user_custcenter_event_content";
+		try {
+			return "user_custcenter_event_content";
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			return "redirect:main.do";
+		}
+		
 	}
 	
 	@RequestMapping(value="/event.do", method= RequestMethod.GET)
 	public String event(Model model) {
-		eDAO.eventAutoDelete();
-		List<EventVO> list_begin = eDAO.selectEventImgBegin();
-		List<EventVO> list_end = eDAO.selectEventImgEnd();
+		try {
+			eDAO.eventAutoDelete();
+			List<EventVO> list_begin = eDAO.selectEventImgBegin();
+			List<EventVO> list_end = eDAO.selectEventImgEnd();
+			
+			model.addAttribute("eventend", list_end.size());
+			model.addAttribute("eventbegin", list_begin.size());
+			model.addAttribute("list_begin", list_begin);
+			model.addAttribute("list_end", list_end);
+			return "user_custcenter_event";
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			return "redirect:main.do";
+		}
 		
-		model.addAttribute("eventend", list_end.size());
-		model.addAttribute("eventbegin", list_begin.size());
-		model.addAttribute("list_begin", list_begin);
-		model.addAttribute("list_end", list_end);
-		return "user_custcenter_event";
 	}
 	
 	@RequestMapping(value = "/eventImgList.do", method = RequestMethod.GET)
