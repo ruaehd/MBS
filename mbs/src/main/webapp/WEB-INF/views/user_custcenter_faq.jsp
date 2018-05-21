@@ -28,7 +28,7 @@
 	<div class="wrapper">
 		<jsp:include page="v1_header.jsp"></jsp:include>
 		<div id="main">
-			<div class="container" style="margin-top: 68px">
+			<div class="container" style="margin-top: 68px;">
 				<div align="center" style="width: 100%; margin-bottom: 20px">
 					<div style="margin: 80px 0px;">
 						<h1>자주하는 질문</h1>
@@ -40,35 +40,34 @@
 					</div>
 				</div>
 			</div>
-		</div>
-		<div class="form-inline">
-			<div class="form-group" style="width: 100%">
-				<button
-					class="w3-button w3-white w3-hover-white faq_button faq_title">
-					<h4>예약</h4>
-				</button>
-				<button
-					class="w3-button w3-white w3-hover-white faq_button faq_title">
-					<h4>결재</h4>
-				</button>
-				<button
-					class="w3-button w3-white w3-hover-white faq_button faq_title">
-					<h4>환불</h4>
-				</button>
-				<button
-					class="w3-button w3-white w3-hover-white faq_button faq_title">
-					<h4>리뷰</h4>
-				</button>
-				<button
-					class="w3-button w3-white w3-hover-white faq_button faq_title">
-					<h4>회원</h4>
-				</button>
-				<button
-					class="w3-button w3-white w3-hover-white faq_button faq_title">
-					<h4>서비스</h4>
-				</button>
+			<div class="form-inline">
+				<div class="form-group" style="width: 100%">
+					<button
+						class="w3-button w3-white w3-hover-white faq_button faq_title">
+						<h4>예약</h4>
+					</button>
+					<button
+						class="w3-button w3-white w3-hover-white faq_button faq_title">
+						<h4>결재</h4>
+					</button>
+					<button
+						class="w3-button w3-white w3-hover-white faq_button faq_title">
+						<h4>환불</h4>
+					</button>
+					<button
+						class="w3-button w3-white w3-hover-white faq_button faq_title">
+						<h4>리뷰</h4>
+					</button>
+					<button
+						class="w3-button w3-white w3-hover-white faq_button faq_title">
+						<h4>회원</h4>
+					</button>
+					<button
+						class="w3-button w3-white w3-hover-white faq_button faq_title">
+						<h4>서비스</h4>
+					</button>
+				</div>
 			</div>
-		</div>
 		<div class="row" style="margin-top: 20px;height:400px">
 			<div class="col-md-4" align="center">
 				<c:if test="${param.code == '1'}"><h3>예약</h3></c:if>
@@ -94,6 +93,7 @@
 				</c:forEach>
 				</table>
 			</div>
+		</div>
 		</div>
 		<jsp:include page="v1_footer.jsp"></jsp:include>
 	</div>
