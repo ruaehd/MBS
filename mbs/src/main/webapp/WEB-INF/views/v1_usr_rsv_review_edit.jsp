@@ -99,7 +99,7 @@
 				<div class="form-inline" style="margin-bottom:20px">
 					<div class="form-group">
 						<label style="width:100px">예약 후기</label>
-						<form:textarea rows="6" path="rsv_cmt_content" style="resize:none; width:400px" value="${vo.rsv_cmt_content}" onkeyup="fnChkByte(this)"></form:textarea>
+						<form:textarea rows="6" path="rsv_cmt_content" required="required" style="resize:none; width:400px" value="${vo.rsv_cmt_content}" onkeyup="fnChkByte(this)"></form:textarea>
 					</div>
 				</div>
 				<hr />

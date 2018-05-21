@@ -73,7 +73,7 @@
 							<hr />
 							<div class="form-inline" style="margin-bottom:10px">
 								<label style="width:100px">날짜</label>
-								<form:input type="text" class="form-control" path="rsv_day" value="${vo.rsv_day}" id="date1"/>
+								<form:input type="text" class="form-control" required="required" path="rsv_day" value="${vo.rsv_day}" id="date1"/>
 							</div>
 							<div class="form-inline" style="margin-bottom:10px">
 								<label style="width:100px">인원</label>
@@ -127,15 +127,15 @@
 							<div>
 								<div class="form-inline" style="margin-bottom:10px">
 									<label style="width:100px">이름</label>
-									<form:input type="text" class="form-control" path="rsv_sub_name" value="${vo.rsv_sub_name}"/>
+									<form:input type="text" class="form-control" required="required" path="rsv_sub_name" value="${vo.rsv_sub_name}"/>
 								</div>
 								<div class="form-inline" style="margin-bottom:10px">
 									<label style="width:100px">전화번호</label>
-									<form:input type="text" class="form-control" path="rsv_sub_tel" value="${vo.rsv_sub_tel}"/>
+									<form:input type="text" class="form-control" required="required" path="rsv_sub_tel" value="${vo.rsv_sub_tel}"/>
 								</div>
 								<div class="form-inline" style="margin-bottom:10px">
 									<label style="width:100px">이메일주소</label>
-									<form:input type="text" class="form-control" path="rsv_sub_email" value="${vo.rsv_sub_email}"/>
+									<form:input type="text" class="form-control" required="required" path="rsv_sub_email" value="${vo.rsv_sub_email}"/>
 								</div>
 								<div class="form-inline" style="margin-bottom:10px">
 									<label style="width:100px">요청사항</label>

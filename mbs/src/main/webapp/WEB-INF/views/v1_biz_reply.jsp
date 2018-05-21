@@ -60,7 +60,7 @@
 					</div>
 					<div class="form-inline" style="margin-bottom:10px">
 						<label style="width:100px">리뷰답글</label>
-						<form:textarea style="width:400px; resize:none" path="rep_content" rows="6" class="form-control" onkeyup="fnChkByte(this)"></form:textarea>
+						<form:textarea style="width:400px; resize:none" required="required" path="rep_content" rows="6" class="form-control" onkeyup="fnChkByte(this)"></form:textarea>
 					</div>
 				</div>
 				<hr />
