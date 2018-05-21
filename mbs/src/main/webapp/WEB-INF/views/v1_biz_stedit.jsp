@@ -25,7 +25,8 @@
 	</style>
 </head>
 <body>
-	<div id="wrapper">
+	<div class="wrapper">
+		<div class="row">
 		<jsp:include page="v1_header.jsp"></jsp:include>
 		<div id="main">
 			<div class="container" style="margin-top:150px; min-height:600px">
@@ -247,6 +248,7 @@
 		</div>
 		<jsp:include page="v1_footer.jsp"></jsp:include>
 	</div>
+</div>
    <script src="resources/js/bootstrap.min.js"></script>
    <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
    <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>

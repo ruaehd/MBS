@@ -33,7 +33,7 @@
 	</style>
 <body>
 	<img src="resources/imgs/login-back.jpg" class="backimg"></img>
-	<div id="wrapper">
+	<div class="wrapper">
 		<jsp:include page="v1_header.jsp"></jsp:include>
 		<div id="main">
 			<div style="margin-top:128px">

@@ -41,7 +41,7 @@
 		<div class="container" style="margin-top:100px; padding:10px">
 			<div id="summary" class="form-inline" style="margin-bottom:10px; height:136px">
 				<div id="usr_info" class="form-group" style="width:30%">
-					사용자 aaa님
+					${sessionScope.Mem_Name}님 환영합니다
 				</div>
 				<div id="summary_board" class="form-group" style="width:60%">
 					<ul id="rsv_cnt" class="list-group">

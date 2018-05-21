@@ -32,7 +32,7 @@
 	</style>
 </head>
 <body>
-	<div id="wrapper" >
+	<div class="wrapper" >
 		<form:form action="usr_tour_comment_edit.do" modelAttribute="vo" method="post">
 			<div class="container" style="padding:20px">
 				<h3>한줄평 작성</h3>

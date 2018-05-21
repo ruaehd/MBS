@@ -7,10 +7,17 @@
 	<head>
 		<meta charset="UTF-8" />
 		<title>Google Nexus Website Menu</title>
+		<link rel="shortcut icon" href="../favicon.ico">
+		<link rel="stylesheet" type="text/css" href="resources/css/normalize.css" />
+		<link rel="stylesheet" type="text/css" href="resources/css/demo.css" />
+		<link rel="stylesheet" type="text/css" href="resources/css/component.css" />
+		<link rel="stylesheet" type="text/css" href="resources/css/bootstrap.css" />
+		<link rel="stylesheet" type="text/css" href="resources/css/w3.css"/>
+		<link rel="stylesheet" type="text/css" href="resources/css/footer.css" />
 		<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 	</head>
 <body>
-	<div id="wrapper">
+	<div class="wrapper">
 		<jsp:include page="v1_header.jsp"></jsp:include>
 		<div id="main">
 			<div style="margin-top:78px">

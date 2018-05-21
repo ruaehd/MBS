@@ -38,7 +38,7 @@
 	</style>
 </head>
 <body>
-	<div id="wrapper" style="width:600px; margin:0 auto">
+	<div class="wrapper" style="width:600px; margin:0 auto">
 		<form:form action="usr_rsv_comment_edit.do?cmt_no=${vo.rsv_cmt_no}" modelAttribute="vo" method="post">	
 			<div style="padding:20px 0">
 				<h3>후기 작성</h3>

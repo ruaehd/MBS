@@ -25,21 +25,25 @@
 	</style>
 </head>
 <body>
-
-	<div class="container" style="margin-top: 68px">
-		<div align="center" style="width: 100%; margin-bottom: 20px">
-			<div style="margin: 80px 0px;">
-				<h1>자주하는 질문</h1>
-					<input type="text" class="w3-input w3-round" placeholder="찾고자 하는 단어 또는 문장을 입력하세요" style="width: 400px; margin-top: 50px; display:inline;" id="search_text"/>
-					<input type="submit" class="w3-button w3-black w3-round " value="검색" id="search_btn"/>
-			</div>
-				
-			<div align="right" style="margin-right:100px">
-				<a href="service_main.do">고객센터</a>
+	<div class="wrapper">
+		<jsp:include page="v1_header.jsp"></jsp:include>
+		<div id="main">
+			<div class="container" style="margin-top: 68px">
+				<div align="center" style="width: 100%; margin-bottom: 20px">
+					<div style="margin: 80px 0px;">
+						<h1>자주하는 질문</h1>
+							<input type="text" class="w3-input w3-round" placeholder="찾고자 하는 단어 또는 문장을 입력하세요" style="width: 400px; margin-top: 50px; display:inline;" id="search_text"/>
+							<input type="submit" class="w3-button w3-black w3-round " value="검색" id="search_btn"/>
+					</div>
+					<div align="right" style="margin-right:100px">
+						<a href="service_main.do">고객센터</a>
+					</div>
+				</div>
 			</div>
 		</div>
 		<jsp:include page="v1_footer.jsp"></jsp:include>
 	</div>
+	
 	<script src="resources/js/jquery-1.11.1.js"></script>
 	<script src="resources/js/bootstrap.min.js"></script>
 	<script>
