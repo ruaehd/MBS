@@ -25,7 +25,7 @@
 	</style>
 </head>
 <body>
-	<div id="wrapper">
+	<div class="wrapper">
 		<jsp:include page="v1_header.jsp"></jsp:include>
 		<div id="main">
 			<div class="container" style="margin-top:150px; min-height:600px">
