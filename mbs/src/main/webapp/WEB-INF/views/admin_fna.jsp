@@ -231,9 +231,10 @@
 		</form:form>
 		
 	<script type="text/javascript" src="resources/js/jquery-1.11.1.js"></script>
-   <script type="text/javascript" src="resources/js/bootstrap.min.js"></script>
-   <script type="text/javascript" src="resources/js/jquery.twbsPagination-1.3.1.js"></script>
-   <script>
+   	<script type="text/javascript" src="resources/js/bootstrap.min.js"></script>
+   	<script type="text/javascript" src="resources/js/readmore.min.js"></script>
+   	<script type="text/javascript" src="resources/js/jquery.twbsPagination-1.3.1.js"></script>
+   	<script>
       $(function() {
     	  	var br2nl = function(varTest){
 				return varTest.replace(/<br>/g, "\n");

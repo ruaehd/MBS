@@ -47,6 +47,7 @@
 							<ul class="nav navbar-nav">
 								<li><a href="admin_rsv_management.do">예약관리</a></li>
 								<li><a href="admin_rev_management.do">리뷰관리</a></li>
+								<li><a href="admin_tour_management.do">관광지관리</a></li>
 							</ul>
 						</div>
 					</div>

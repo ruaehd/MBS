@@ -34,7 +34,7 @@
 		      <div class="col-xs-12">
 		      <div align="center" style="margin-bottom:50px">
 					<h1 style="font-size:56px">
-						<b>관광지 수정</b>
+						<b>사업체 수정</b>
 					</h1>
 				</div>
 		               <ul class="nav nav-pills nav-justified thumbnail setup-panel">
@@ -53,7 +53,7 @@
 		      </div>
 		      
 		      
-		      <form:form action="biz_stedit.do?no=${vo.company_num}" id="form" class="form-horizontal" enctype="multipart/form-data" modelAttribute="vo" method="post" >
+		      <form:form action="tour_edit.do?no=${vo.company_num}" id="form" class="form-horizontal" enctype="multipart/form-data" modelAttribute="vo" method="post" >
 		       <div class="row setup-content" id="step-1">
 		           <div class="col-xs-12">
 		            
@@ -141,32 +141,11 @@
 		                     </div>
 		                  </div>
 		                  <div class="form-group">
-		                     <label class="col-sm-4 control-label" for="intro">예약 최대인원</label>
-		                     <div class="col-sm-5">
-		                        <form:input class="form-control" id="company_personnel" path="company_personnel" placeholder="예) 5"/>
-		                     </div>
-		                  </div>
-		                 
-		                  <div class="form-group">
 		                     <label class="col-sm-4 control-label" for="intro">소개글</label>
 		                     <div class="col-sm-5">
 		                        <form:textarea class="form-control" rows="6" style="resize:none" id="str_document" path="str_document"></form:textarea>
 		                     </div>
 		                  </div>
-		                  
-		                   <div class="form-group">
-		                     <label class="col-sm-4 control-label" for="menu">메뉴</label>
-		                     <div class="col-sm-5">
-		                        <div class="buttons">      
-		                           <div class="form-inline" style="margin-bottom:5px">
-		                                   <input type="text" class="form-control mname" id="mu" style="width:40%" name="aaa">
-		                                   <input type="text" class="form-control price" id="pr" style="width:40%" name="bbb">
-		                                   <input type="button" class="btnAdd btn btn-success" value="추가">
-		                                </div>        
-		                          </div>
-		                     </div>
-		                  </div>
-		                  
 		                  
 		                  <div class="form-group">
 		                     <label class="col-sm-4 control-label" for="time">이미지</label>
@@ -297,41 +276,10 @@
    		}
    		var len = mlist.length;
    		
-   		for(var j=0;j<len;j++){
-   			if(aaa.length<5){
-   					if(j == 0){
-   						$('#mu').val(mlist[j].menu_name);
-   						$('#pr').val(mlist[j].menu_price);
-   					}
-   					else{
-                $('.buttons').append (                        
-                          '<div class="form-inline del" style="margin-bottom:5px">' +
-                             '<input name="aaa" type="text" class="form-control mname" style="width:40%"  value='+mlist[j].menu_name+'> ' +
-                              '<input name="bbb" type="text" class="form-control price" style="width:40%"  value='+mlist[j].menu_price+'> ' +
-                             '<input type="button" class="btnRemove btn btn-danger" value="삭제"> ' +
-                          '</div>'
-                      );
-                aaa = $('input[name="aaa"').toArray();
-   					}
-             }
-             else{
-                 alert("최대 5개까지 추가 가능합니다.");
-                 return false;
-             }
-             
-               // end append                            
-              $('.btnRemove').on('click', function () { 
-                  $(this).parent().remove (); //
-                  aaa.splice($(this),1);
-              });
-   		}
-   		
    		    $('#company_personnel').keyup(function(){
    		         $(this).val($(this).val().replace(/[^0-9]/g,""));
    		    }); 
-   		 	$('.price').keyup(function(){
-		         $(this).val($(this).val().replace(/[^0-9]/g,""));
-		    }); 
+
    		$('.imgs').click(function(){
    			var idx = $(this).index('.imgs');
    			$('.fileload_'+idx).trigger('click');	
@@ -520,31 +468,8 @@
                 $target.show();
             }
         });
-        var aaa = [];
         var bbb = [];
 
-        $('.btnAdd').click (function(){
-           if(aaa.length<5){
-              $('.buttons').append (                        
-                        '<div class="form-inline del" style="margin-bottom:5px">' +
-                           '<input name="aaa" type="text" class="form-control mname" style="width:40%"> ' +
-                            '<input name="bbb" type="text" class="form-control price" style="width:40%"> ' +
-                           '<input type="button" class="btnRemove btn btn-danger" value="삭제"> ' +
-                        '</div>'
-                    );
-              aaa = $('input[name="aaa"').toArray();
-           }
-           else{
-               alert("최대 5개까지 추가 가능합니다.");
-               return false;
-           }
-           
-             // end append                            
-            $('.btnRemove').on('click', function () { 
-                $(this).parent().remove (); //
-                aaa.splice($(this),1);
-            });
-        }); // end click           
         $('ul.setup-panel li.active a').trigger('click');
         
         // DEMO ONLY //
@@ -577,7 +502,6 @@
   			var stime = $('#stime').val();
   			var etime = $('#etime').val();
   			var str_document = $('#str_document').val();
-  			var company_personnel = $('#company_personnel').val();
   			if(name == ""){alert("상호명을 입력해주세요");return null;}
   			else if(company_num == ""){alert("사업자 등록번호를 입력해주세요");return null;}
   			else if(company_conditions == ""){alert("업태를 입력해주세요");return null;}
@@ -586,7 +510,6 @@
   			else if(company_add == ""){alert("사업체 주소를 입력해주세요");return null;}
   			else if(stime == "" || etime == ""){alert("영업시간을 입력해주세요");return null;}
   			else if(str_document ==""){alert("소개글을 입력해주세요");return null;}
-  			else if(company_personnel ==""){alert("예약 최대인원을 입력해주세요");return null;}
   			else{
   				var geocoder = new daum.maps.services.Geocoder();
   				geocoder.addressSearch(company_add, function(result, status) {
