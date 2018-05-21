@@ -104,7 +104,7 @@
 		$(function() {
 			var func = function(){
 				var tx = encodeURIComponent($('#search_text').val());
-				window.location.href="fna.do?text="+tx;
+				window.location.href="fna.do?code=0&text="+tx;
 			};
 			
 			$('#search_btn').click(function(){

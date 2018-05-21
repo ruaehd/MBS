@@ -163,17 +163,17 @@
 			 function getListItem(index,datalist){
 				 var el = document.createElement('li'),
 				    itemStr =
-				    	'<div class="w3-border w3-white" style="width:100%; height:100px;padding:5px;margin-top:10px">'+
+				    	'<a href="usr_content.do?str_number='+datalist.number+'"><div class="w3-border w3-white" style="width:100%; height:100px;padding:5px;margin-top:10px">'+
 		            		'<div class="row">'+
 		            		'<div class="col-md-4">'+
 		            			'<img class="'+datalist.number+'" src="getBlobImg.do?no='+ datalist.number +'" align="left" style="width:100%;height:90px;z-index:1;"/>'+
 		            			'</div>'+
 		            			'<div class="col-md-8" style="padding:10px">'+
-		            			'<div style="font-size:15px"><a href="usr_content.do?str_number='+datalist.number+'"><font style="font-size:15px;font-family:"Malgun Gothic","dotum","돋움"">'+datalist.name+'</font></a></div>'+
+		            			'<div style="font-size:15px"><font style="font-size:15px;font-family:"Malgun Gothic","dotum","돋움"">'+datalist.name+'</font></div>'+
 		            						'<div style="color:gray">'+datalist.address+'</div>'+
 		            			'</div>'+
 		            		'</div>'+
-		            	'</div>';
+		            	'</div></a>';
 		            				
 		            el.innerHTML = itemStr;
 		            el.className = 'item';

@@ -1,5 +1,6 @@
 package com.mbs.mvc.controller;
 
+import java.net.URLEncoder;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -101,11 +102,11 @@ public class ServiceController {
 	}
 	
 	@RequestMapping(value="/fna.do", method= RequestMethod.GET)
-	public String qna1(Model model, @RequestParam(value = "code", defaultValue="0") int fna_code, 
+	public String qna1(Model model, @RequestParam(value = "code", defaultValue="-1") int fna_code, 
 			@RequestParam(value = "text", defaultValue="") String text) {
 		try {
-			if(fna_code == 0) {
-				return "redirect:fna.do?code=1";
+			if(fna_code == -1) {
+				return "redirect:fna.do?code=1&text="+URLEncoder.encode(text,"utf-8");
 			}
 			FNAVO vo = new FNAVO();
 			vo.setFna_code(fna_code);

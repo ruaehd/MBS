@@ -50,7 +50,7 @@
                                  </div>
 				</div>
 			</div>
-			<div class="section" id="section2">
+		<!-- 	<div class="section" id="section2">
 				<div class="slide" id="slide1" data-anchor="slide1">
 					<div style="width:100%">
 						<div style="width:60%;margin:0px auto">
@@ -87,7 +87,7 @@
 						</div>
 					</div>
 				</div>
-			</div>
+			</div> -->
 			<div class="section">
 			
 			<div class="row" style="height:100vh">

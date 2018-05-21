@@ -15,25 +15,25 @@
 		<link rel="stylesheet" type="text/css" href="resources/css/footer.css" />
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 		<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+		<style>
+			.backimg{
+				position:absolute;
+				width:100%;
+				height:100vh;
+				z-index:1;
+				filter: blur(2px);
+			}
+			#wrapper{
+				position:absolute;
+				z-index:2;
+				top:0px;
+				left:0px;
+			}
+		</style>
 	</head>
-	<style>
-		.backimg{
-			position:absolute;
-			width:100%;
-			height:100vh;
-			z-index:1;
-			filter: blur(2px);
-		}
-		#wrapper{
-			position:absolute;
-			z-index:2;
-			top:0px;
-			left:0px;
-		}
-	</style>
 <body>
 	<img src="resources/imgs/login-back.jpg" class="backimg"></img>
-	<div class="wrapper">
+	<div id="wrapper">
 		<jsp:include page="v1_header.jsp"></jsp:include>
 		<div id="main">
 			<div style="margin-top:128px">

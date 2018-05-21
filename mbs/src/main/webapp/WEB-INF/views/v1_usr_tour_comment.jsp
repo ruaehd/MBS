@@ -62,7 +62,7 @@
 				<div class="form-inline" style="margin-bottom:20px">
 					<div class="form-group">
 						<label style="width:100px">후기 작성</label>
-						<form:textarea rows="3" path="tour_cmt_content" style="resize:none; width:400px" onkeyup="fnChkByte(this)"></form:textarea>
+						<form:textarea rows="3" path="tour_cmt_content" required="required" style="resize:none; width:400px" onkeyup="fnChkByte(this)"></form:textarea>
 					</div>
 				</div>
 				<hr />
