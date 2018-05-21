@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Admin_Qna">
+	<resultMap type="com.mbs.mvc.vo.QNAVO" id="resultQnaImg">
+		<result column ="qst_no" property="qst_no" />
+		<result column ="qst_img" property="qst_img" jdbcType="BLOB" />
+	</resultMap>
+	<select id="QnaImg" parameterType="int" resultMap="resultQnaImg">
+		SELECT qst_no, qst_img FROM `question` WHERE qst_no=#{qst_no} 
+	</select>	
+
+	<select id="Amind_QnaList" parameterType="com.mbs.mvc.vo.QNAVO" resultType="com.mbs.mvc.vo.QNAVO">
+		SELECT qst_no, qst_title, qst_content, qst_date, mb_id, qst_open, qst_code FROM `question` 
+		<if test="qst_type == 'all'">
+			WHERE (qst_title LIKE CONCAT('%', #{qst_text}, '%') OR qst_content LIKE CONCAT('%', #{qst_text}, '%') OR mb_id LIKE CONCAT('%', #{qst_text}, '%'))    
+		</if>
+		<if test="qst_type != 'all'">
+			WHERE ${qst_type} LIKE CONCAT('%', #{qst_text}, '%')   
+		</if>
+		<if test="qst_code != '유형'">
+			AND qst_code=#{qst_code}   
+		</if>
+		<if test="qst_sel_type != 'all'">
+			AND qst_open=#{qst_sel_type}   
+		</if>
+		ORDER BY qst_no DESC LIMIT #{qst_page}, 10
+	</select>
+	
+	<select id="QnaTotPage" parameterType="com.mbs.mvc.vo.QNAVO" resultType="int">
+		SELECT COUNT(*) FROM `question` 
+			<if test="qst_type == 'all'">
+			WHERE (qst_title LIKE CONCAT('%', #{qst_text}, '%') OR qst_content LIKE CONCAT('%', #{qst_text}, '%') OR mb_id LIKE CONCAT('%', #{qst_text}, '%'))    
+			</if>
+			<if test="qst_type != 'all'">
+				WHERE ${qst_type} LIKE CONCAT('%', #{qst_text}, '%')   
+			</if>
+			<if test="qst_code != '유형'">
+				AND qst_code=#{qst_code}   
+			</if>
+			<if test="qst_sel_type != 'all'">
+				AND qst_open=#{qst_sel_type}   
+			</if>
+	</select>
+	
+	<insert id="Admin_Asnwer" parameterType="com.mbs.mvc.vo.Qst_AnswerVO">
+		INSERT INTO `qst_answer`(qst_as_content, qst_as_date, qst_no) VALUES(#{qst_as_content},NOW(),#{qst_no}); 
+		UPDATE `question` SET qst_open=1 WHERE qst_no=#{qst_no}; 
+	</insert>
+	
+	<select id="Qst_Answer" parameterType="int" resultType="com.mbs.mvc.vo.Qst_AnswerVO">
+		SELECT qst_as_content, qst_as_date FROM `qst_answer` WHERE qst_no=#{qst_no}
+	</select>
+	
+	<update id="Qst_AnswerUpdate" parameterType="com.mbs.mvc.vo.Qst_AnswerVO">
+		UPDATE `qst_answer` SET qst_as_content=#{qst_as_content} WHERE qst_no=#{qst_no}
+	</update>
+</mapper>

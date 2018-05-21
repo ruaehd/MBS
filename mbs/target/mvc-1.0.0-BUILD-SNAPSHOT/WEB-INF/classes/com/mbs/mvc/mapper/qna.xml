@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="QNA">
+	
+	<insert id="insertQuestion" parameterType="com.mbs.mvc.vo.QNAVO">
+		INSERT INTO question(qst_no, qst_title, qst_content, qst_img, qst_code, mb_id, qst_date) VALUES(#{qst_no}, #{qst_title}, #{qst_content}, #{qst_img, jdbcType=BLOB}, #{qst_code}, #{mb_id}, NOW())	
+	</insert>
+	
+	<!-- <select id="selectQuestionLastNo" resultType="int">
+		SELECT ifnull(MAX(qst_no), 10000000) FROM question
+	</select> -->
+	
+</mapper>
