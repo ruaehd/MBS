@@ -1,6 +1,16 @@
-.footer .footer-inner .help dl dd .link-kakaotalk span::before
-	{
-	
+html {
+	height: 100%;
+}
+body {
+	margin: 0;
+	height: 100%;
+}
+.wrapper {
+	min-height: 100%;
+	position: relative;
+	padding-bottom: 173px; /* footer height */
+}
+.footer .footer-inner .help dl dd .link-kakaotalk span::before {
 	content: '';
 	display: inline-block;
 	font-size: 0;
@@ -16,7 +26,7 @@
 	background-position: 0 -120px;
 }
 
- footer {
+footer {
 	margin: 0;
 	padding: 0;
 	border: 0;
@@ -24,14 +34,15 @@
 	vertical-align: baseline;
 }
 
- footer {
+footer {
 	display: block;
 }
 
-
 .footer {
-	/* position: absolute;
-	bottom: 0; */
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	right: 0;
 	overflow: hidden;
 	padding: 45px 0 35px;
 	width: 100%;

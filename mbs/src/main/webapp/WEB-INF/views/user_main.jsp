@@ -4,13 +4,22 @@
 <!DOCTYPE html>
 <html>
 	<head>
+		<link rel="shortcut icon" href="../favicon.ico">
+		<link rel="stylesheet" type="text/css" href="resources/css/normalize.css" />
+		<link rel="stylesheet" type="text/css" href="resources/css/demo.css" />
+		<link rel="stylesheet" type="text/css" href="resources/css/component.css" />
+		<link rel="stylesheet" type="text/css" href="resources/css/bootstrap.css" />
+		<link rel="stylesheet" type="text/css" href="resources/css/w3.css"/>
+		<link rel="stylesheet" type="text/css" href="resources/css/footer.css" />
 		<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"/>
 	</head>
 <body>
-	<div class="row" style="margin-top: 68px; border-bottom: 1px solid #cccccc; width: 100%">
-		<jsp:include page="v1_header.jsp"></jsp:include>
-		<div class="col-md-9"
-			style="border-right: 1px solid #cccccc; padding: 10px">
+	<div class="wrapper">
+	<jsp:include page="v1_header.jsp"></jsp:include>
+	<div id="main">
+	<div class="row" style="margin-top: 68px; border-bottom: 1px solid #cccccc; width: 100%; padding:20px">
+		
+		<div class="col-md-9" style="border-right: 1px solid #cccccc; padding: 10px">
 			<div class="w3-round w3-light-gray" id="imgcon" style="border: 1px solid #cccccc; width: 100%; height: 300px;white-space:nowrap;overflow-x:auto;overflow-y:hidden">
 				<h3>현재 예약중인 항목</h3>
 					<c:if test="${empty rlist}">
@@ -120,7 +129,9 @@
 			</div>
 		</div>
 	</div>
-
+	</div>
+	<jsp:include page="v1_footer.jsp"></jsp:include>
+</div>
         	<div class="modal fade" id="questionlist">
 				<div class="modal-dialog">
 						<div class="modal-content">
@@ -143,7 +154,7 @@
 						</div>
 					</div>       	
         	</div>
-        	<jsp:include page="v1_footer.jsp"></jsp:include>
+        	
    <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 <script>
 	$(function(){

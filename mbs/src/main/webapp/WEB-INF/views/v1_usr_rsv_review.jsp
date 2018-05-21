@@ -6,14 +6,9 @@
 <html>
 <head>
 	<meta charset="UTF-8" />
-	<title>Google Nexus Website Menu</title>
-	<link rel="shortcut icon" href="../favicon.ico">
-	<link rel="stylesheet" type="text/css" href="resources/css/normalize.css" />
-	<link rel="stylesheet" type="text/css" href="resources/css/demo.css" />
-	<link rel="stylesheet" type="text/css" href="resources/css/component.css" />
+	<title>후기작성</title>
 	<link rel="stylesheet" type="text/css" href="resources/css/bootstrap.css" />
 	<link rel="stylesheet" type="text/css" href="resources/css/w3.css"/>
-	<link rel="stylesheet" type="text/css" href="resources/css/footer.css" />
 	<link rel="stylesheet" type="text/css" href="resources/css/jquery-ui.min.css" />
 	<style>
 		.container{
@@ -43,7 +38,7 @@
 	</style>
 </head>
 <body>
-	<div id="wrapper" style="width:600px; margin:0 auto">
+	<div class="wrapper" style="width:600px; margin:0 auto">
 		<form:form action="usr_rsv_comment.do?rsv_no=${param.rsv_no}" modelAttribute="vo" method="post">	
 			<div style="padding:20px 0">
 				<h3>후기 작성</h3>

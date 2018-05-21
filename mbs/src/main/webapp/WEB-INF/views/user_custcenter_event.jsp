@@ -14,7 +14,7 @@
 		<link rel="stylesheet" type="text/css" href="resources/css/footer.css" />
 	</head>
 <body>
-	<div id="wrapper">
+	<div class="wrapper">
 		<jsp:include page="v1_header.jsp"></jsp:include>
 		<div id="main">
 			<div style="margin-top:68px">
@@ -120,7 +120,7 @@
 			$('#mouseup').show();
 		});
 		$('#carousel').mouseleave(function(){
-			$('#mouseup').hi	de();
+			$('#mouseup').hide();
 		});
 	});
 	</script>

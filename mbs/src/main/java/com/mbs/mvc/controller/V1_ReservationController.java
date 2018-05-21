@@ -48,7 +48,7 @@ public class V1_ReservationController {
 		
 		try{
 			//세션아이디
-			if(Integer.valueOf((String)httpSession.getAttribute("Mem_Grade"))>2) {	//관리자라면
+			if((Integer)httpSession.getAttribute("Mem_Grade")>2) {	//관리자라면
 				vo.setRsv_sub_id(mb_id);
 			}
 			else {	//관리자가 아니라면
@@ -89,7 +89,7 @@ public class V1_ReservationController {
 			model.addAttribute("message", "신규 예약이 완료 되었습니다.");
 			model.addAttribute("title", "예약 완료");
 			
-			if(Integer.valueOf((String)httpSession.getAttribute("Mem_Grade"))>2) {	//관리자라면
+			if((Integer)httpSession.getAttribute("Mem_Grade")>2) {	//관리자라면
 				model.addAttribute("url", "admin_rsv_management.do");
 			}
 			else {	//관리자가 아니라면

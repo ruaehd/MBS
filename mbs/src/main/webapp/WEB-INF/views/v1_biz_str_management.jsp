@@ -7,7 +7,7 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>Insert title here</title>
+	<title>업체관리</title>
 	
 	<link rel="shortcut icon" href="../favicon.ico">
 	<link rel="stylesheet" type="text/css" href="resources/css/normalize.css" />
@@ -42,6 +42,7 @@
 	</style>	
 </head>
 <body>
+<div class="wrapper">
 	<div class="row">
 		<jsp:include page="v1_header.jsp"></jsp:include>
 		<div id="main">
@@ -137,7 +138,7 @@
 		</div>
 		<jsp:include page="v1_footer.jsp"></jsp:include>
 	</div>
-
+</div>
 	<script src="resources/js/jquery-1.11.1.js"></script>
 	<script src="resources/js/bootstrap.min.js"></script>
 	<script src="resources/js/jquery.twbsPagination.min.js"></script>

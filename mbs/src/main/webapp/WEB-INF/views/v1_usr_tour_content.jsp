@@ -11,7 +11,7 @@
 <html>
 <head>
 	<meta charset="UTF-8" />
-	<title>Google Nexus Website Menu</title>
+	<title>관광지 정보</title>
 	<link rel="shortcut icon" href="../favicon.ico">
 	<link rel="stylesheet" type="text/css" href="resources/css/normalize.css" />
 	<link rel="stylesheet" type="text/css" href="resources/css/demo.css" />
@@ -74,7 +74,7 @@
 	</style>
 </head>
 <body>
-	<div id="wrapper">
+	<div class="wrapper">
 		<jsp:include page="v1_header.jsp"></jsp:include>
 		<div id="main">
 			<div class="container" style="margin-top:100px ">

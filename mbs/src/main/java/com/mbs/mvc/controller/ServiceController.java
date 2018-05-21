@@ -52,10 +52,10 @@ public class ServiceController {
 	public String notice_content(Model model, @RequestParam("ntc_no") int ntc_no) {
 		try {
 			NoticeVO vo = sDAO.selectNoticeContent(ntc_no);
-			NoticeVO pvo = sDAO.selectNoticeContent(ntc_no-1);
-			NoticeVO nvo = sDAO.selectNoticeContent(ntc_no+1);
 			int ntc_prev = sDAO.selectNoticePrev(ntc_no);
 			int ntc_next = sDAO.selectNoticeNext(ntc_no);
+			NoticeVO pvo = sDAO.selectNoticeContent(ntc_prev);
+			NoticeVO nvo = sDAO.selectNoticeContent(ntc_next);
 			vo.setNtc_content(nl2br(vo.getNtc_content()));
 			model.addAttribute("pvo", pvo);
 			model.addAttribute("nvo", nvo);
@@ -104,6 +104,9 @@ public class ServiceController {
 	public String qna1(Model model, @RequestParam(value = "code", defaultValue="0") int fna_code, 
 			@RequestParam(value = "text", defaultValue="") String text) {
 		try {
+			if(fna_code == 0) {
+				return "redirect:fna.do?code=1";
+			}
 			FNAVO vo = new FNAVO();
 			vo.setFna_code(fna_code);
 			vo.setFna_sc_text(text);

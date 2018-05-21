@@ -15,7 +15,7 @@
 		
 				<div class="info">
 					<ul class="util">
-						<li><a href="#" target="_blank">배달의민족</a></li>
+						<li><a href="#" target="_blank">MBS</a></li>
 						<li><a href="#" target="_blank">회사소개</a></li>
 						<li><a href="#">이용약관</a></li>
 						<li><a href="#">광고운영정책</a></li>
@@ -23,14 +23,14 @@
 						<li><a href="#">제휴문의</a></li>
 					</ul>
 		
-					<a href="#" target="_blank" class="sp-footer-logo footer-logo ir">우아한형제들</a>
+					<a href="#" target="_blank" class="sp-footer-logo footer-logo ir">MBS</a>
 					<address class="address">
 						<span>사업자등록번호 : 120-87-65763</span>
-						<span>통신판매업 신고번호 : 서울 송파 - 0515호</span>
-						<span>대표 : 김봉진</span> 
-						<span>주소 : 서울 송파구 위례성대로 2 장은빌딩 18층</span>
+						<span>통신판매업 신고번호 : 부산 동래 - 0515호</span>
+						<span>대표 : MBS</span> 
+						<span>주소 : 부산광역시 동래구</span>
 					</address>
-					<p class="copyright">© Woowa Brothers Corp.</p>
+					<p class="copyright">© MBS Corp.</p>
 				</div>
 			</div>
 		</div>
