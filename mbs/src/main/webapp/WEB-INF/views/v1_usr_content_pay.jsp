@@ -72,7 +72,7 @@
 							<input type="hidden" name="str_number" value="${param.str_number}" />
 							<div class="form-inline" style="margin-bottom:10px">
 								<label style="width:100px">날짜</label>
-								<form:input type="text" class="form-control" path="rsv_day" id="date1"/>
+								<form:input type="text" class="form-control" required="required" path="rsv_day" id="date1"/>
 							</div>
 							<div class="form-inline" style="margin-bottom:10px">
 								<label style="width:100px">인원</label>
@@ -123,15 +123,15 @@
 								<div class="form-inline" style="margin-bottom:10px">
 									<label style="width:100px">이름</label>
 									<input type="hidden" name="mb_id" value="${mvo.mb_id}"/>
-									<form:input type="text" class="form-control" path="rsv_sub_name" value="${mvo.mb_name}"/>
+									<form:input type="text" class="form-control" required="required" path="rsv_sub_name" value="${mvo.mb_name}"/>
 								</div>
 								<div class="form-inline" style="margin-bottom:10px">
 									<label style="width:100px">전화번호</label>
-									<form:input type="text" class="form-control" path="rsv_sub_tel" value="${mvo.mb_tel}"/>
+									<form:input type="text" class="form-control" required="required" path="rsv_sub_tel" value="${mvo.mb_tel}"/>
 								</div>
 								<div class="form-inline" style="margin-bottom:10px">
 									<label style="width:100px">이메일주소</label>
-									<form:input type="text" class="form-control" path="rsv_sub_email" value="${mvo.mb_email}" />
+									<form:input type="text" class="form-control" required="required" path="rsv_sub_email" value="${mvo.mb_email}" />
 								</div>
 								<div class="form-inline" style="margin-bottom:10px">
 									<label style="width:100px">요청사항</label>
