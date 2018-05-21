@@ -11,7 +11,7 @@
 <html>
 <head>
 	<meta charset="UTF-8" />
-	<title>Google Nexus Website Menu</title>
+	<title>관광지 정보</title>
 	<link rel="shortcut icon" href="../favicon.ico">
 	<link rel="stylesheet" type="text/css" href="resources/css/normalize.css" />
 	<link rel="stylesheet" type="text/css" href="resources/css/demo.css" />

@@ -7,7 +7,7 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>Insert title here</title>
+	<title>리뷰관리</title>
 	<link rel="stylesheet" href="resources/css/bootstrap.css" />
 	<link rel="stylesheet" href="resources/css/v1_adminside.css" />
 	<link rel="stylesheet" href="resources/css/w3.css" />
