@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="AdminChart">
+	
+	<select id="selectOldManCount" resultType="com.mbs.mvc.vo.V1_AgeVO">
+		select
+		sum(if(date_format(now(),'%Y')-substring(mb_birth,1,4) between 0 and 19 , 1, 0) and mb_gender = '1' ) as age_10,
+		sum(if(date_format(now(),'%Y')-substring(mb_birth,1,4) between 20 and 29 , 1, 0) and mb_gender = '1' ) as age_20,
+		sum(if(date_format(now(),'%Y')-substring(mb_birth,1,4) between 30 and 39 , 1, 0) and mb_gender = '1' ) as age_30,
+		sum(if(date_format(now(),'%Y')-substring(mb_birth,1,4) between 40 and 49 , 1, 0) and mb_gender = '1' ) as age_40,
+		sum(if(date_format(now(),'%Y')-substring(mb_birth,1,4) between 50 and 59 , 1, 0) and mb_gender = '1' ) as age_50,
+		sum(if(date_format(now(),'%Y')-substring(mb_birth,1,4) between 60 and 69 , 1, 0) and mb_gender = '1' ) as age_60,
+		sum(if(date_format(now(),'%Y')-substring(mb_birth,1,4) between 70 and 79 , 1, 0) and mb_gender = '1' ) as age_70,
+		sum(if(date_format(now(),'%Y')-substring(mb_birth,1,4) between 80 and 89 , 1, 0) and mb_gender = '1' ) as age_80,
+		sum(if(date_format(now(),'%Y')-substring(mb_birth,1,4) between 90 and 200 , 1, 0) and mb_gender = '1' ) as age_90
+	from member
+	</select>
+	
+	<select id="selectOldWomanCount" resultType="com.mbs.mvc.vo.V1_AgeVO">
+		select
+		sum(if(date_format(now(),'%Y')-substring(mb_birth,1,4) between 10 and 19 , 1, 0) and mb_gender = '2' ) as age_10,
+		sum(if(date_format(now(),'%Y')-substring(mb_birth,1,4) between 20 and 29 , 1, 0) and mb_gender = '2' ) as age_20,
+		sum(if(date_format(now(),'%Y')-substring(mb_birth,1,4) between 30 and 39 , 1, 0) and mb_gender = '2' ) as age_30,
+		sum(if(date_format(now(),'%Y')-substring(mb_birth,1,4) between 40 and 49 , 1, 0) and mb_gender = '2' ) as age_40,
+		sum(if(date_format(now(),'%Y')-substring(mb_birth,1,4) between 50 and 59 , 1, 0) and mb_gender = '2' ) as age_50,
+		sum(if(date_format(now(),'%Y')-substring(mb_birth,1,4) between 60 and 69 , 1, 0) and mb_gender = '2' ) as age_60,
+		sum(if(date_format(now(),'%Y')-substring(mb_birth,1,4) between 70 and 79 , 1, 0) and mb_gender = '2' ) as age_70,
+		sum(if(date_format(now(),'%Y')-substring(mb_birth,1,4) between 80 and 89 , 1, 0) and mb_gender = '2' ) as age_80,
+		sum(if(date_format(now(),'%Y')-substring(mb_birth,1,4) between 90 and 200 , 1, 0) and mb_gender = '2' ) as age_90
+	from member
+	</select>
+	
+	<select id="selectMonthChartCount" resultType="com.mbs.mvc.vo.V1_MonthChart">
+		SELECT DATE(mb_date) member, COUNT(*)as count FROM member GROUP BY member
+	</select>
+	
+	<select id="selectPriceCount1" parameterType="int" resultType="com.mbs.mvc.vo.V1_AdminStoreChartVO">
+		SELECT 
+			(SELECT count(ifnull(sm.mn_price,0))
+			FROM store s INNER JOIN str_menu sm ON s.str_number = sm.str_number WHERE sm.mn_price BETWEEN 0 AND 5000 AND s.str_category = '1' AND s.str_delete = 1) as price_0,
+			(SELECT count(ifnull(sm.mn_price,0))
+			FROM store s INNER JOIN str_menu sm ON s.str_number = sm.str_number WHERE sm.mn_price BETWEEN 5000 AND 15000 AND s.str_category = '1' AND s.str_delete = 1) as price_1,
+			(SELECT count(ifnull(sm.mn_price,0))
+			FROM store s INNER JOIN str_menu sm ON s.str_number = sm.str_number WHERE sm.mn_price BETWEEN 15000 AND 25000 AND s.str_category = '1' AND s.str_delete = 1) as price_2,
+			(SELECT count(ifnull(sm.mn_price,0))
+			FROM store s INNER JOIN str_menu sm ON s.str_number = sm.str_number WHERE sm.mn_price BETWEEN 25000 AND 35000 AND s.str_category = '1' AND s.str_delete = 1) as price_3,
+			(SELECT count(ifnull(sm.mn_price,0))
+			FROM store s INNER JOIN str_menu sm ON s.str_number = sm.str_number WHERE sm.mn_price BETWEEN 35000 AND 45000 AND s.str_category = '1' AND s.str_delete = 1) as price_4,
+			(SELECT count(ifnull(sm.mn_price,0))
+			FROM store s INNER JOIN str_menu sm ON s.str_number = sm.str_number WHERE sm.mn_price BETWEEN 45000 AND 55000 AND s.str_category = '1' AND s.str_delete = 1) as price_5,
+			(SELECT count(ifnull(sm.mn_price,0))
+			FROM store s INNER JOIN str_menu sm ON s.str_number = sm.str_number WHERE sm.mn_price BETWEEN 55000 AND 70000 AND s.str_category = '1' AND s.str_delete = 1) as price_6,
+			(SELECT count(ifnull(sm.mn_price,0))
+			FROM store s INNER JOIN str_menu sm ON s.str_number = sm.str_number WHERE sm.mn_price > 70000 AND s.str_category = '1' AND s.str_delete = 1) as price_7
+	</select>
+	
+	<select id="selectPriceCount2" resultType="com.mbs.mvc.vo.V1_AdminStoreChartVO">
+		SELECT 
+			(SELECT count(ifnull(sm.mn_price,0))
+			FROM store s INNER JOIN str_menu sm ON s.str_number = sm.str_number WHERE sm.mn_price BETWEEN 0 AND 5000 AND s.str_category = '2' AND s.str_delete = 1) as price_0,
+			(SELECT count(ifnull(sm.mn_price,0))
+			FROM store s INNER JOIN str_menu sm ON s.str_number = sm.str_number WHERE sm.mn_price BETWEEN 5000 AND 15000 AND s.str_category = '2' AND s.str_delete = 1) as price_1,
+			(SELECT count(ifnull(sm.mn_price,0))
+			FROM store s INNER JOIN str_menu sm ON s.str_number = sm.str_number WHERE sm.mn_price BETWEEN 15000 AND 25000 AND s.str_category = '2' AND s.str_delete = 1) as price_2,
+			(SELECT count(ifnull(sm.mn_price,0))
+			FROM store s INNER JOIN str_menu sm ON s.str_number = sm.str_number WHERE sm.mn_price BETWEEN 25000 AND 35000 AND s.str_category = '2' AND s.str_delete = 1) as price_3,
+			(SELECT count(ifnull(sm.mn_price,0))
+			FROM store s INNER JOIN str_menu sm ON s.str_number = sm.str_number WHERE sm.mn_price BETWEEN 35000 AND 45000 AND s.str_category = '2' AND s.str_delete = 1) as price_4,
+			(SELECT count(ifnull(sm.mn_price,0))
+			FROM store s INNER JOIN str_menu sm ON s.str_number = sm.str_number WHERE sm.mn_price BETWEEN 45000 AND 55000 AND s.str_category = '2' AND s.str_delete = 1) as price_5,
+			(SELECT count(ifnull(sm.mn_price,0))
+			FROM store s INNER JOIN str_menu sm ON s.str_number = sm.str_number WHERE sm.mn_price BETWEEN 55000 AND 70000 AND s.str_category = '2' AND s.str_delete = 1) as price_6,
+			(SELECT count(ifnull(sm.mn_price,0))
+			FROM store s INNER JOIN str_menu sm ON s.str_number = sm.str_number WHERE sm.mn_price > 70000 AND s.str_category = '2' AND s.str_delete = 1) as price_7
+	</select>
+	
+	<select id="selectStoreCount" resultType="int" parameterType="int">
+		SELECT count(*) FROM store WHERE str_category = #{gubun} AND str_delete = 1
+	</select>
+	
+	<select id="selectStoreMonthChartCount" resultType="com.mbs.mvc.vo.V1_MonthChart">
+		SELECT DATE(str_date) store, COUNT(*)as count FROM store WHERE str_delete = 1 GROUP BY store
+	</select>
+	
+	<select id="selectStorePrice" resultType="int">
+		SELECT avg(sm.mn_price) FROM store s INNER JOIN str_menu sm WHERE str_delete = '1'
+	</select>
+	
+	<select id="selectStoreCount1" resultType="int">
+		SELECT count(*) FROM store WHERE str_delete = '1'
+	</select>
+	
+	<select id="selectStorePoint" resultType="String">
+		SELECT  ROUND (avg(rc.rsv_cmt_point), 2) FROM
+			(SELECT r.rsv_no FROM store s INNER JOIN reservation r ON s.str_number = r.str_number) rs 
+		INNER JOIN rsv_comment rc ON rs.rsv_no = rc.rsv_no
+	</select>
+	
+	<select id="selectReservationOne" parameterType="String" resultType="com.mbs.mvc.vo.V1_Reservation">
+		SELECT r.rsv_no,s.str_name, r.rsv_day, r.rsv_date, r.rsv_personnel, r.rsv_sub_id, r.rsv_sub_email, r.rsv_delete, r.rsv_code  
+		FROM store s INNER JOIN reservation r ON s.str_number = r.str_number WHERE s.str_name LIKE concat('%',#{name},'%') AND r.rsv_delete = 1 
+		ORDER BY r.rsv_date DESC
+	</select>
+	
+	<select id="selectReservationMonth" resultType="com.mbs.mvc.vo.V1_MonthChart">
+		SELECT DATE(rsv_date) reservation, COUNT(*)as count FROM reservation WHERE rsv_delete = 1 GROUP BY reservation
+	</select>
+	
+	<select id="selectWeekReservationCount" parameterType="String" resultType="com.mbs.mvc.vo.V1_WeekCount">
+		select
+			(select count(*) from reservation r inner join store s on r.str_number = s.str_number where r.rsv_date = date_add(DATE(now()) , interval -1 day) AND s.str_name LIKE concat('%',#{name},'%') AND r.rsv_delete = 1 )day_1,
+			(select count(*) from reservation r inner join store s on r.str_number = s.str_number where r.rsv_date = date_add(DATE(now()) , interval -2 day) AND s.str_name LIKE concat('%',#{name},'%') AND r.rsv_delete = 1 )day_2,
+			(select count(*) from reservation r inner join store s on r.str_number = s.str_number where r.rsv_date = date_add(DATE(now()) , interval -3 day) AND s.str_name LIKE concat('%',#{name},'%') AND r.rsv_delete = 1 )day_3,
+			(select count(*) from reservation r inner join store s on r.str_number = s.str_number where r.rsv_date = date_add(DATE(now()) , interval -4 day) AND s.str_name LIKE concat('%',#{name},'%') AND r.rsv_delete = 1 )day_4,
+			(select count(*) from reservation r inner join store s on r.str_number = s.str_number where r.rsv_date = date_add(DATE(now()) , interval -5 day) AND s.str_name LIKE concat('%',#{name},'%') AND r.rsv_delete = 1 )day_5,
+			(select count(*) from reservation r inner join store s on r.str_number = s.str_number where r.rsv_date = date_add(DATE(now()) , interval -6 day) AND s.str_name LIKE concat('%',#{name},'%') AND r.rsv_delete = 1 )day_6,
+			(select count(*) from reservation r inner join store s on r.str_number = s.str_number where r.rsv_date = date_add(DATE(now()) , interval -7 day) AND s.str_name LIKE concat('%',#{name},'%') AND r.rsv_delete = 1 )day_7
+	</select>
+	
+	<select id="selectReservationAllCount" resultType="int">
+		select count(*) from reservation
+	</select>
+	
+	<select id="selectReservationNowCount" resultType="int">
+		select count(*) from reservation where rsv_code = 2 AND rsv_delete = 1
+	</select>
+</mapper>

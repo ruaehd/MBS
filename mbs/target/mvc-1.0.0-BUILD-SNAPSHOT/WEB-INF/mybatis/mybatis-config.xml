@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "HTTP://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+	<settings>
+		<setting name="cacheEnabled" value="true" />
+
+		<!--<setting name="lazyLoadingEnabled" value="true" /> -->
+		<setting name="aggressiveLazyLoading" value="true" />
+		<setting name="multipleResultSetsEnabled" value="true" />
+		<setting name="useColumnLabel" value="true" />
+		<setting name="callSettersOnNulls" value="true"/>
+		<!-- <setting name="autoMappingBehavior" value="false" /> -->
+		<setting name="useGeneratedKeys" value="true" />
+		<setting name="defaultExecutorType" value="REUSE" />
+		<setting name="defaultStatementTimeout" value="5000" />
+	</settings>
+
+	<typeAliases>
+		<typeAlias alias="V1_Store" type="com.mbs.mvc.vo.V1_Store" />
+		<typeAlias alias="V1_Menu" type="com.mbs.mvc.vo.V1_Menu" />
+		<typeAlias alias="V1_StrImg" type="com.mbs.mvc.vo.V1_StrImg" />
+		<typeAlias alias="V1_Member" type="com.mbs.mvc.vo.V1_Member" />
+		<typeAlias alias="V1_Reservation" type="com.mbs.mvc.vo.V1_Reservation" />
+		<typeAlias alias="V1_Comment" type="com.mbs.mvc.vo.V1_Comment" />
+		<typeAlias alias="V1_RsvMenu" type="com.mbs.mvc.vo.V1_RsvMenu" />
+		<typeAlias alias="V1_TourCmt" type="com.mbs.mvc.vo.V1_TourComment" />
+		<typeAlias alias="V1_AdminReview" type="com.mbs.mvc.vo.V1_AdminReview" />
+		<typeAlias alias="V1_Reply" type="com.mbs.mvc.vo.V1_Reply" />
+	</typeAliases>
+
+</configuration>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Event">
+	<resultMap type="com.mbs.mvc.vo.EventVO" id="resultEventContent">
+		<result column ="evt_no" property="evt_no" />
+		<result column ="evt_content" property="evt_content" jdbcType="BLOB" />
+	</resultMap>
+	<select id="selectEventContent" parameterType="int" resultMap="resultEventContent">
+		SELECT evt_no, evt_content FROM `event` WHERE evt_no=#{evt_no} 
+	</select>
+	
+	<resultMap type="com.mbs.mvc.vo.EventVO" id="resultEventImg">
+		<result column ="evt_no" property="evt_no" />
+		<result column ="evt_image" property="evt_image" jdbcType="BLOB" />
+	</resultMap>
+	<select id="selectEventImg" parameterType="int" resultMap="resultEventImg">
+		SELECT evt_no, evt_image FROM `event` WHERE evt_no=#{evt_no} 
+	</select>
+	
+	<select id="selectEventImgBegin" resultType="com.mbs.mvc.vo.EventVO">
+		SELECT evt_no FROM `event` WHERE evt_begintime <![CDATA[ <= ]]> CURDATE() AND evt_endtime <![CDATA[ >= ]]> CURDATE() AND evt_delete=1 ORDER BY evt_begintime DESC 
+	</select>
+	
+	<select id="selectEventImgEnd" resultType="com.mbs.mvc.vo.EventVO">
+		SELECT evt_no FROM `event` WHERE evt_delete=0 ORDER BY evt_endtime DESC LIMIT 10
+	</select>
+	
+	<update id="autodelete">
+		UPDATE `event` SET evt_delete=3 WHERE evt_endtime <![CDATA[ < ]]> CURDATE() AND evt_delete=2;
+		UPDATE `event` SET evt_delete=1 WHERE evt_begintime <![CDATA[ <= ]]> CURDATE() AND evt_delete=2;
+		UPDATE `event` SET evt_delete=3 WHERE evt_endtime <![CDATA[ < ]]> CURDATE() AND evt_delete=1; 
+	</update>
+	
+</mapper>

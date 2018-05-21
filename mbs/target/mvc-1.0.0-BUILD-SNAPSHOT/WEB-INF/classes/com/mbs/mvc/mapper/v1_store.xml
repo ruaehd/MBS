@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="V1_Store">
+	<select id="selectStoreOne" parameterType="int" resultType="V1_Store">
+		SELECT s.*, m.mb_id, m.mb_name, m.mb_email FROM `store` s
+		INNER JOIN `member` m
+		ON s.mb_id = m.mb_id
+		WHERE s.str_number=#{str_number}
+	</select>
+	
+	<select id="selectMenuList" parameterType="int" resultType="V1_Menu">
+		SELECT * FROM `str_menu` WHERE str_number=#{str_number}
+	</select>
+	
+	<resultMap type="V1_StrImg" id="resultImg" >
+		<result column="str_image" property="str_image" jdbcType="BLOB"/>
+	</resultMap>
+	<select id="selectBlobImg" parameterType="V1_StrImg" resultMap="resultImg">
+		SELECT str_image FROM `str_image` WHERE str_number=#{str_number} AND str_image_idx=#{str_image_idx}
+	</select>
+	
+	<insert id="insertImgs" parameterType="V1_StrImg">
+		INSERT INTO `str_image` (str_image, str_number, str_image_idx, str_img_date)
+		VALUES(#{str_image, jdbcType=BLOB}, #{str_number}, #{str_image_idx}, NOW()) 
+	</insert>
+	
+	<select id="selectImgCount" parameterType="int" resultType="int">
+		SELECT COUNT(*) AS cnt FROM `str_image` WHERE str_number=#{str_number}
+	</select>
+	
+	<select id="selectMemberOne" parameterType="String" resultType="V1_Member">
+		SELECT * FROM `member` WHERE mb_id=#{mb_id}
+	</select>
+	
+</mapper>
