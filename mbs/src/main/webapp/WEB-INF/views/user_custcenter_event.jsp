@@ -120,7 +120,7 @@
 			$('#mouseup').show();
 		});
 		$('#carousel').mouseleave(function(){
-			$('#mouseup').hi	de();
+			$('#mouseup').hide();
 		});
 	});
 	</script>
