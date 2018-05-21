@@ -6,14 +6,9 @@
 <html>
 <head>
 	<meta charset="UTF-8" />
-	<title>Google Nexus Website Menu</title>
-	<link rel="shortcut icon" href="../favicon.ico">
-	<link rel="stylesheet" type="text/css" href="resources/css/normalize.css" />
-	<link rel="stylesheet" type="text/css" href="resources/css/demo.css" />
-	<link rel="stylesheet" type="text/css" href="resources/css/component.css" />
+	<title>후기작성</title>
 	<link rel="stylesheet" type="text/css" href="resources/css/bootstrap.css" />
 	<link rel="stylesheet" type="text/css" href="resources/css/w3.css"/>
-	<link rel="stylesheet" type="text/css" href="resources/css/footer.css" />
 	<link rel="stylesheet" type="text/css" href="resources/css/jquery-ui.min.css" />
 	<style>
 		.container{

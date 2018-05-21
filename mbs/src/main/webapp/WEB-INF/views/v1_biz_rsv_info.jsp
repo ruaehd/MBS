@@ -6,7 +6,7 @@
 <html>
 <head>
 	<meta charset="UTF-8" />
-	<title>Google Nexus Website Menu</title>
+	<title>예약정보</title>
 	<link rel="stylesheet" type="text/css" href="resources/css/bootstrap.css" />
 </head>
 <body>

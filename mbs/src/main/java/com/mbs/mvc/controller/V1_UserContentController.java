@@ -166,7 +166,7 @@ public class V1_UserContentController {
 			}
 			else {
 				V1_Member mvo = new V1_Member();
-				if(Integer.valueOf((String)httpSession.getAttribute("Mem_Grade"))>2) {	//관리자라면
+				if((Integer)httpSession.getAttribute("Mem_Grade")>2) {	//관리자라면
 					mvo = ucDAO.selectMemberOne(rsv_id);
 				}
 				else {
