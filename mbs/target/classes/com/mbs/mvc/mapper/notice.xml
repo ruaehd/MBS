@@ -15,7 +15,7 @@
 	</select>
 	
 	<select id="selectNoticeOne" parameterType="int" resultType="com.mbs.mvc.vo.NoticeVO">
-	SELECT * FROM `notice` WHERE ntc_no=#{ntc_no}
+	SELECT * FROM `notice` WHERE ntc_no=#{ntc_no} 
 	</select>
 	
 	<select id="selectNoticePrev" parameterType="int" resultType="int">

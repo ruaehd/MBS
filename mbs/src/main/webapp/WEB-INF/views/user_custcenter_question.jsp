@@ -62,7 +62,7 @@
 			<hr/>
 			<div align="center">
 				<input type="submit" class="w3-button w3-round w3-border" value="보내기"/>
-				<a href="user_custcenter_main.do"><button class="w3-button w3-round w3-border">뒤로가기</button></a>
+				<a href="service_main.do" style="text-decoration:none" class="w3-button w3-round w3-border">뒤로가기</a>
 			</div>
 			
 		</div>
