@@ -36,7 +36,7 @@
 </style>
 <body>
 <div class="row">
-    <jsp:include page="admin_header.jsp"></jsp:include>
+    <jsp:include page="v1_admin_header.jsp"></jsp:include>
 </div>
 
     <!-- Main Content -->
@@ -127,13 +127,23 @@
 					</div>
 					
 					<div class="form-inline" style="margin-top:3px; margin-bottom:3px">
+						<div class="form-group">
 						<label style="width:120px">메인이미지</label>
-						<input type="file" name="evt_image1" class="form-control" />
+						</div>
+						<div class="form-group">
+						<input type="file" name="evt_image1" class="form-control" id="insert_img" style="width:500px" /><br />
+						<img src="resources/imgs/default.jpg" width="500px" height="180px" id="insert_img1"   />
+						</div>
 					</div>
 					
 					<div class="form-inline" style="margin-top:3px; margin-bottom:3px">
+						<div class="form-group">
 						<label style="width:120px">내용이미지</label>
-						<input type="file" name="evt_content1" class="form-control" />
+						</div>
+						<div class="form-group">
+						<input type="file" name="evt_content1" class="form-control" id="insert_content" style="width:500px" /><br />
+						<img src="resources/imgs/default.jpg" width="500px" height="180px" id="insert_content1"/>
+						</div>
 					</div>
 					
 					<div class="form-inline" style="margin-top:3px; margin-bottom:3px">
@@ -160,6 +170,12 @@
 							<h2>이벤트삭제</h2>
 						</div>
 						<div class="modal-body">
+							<input type="hidden" name="type" value="${param.type}">
+							<input type="hidden" name="text" value="${param.text}">
+							<input type="hidden" name="sel_type" value="${param.sel_type}">
+							<input type="hidden" name="begin" value="${param.begin}">
+							<input type="hidden" name="end" value="${param.end}">
+							<input type="hidden" name="page" value="${param.page}">
 							<input type="hidden" name="evt_no" id="evt_delete_no" />
 							<input type="hidden" name="evt_delete" id="delete_no">
 							<label style="font-size:30px">제목 : </label>
@@ -176,7 +192,7 @@
 			</div>
 		</form>
 
-	<form:form action="event_update.do" method="post" modelAttribute="vo" enctype="multipart/form-data">
+	<form:form action="event_update.do?type=${param.type}&text=${param.text}&sel_type=${param.sel_type}&begin=${param.begin}&end=${param.end}&page=${param.page}" method="post" modelAttribute="vo" enctype="multipart/form-data">
 			<div class="modal fade" id="updatemodal">
 				<div class="modal-dialog">
 					<div class="modal-content" style="width:700px">
@@ -244,6 +260,46 @@
 
    <script>
 	$(function() {
+		$('#insert_img').change(function(){
+			//현재 파일을 img변수에 넣음
+			var img = this;
+			//img변수에 값이 있다면, 파일을 선택했다면
+			if(img.files && img.files[0]){
+				//파일을 읽기위한 객체 생성
+				var reader = new FileReader();
+				//파일을 읽어 들임.
+				reader.onload = function(e){
+					//읽은 파일을 img src태그에 넣음
+					$('#insert_img1').attr('src',e.target.result);
+				};
+				//파일의 링크를 읽음
+				reader.readAsDataURL(img.files[0]);
+			}
+			/* else{	//파일을 선택하지 않았다면
+				$('#preview_img').attr('src','resources/imgs/dafault.jpg');
+			} */
+		});
+		
+		$('#insert_content').change(function(){
+			//현재 파일을 img변수에 넣음
+			var img = this;
+			//img변수에 값이 있다면, 파일을 선택했다면
+			if(img.files && img.files[0]){
+				//파일을 읽기위한 객체 생성
+				var reader = new FileReader();
+				//파일을 읽어 들임.
+				reader.onload = function(e){
+					//읽은 파일을 img src태그에 넣음
+					$('#insert_content1').attr('src',e.target.result);
+				};
+				//파일의 링크를 읽음
+				reader.readAsDataURL(img.files[0]);
+			}
+			/* else{	//파일을 선택하지 않았다면
+				$('#preview_img').attr('src','resources/imgs/dafault.jpg');
+			} */
+		});
+		
 		$('#evt_img1').change(function(){
 			//현재 파일을 img변수에 넣음
 			var img = this;
@@ -311,7 +367,6 @@
 	 	$('#search_btn').click(function(){
 				func();
 		});
-
 		$('#search_text').keyup(function(event){
 			if(event.which == 13){
 				func();
@@ -322,6 +377,15 @@
 	  	  		var sty = $(this).val();
 	  	  		window.location.href="admin_event.do?type=${param.type}&text=${param.text}&sel_type="+sty+"&begin=${param.begin}&end=${param.end}&page=1";
 	  	});
+		
+		$('#insert_img1').click(function(){
+			$('#insert_img').click();
+		})
+		
+		$('#insert_content1').click(function(){
+			$('#insert_content').click();
+		}) 
+		
 			
 		$('#evt_img').click(function(){
 			$('#evt_img1').click();
@@ -461,7 +525,6 @@
 				     "endDate": "${vo.evt_endtime}" 
 				});
 	  		</c:forEach> */
-
             $('.pagination').twbsPagination({
                totalPages:'${totPage}',
                visiblePages:10,
@@ -472,7 +535,6 @@
                  $('.navbar-nav').toggleClass('slide-in');
                  $('.side-body').toggleClass('body-slide-in');
                  $('#search').removeClass('in').addClass('collapse').slideUp(200);
-
                  /// uncomment code for absolute positioning tweek see top comment in css
                  //$('.absolute-wrapper').toggleClass('slide-in');
                  
@@ -482,10 +544,8 @@
             $('#search-trigger').click(function () {
                  $('.navbar-nav').removeClass('slide-in');
                  $('.side-body').removeClass('body-slide-in');
-
                  /// uncomment code for absolute positioning tweek see top comment in css
                  //$('.absolute-wrapper').removeClass('slide-in');
-
              });
       });
    </script>   

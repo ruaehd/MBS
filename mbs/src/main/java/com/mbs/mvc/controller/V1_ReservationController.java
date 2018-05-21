@@ -1,17 +1,12 @@
 package com.mbs.mvc.controller;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-
-import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,7 +21,6 @@ import com.mbs.mvc.dao.V1_ReservationDAO;
 import com.mbs.mvc.dao.V1_ReviewDAO;
 import com.mbs.mvc.dao.V1_UserContentDAO;
 import com.mbs.mvc.vo.V1_Comment;
-import com.mbs.mvc.vo.V1_Menu;
 import com.mbs.mvc.vo.V1_Reservation;
 import com.mbs.mvc.vo.V1_RsvMenu;
 
@@ -54,11 +48,11 @@ public class V1_ReservationController {
 		
 		try{
 			//세션아이디
-			if((Integer)httpSession.getAttribute("_gr")>2) {	//관리자라면
+			if(Integer.valueOf((String)httpSession.getAttribute("Mem_Grade"))>2) {	//관리자라면
 				vo.setRsv_sub_id(mb_id);
 			}
 			else {	//관리자가 아니라면
-				vo.setRsv_sub_id((String)httpSession.getAttribute("_id"));
+				vo.setRsv_sub_id(String.valueOf((String)httpSession.getAttribute("Mem_Id")));
 			}
 			vo.setStr_number(str_number);
 			System.out.println(vo.getRsv_day());
@@ -95,7 +89,7 @@ public class V1_ReservationController {
 			model.addAttribute("message", "신규 예약이 완료 되었습니다.");
 			model.addAttribute("title", "예약 완료");
 			
-			if((Integer)httpSession.getAttribute("_gr")>2) {	//관리자라면
+			if(Integer.valueOf((String)httpSession.getAttribute("Mem_Grade"))>2) {	//관리자라면
 				model.addAttribute("url", "admin_rsv_management.do");
 			}
 			else {	//관리자가 아니라면
@@ -122,42 +116,47 @@ public class V1_ReservationController {
 			@RequestParam(value="page", defaultValue="1") int page,
 			HttpSession httpSession) {
 		try {
-		
-			if(rsv_code == -1) {	//menu값이 없을 경우
-				return "redirect:usr_rsv_list.do?rsv_code=0";
+			if(httpSession.getAttribute("Mem_Id") == null) {
+				return "redirect:user_login.do";
 			}
-			String rsv_id = (String)httpSession.getAttribute("_id");
-			
-			//세션아이디
-			V1_Reservation vo = new V1_Reservation();
-			vo.setRsv_sub_id(rsv_id);
-			vo.setPage((page-1)*10);
-			vo.setRsv_code(rsv_code);
-			Map<String, Integer> map = rDAO.countRsvTot(vo);
-			Map<String, Integer> map1 = new LinkedHashMap<String, Integer>();
-			
-			if(map.get("exp") == null) {
-				map.put("exp", 0);
-				map.put("com", 0);
-				map.put("can", 0);
+			else {
+				if(rsv_code == -1) {	//menu값이 없을 경우
+					return "redirect:usr_rsv_list.do?rsv_code=0";
+				}
+				String rsv_id = (String)httpSession.getAttribute("Mem_Id");
+				
+				//세션아이디
+				V1_Reservation vo = new V1_Reservation();
+				vo.setRsv_sub_id(rsv_id);
+				vo.setPage((page-1)*10);
+				vo.setRsv_code(rsv_code);
+				Map<String, Integer> map = rDAO.countRsvTot(vo);
+				Map<String, Integer> map1 = new LinkedHashMap<String, Integer>();
+				
+				if(map.get("exp") == null) {
+					map.put("exp", 0);
+					map.put("com", 0);
+					map.put("can", 0);
+				}
+				
+				int tot = Integer.parseInt(String.valueOf(map.get("exp")))
+						+Integer.parseInt(String.valueOf(map.get("com")))
+						+Integer.parseInt(String.valueOf(map.get("can")));
+				
+				map1.put("전체", tot);
+				map1.put("이용예정", Integer.parseInt(String.valueOf(map.get("exp"))));
+				map1.put("이용완료", Integer.parseInt(String.valueOf(map.get("com"))));
+				map1.put("예약취소", Integer.parseInt(String.valueOf(map.get("can"))));
+				
+				
+				model.addAttribute("map", map1);
+				
+				List<V1_Reservation> rlist = rDAO.selectRsvList(vo);
+				model.addAttribute("rlist", rlist);
+				
+				return "v1_usr_rsv_list";
 			}
 			
-			int tot = Integer.parseInt(String.valueOf(map.get("exp")))
-					+Integer.parseInt(String.valueOf(map.get("com")))
-					+Integer.parseInt(String.valueOf(map.get("can")));
-			
-			map1.put("전체", tot);
-			map1.put("이용예정", Integer.parseInt(String.valueOf(map.get("exp"))));
-			map1.put("이용완료", Integer.parseInt(String.valueOf(map.get("com"))));
-			map1.put("예약취소", Integer.parseInt(String.valueOf(map.get("can"))));
-			
-			
-			model.addAttribute("map", map1);
-			
-			List<V1_Reservation> rlist = rDAO.selectRsvList(vo);
-			model.addAttribute("rlist", rlist);
-			
-			return "v1_usr_rsv_list";
 		}
 		catch(Exception e){
 			System.out.println(e.getMessage());
@@ -176,7 +175,7 @@ public class V1_ReservationController {
 		try {
 			V1_Reservation vo = new V1_Reservation();
 			vo.setRsv_no(rsv_no);
-			String id = (String)httpSession.getAttribute("_id");
+			String id = (String)httpSession.getAttribute("Mem_Id");
 			V1_Comment revo = new V1_Comment();
 			revo.setRsv_cmt_writer(id);
 			revo.setRsv_no(rsv_no);

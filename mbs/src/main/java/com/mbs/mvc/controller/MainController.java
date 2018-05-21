@@ -29,7 +29,6 @@ public class MainController {
 	
 	@RequestMapping(value="/map_main.do", method= RequestMethod.GET)
 	public String map_main(HttpSession httpsession) {
-		System.out.println(httpsession.getAttribute("Mem_Grade"));
 		return "map_main";
 	}
 	
@@ -53,5 +52,11 @@ public class MainController {
 			System.out.println(e.getMessage());
 			return null;
 		}
+	}
+	
+	@RequestMapping(value="/ad_alert.do",method = RequestMethod.GET)
+	public String alert(HttpSession httpsession) {
+		httpsession.invalidate();
+		return "v1_ad_alert";
 	}
 }

@@ -14,7 +14,6 @@
 	<link rel="stylesheet" type="text/css" href="resources/css/bootstrap.css" />
 	<link rel="stylesheet" type="text/css" href="resources/css/w3.css"/>
 	<link rel="stylesheet" type="text/css" href="resources/css/footer.css" />
-	<link rel="stylesheet" type="text/css" href="resources/css/jquery-ui.min.css" />
 	<style>
 		.container{
 			z-index:2;
@@ -98,26 +97,23 @@
 		<jsp:include page="v1_footer.jsp"></jsp:include>
 	
 	</div>
-	
-	<script src="resources/js/jquery-1.11.1.js"></script>
-	<script src="resources/js/bootstrap.min.js"></script>
 	<script src="resources/js/jquery.twbsPagination.min.js"></script>
 	<script>
 		$(function(){
 
-			var totpage = 0;
+			
 			
 			if(${param.rsv_code} == 0){
-				totpage = (${map.get("전체")}-1)/10+1
+				var totpage = (${map.get("전체")}-1)/10+1
 			}
 			else if(${param.rsv_code} == 1){
-				totpage = (${map.get("이용예정")}-1)/10+1
+				var totpage = (${map.get("이용예정")}-1)/10+1
 			}
 			else if (${param.rsv_code} == 2){
-				totpage = (${map.get("이용완료")}-1)/10+1
+				var totpage = (${map.get("이용완료")}-1)/10+1
 			}
 			else if (${param.rsv_code} == 3){
-				totpage = (${map.get("예약취소")}-1)/10+1
+				var totpage = (${map.get("예약취소")}-1)/10+1
 			}
 			
 			$('#pagination').twbsPagination({

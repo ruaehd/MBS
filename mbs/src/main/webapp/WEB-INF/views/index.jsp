@@ -16,22 +16,24 @@
         <link rel="stylesheet" href="resources/css/jquery.fullPage.css"/>
         <link rel="stylesheet" href="resources/css/bootstrap.min.css"/>
         <link rel="stylesheet" href="resources/css/w3.css"/>
+        
+        <style>
+			.section{
+				text-align:center;
+				align:center;
+				margin:0px auto;
+			}
+			
+			#section1{
+				background-image:url(resources/imgs/title.png);
+				background-size:100% 100vh;
+			}
+			#section2{
+				background-color:powderblue;
+			}
+			</style>
     </head>
-<style>
-.section{
-	text-align:center;
-	align:center;
-	margin:0px auto;
-}
 
-#section1{
-	background-image:url(resources/imgs/title.png);
-	background-size:100% 100vh;
-}
-#section2{
-	background-color:powderblue;
-}
-</style>
     <body>
 		<div id="fullpage">
 			<div class="section" id="section1">
@@ -86,18 +88,18 @@
 					</div>
 				</div>
 			</div>
-			<div class="section" style="background-color:gray">
-			<div class="row">
-				<div class="col-md-6" style="border-right:1px solid #FFFFFF">
-			   <a href="map_main.do" target="_blank" class="btn btn-white btn-round mr-3 col-md-6" style="opacity:0.9">
-               <em class="fa fa-eye fa-fw" style="height:60px;padding:20px"></em>
-                <font style="margin-right:15px;opacity:1.0">지도로 볼래요</font></a>
+			<div class="section">
+			
+			<div class="row" style="height:100vh">
+				<div class="col-md-6">
+				<h1>지도로 보기</h1>
+				<a href="map_main.do" class="btn-none btn-round mr-3 btn-block"style="height:90vh;z-index:2;left:0;position:absolute">
+				<img src="resources/imgs/map_page.PNG" style="width:100%; height:90vh;z-index:1;top:0;left:0;position:absolute;opacity: 0.8"/></a>
                 </div>
-           		 <div class="col-md-6" >
-               <a href="web_main.do" target="_blank" class="btn btn-white btn-round" style="opacity:0.9">
-                 <em class="fa fa-eye fa-fw" style="height:60px;padding:20px"></em>
-                 <font style="margin-right:15px">자세히 볼래요</font>
-               </a>
+           		 <div class="col-md-6">
+           		 <h1>검색범위로 보기</h1>
+               <a href="web_main.do" class="btn-none btn-round mr-3 btn-block"style="height:90vh;z-index:2;left:0;position:absolute">
+               <img src="resources/imgs/web_page.PNG" style="width:100%; height:90vh;z-index:1;top:0;left:10px;position:absolute;opacity: 0.8"/></a>
                </div>
                </div>
            </div>
@@ -119,10 +121,7 @@
         			});
         		});
         		$('#fullpage').fullpage({
-        			slidesNavigation:true,
-        			navigation:true,
-        			navigationPosition:'right',
-        			navigationTooltips:['소개글','개발자소개','페이지이동']
+        			slidesNavigation:true
         		});
         	})
         </script>

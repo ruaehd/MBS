@@ -156,10 +156,10 @@
 							</h3>
 						</div>
 						<div class="col-md-4" align="right">
-							<c:if test="${sessionScope._gr > 2}">
+							<c:if test="${sessionScope.Mem_Grade > 2}">
 								<input type="button" class="btn btn-success disabled" value="후기 작성" onClick="writeComment()" />
 							</c:if>
-							<c:if test="${sessionScope._gr < 3}">
+							<c:if test="${sessionScope.Mem_Grade < 3}">
 								<c:if test="${chk == 0}">
 									<input type="button" class="btn btn-success" value="후기 작성" onClick="writeComment()" />
 								</c:if>	
@@ -197,7 +197,6 @@
 				<div id="map" style="width:100%;height:350px;"></div>
 			</div>
 		</div>
-		
 		<jsp:include page="v1_footer.jsp"></jsp:include>
 	</div>
 	

@@ -2,47 +2,44 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%> <!-- // 반복문 c:forEach c:if-->
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %> <!-- // model and view -->
 <%@ page session="false" %>
+<!DOCTYPE html>
 <html>
 <head>
-   <title>자주하는질문</title>
-   <link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-   <link rel="stylesheet" href="resources/css/v1_adminside.css" />
-   <link rel="stylesheet" href="resources/css/w3.css" />
+	<meta charset="UTF-8">
+	<title>자주하는질문</title>
+	<link rel="stylesheet" href="resources/css/bootstrap.css" />
+	<link rel="stylesheet" href="resources/css/v1_adminside.css" />
+	<link rel="stylesheet" href="resources/css/w3.css" />
+	<style>
+		.modal-backdrop.in {
+	         z-index:auto;
+	   }
+	   .table-head{
+	      font-color:white;
+	   }
+	   .title{
+	      margin-top:50px;
+	      margin-bottom:20px;
+	      font-size:50px
+	   }
+	   .count{
+	      width:100px;
+	      align:center
+	   }
+	   .btn_add{
+	      margin-bottom:10px
+	   }
+	   .select{
+	      width:50px;
+	      vertical-align:middle
+	   }
+	</style>
 </head>
-<style>
-	.modal-backdrop.in {
-         z-index:auto;
-   }
-   .table-head{
-      font-color:white;
-   }
-   .title{
-      margin-top:50px;
-      margin-bottom:20px;
-      font-size:50px
-   }
-   .count{
-      width:100px;
-      align:center
-   }
-   .btn_add{
-      margin-bottom:10px
-   }
-   .select{
-      width:50px;
-      vertical-align:middle
-   }
-</style>
+
 <body>
-   <script type="text/javascript" src="resources/js/jquery-1.11.1.js"></script>
-   <script type="text/javascript" src="resources/js/bootstrap.min.js"></script>
-   <script type="text/javascript" src="resources/js/jquery.twbsPagination-1.3.1.js"></script>
 
 <div class="row">
-    <jsp:include page="admin_header.jsp"></jsp:include>
-</div>
-
-    <!-- Main Content -->
+    <jsp:include page="v1_admin_header.jsp"></jsp:include>
     <div class="container-fluid">
         <div class="side-body">
         <div class="title"> 자주하는질문 </div>
@@ -90,7 +87,8 @@
                  <tr>
                     <td class="count">${vo.fna_no}</td>
                     <td style="width:200px;">${vo.fna_title}</td>
-                    <td style="width:500px;">${vo.fna_content}</td>
+                    
+                    <td style="width:500px;"><div class="con">${vo.fna_content}</div></td>
                     <td>
                     <c:if test="${vo.fna_code==1}">예약</c:if>
                     <c:if test="${vo.fna_code==2}">결재</c:if>
@@ -121,6 +119,10 @@
          </div>
         </div>
     </div>
+</div>
+
+    <!-- Main Content -->
+    
 
 	<form:form action="admin_fna.do" modelAttribute="vo" method="post">
 	<div class="modal fade" id="insertmodal">
@@ -169,8 +171,13 @@
 							<h2>자주하는질문 전환</h2>
 						</div>
 						<div class="modal-body">
+							<input type="hidden" name="type" value="${param.type}">
+							<input type="hidden" name="text" value="${param.text}">
+							<input type="hidden" name="sel_code" value="${param.sel_code}">
+							<input type="hidden" name="sel_type" value="${param.sel_type}">
+							<input type="hidden" name="page" value="${param.page}">
 							<input type="hidden" name="fna_no" id="fna_delete_no" />
-							<input type="hidden" name="fna_delete" id="delete_no">
+							<input type="hidden" name="fna_delete" id="delete_no" />
 							<label style="font-size:30px">제목 : </label>
 							<label style="font-size:30px" id="delete_title"></label><br />
 							<label style="" id="delete_name"></label>
@@ -185,7 +192,7 @@
 			</div>
 		</form>
 		
-		<form:form action="fna_update.do" method="post" modelAttribute="vo">
+		<form:form action="fna_update.do?type=${param.type}&text=${param.text}&sel_code=${param.sel_code}&sel_type=${param.sel_type}&page=${param.page}" method="post" modelAttribute="vo">
 			<div class="modal fade" id="updatemodal">
 				<div class="modal-dialog">
 					<div class="modal-content">
@@ -222,14 +229,30 @@
 				</div>
 			</div>
 		</form:form>
-
+		
+	<script type="text/javascript" src="resources/js/jquery-1.11.1.js"></script>
+   <script type="text/javascript" src="resources/js/bootstrap.min.js"></script>
+   <script type="text/javascript" src="resources/js/jquery.twbsPagination-1.3.1.js"></script>
    <script>
       $(function() {
+    	  	var br2nl = function(varTest){
+				return varTest.replace(/<br>/g, "\n");
+			};
+    	  
     		var func = function(){
 				var ty = $('#search_type').val();
 				var tx = encodeURIComponent($('#search_text').val());
 				window.location.href="admin_fna.do?type="+ty+"&text="+tx+"&sel_code=${param.sel_code}&sel_type=${param.sel_type}&page=1";
 			};
+			$('.con').readmore({
+	            blockCSS: 'display: block;',
+	            speed: 75,
+	            collapsedHeight: 65,
+	            
+	            moreLink: '<a href="#" style="color:blue;"><span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span>자세히</a>',
+	            lessLink: '<a href="#" style="color:blue;"><span class="glyphicon glyphicon-triangle-top" aria-hidden="true"></span>숨김</a>'
+	         });
+			
 			
 			$('#search_btn').click(function(){
 					func();
@@ -256,7 +279,7 @@
     	  		
     	  		$('#update_fna_no').val(arr[idx][0]);
      	  		$('#update_fna_title').val(arr[idx][1]);
-     	  		$('#update_fna_content').val(arr[idx][2]);
+     	  		$('#update_fna_content').val(br2nl(arr[idx][2]));
  				$('#update_fna_code').val(arr[idx][3]).prop("selected", true);
     	  	 
     	  		$('#updatemodal').modal('show');
@@ -311,7 +334,6 @@
                  $('.navbar-nav').toggleClass('slide-in');
                  $('.side-body').toggleClass('body-slide-in');
                  $('#search').removeClass('in').addClass('collapse').slideUp(200);
-
                  /// uncomment code for absolute positioning tweek see top comment in css
                  //$('.absolute-wrapper').toggleClass('slide-in');
                  
@@ -321,10 +343,8 @@
             $('#search-trigger').click(function () {
                  $('.navbar-nav').removeClass('slide-in');
                  $('.side-body').removeClass('body-slide-in');
-
                  /// uncomment code for absolute positioning tweek see top comment in css
                  //$('.absolute-wrapper').removeClass('slide-in');
-
              });
       });
    </script>   

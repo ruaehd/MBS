@@ -10,12 +10,13 @@ public class MemberVO {
 	private String mb_tel = null;
 	private int mb_delete = 0;
 	private String mb_date = null;
-	private String mb_grade = null;
+	private int mb_grade = 0;
+
 	
-	public String getMb_grade() {
+	public int getMb_grade() {
 		return mb_grade;
 	}
-	public void setMb_grade(String mb_grade) {
+	public void setMb_grade(int mb_grade) {
 		this.mb_grade = mb_grade;
 	}
 	public String getMb_birth() {

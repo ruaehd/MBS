@@ -6,15 +6,19 @@
 <head>
    <meta charset="UTF-8">
    <title>예약통계</title>
+   <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+   	<link rel="stylesheet" href="resources/css/bootstrap.css" />
+	<link rel="stylesheet" href="resources/css/v1_adminside.css" />
+	<link rel="stylesheet" href="resources/css/w3.css" />
+	<style>
+	   .title{
+	      margin-top:50px;
+	      margin-bottom:20px;
+	      font-size:50px
+	   }
+	</style>
 </head>
-<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<style>
-   .title{
-      margin-top:50px;
-      margin-bottom:20px;
-      font-size:50px
-   }
-</style>
+
 
 <body>
 	<div class="row">
@@ -31,7 +35,7 @@
 								<b id="resercount">현재 ${nowcount}개의 예약이 진행중입니다</b>
 							</h2>
 							<h2 style="margin-top: 150px">
-							<b id="resernowcount">현재까지 ${allcount}개의 예약이 완료되었습니다</b>
+							<b id="resernowcount">현재까지 ${allcount}개의 예약이 <br/> 완료되었습니다</b>
 							
 							</h2>
 							
@@ -59,9 +63,12 @@
 			</div>
 		</div>
 	</div>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
-<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
-<script type="text/javascript" src="resources/js/Chart.bundle.js"></script>
+	<script src="resources/js/jquery-1.11.1.js"></script>
+	<script src="resources/js/bootstrap.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+	<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+	<script type="text/javascript" src="resources/js/Chart.bundle.js"></script>
+
 <script>
 	$(function(){
 		$('#linecanvas').hide();
@@ -236,7 +243,7 @@
 				datelist.push(moment().subtract(i, 'days').format('YYYY-MM-DD'));
 			}
 			//각각의 한번마다 30번씩 배열 돌림
-			for (var j=datelist.length-1;j>-1;j--) {
+			for (var j=0;j<datelist.length;j++) {
 				var val = 0;
 				for(var i=0;i<rlist.length;i++){
 					
@@ -256,7 +263,7 @@
 					data: {
 						labels: datelist,
 						datasets: [{
-							label: '한달 간 총 예약수',
+							label: '한달 간 예약수',
 							data: monthdata,
 							backgroundColor: 'rgba(132, 132, 132, 0.4)',
 							type: 'line',

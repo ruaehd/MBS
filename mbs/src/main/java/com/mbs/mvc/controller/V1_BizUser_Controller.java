@@ -86,7 +86,7 @@ public class V1_BizUser_Controller {
 		vo.setFile(file.getBytes());
 		bmDAO.insertBizMember(vo);
 		bmDAO.updateMemberBiz(vo);
-		
+		httpsession.setAttribute("Mem_Grade","2");
 		//menu 등록 sql
 		for(int k=0;k<aaa.length;k++) {
 			vo.setMenu_name(aaa[k]);
@@ -109,7 +109,7 @@ public class V1_BizUser_Controller {
 				bmDAO.insertBizImage(vo);
 			}
 			
-			return "redirect:biz_join.do";
+			return "redirect:map_main.do";
 	}
 	@RequestMapping(value="/biz_stedit.do",method=RequestMethod.POST)
 	public String businessedit(@ModelAttribute("vo")V1_BizJoin vo,
@@ -153,6 +153,6 @@ public class V1_BizUser_Controller {
 				bmDAO.updateBizImage(vo);
 			}
 			
-			return "redirect:biz_stedit.do?no="+no;
+			return "redirect:map_main.do";
 	}
 }

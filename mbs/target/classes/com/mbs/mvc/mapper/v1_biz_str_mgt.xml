@@ -13,7 +13,7 @@
 				COUNT(CASE WHEN rsv_code=2 THEN 1 END) AS com,
 				COUNT(CASE WHEN rsv_code=3 THEN 1 END) AS can
             FROM `store` s
-            RIGHT JOIN
+            LEFT JOIN
 				(
 				SELECT r.rsv_no, r.rsv_code, c.rsv_cmt_point, c.rsv_cmt_delete, r.str_number FROM `reservation` r
 				RIGHT JOIN `rsv_comment` c

@@ -23,6 +23,7 @@ public class V1_Ajax_AdminController {
 	@Autowired
 	private V1_AdminReservationDAO arDAO = null;
 	
+	
 	@RequestMapping(value="/ajax_adminuserdelete.do", method= {RequestMethod.GET,RequestMethod.POST})
 	public int ajaxadminuserdelete(@RequestParam("mb_id")String mb_id) {
 		int ret = auDAO.deleteUser(mb_id);

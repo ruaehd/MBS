@@ -6,43 +6,48 @@
 <head>
    <meta charset="UTF-8">
    <title>회원관리</title>
+   <link rel="stylesheet" href="resources/css/bootstrap.css" />
+   <link rel="stylesheet" href="resources/css/w3.css" />
+   <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+   <link rel="stylesheet" href="resources/css/v1_adminside.css" />
+   <link rel="stylesheet" href="resources/css/daterangepicker.css" />
+	<style>
+	   .table-head{
+	      font-color:white;
+	   }
+	   .title{
+	      margin-top:50px;
+	      margin-bottom:20px;
+	      font-size:50px
+	   }
+	   .count{
+	      width:100px;
+	      align:center
+	   }
+	   .btn_add{
+	      margin-bottom:10px
+	   }
+	   .w3-border-dark-gray{
+	   	  width:100px
+	   }
+	   .modal-backdrop.in {
+	   		z-index:auto;
+	   }
+	   .modal-title{
+	   	font-size:20px
+	   }
+	   .modal-namespace{
+	   	margin-bottom:10px
+	   }
+	   .name-label{
+	   	width:100px
+	   }
+	   .mb_shorttext{
+	   	width:150px
+	   }
+	</style>
 </head>
-<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<style>
-   .table-head{
-      font-color:white;
-   }
-   .title{
-      margin-top:50px;
-      margin-bottom:20px;
-      font-size:50px
-   }
-   .count{
-      width:100px;
-      align:center
-   }
-   .btn_add{
-      margin-bottom:10px
-   }
-   .w3-border-dark-gray{
-   	  width:100px
-   }
-   .modal-backdrop.in {
-   		z-index:auto;
-   }
-   .modal-title{
-   	font-size:20px
-   }
-   .modal-namespace{
-   	margin-bottom:10px
-   }
-   .name-label{
-   	width:100px
-   }
-   .mb_shorttext{
-   	width:150px
-   }
-</style>
+
 
 <body>
    <div class="row">
@@ -62,7 +67,7 @@
                  </select>
                  <input type="text" class="form-control" id="searchval" value="${svo.searchval}"/>
                  <button type="button" class="form-control btn-success" id="search">검색</button>
-                 <button type="button" class="btn btn-primary btn_add">추가하기</button>
+                 <button type="button" class="form-control btn-primary btn_add" style="margin-bottom:0px">회원추가</button>
               </div>
            </div>
            <table class="table">
@@ -168,8 +173,11 @@
         </form:form>
     </div>
 </div>
-
+<script src="resources/js/bootstrap.min.js"></script>
 <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<script src="resources/js/jquery.twbsPagination.min.js"></script>
+<script type="text/javascript" src="resources/js/moment.js"></script>
+<script type="text/javascript" src="resources/js/daterangepicker.js"></script>
 <script>
 	$(function(){
 		var secls = ${param.searchcol};
@@ -237,14 +245,6 @@
                  $('#mb_tel').val(t1+"-"+t2+"-"+t3);
                  $('#memberform').submit();
 			});
-			
-			$('#mb_brith').datepicker({
-					dateFormat:"yy-mm-dd",
-					changeMonth: true,
-					changeYear: true,
-					dayNamesMin:['일','월','화','수','목','금','토'],
-					showMonthAfterYear:true
-				});
 		$('.btn_add').click(function(){
 			$('#insertMember').modal('show');
 		});
@@ -253,9 +253,22 @@
              visiblePages:10,
              href:'?page={{number}}&searchcol='+$('#search_select').val()+'&searchval='+$('#searchval').val()
           });
-
 	});
 </script>
-
+<script>
+	  	$(function(){
+	  		 $('#mb_brith').daterangepicker({
+	  	  		singleDatePicker: true,
+	  	  	    showDropdowns: true,
+	  	  	    locale: {
+	  	          format: 'YYYY-MM-DD',
+	  	          applyLabel: '적용',
+	  	          cancelLabel: '취소',
+	  	          monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+	  	          daysOfWeek: ['일', '월', '화', '수', '목', '금', '토'],
+	  					  }
+	  		    });
+	  		});
+  	</script>
 </body>
 </html>

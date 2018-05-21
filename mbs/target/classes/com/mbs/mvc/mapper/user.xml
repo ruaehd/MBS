@@ -50,5 +50,13 @@
 	<select id="selectEventList" resultType="com.mbs.mvc.vo.User_EventVO">
 	 	SELECT evt_no,evt_title,evt_begintime,evt_endtime,evt_date,mb_id FROM event ORDER BY evt_date DESC LIMIT 0,5
 	</select>
+	
+	<select id="selectMemberQuestionList" parameterType="String" resultType="com.mbs.mvc.vo.QuestionVO">
+		SELECT qst_no, qst_title, qst_content, qst_open, qst_date FROM question WHERE mb_id = #{mb_id}
+	</select>
+	
+	<select id="selectEmailCheck" parameterType="com.mbs.mvc.vo.MemberVO" resultType="int">
+		SELECT COUNT(*) AS cnt FROM `member` WHERE mb_id=#{mb_id} AND mb_email=#{mb_email}
+	</select>
 
 </mapper>

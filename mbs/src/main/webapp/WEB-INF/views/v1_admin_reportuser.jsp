@@ -4,46 +4,50 @@
 <!DOCTYPE html>
 <html>
 <head>
-   <meta charset="UTF-8">
-   <title>회원관리</title>
+   	<meta charset="UTF-8">
+   	<title>회원관리</title>
+   	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+   	<link rel="stylesheet" href="resources/css/bootstrap.css" />
+	<link rel="stylesheet" href="resources/css/v1_adminside.css" />
+	<link rel="stylesheet" href="resources/css/w3.css" />
+	<style>
+	   .table-head{
+	      font-color:white;
+	   }
+	   .title{
+	      margin-top:50px;
+	      margin-bottom:20px;
+	      font-size:50px;
+	      color:red
+	   }
+	   .count{
+	      width:100px;
+	      align:center
+	   }
+	   .btn_add{
+	      margin-bottom:10px
+	   }
+	   .w3-border-dark-gray{
+	   	  width:100px
+	   }
+	   .modal-backdrop.in {
+	   		z-index:auto;
+	   }
+	   .modal-title{
+	   	font-size:20px
+	   }
+	   .modal-namespace{
+	   	margin-bottom:10px
+	   }
+	   .name-label{
+	   	width:100px
+	   }
+	   .mb_shorttext{
+	   	width:150px
+	   }
+	</style>
 </head>
-<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<style>
-   .table-head{
-      font-color:white;
-   }
-   .title{
-      margin-top:50px;
-      margin-bottom:20px;
-      font-size:50px;
-      color:red
-   }
-   .count{
-      width:100px;
-      align:center
-   }
-   .btn_add{
-      margin-bottom:10px
-   }
-   .w3-border-dark-gray{
-   	  width:100px
-   }
-   .modal-backdrop.in {
-   		z-index:auto;
-   }
-   .modal-title{
-   	font-size:20px
-   }
-   .modal-namespace{
-   	margin-bottom:10px
-   }
-   .name-label{
-   	width:100px
-   }
-   .mb_shorttext{
-   	width:150px
-   }
-</style>
+
 
 <body>
    <div class="row">
@@ -168,45 +172,47 @@
         </form:form>
     </div>
 </div>
-
-<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
-<script>
-	$(function(){
-		var secls = ${param.searchcol};
-		if(secls == 1) {$('.secls1').prop("selected" , true);}
-		else if (secls == 2){$('.secls2').prop("selected" , true);}
-		
-		$('#search').click(function(){
-			var searchcol = $('#search_select').val();
-			var searchval = $('#searchval').val();
-			location.href = "admin_user.do?page=1&searchcol="+searchcol+"&searchval="+searchval;
-		});
-		
-		
-		$('.btn-info').click(function(){
-			var idx= $('.btn-info').index(this);
-			console.log(idx);
-			var mb_id = $('.listmb_id').eq(idx).text();
-			$.post('ajax_adminuserdelete1.do',{"mb_id":mb_id} , function(ret){
-				if(ret == 1){
-					alert("해당 회원을 차단 해제 하였습니다.");
-					window.location.href= "admin_reportuser.do?page=${param.page}&searchcol=${param.searchcol}&searchval=${param.searchval}";
-				}
-				else{
-					alert("해당 회원 차단 해제에 실패하셨습니다");
-					return null;
-				}
+	<script src="resources/js/jquery-1.11.1.js"></script>
+	<script src="resources/js/bootstrap.min.js"></script>
+	<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+	<script src="resources/js/jquery.twbsPagination.min.js"></script>
+	<script>
+		$(function(){
+			var secls = ${param.searchcol};
+			if(secls == 1) {$('.secls1').prop("selected" , true);}
+			else if (secls == 2){$('.secls2').prop("selected" , true);}
+			
+			$('#search').click(function(){
+				var searchcol = $('#search_select').val();
+				var searchval = $('#searchval').val();
+				location.href = "admin_user.do?page=1&searchcol="+searchcol+"&searchval="+searchval;
 			});
+			
+			
+			$('.btn-info').click(function(){
+				var idx= $('.btn-info').index(this);
+				console.log(idx);
+				var mb_id = $('.listmb_id').eq(idx).text();
+				$.post('ajax_adminuserdelete1.do',{"mb_id":mb_id} , function(ret){
+					if(ret == 1){
+						alert("해당 회원을 차단 해제 하였습니다.");
+						window.location.href= "admin_reportuser.do?page=${param.page}&searchcol=${param.searchcol}&searchval=${param.searchval}";
+					}
+					else{
+						alert("해당 회원 차단 해제에 실패하셨습니다");
+						return null;
+					}
+				});
+			});
+			
+			 $('.pagination').twbsPagination({ 
+	             totalPages:'${pagecount}',
+	             visiblePages:10,
+	             href:'?page={{number}}&searchcol='+$('#search_select').val()+'&searchval='+$('#searchval').val()
+	          });
+	
 		});
-		
-		 $('.pagination').twbsPagination({ 
-             totalPages:'${pagecount}',
-             visiblePages:10,
-             href:'?page={{number}}&searchcol='+$('#search_select').val()+'&searchval='+$('#searchval').val()
-          });
-
-	});
-</script>
+	</script>
 
 </body>
 </html>

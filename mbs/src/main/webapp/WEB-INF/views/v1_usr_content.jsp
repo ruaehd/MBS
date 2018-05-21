@@ -142,12 +142,14 @@
 						<h1>${vo.str_name}</h1>
 						<hr/>
 						<div>
-							<c:if test="${sessionScope._gr > 2 || sessionScope._id == vo.mb_id}">
-								<a href="usr_content_pay.do?str_number=${vo.str_number}" class="btn btn-info disabled">예약하기</a>
-							</c:if>
-							<c:if test="${sessionScope._gr < 3 && sessionScope._id != vo.mb_id}">
-								<a href="usr_content_pay.do?str_number=${vo.str_number}" class="btn btn-info">예약하기</a>
-							</c:if>
+							<c:choose>
+								<c:when test="${sessionScope.Mem_Grade > 2 || sessionScope.Mem_Id == vo.mb_id}">
+									<a href="usr_content_pay.do?str_number=${vo.str_number}" class="btn btn-info disabled">예약하기</a>
+								</c:when>
+								<c:otherwise>
+									<a href="usr_content_pay.do?str_number=${vo.str_number}" class="btn btn-info">예약하기</a>
+								</c:otherwise>
+							</c:choose>
 							<a href="#commnet" class="btn btn-primary">후기보기</a>
 							<a href="#map" class="btn btn-success">지도보기</a>
 							<a href="#" class="btn btn-danger">뒤로가기</a>

@@ -12,7 +12,6 @@ import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeUtility;
 
 public class V1_EmailConfigure {
-
 	public static void sendEmail(String email, String title, String text) {
 		// TODO Auto-generated method stub
 		String host = "smtp.naver.com";	//smtp 서버

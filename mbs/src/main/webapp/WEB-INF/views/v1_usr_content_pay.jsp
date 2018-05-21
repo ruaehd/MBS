@@ -123,15 +123,15 @@
 								<div class="form-inline" style="margin-bottom:10px">
 									<label style="width:100px">이름</label>
 									<input type="hidden" name="mb_id" value="${mvo.mb_id}"/>
-									<form:input type="text" class="form-control" path="rsv_sub_name" id="" value="${mvo.mb_name}"/>
+									<form:input type="text" class="form-control" path="rsv_sub_name" value="${mvo.mb_name}"/>
 								</div>
 								<div class="form-inline" style="margin-bottom:10px">
 									<label style="width:100px">전화번호</label>
-									<form:input type="text" class="form-control" path="rsv_sub_tel" id="" value="${mvo.mb_tel}"/>
+									<form:input type="text" class="form-control" path="rsv_sub_tel" value="${mvo.mb_tel}"/>
 								</div>
 								<div class="form-inline" style="margin-bottom:10px">
 									<label style="width:100px">이메일주소</label>
-									<form:input type="text" class="form-control" path="rsv_sub_email" id="" value="${mvo.mb_email}"/>
+									<form:input type="text" class="form-control" path="rsv_sub_email" value="${mvo.mb_email}" />
 								</div>
 								<div class="form-inline" style="margin-bottom:10px">
 									<label style="width:100px">요청사항</label>
@@ -282,6 +282,14 @@
 				$('#total').text(tot+'원');
 				
 			});
+			
+			var mb_id = "${sessionScope.Mem_Id}";
+			var mb_gr = ${sessionScope.Mem_Grade};
+			
+			if(mb_id == "${svo.mb_id}" || mb_gr == 3){
+				alert("본인소유 업체는 예약 할 수 없습니다.");
+				location.href="usr_content.do?str_number="+${svo.str_number}
+			}
 		});
 	</script>
 
