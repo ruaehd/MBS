@@ -27,6 +27,10 @@ public class V1_BizMemDAO {
 	public int insertBizMember(V1_BizJoin vo) {
 		return sqlsession.insert("BizMem.insertBizMember",vo);
 	}
+	public int tourinsert(V1_BizJoin vo) {
+		return sqlsession.insert("BizMem.tourinsert",vo);
+	}
+	
 	public int insertBizMenu(V1_BizJoin vo) {
 		return sqlsession.insert("BizMem.insertBizMenu",vo);
 	}

@@ -17,6 +17,15 @@
 			str_number,str_category,str_class,str_name,str_conditions,str_address,str_tel,str_file,str_begintime,
 			str_endtime,str_lng,str_lat,str_document,str_date,mb_id,str_personnel,str_delete) 
 		VALUES ( 
+			#{company_num}, 1,#{company_class}, #{company_name}, #{company_conditions}, #{company_add}, #{company_tel},
+			 #{file,jdbcType=BLOB},#{stime},#{etime}, #{company_lat}, #{company_lng}, #{str_document},NOW(),#{ceo_name},#{company_personnel},1)
+	</insert>
+	
+	<insert id="tourinsert" parameterType="com.mbs.mvc.vo.V1_BizJoin">
+		INSERT INTO store (
+			str_number,str_category,str_class,str_name,str_conditions,str_address,str_tel,str_file,str_begintime,
+			str_endtime,str_lng,str_lat,str_document,str_date,mb_id,str_personnel,str_delete) 
+		VALUES ( 
 			#{company_num}, 2,#{company_class}, #{company_name}, #{company_conditions}, #{company_add}, #{company_tel},
 			 #{file,jdbcType=BLOB},#{stime},#{etime}, #{company_lat}, #{company_lng}, #{str_document},NOW(),#{ceo_name},#{company_personnel},1)
 	</insert>

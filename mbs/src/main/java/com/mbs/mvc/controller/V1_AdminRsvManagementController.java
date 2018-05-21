@@ -1,5 +1,6 @@
 package com.mbs.mvc.controller;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -7,17 +8,23 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.mbs.mvc.conf.V1_EmailConfigure;
 import com.mbs.mvc.dao.V1_AdminDAO;
+import com.mbs.mvc.dao.V1_BizMemDAO;
 import com.mbs.mvc.vo.V1_AdminReview;
+import com.mbs.mvc.vo.V1_BizJoin;
 import com.mbs.mvc.vo.V1_Comment;
 import com.mbs.mvc.vo.V1_Reservation;
 import com.mbs.mvc.vo.V1_Store;
@@ -27,6 +34,7 @@ import com.mbs.mvc.vo.V1_TourComment;
 public class V1_AdminRsvManagementController {
 	
 	@Autowired private V1_AdminDAO aDAO = null;
+	@Autowired private V1_BizMemDAO bmDAO = null;
 	
 	@RequestMapping(value="/admin_rsv_management.do", method=RequestMethod.GET)
 	public String AdminRsvManagement(Model model, 
@@ -287,5 +295,141 @@ public class V1_AdminRsvManagementController {
 		
 	}
 	
+	@RequestMapping(value="/admin_tour_management.do", method=RequestMethod.GET)
+	public String AdminTourManagement(Model model, 
+			@RequestParam(value="page", defaultValue="1") int page, 
+			@RequestParam(value="text", defaultValue="") String text) {
+		
+		try {
+			
+			V1_Store vo = new V1_Store();
+			vo.setPage((page-1)*6);
+			vo.setText(text);
+			vo.setStr_category(2);
+			
+			List<V1_Store> list = aDAO.selectStoreList(vo);
+			
+			model.addAttribute("list", list);
+			model.addAttribute("tot", (list.size()-1)/6+1);
+			return"v1_admin_tour_management";
+		}
+		catch (Exception e) {
+			System.out.println(e.getMessage());
+			return"v1_admin_tour_management";
+		}
+	}
+	
+	@RequestMapping(value="/tour_edit.do", method=RequestMethod.GET)
+	public String TourEdit(Model model, @RequestParam(value="str_number") int str_number) {
+		
+		try {
+			V1_BizJoin vo = bmDAO.selectStoreOne(str_number);
+			int idx = bmDAO.selectImgCount(str_number);
+			List<V1_BizJoin> mlist = bmDAO.selectMenuCount(str_number);
+			model.addAttribute("vo", vo);
+			model.addAttribute("idx", idx);
+			model.addAttribute("mlist", mlist);
+			
+			return"v1_tour_edit";
+		}
+		catch (Exception e) {
+			System.out.println(e.getMessage());
+			return"v1_tour_edit";
+		}
+	}
+	
+	@RequestMapping(value="/tour_edit.do", method=RequestMethod.POST)
+	public String TourEdit(@ModelAttribute("vo")V1_BizJoin vo,MultipartHttpServletRequest request,
+			HttpSession httpsession,@RequestParam("no")String no) {
+		
+		try {
+			vo.setCompany_num(no);
+			vo.setCeo_name((String)httpsession.getAttribute("Mem_Id"));
+			Map<String, MultipartFile> map = request.getFileMap();
+			List<String> keys = new ArrayList<String>();
+			
+			// store 등록 sql
+			MultipartFile file = map.get("business_file");
+			if(file.getOriginalFilename() != "") {
+			vo.setFilename(file.getOriginalFilename());
+			vo.setFile(file.getBytes());
+			bmDAO.updateBizMember(vo);
+			}
+			
+			//img 등록 sql
+			    //등록증 제외 for문
+				for(int i=0;i<(map.size()-1);i++) {
+					MultipartFile timg = map.get("imgs_"+i);
+					if(timg != null && !timg.getOriginalFilename().equals("")) {
+							keys.add("imgs_"+i);
+					}
+				}
+				for(int j=0;j<keys.size();j++) {
+					MultipartFile timg = map.get(keys.get(j));
+					vo.setStr_img_idx(j);
+					vo.setImgs(timg.getBytes());
+					bmDAO.updateBizImage(vo);
+				}
+				
+				return "redirect:admin_tour_management.do";
+		}
+		catch (Exception e) {
+			System.out.println(e.getMessage());
+			return "redirect:v1_tour_edit.do";
+		}
+	}
+	
+	@RequestMapping(value="/tour_insert.do", method=RequestMethod.GET)
+	public String TourInsert(Model model,V1_BizJoin vo) {
+		try {
+			model.addAttribute("vo", vo);
+			return "v1_tour_insert";
+		}
+		catch (Exception e) {
+			System.out.println(e.getMessage());
+			return "v1_tour_insert";
+		}
+		
+	}
+	
+	
+	@RequestMapping(value="/tour_insert.do",method=RequestMethod.POST)
+	public String TourInsert(@ModelAttribute("vo")V1_BizJoin vo,
+			MultipartHttpServletRequest request,
+			HttpSession httpsession) throws IOException {
+		try {
+			vo.setCeo_name((String)httpsession.getAttribute("Mem_Id"));
+			Map<String, MultipartFile> map = request.getFileMap();
+			List<String> keys = new ArrayList<String>();
+			
+			// store 등록 sql
+			MultipartFile file = map.get("business_file");
+			vo.setFilename(file.getOriginalFilename());
+			vo.setFile(file.getBytes());
+			bmDAO.tourinsert(vo);
+			//menu 등록 sql
+			//img 등록 sql
+			    //등록증 제외 for문
+				for(int i=0;i<(map.size()-1);i++) {
+					MultipartFile timg = map.get("imgs_"+i);
+					if(timg != null && !timg.getOriginalFilename().equals("")) {
+							keys.add("imgs_"+i);
+					}
+				}
+				for(int j=0;j<keys.size();j++) {
+					MultipartFile timg = map.get(keys.get(j));
+					vo.setStr_img_idx(j);
+					vo.setImgs(timg.getBytes());
+					bmDAO.insertBizImage(vo);
+				}
+				
+				return "redirect:admin_tour_management.do";
+		}
+		catch (Exception e) {
+			System.out.println(e.getMessage());
+			return "redirect:admin_tour_management.do";
+		}
+		
+	}
 	
 }

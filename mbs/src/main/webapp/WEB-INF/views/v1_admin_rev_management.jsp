@@ -84,10 +84,20 @@
 			                            <div class="card" style="padding-top:10px">
 			                                <div class="card-body text-center">
 			                                    <p><img class=" img-fluid" src="get_blob_img.do?str_number=${tmp.str_number}&idx=0" alt="card image"></p>
-			                                    <h4 class="card-title str_name" id="name_${i.index}">${tmp.str_name}</h4>
+			                                    <c:if test="${tmp.str_category == 1}">
+			                                    	<h4 class="card-title str_name" id="name_${i.index}">${tmp.str_name}</h4>
+			                                    </c:if>
+			                                    <c:if test="${tmp.str_category == 2}">
+			                                    	<h4 class="str_name" style="color: #286090;" id="name_${i.index}">${tmp.str_name}</h4>
+			                                    </c:if>
 			                                    <p class="card-text">${tmp.str_address}</p>
 			                                    <p class="card-text"></p>
-			                                    <a href="#" class="btn btn-primary btn-sm" style="margin-right:10px"><i class="glyphicon glyphicon-earphone"></i></a>${tmp.str_tel}
+			                                    <c:if test="${tmp.str_category == 1}">
+			                                    	<a href="#" class="btn btn-success btn-sm" style="margin-right:10px"><i class="glyphicon glyphicon-earphone"></i></a>${tmp.str_tel}
+			                                    </c:if>
+			                                    <c:if test="${tmp.str_category == 2}">
+			                                    	<a href="#" class="btn btn-primary btn-sm" style="margin-right:10px"><i class="glyphicon glyphicon-earphone"></i></a>${tmp.str_tel}
+			                                    </c:if>
 			                                </div>
 			                            </div>
 			                        </div>
@@ -104,10 +114,12 @@
 				                                    <p class="card-text">예약취소 : ${tmp.can}</p>
 			                                    </c:if>
 			                                    <div class="form-inline">
-			                                    	<a href="#" class="btn btn-primary btn-sm send_email">
-			                                    		<i class="glyphicon glyphicon-envelope"></i>
-			                                    		<input type="hidden" class="mb_email" value="${tmp.mb_email}" />
-			                                    	</a>
+			                                    	<c:if test="${tmp.str_category == 1}">
+				                                    	<a href="#" class="btn btn-primary btn-sm send_email">
+				                                    		<i class="glyphicon glyphicon-envelope"></i>
+				                                    		<input type="hidden" class="mb_email" value="${tmp.mb_email}" />
+				                                    	</a>
+			                                    	</c:if>
 			                                        <a href="admin_rev_list.do?str_number=${tmp.str_number}&str_cat=${tmp.str_category}" class="btn btn-primary btn-sm">리뷰관리(${tmp.cnt})</a> 
 			                                    </div>
 			                                    <hr />
