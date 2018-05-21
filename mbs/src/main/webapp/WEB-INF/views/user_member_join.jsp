@@ -250,7 +250,7 @@
 			                  아이디
 			               </div>
 			               <div class="col-md-4">
-			                  <form:input type="text" path="mb_id" id="mb_id" class="w3-input w3-round w3-border form-control" />
+			                  <form:input type="text" path="mb_id" id="mb_id" class="w3-input w3-round w3-border form-control"/>
 			               </div>
 			            
 			               <div class="col-md-1" style="margin-left:20px">
@@ -267,8 +267,8 @@
 			               <div id="exp"></div>
 			            </div>
 			            <div class="row menu"  style="margin-bottom:20px">
-			               <div class="col-md-offset-3 col-md-3" style="width:100px">
-			                  암호재확인
+			               <div class="col-md-offset-3 col-md-3" style="width:100px;">
+			                  암호 확인
 			               </div>
 			               <div class="col-md-4">
 			                  <input type="password" id="mb_repw"  size="16" class="w3-input w3-round w3-border form-control" />
@@ -318,9 +318,9 @@
 			                  전화번호
 			               </div>
 			               <div class="form-inline col-md-4">
-			                  <input type="text" id="tel1" class="w3-input w3-round w3-border form-control" maxlength="3" style="width:70px"/>-
-			                  <input type="text" id="tel2"class="w3-input w3-round w3-border form-control" maxlength="4" style="width:90px"/>-
-			                  <input type="text" id="tel3"class="w3-input w3-round w3-border form-control" maxlength="4" style="width:90px"/>
+			                  <input type="text" id="tel1" class="w3-input w3-round w3-border form-control teltext" maxlength="3" style="width:70px"/>-
+			                  <input type="text" id="tel2"class="w3-input w3-round w3-border form-control teltext" maxlength="4" style="width:90px"/>-
+			                  <input type="text" id="tel3"class="w3-input w3-round w3-border form-control teltext" maxlength="4" style="width:90px"/>
 			                  <form:input type="hidden" path="mb_tel" value=""/>
 			               </div>
 			         </div>
@@ -346,6 +346,33 @@
   $(document).ready(function() {
 	  var pcheck = 0;
 	  var repcheck = 0;
+	  
+	 $('#mb_id').keyup(function(event){
+		 var text = $(this).val();
+		    var str_space = /\s/;
+		    if(str_space.exec(text)) {
+		        alert("해당 항목에는 공백을 사용할수 없습니다.");
+		        $(this).focus();
+		        $(this).val($(this).val().replace(' ',''));
+		        return false;
+		    } 
+		});
+	 
+	 $('#mb_name').keyup(function(event){
+		 var text = $(this).val();
+		    var str_space = /\s/;
+		    if(str_space.exec(text)) {
+		        alert("해당 항목에는 공백을 사용할수 없습니다.");
+		        $(this).focus();
+		        $(this).val($(this).val().replace(' ',''));
+		        return false;
+		    } 
+		});
+	 
+	 $('.teltext').keyup(function(){
+	         $(this).val($(this).val().replace(/[^0-9]/g,""));
+	    });
+	  
 	  $('#idcheck').click(function(){
    		 $('#idcheck').removeClass('w3-green');
    		 $('#idcheck').addClass('w3-red');
