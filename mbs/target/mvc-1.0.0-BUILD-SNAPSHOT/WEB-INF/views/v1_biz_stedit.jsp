@@ -6,7 +6,7 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>Insert title here</title>
+	<title>관광지 수정</title>
 	<link rel="shortcut icon" href="../favicon.ico">
 	<link rel="stylesheet" type="text/css" href="resources/css/normalize.css" />
 	<link rel="stylesheet" type="text/css" href="resources/css/demo.css" />
@@ -34,7 +34,7 @@
 		      <div class="col-xs-12">
 		      <div align="center" style="margin-bottom:50px">
 					<h1 style="font-size:56px">
-						<b>사업체 수정</b>
+						<b>관광지 수정</b>
 					</h1>
 				</div>
 		               <ul class="nav nav-pills nav-justified thumbnail setup-panel">
@@ -187,7 +187,7 @@
 		                  </div>
 		               <div align="center">
 		                      <button type="button" id="prev-1" class="btn btn-primary btn-lg">이전 단계로</button>
-		                      <button type="button" id="next-3" class="btn btn-primary btn-lg">사업체 등록</button>
+		                      <button type="button" id="next-3" class="btn btn-primary btn-lg">관광지 수정</button>
 		                  </div>
 		               </div>
 		              
