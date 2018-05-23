@@ -52,6 +52,9 @@ public class V1_BizMemDAO {
 	public int updateBizMember(V1_BizJoin vo) {
 		return sqlsession.update("BizMem.updateBizMember",vo);
 	}
+	public int updateTour(V1_BizJoin vo) {
+		return sqlsession.update("BizMem.updateTour",vo);
+	}
 	public int updateBizMenu(V1_BizJoin vo) {
 		return sqlsession.update("BizMem.updateBizMenu",vo);
 	}

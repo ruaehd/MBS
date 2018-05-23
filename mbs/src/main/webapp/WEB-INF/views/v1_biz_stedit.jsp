@@ -187,7 +187,7 @@
 		                  </div>
 		               <div align="center">
 		                      <button type="button" id="prev-1" class="btn btn-primary btn-lg">이전 단계로</button>
-		                      <button type="button" id="next-3" class="btn btn-primary btn-lg">관광지 수정</button>
+		                      <button type="button" id="next-3" class="btn btn-primary btn-lg">업체 수정</button>
 		                  </div>
 		               </div>
 		              

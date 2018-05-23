@@ -353,9 +353,8 @@ public class V1_AdminRsvManagementController {
 			if(file.getOriginalFilename() != "") {
 			vo.setFilename(file.getOriginalFilename());
 			vo.setFile(file.getBytes());
-			bmDAO.updateBizMember(vo);
 			}
-			
+			bmDAO.updateTour(vo);
 			//img 등록 sql
 			    //등록증 제외 for문
 				for(int i=0;i<(map.size()-1);i++) {

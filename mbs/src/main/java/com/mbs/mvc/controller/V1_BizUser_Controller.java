@@ -128,8 +128,8 @@ public class V1_BizUser_Controller {
 		if(file.getOriginalFilename() != "") {
 		vo.setFilename(file.getOriginalFilename());
 		vo.setFile(file.getBytes());
-		bmDAO.updateBizMember(vo);
 		}
+		bmDAO.updateBizMember(vo);
 		//menu 등록 sql
 		for(int k=0;k<aaa.length;k++) {
 			vo.setMenu_name(aaa[k]);
