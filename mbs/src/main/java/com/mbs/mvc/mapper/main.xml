@@ -10,9 +10,7 @@
     FROM 
       store s 
    	INNER JOIN 
-      str_menu sm
-    ON
-       s.str_number = sm.str_number 
+      str_menu sm 
     WHERE 
      s.str_lat BETWEEN #{so} AND #{no} AND
      s.str_lng BETWEEN #{we} AND #{ea}
@@ -25,9 +23,7 @@
     FROM 
        store s 
    	INNER JOIN 
-       str_menu sm
-    ON
-       s.str_number = sm.str_number 
+       str_menu sm 
     WHERE
         sm.mn_price BETWEEN  #{price_start} AND #{price_end} AND
       CASE
@@ -49,9 +45,7 @@
     FROM 
       store s 
    	INNER JOIN 
-      str_menu sm
-     ON
-       s.str_number = sm.str_number 
+      str_menu sm 
      WHERE
     	s.str_lat BETWEEN #{so} AND #{no} AND
     	s.str_lng BETWEEN #{we} AND #{ea} AND
@@ -98,9 +92,7 @@
     		)A
     	) s 
    	INNER JOIN 
-    	str_menu sm
-    ON
-    	s.str_number = sm.str_number 
+    	str_menu sm 
     WHERE 
         sm.mn_price BETWEEN  #{price_start} AND #{price_end} AND
     	sm.mn_no = (select  distinct MIN(sm.mn_no) from str_menu where sm.mn_idx = 1) AND
