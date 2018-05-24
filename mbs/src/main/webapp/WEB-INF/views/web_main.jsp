@@ -216,23 +216,12 @@
 										);
 								for(var i=0;i<datalist.length;i++){
 									var cate = 0;
-<<<<<<< HEAD
 									if(datalist[i].category == 1){
 										cate = '음식점';
-=======
+									}
 									if(datalist[i].category == 2){
 										cate = '관광지';
->>>>>>> branch 'dev' of https://github.com/ruaehd/MBS.git
 									}
-<<<<<<< HEAD
-									if(datalist[i].category == 2){
-										cate = '관광지';
-=======
-									if(datalist[i].category == 1){
-										cate = '음식점';
->>>>>>> branch 'dev' of https://github.com/ruaehd/MBS.git
-									}
-									
 									
 									var st1 = datalist[i].starttime.substring(0,2);
 									var et1 = datalist[i].endtime.substring(0,2);
