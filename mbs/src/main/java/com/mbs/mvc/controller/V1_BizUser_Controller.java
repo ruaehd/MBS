@@ -109,7 +109,7 @@ public class V1_BizUser_Controller {
 				bmDAO.insertBizImage(vo);
 			}
 			
-			return "redirect:map_main.do";
+			return "redirect:biz_str_management.do";
 	}
 	@RequestMapping(value="/biz_stedit.do",method=RequestMethod.POST)
 	public String businessedit(@ModelAttribute("vo")V1_BizJoin vo,
@@ -153,6 +153,6 @@ public class V1_BizUser_Controller {
 				bmDAO.updateBizImage(vo);
 			}
 			
-			return "redirect:map_main.do";
+			return "redirect:biz_str_management.do";
 	}
 }

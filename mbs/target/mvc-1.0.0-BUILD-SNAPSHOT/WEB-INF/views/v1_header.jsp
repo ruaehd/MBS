@@ -2,11 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@ page session="true" %>
-<link rel="stylesheet" type="text/css" href="resources/css/component.css" />
-<link rel="stylesheet" type="text/css" href="resources/css/bootstrap.css" />
-<link rel="stylesheet" type="text/css" href="resources/css/w3.css"/>
-<link rel="stylesheet" type="text/css" href="resources/css/footer.css"/>
-<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
 <!DOCTYPE html>
 		<div id="header">
 			<ul id="gn-menu" class="gn-menu-main">
