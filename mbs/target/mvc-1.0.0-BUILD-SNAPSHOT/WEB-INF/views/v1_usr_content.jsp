@@ -152,7 +152,7 @@
 							</c:choose>
 							<a href="#commnet" class="btn btn-primary">후기보기</a>
 							<a href="#map" class="btn btn-success">지도보기</a>
-							<a href="#" class="btn btn-danger">뒤로가기</a>
+							<a href="${url}" class="btn btn-danger">뒤로가기</a>
 						</div>
 					</div>
 				</div>
