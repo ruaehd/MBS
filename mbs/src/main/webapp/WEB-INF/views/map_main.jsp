@@ -5,6 +5,10 @@
 <html>
 <head>
 	<meta charset="UTF-8" />
+	<link rel="stylesheet" type="text/css" href="resources/css/component.css" />
+	<link rel="stylesheet" type="text/css" href="resources/css/bootstrap.css" />
+	<link rel="stylesheet" type="text/css" href="resources/css/w3.css"/>
+	<link rel="stylesheet" type="text/css" href="resources/css/footer.css"/>
 	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"/>
 	<link rel="stylesheet" href="resources/css/daterangepicker.css" />
 	<style>
@@ -313,17 +317,17 @@
 				 function getListItem(index,datalist){
 					 var el = document.createElement('li'),
 					    itemStr =
-					    	'<div class="w3-border w3-white" style="width:100%; height:100px;padding:5px;margin-top:10px">'+
+					    	'<a href="usr_content.do?str_number='+datalist.number+'"><div class="w3-border w3-white" style="width:100%; height:100px;padding:5px;margin-top:10px">'+
 			            		'<div class="row">'+
 			            			'<div class="col-md-4">'+
 			            					'<img class="'+datalist.number+'" src="get_blob_img.do?str_number='+ datalist.number +'&idx=0" align="left" style="width:100%;height:90px;z-index:1;"/>'+
 			            			'</div>'+
 			            			'<div class="col-md-8" style="padding:10px">'+
-			            			'<div style="font-size:15px"><a href="usr_content.do?str_number='+datalist.number+'"><font style="font-size:15px;font-family:"Malgun Gothic","dotum","돋움"">'+datalist.name+'</font></a></div>'+
+			            			'<div style="font-size:15px"><font style="font-size:15px;font-family:"Malgun Gothic","dotum","돋움"">'+datalist.name+'</font></div>'+
 			            						'<div style="color:gray">'+datalist.address+'</div>'+
 			            			'</div>'+
 			            		'</div>'+
-			            	'</div>';
+			            	'</div></a>';
 			            				
 			            el.innerHTML = itemStr;
 			            el.className = 'item';
@@ -445,17 +449,17 @@
 					 function getListItem(index,datalist){
 						 var el = document.createElement('li'),
 						    itemStr =
-						    	'<div class="w3-border w3-white" style="width:100%; height:100px;padding:5px;margin-top:10px">'+
+						    	'<a href="usr_content.do?str_number='+datalist.number+'"><div class="w3-border w3-white" style="width:100%; height:100px;padding:5px;margin-top:10px">'+
 				            		'<div class="row">'+
 				            			'<div class="col-md-4">'+
 				            					'<img class="'+datalist.number+'" src="get_blob_img.do?str_number='+ datalist.number +'&idx=0" align="left" style="width:100%;height:90px;z-index:1;"/>'+
 				            			'</div>'+
 				            			'<div class="col-md-8" style="padding:10px">'+
-				            			'<div style="font-size:15px"><a href="usr_content.do?str_number='+datalist.number+'"><font style="font-size:15px;font-family:"Malgun Gothic","dotum","돋움"">'+datalist.name+'</font></a></div>'+
+				            			'<div style="font-size:15px"><font style="font-size:15px;font-family:"Malgun Gothic","dotum","돋움"">'+datalist.name+'</font></div>'+
 				            						'<div style="color:gray">'+datalist.address+'</div>'+
 				            			'</div>'+
 				            		'</div>'+
-				            	'</div>';
+				            	'</div></a>';
 				            				
 				            el.innerHTML = itemStr;
 				            el.className = 'item';
@@ -505,17 +509,17 @@
 					 function getListItem(index,datalist){
 						 var el = document.createElement('li'),
 						    itemStr =
-						    	'<div class="w3-border w3-white" style="width:100%; height:100px;padding:5px;margin-top:10px">'+
+						    	'<a href="usr_content.do?str_number='+datalist.number+'"><div class="w3-border w3-white" style="width:100%; height:100px;padding:5px;margin-top:10px">'+
 				            		'<div class="row">'+
 				            			'<div class="col-md-4">'+
 				            					'<img class="'+datalist.number+'" src="get_blob_img.do?str_number='+ datalist.number +'&idx=0" align="left" style="width:100%;height:90px;z-index:1;"/>'+
 				            			'</div>'+
 				            			'<div class="col-md-8" style="padding:10px">'+
-				            			'<div style="font-size:15px"><a href="usr_content.do?str_number='+datalist.number+'"><font style="font-size:15px;font-family:"Malgun Gothic","dotum","돋움"">'+datalist.name+'</font></a></div>'+
+				            			'<div style="font-size:15px"><font style="font-size:15px;font-family:"Malgun Gothic","dotum","돋움"">'+datalist.name+'</font></div>'+
 				            						'<div style="color:gray">'+datalist.address+'</div>'+
 				            			'</div>'+
 				            		'</div>'+
-				            	'</div>';
+				            	'</div></a>';
 				            				
 				            el.innerHTML = itemStr;
 				            el.className = 'item';
