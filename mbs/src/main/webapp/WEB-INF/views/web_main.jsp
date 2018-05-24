@@ -217,10 +217,10 @@
 								for(var i=0;i<datalist.length;i++){
 									var cate = 0;
 									if(datalist[i].category == 1){
-										cate = '관광지';
+										cate = '음식점';
 									}
 									if(datalist[i].category == 2){
-										cate = '음식점';
+										cate = '관광지';
 									}
 									
 									
