@@ -238,10 +238,10 @@
 				var tr = 0;
 				var fo = 0;
 				if($('#travel').hasClass('w3-pale-green')){
-					tr = 1;
+					tr = 2;
 				}
 				if($('#food').hasClass('w3-pale-blue')){
-					fo = 2;
+					fo = 1;
 				}
 				var date = $('#datepicker').val();
 				var pr = $('#amount').val();
@@ -396,10 +396,10 @@
 					var tr = 0;
 					var fo = 0;
 					if($('#travel').hasClass('w3-pale-green')){
-						tr = 1;
+						tr = 2;
 					}
 					if($('#food').hasClass('w3-pale-blue')){
-						fo = 2;
+						fo = 1;
 					}
 					var date = $('#datepicker').val();
 					var pr = $('#amount').val();

@@ -40,10 +40,11 @@ public class V1_UserContentController {
 	public String userContent(Model model, 
 			@RequestParam(value="page", defaultValue="1") int page, 
 			@RequestParam("str_number") int str_number,
-			HttpSession httpSession) {
+			HttpSession httpSession,HttpServletRequest request) {
 		try{
 			V1_Store vo = ucDAO.selectStoreOne(str_number);
 			int cnt = ucDAO.selectImgCount(str_number);
+			String back_url = request.getHeader("REFERER");
 			
 			if(vo.getStr_category()==1) {
 				
@@ -107,7 +108,7 @@ public class V1_UserContentController {
 				model.addAttribute("price", price);
 				model.addAttribute("recnt", tot);
 				model.addAttribute("totPage", (tot-1)/5+1);
-				
+				model.addAttribute("url", back_url);
 				return "v1_usr_content";
 			}
 			else {
@@ -140,7 +141,7 @@ public class V1_UserContentController {
 				model.addAttribute("recnt", tot);
 				model.addAttribute("totPage", (tot-1)/5+1);
 				model.addAttribute("avg", avg);
-				
+				model.addAttribute("url", back_url);
 				return "v1_usr_tour_content";
 			}
 		}

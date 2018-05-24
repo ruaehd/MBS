@@ -169,10 +169,10 @@
 					var tr = 0;
 					var fo = 0;
 				if($('#travel').hasClass('w3-pale-green')){
-					tr = 1;
+					tr = 2;
 				}
 				if($('#food').hasClass('w3-pale-blue')){
-					fo = 2;
+					fo = 1;
 				}
 				var addr = $('#sample4_roadAddress').val();
 				
@@ -216,23 +216,12 @@
 										);
 								for(var i=0;i<datalist.length;i++){
 									var cate = 0;
-<<<<<<< HEAD
 									if(datalist[i].category == 1){
 										cate = '음식점';
-=======
+									}
 									if(datalist[i].category == 2){
 										cate = '관광지';
->>>>>>> branch 'dev' of https://github.com/ruaehd/MBS.git
 									}
-<<<<<<< HEAD
-									if(datalist[i].category == 2){
-										cate = '관광지';
-=======
-									if(datalist[i].category == 1){
-										cate = '음식점';
->>>>>>> branch 'dev' of https://github.com/ruaehd/MBS.git
-									}
-									
 									
 									var st1 = datalist[i].starttime.substring(0,2);
 									var et1 = datalist[i].endtime.substring(0,2);
@@ -257,7 +246,7 @@
 										'</div>'+
 											'<div class="row" >'+
 												'<div class="col-md-4">'+
-													'<img class="'+datalist[i].number+'"src="getBlobImg.do?no='+ datalist[i].number +'" align="left" style="width:100%;height:170px;z-index:1;border:1px solid #cccccc"/>'+
+													'<img class="'+datalist[i].number+'"src="get_blob_img.do?str_number='+ datalist[i].number +'&idx=0" align="left" style="width:100%;height:170px;z-index:1;border:1px solid #cccccc"/>'+
 													'<a href="usr_content.do?str_number='+datalist[i].number+'" style="width:100%"><button class="w3-button btn_con" style="width:100%">예약하기</button></a>'+								
 													'</div>'+
 												'<div class="col-md-8">'+
