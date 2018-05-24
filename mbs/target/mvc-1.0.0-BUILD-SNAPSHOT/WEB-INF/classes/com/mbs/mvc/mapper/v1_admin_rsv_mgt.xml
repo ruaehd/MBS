@@ -64,16 +64,16 @@
 			FROM `member` m
 			INNER JOIN
 				
-				(SELECT rc.rsv_no, rc.rsv_code, rc.rsv_cmt_point, rc.rsv_cmt_no, rc.rsv_cmt_delete, rc.rsv_delete, s.str_number, s.mb_id, s.str_name, s.str_date, s.str_tel, s.str_address, s.str_category, s.str_delete FROM `store` s
+				(SELECT rc.rsv_no, rc.rsv_code, rc.rsv_cmt_point, rc.rsv_cmt_no, rc.rsv_cmt_delete, s.str_number, s.mb_id, s.str_name, s.str_date, s.str_tel, s.str_address, s.str_category, s.str_delete FROM `store` s
 				LEFT OUTER JOIN
 				
-					(SELECT r.str_number, r.rsv_no, r.rsv_code, c.rsv_cmt_point, c.rsv_cmt_no, c.rsv_cmt_delete, r.rsv_delete FROM `reservation` r
+					(SELECT r.str_number, r.rsv_no, r.rsv_code, c.rsv_cmt_point, c.rsv_cmt_no, c.rsv_cmt_delete FROM `reservation` r
 					LEFT OUTER JOIN `rsv_comment` c
 					ON r.rsv_no=c.rsv_no
                     GROUP BY r.rsv_no
                     UNION
                     
-                    SELECT r.str_number, r.rsv_no, r.rsv_code, c.rsv_cmt_point, c.rsv_cmt_no, c.rsv_cmt_delete, r.rsv_delete FROM `reservation` r
+                    SELECT r.str_number, r.rsv_no, r.rsv_code, c.rsv_cmt_point, c.rsv_cmt_no, c.rsv_cmt_delete FROM `reservation` r
 					RIGHT OUTER JOIN `rsv_comment` c
 					ON r.rsv_no=c.rsv_no
                     GROUP BY r.rsv_no

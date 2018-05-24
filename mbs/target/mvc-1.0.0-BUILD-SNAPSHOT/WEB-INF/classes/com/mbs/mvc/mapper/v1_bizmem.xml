@@ -64,6 +64,14 @@
 		WHERE str_number = #{company_num}
 	</update>
 	
+	<update id="updateTour" parameterType="com.mbs.mvc.vo.V1_BizJoin">
+		UPDATE store SET 
+		str_class = #{company_class}, str_name = #{company_name}, str_conditions = #{company_conditions}, str_address = #{company_add},
+		str_tel = #{company_tel}, str_file = #{file,jdbcType=BLOB}, str_filename = #{filename}, str_begintime = #{stime}, str_endtime = #{etime} ,
+		str_lng = #{company_lat}, str_lat = #{company_lng}, str_document = #{str_document}
+		WHERE str_number = #{company_num}
+	</update>
+	
 	<update id="updateBizMenu" parameterType="com.mbs.mvc.vo.V1_BizJoin">
 		call mbs.MenuUpdateProcedure(
 			#{menu_name, mode=IN, jdbcType=VARCHAR, javaType=string},

@@ -39,7 +39,7 @@
          
          		<li class="panel panel-default" id="dropdown">
 					<a data-toggle="collapse" href="#dropdown-lvl2"> 
-						<span class="glyphicon glyphicon-plane"></span> 예약관리
+						<span class="glyphicon glyphicon-plane"></span> 업체관리
 						<span class="caret"></span>
 					</a>
 					<div id="dropdown-lvl2" class="panel-collapse collapse">
