@@ -216,11 +216,21 @@
 										);
 								for(var i=0;i<datalist.length;i++){
 									var cate = 0;
+<<<<<<< HEAD
 									if(datalist[i].category == 1){
-										cate = '관광지';
-									}
-									if(datalist[i].category == 2){
 										cate = '음식점';
+=======
+									if(datalist[i].category == 2){
+										cate = '관광지';
+>>>>>>> branch 'dev' of https://github.com/ruaehd/MBS.git
+									}
+<<<<<<< HEAD
+									if(datalist[i].category == 2){
+										cate = '관광지';
+=======
+									if(datalist[i].category == 1){
+										cate = '음식점';
+>>>>>>> branch 'dev' of https://github.com/ruaehd/MBS.git
 									}
 									
 									
@@ -237,6 +247,7 @@
 										var tel2 = datalist[i].tel.substring(3,7);
 										var tel3 = datalist[i].tel.substring(7,11);	
 									}
+									
 									$('#contentlist').append(
 										'<div class="w3-border w3-white" style="padding:10px;margin-bottom:20px;width:100%">' +
 											'<h4><b>'+datalist[i].name+'</b></h4>'+
@@ -251,13 +262,16 @@
 													'</div>'+
 												'<div class="col-md-8">'+
 													'<div class="w3-round bar_con" style="margin-bottom:20px;padding:5px">'+cate+'</div>'+
-													'<div style="width:120px;float:left">대표메뉴 :</div>'+datalist[i].menu+' - '+datalist[i].menu_price+'<hr/>'+
+													'<div class="menu_con"><div style="width:120px;float:left">대표메뉴 :</div>'+datalist[i].menu+' - '+datalist[i].menu_price+'<hr/></div>'+
 													'<div style="width:120px;float:left">예약가능시간 :</div>'+st1+'시 ~ '+et1+'시<hr/>'+
 													'<div style="width:120px;float:left">전화번호 :</div>'+tel1+tel2+tel3+
 												'</div>'+
 											'</div>'+
 										'</div>'
 										);
+									if(datalist[i].category == 2){
+										$('.menu_con').eq(i).empty();
+									}
 									if(datalist[i].category == 1){
 										$('.btn_con').eq(i).addClass('w3-green w3-hover-green');
 										$('.bar_con').eq(i).addClass('w3-green');
