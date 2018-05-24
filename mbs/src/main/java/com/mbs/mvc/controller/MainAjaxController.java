@@ -94,6 +94,7 @@ public class MainAjaxController {
 			@RequestParam(value="lng",required=false) String lng,
 			@RequestParam(value="ra",required=false) int ra,
 			Main_SearchVO vo){
+		try {
 		vo.setCategory(travel+food);
 		vo.setAddr(addr);
 		vo.setDate(date);
@@ -106,6 +107,11 @@ public class MainAjaxController {
 		System.out.println(vo.getCategory());
 		List<Web_ListVO> list = maDAO.selectWebContentList(vo);
 		return list;
+		}
+		catch(Exception e) {
+			System.out.println(e.getMessage());
+			return null;
+		}
 	}
 	
 	
