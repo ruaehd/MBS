@@ -4,7 +4,7 @@
 <%@ page session="false" %>
 <html>
 <head>
-   <title>관리자1</title>
+   <title>이벤트</title>
    <link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
    <link rel="stylesheet" href="resources/css/v1_adminside.css" />
    <link rel="stylesheet" href="resources/css/w3.css" />
@@ -42,7 +42,7 @@
     <!-- Main Content -->
     <div class="container-fluid">
         <div class="side-body">
-        <div class="title"> 관리명 </div>
+        <div class="title">이벤트</div>
             <div class="row">
            <div class="col-md-2">
               <button type="button" id="btn_insert" class="btn btn-primary btn_add">추가하기</button>

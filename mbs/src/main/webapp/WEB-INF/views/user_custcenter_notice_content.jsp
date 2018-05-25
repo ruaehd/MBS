@@ -4,7 +4,7 @@
 <html>
 	<head>
 		<meta charset="UTF-8" />
-		<title>Google Nexus Website Menu</title>
+		<title>공지내용</title>
 		<link rel="shortcut icon" href="../favicon.ico">
 		<link rel="stylesheet" type="text/css" href="resources/css/normalize.css" />
 		<link rel="stylesheet" type="text/css" href="resources/css/demo.css" />
@@ -21,7 +21,7 @@
 				<div class="container" style="width:60%; margin:0px auto">
 					<div class="w3-display-container" style="width:100%; height:200px">
 						<div class="w3-display-middle">
-							<h1>공지사항</h1>
+							<h1>공지내용</h1>
 						</div>
 					</div>
 					<div class="form-inline">
