@@ -6,7 +6,7 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>QNA 관리</title>
+	<title>1:1문의</title>
 	<link rel="stylesheet" href="resources/css/bootstrap.css" />
 	<link rel="stylesheet" href="resources/css/v1_adminside.css" />
 	<link rel="stylesheet" href="resources/css/w3.css" />
@@ -41,7 +41,7 @@
     <jsp:include page="v1_admin_header.jsp"></jsp:include>
     <div class="container-fluid">
         <div class="side-body">
-        <div class="title">QNA관리</div>
+        <div class="title">1:1문의</div>
             <div class="row">
            <div class=" col-md-offset-8 col-md-4 form-inline" style="margin-bottom:10px;">
                  <select class="form-control" id="search_type">

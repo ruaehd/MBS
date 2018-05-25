@@ -23,7 +23,7 @@
 	</select>
 	
 	<select id="selectEventImgEnd" resultType="com.mbs.mvc.vo.EventVO">
-		SELECT evt_no FROM `event` WHERE evt_delete=0 ORDER BY evt_endtime DESC LIMIT 10
+		SELECT evt_no FROM `event` WHERE evt_delete=3 ORDER BY evt_endtime DESC LIMIT 10
 	</select>
 	
 	<update id="autodelete">
