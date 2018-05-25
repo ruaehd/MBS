@@ -5,6 +5,11 @@
 <head>
 	<meta charset="UTF-8" />
 	<title>Google Nexus Website Menu</title>
+	<link rel="stylesheet" type="text/css" href="resources/css/component.css" />
+	<link rel="stylesheet" type="text/css" href="resources/css/bootstrap.css" />
+	<link rel="stylesheet" type="text/css" href="resources/css/w3.css"/>
+	<link rel="stylesheet" type="text/css" href="resources/css/footer.css"/>
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 	<link rel="stylesheet" type="text/css" href="resources/css/jquery-ui.min.css" />
 	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 	<link rel="stylesheet" href="resources/css/daterangepicker.css" />
@@ -15,16 +20,13 @@
 		.gn-menu-main{
 			z-index:10;
 		}
-		.wrapper{
-		background-image: url("resources/imgs/dust_scratches.png")
-		}
 	</style>
 </head>
-<body>
+<body style="background-image: url('resources/imgs/dust_scratches.png'); height: 100vh">
 	<div class="wrapper">
 		<jsp:include page="v1_header.jsp"></jsp:include>
 		<div id="main">
-			<div style="margin: 68px auto; width:80%" class="row">
+			<div style="margin: 68px auto; width:80%; " class="row">
 				<div class="col-md-4">
 					<div class="w3-dark-gray w3-white w3-border-black w3-round-large" style="padding:10px">
 						<div align="center">
@@ -94,19 +96,18 @@
 					</div>
 				</div>
 				<div class="col-md-offset-1 col-md-7">
-				
-				<div id="joincontent" >
-					<div  class="w3-border w3-white" align="center" style="height:50vh;padding:30px">
-					<img src="resources/imgs/glass.png" style="width:25%; height:20vh;margin-bottom:10px"/>
-					<h3>입력하신 주소를 기준으로<br/><br/>검색범위만큼 검색합니다</h3>
+					<div id="joincontent" >
+						<div  class="w3-border w3-white" align="center" style="height:50vh;padding:30px">
+						<img src="resources/imgs/glass.png" style="width:25%; height:20vh;margin-bottom:10px"/>
+						<h3>입력하신 주소를 기준으로<br/><br/>검색범위만큼 검색합니다</h3>
+						</div>
 					</div>
-				</div>
-				<div id="contenthead"></div>
-				<div id="contentlist" style="height:80vh;overflow-x:hidden;overflow-y:auto"></div> 
+					<div id="contenthead"></div>
+					<div id="contentlist" style="overflow-x:hidden;overflow-y:auto"></div> 
 				</div>
 			</div>
+			<jsp:include page="v1_footer.jsp"></jsp:include>
 		</div>
-		<jsp:include page="v1_footer.jsp"></jsp:include>
 	</div>
 	 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
@@ -169,10 +170,10 @@
 					var tr = 0;
 					var fo = 0;
 				if($('#travel').hasClass('w3-pale-green')){
-					tr = 1;
+					tr = 2;
 				}
 				if($('#food').hasClass('w3-pale-blue')){
-					fo = 2;
+					fo = 1;
 				}
 				var addr = $('#sample4_roadAddress').val();
 				
@@ -216,13 +217,12 @@
 										);
 								for(var i=0;i<datalist.length;i++){
 									var cate = 0;
-									if(datalist[i].category == 2){
-										cate = '관광지';
-									}
 									if(datalist[i].category == 1){
 										cate = '음식점';
 									}
-									
+									if(datalist[i].category == 2){
+										cate = '관광지';
+									}
 									
 									var st1 = datalist[i].starttime.substring(0,2);
 									var et1 = datalist[i].endtime.substring(0,2);
@@ -237,7 +237,8 @@
 										var tel2 = datalist[i].tel.substring(3,7);
 										var tel3 = datalist[i].tel.substring(7,11);	
 									}
-									
+									var element = document.getElementById("contentlist");
+							         element.style.height = "80vh";
 									$('#contentlist').append(
 										'<div class="w3-border w3-white" style="padding:10px;margin-bottom:20px;width:100%">' +
 											'<h4><b>'+datalist[i].name+'</b></h4>'+
@@ -247,8 +248,8 @@
 										'</div>'+
 											'<div class="row" >'+
 												'<div class="col-md-4">'+
-													'<img class="'+datalist[i].number+'"src="getBlobImg.do?no='+ datalist[i].number +'" align="left" style="width:100%;height:170px;z-index:1;border:1px solid #cccccc"/>'+
-													'<a href="usr_content.do?str_number='+datalist[i].number+'" style="width:100%"><button class="w3-button btn_con" style="width:100%">예약하기</button></a>'+								
+													'<img class="'+datalist[i].number+'"src="get_blob_img.do?str_number='+ datalist[i].number +'&idx=0" align="left" style="width:100%;height:170px;z-index:1;border:1px solid #cccccc"/>'+
+													'<a href="usr_content.do?str_number='+datalist[i].number+'" style="width:100%"><button class="w3-button btn_con" style="width:100%">상세화면</button></a>'+								
 													'</div>'+
 												'<div class="col-md-8">'+
 													'<div class="w3-round bar_con" style="margin-bottom:20px;padding:5px">'+cate+'</div>'+

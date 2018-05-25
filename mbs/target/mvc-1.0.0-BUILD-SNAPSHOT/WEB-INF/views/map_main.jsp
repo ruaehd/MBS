@@ -5,6 +5,10 @@
 <html>
 <head>
 	<meta charset="UTF-8" />
+	<link rel="stylesheet" type="text/css" href="resources/css/component.css" />
+	<link rel="stylesheet" type="text/css" href="resources/css/bootstrap.css" />
+	<link rel="stylesheet" type="text/css" href="resources/css/w3.css"/>
+	<link rel="stylesheet" type="text/css" href="resources/css/footer.css"/>
 	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"/>
 	<link rel="stylesheet" href="resources/css/daterangepicker.css" />
 	<style>
@@ -166,7 +170,7 @@
 				    	'<a href="usr_content.do?str_number='+datalist.number+'"><div class="w3-border w3-white" style="width:100%; height:100px;padding:5px;margin-top:10px">'+
 		            		'<div class="row">'+
 		            		'<div class="col-md-4">'+
-		            			'<img class="'+datalist.number+'" src="getBlobImg.do?no='+ datalist.number +'" align="left" style="width:100%;height:90px;z-index:1;"/>'+
+		            			'<img class="'+datalist.number+'" src="get_blob_img.do?str_number='+ datalist.number +'&idx=0" align="left" style="width:100%;height:90px;z-index:1;"/>'+
 		            			'</div>'+
 		            			'<div class="col-md-8" style="padding:10px">'+
 		            			'<div style="font-size:15px"><font style="font-size:15px;font-family:"Malgun Gothic","dotum","돋움"">'+datalist.name+'</font></div>'+
@@ -182,7 +186,7 @@
 			//마커에 들어가는 인포윈도우 함수
 			function displayInfowindow(marker, datalist){
 				var content = '<div align="center" style="width:150px">'+
-       		 '<a href="user_content.do?no='+datalist.number+'"><img class="'+datalist.number+'" src="getBlobImg.do?no='+ datalist.number + '" align="left" style="width:148px;height:100px;z-index:1;margin-top:0;margin-bottom:10px"/></a>' +
+       		 '<a href="user_content.do?no='+datalist.number+'"><img class="'+datalist.number+'" src="get_blob_img.do?str_number='+ datalist.number + '&idx=0" align="left" style="width:148px;height:100px;z-index:1;margin-top:0;margin-bottom:10px"/></a>' +
     		 '<p style="margin-bottom:10px"><b>'+ datalist.name +'</b></p>' +
     		 '</div>';
     		 infowindow.setContent(content);
@@ -238,10 +242,10 @@
 				var tr = 0;
 				var fo = 0;
 				if($('#travel').hasClass('w3-pale-green')){
-					tr = 1;
+					tr = 2;
 				}
 				if($('#food').hasClass('w3-pale-blue')){
-					fo = 2;
+					fo = 1;
 				}
 				var date = $('#datepicker').val();
 				var pr = $('#amount').val();
@@ -313,17 +317,17 @@
 				 function getListItem(index,datalist){
 					 var el = document.createElement('li'),
 					    itemStr =
-					    	'<div class="w3-border w3-white" style="width:100%; height:100px;padding:5px;margin-top:10px">'+
+					    	'<a href="usr_content.do?str_number='+datalist.number+'"><div class="w3-border w3-white" style="width:100%; height:100px;padding:5px;margin-top:10px">'+
 			            		'<div class="row">'+
 			            			'<div class="col-md-4">'+
-			            					'<img class="'+datalist.number+'" src="getBlobImg.do?no='+ datalist.number +'" align="left" style="width:100%;height:90px;z-index:1;"/>'+
+			            					'<img class="'+datalist.number+'" src="get_blob_img.do?str_number='+ datalist.number +'&idx=0" align="left" style="width:100%;height:90px;z-index:1;"/>'+
 			            			'</div>'+
 			            			'<div class="col-md-8" style="padding:10px">'+
-			            			'<div style="font-size:15px"><a href="usr_content.do?str_number='+datalist.number+'"><font style="font-size:15px;font-family:"Malgun Gothic","dotum","돋움"">'+datalist.name+'</font></a></div>'+
+			            			'<div style="font-size:15px"><font style="font-size:15px;font-family:"Malgun Gothic","dotum","돋움"">'+datalist.name+'</font></div>'+
 			            						'<div style="color:gray">'+datalist.address+'</div>'+
 			            			'</div>'+
 			            		'</div>'+
-			            	'</div>';
+			            	'</div></a>';
 			            				
 			            el.innerHTML = itemStr;
 			            el.className = 'item';
@@ -331,7 +335,7 @@
 				}
 				function displayInfowindow(marker, datalist){
 					var content = '<div align="center" style="width:150px">'+
-	       		 '<a href="user_content.do?no='+datalist.number+'"><img class="'+datalist.number+'" src="getBlobImg.do?no='+ datalist.number + '" align="left" style="width:148px;height:100px;z-index:1;margin-top:0;margin-bottom:10px"/></a>' +
+	       		 '<a href="user_content.do?no='+datalist.number+'"><img class="'+datalist.number+'" src="get_blob_img.do?str_number='+ datalist.number + '&idx=0" align="left" style="width:148px;height:100px;z-index:1;margin-top:0;margin-bottom:10px"/></a>' +
 	    		 '<p style="margin-bottom:10px"><b>'+ datalist.name +'</b></p>' +
 	    		 '</div>';
 	    		 infowindow.setContent(content);
@@ -396,10 +400,10 @@
 					var tr = 0;
 					var fo = 0;
 					if($('#travel').hasClass('w3-pale-green')){
-						tr = 1;
+						tr = 2;
 					}
 					if($('#food').hasClass('w3-pale-blue')){
-						fo = 2;
+						fo = 1;
 					}
 					var date = $('#datepicker').val();
 					var pr = $('#amount').val();
@@ -445,17 +449,17 @@
 					 function getListItem(index,datalist){
 						 var el = document.createElement('li'),
 						    itemStr =
-						    	'<div class="w3-border w3-white" style="width:100%; height:100px;padding:5px;margin-top:10px">'+
+						    	'<a href="usr_content.do?str_number='+datalist.number+'"><div class="w3-border w3-white" style="width:100%; height:100px;padding:5px;margin-top:10px">'+
 				            		'<div class="row">'+
 				            			'<div class="col-md-4">'+
-				            					'<img class="'+datalist.number+'" src="getBlobImg.do?no='+ datalist.number +'" align="left" style="width:100%;height:90px;z-index:1;"/>'+
+				            					'<img class="'+datalist.number+'" src="get_blob_img.do?str_number='+ datalist.number +'&idx=0" align="left" style="width:100%;height:90px;z-index:1;"/>'+
 				            			'</div>'+
 				            			'<div class="col-md-8" style="padding:10px">'+
-				            			'<div style="font-size:15px"><a href="usr_content.do?str_number='+datalist.number+'"><font style="font-size:15px;font-family:"Malgun Gothic","dotum","돋움"">'+datalist.name+'</font></a></div>'+
+				            			'<div style="font-size:15px"><font style="font-size:15px;font-family:"Malgun Gothic","dotum","돋움"">'+datalist.name+'</font></div>'+
 				            						'<div style="color:gray">'+datalist.address+'</div>'+
 				            			'</div>'+
 				            		'</div>'+
-				            	'</div>';
+				            	'</div></a>';
 				            				
 				            el.innerHTML = itemStr;
 				            el.className = 'item';
@@ -463,7 +467,7 @@
 					}
 					function displayInfowindow(marker, datalist){
 						var content = '<div align="center" style="width:150px">'+
-		       		 '<a href="user_content.do?no='+datalist.number+'"><img class="'+datalist.number+'" src="getBlobImg.do?no='+ datalist.number + '" align="left" style="width:148px;height:100px;z-index:1;margin-top:0;margin-bottom:10px"/></a>' +
+		       		 '<a href="user_content.do?no='+datalist.number+'"><img class="'+datalist.number+'" src="get_blob_img.do?str_number='+ datalist.number + '&idx=0" align="left" style="width:148px;height:100px;z-index:1;margin-top:0;margin-bottom:10px"/></a>' +
 		    		 '<p style="margin-bottom:10px"><b>'+ datalist.name +'</b></p>' +
 		    		 '</div>';
 		    		 infowindow.setContent(content);
@@ -505,17 +509,17 @@
 					 function getListItem(index,datalist){
 						 var el = document.createElement('li'),
 						    itemStr =
-						    	'<div class="w3-border w3-white" style="width:100%; height:100px;padding:5px;margin-top:10px">'+
+						    	'<a href="usr_content.do?str_number='+datalist.number+'"><div class="w3-border w3-white" style="width:100%; height:100px;padding:5px;margin-top:10px">'+
 				            		'<div class="row">'+
 				            			'<div class="col-md-4">'+
-				            					'<img class="'+datalist.number+'" src="getBlobImg.do?no='+ datalist.number +'" align="left" style="width:100%;height:90px;z-index:1;"/>'+
+				            					'<img class="'+datalist.number+'" src="get_blob_img.do?str_number='+ datalist.number +'&idx=0" align="left" style="width:100%;height:90px;z-index:1;"/>'+
 				            			'</div>'+
 				            			'<div class="col-md-8" style="padding:10px">'+
-				            			'<div style="font-size:15px"><a href="usr_content.do?str_number='+datalist.number+'"><font style="font-size:15px;font-family:"Malgun Gothic","dotum","돋움"">'+datalist.name+'</font></a></div>'+
+				            			'<div style="font-size:15px"><font style="font-size:15px;font-family:"Malgun Gothic","dotum","돋움"">'+datalist.name+'</font></div>'+
 				            						'<div style="color:gray">'+datalist.address+'</div>'+
 				            			'</div>'+
 				            		'</div>'+
-				            	'</div>';
+				            	'</div></a>';
 				            				
 				            el.innerHTML = itemStr;
 				            el.className = 'item';
@@ -523,7 +527,7 @@
 					}
 					function displayInfowindow(marker, datalist){
 						var content = '<div align="center" style="width:150px">'+
-		       		 '<a href="user_content.do?no='+datalist.number+'"><img class="'+datalist.number+'" src="getBlobImg.do?no='+ datalist.number + '" align="left" style="width:148px;height:100px;z-index:1;margin-top:0;margin-bottom:10px"/></a>' +
+		       		 '<a href="user_content.do?no='+datalist.number+'"><img class="'+datalist.number+'" src="get_blob_img.do?str_number='+ datalist.number + '&idx=0" align="left" style="width:148px;height:100px;z-index:1;margin-top:0;margin-bottom:10px"/></a>' +
 		    		 '<p style="margin-bottom:10px"><b>'+ datalist.name +'</b></p>' +
 		    		 '</div>';
 		    		 infowindow.setContent(content);

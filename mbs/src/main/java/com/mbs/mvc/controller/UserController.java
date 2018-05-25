@@ -72,6 +72,10 @@ public class UserController {
 	
 	@RequestMapping(value="/user_logout.do",method=RequestMethod.GET)
 	public String user_logout(HttpSession session,Model model,HttpServletRequest request) {
+		if(session.getAttribute("Mem_Id") == null) {
+			return  "redirect:map_main.do";
+		}
+		
 		String url = null;
 		url = (String)request.getHeader("REFERER");
 		if((Integer)session.getAttribute("Mem_Grade") == 3) {

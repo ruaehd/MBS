@@ -9,8 +9,10 @@
 		s.str_category category
     FROM 
       store s 
-   	INNER JOIN 
-      str_menu sm 
+   	LEFT JOIN 
+      str_menu sm
+    ON
+       s.str_number = sm.str_number 
     WHERE 
      s.str_lat BETWEEN #{so} AND #{no} AND
      s.str_lng BETWEEN #{we} AND #{ea}
@@ -22,20 +24,22 @@
 		s.str_category category
     FROM 
        store s 
-   	INNER JOIN 
-       str_menu sm 
+   	LEFT JOIN 
+       str_menu sm
+    ON
+       s.str_number = sm.str_number 
     WHERE
-        sm.mn_price BETWEEN  #{price_start} AND #{price_end} AND
       CASE
     	WHEN #{category} =1 
-    	THEN s.str_category = 1
+	    	THEN s.str_category = 1
+	    	AND sm.mn_price BETWEEN  #{price_start} AND #{price_end}
     	WHEN #{category} =2 
-    	THEN s.str_category = 2 
+    		THEN s.str_category = 2 
     	WHEN #{category} =3 
-    	THEN s.str_category <![CDATA[<]]> 3
-      ELSE  
-    	s.str_category = 0 
+	    	THEN s.str_category <![CDATA[<]]> 3
+	    	OR sm.mn_price BETWEEN  #{price_start} AND #{price_end}
       END
+     
 	</select>
 	
 	<select id="selectMainDragSearch" parameterType="com.mbs.mvc.vo.Main_SearchVO" resultType="com.mbs.mvc.vo.Map_ListVO">
@@ -44,21 +48,22 @@
 		s.str_category category
     FROM 
       store s 
-   	INNER JOIN 
-      str_menu sm 
+   	LEFT JOIN 
+      str_menu sm
+     ON
+       s.str_number = sm.str_number 
      WHERE
     	s.str_lat BETWEEN #{so} AND #{no} AND
     	s.str_lng BETWEEN #{we} AND #{ea} AND
-        sm.mn_price BETWEEN  #{price_start} AND #{price_end} AND
       CASE
     	WHEN #{category} =1 
-    	THEN s.str_category = 1
+    		THEN s.str_category = 1
+    		AND sm.mn_price BETWEEN  #{price_start} AND #{price_end}
     	WHEN #{category} =2 
-    	THEN s.str_category = 2 
+    		THEN s.str_category = 2 
     	WHEN #{category} =3 
-    	THEN s.str_category <![CDATA[<]]> 3
-      ELSE  
-    	s.str_category = 0 
+    		THEN s.str_category <![CDATA[<]]> 3
+    		OR sm.mn_price BETWEEN  #{price_start} AND #{price_end}
       END
 	
 	</select>
@@ -92,33 +97,21 @@
     		)A
     	) s 
    	LEFT JOIN 
-    	str_menu sm 
+    	str_menu sm
     ON
-    	s.str_number = sm.str_number
-    WHERE IF (mn_name is null,
-		 CASE 
+    	s.str_number = sm.str_number 
+    WHERE 
+	    CASE 
 	    	WHEN #{category} = 1 
-	    	THEN s.str_category = 1 
+		    	THEN s.str_category = 1 
+		    	AND sm.mn_price BETWEEN  #{price_start} AND #{price_end}
 	    	WHEN #{category} = 2 
-	    	THEN s.str_category = 2 
+	    		THEN s.str_category = 2 
 	    	WHEN #{category} = 3 
-	    	THEN s.str_category <![CDATA[<]]> 3
-    	ELSE  
-    		s.str_category = 0 
+		    	THEN s.str_category <![CDATA[<]]> 3
+		    	OR sm.mn_price BETWEEN  #{price_start} AND #{price_end}
     	END
-        ,
-        sm.mn_price BETWEEN  #{price_start} AND #{price_end} AND
-    	sm.mn_no = (select  distinct MIN(sm.mn_no) from str_menu where sm.mn_idx = 1) AND
-	   CASE 
-	    	WHEN #{category} = 1 
-	    	THEN s.str_category = 1 
-	    	WHEN #{category} = 2 
-	    	THEN s.str_category = 2 
-	    	WHEN #{category} = 3 
-	    	THEN s.str_category <![CDATA[<]]> 3
-    	ELSE  
-    		s.str_category = 0 
-		END); 
+    	GROUP BY s.str_number
 	</select>
 
 </mapper>
