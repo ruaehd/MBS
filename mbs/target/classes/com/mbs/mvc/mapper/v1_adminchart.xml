@@ -98,24 +98,24 @@
 	</select>
 	
 	<select id="selectReservationOne" parameterType="String" resultType="com.mbs.mvc.vo.V1_Reservation">
-		SELECT r.rsv_no,s.str_name, r.rsv_day, r.rsv_date, r.rsv_personnel, r.rsv_sub_id, r.rsv_sub_email, r.rsv_delete, r.rsv_code  
-		FROM store s INNER JOIN reservation r ON s.str_number = r.str_number WHERE s.str_name LIKE concat('%',#{name},'%') AND r.rsv_delete = 1 
+		SELECT r.rsv_no,s.str_name, r.rsv_day, r.rsv_date, r.rsv_personnel, r.rsv_sub_id, r.rsv_sub_email, r.rsv_code  
+		FROM store s INNER JOIN reservation r ON s.str_number = r.str_number WHERE s.str_name LIKE concat('%',#{name},'%') 
 		ORDER BY r.rsv_date DESC
 	</select>
 	
 	<select id="selectReservationMonth" resultType="com.mbs.mvc.vo.V1_MonthChart">
-		SELECT DATE(rsv_date) reservation, COUNT(*)as count FROM reservation WHERE rsv_delete = 1 GROUP BY reservation
+		SELECT DATE(rsv_date) reservation, COUNT(*)as count FROM reservation GROUP BY reservation
 	</select>
 	
 	<select id="selectWeekReservationCount" parameterType="String" resultType="com.mbs.mvc.vo.V1_WeekCount">
 		select
-			(select count(*) from reservation r inner join store s on r.str_number = s.str_number where r.rsv_date = date_add(DATE(now()) , interval -1 day) AND s.str_name LIKE concat('%',#{name},'%') AND r.rsv_delete = 1 )day_1,
-			(select count(*) from reservation r inner join store s on r.str_number = s.str_number where r.rsv_date = date_add(DATE(now()) , interval -2 day) AND s.str_name LIKE concat('%',#{name},'%') AND r.rsv_delete = 1 )day_2,
-			(select count(*) from reservation r inner join store s on r.str_number = s.str_number where r.rsv_date = date_add(DATE(now()) , interval -3 day) AND s.str_name LIKE concat('%',#{name},'%') AND r.rsv_delete = 1 )day_3,
-			(select count(*) from reservation r inner join store s on r.str_number = s.str_number where r.rsv_date = date_add(DATE(now()) , interval -4 day) AND s.str_name LIKE concat('%',#{name},'%') AND r.rsv_delete = 1 )day_4,
-			(select count(*) from reservation r inner join store s on r.str_number = s.str_number where r.rsv_date = date_add(DATE(now()) , interval -5 day) AND s.str_name LIKE concat('%',#{name},'%') AND r.rsv_delete = 1 )day_5,
-			(select count(*) from reservation r inner join store s on r.str_number = s.str_number where r.rsv_date = date_add(DATE(now()) , interval -6 day) AND s.str_name LIKE concat('%',#{name},'%') AND r.rsv_delete = 1 )day_6,
-			(select count(*) from reservation r inner join store s on r.str_number = s.str_number where r.rsv_date = date_add(DATE(now()) , interval -7 day) AND s.str_name LIKE concat('%',#{name},'%') AND r.rsv_delete = 1 )day_7
+			(select count(*) from reservation r inner join store s on r.str_number = s.str_number where r.rsv_date = date_add(DATE(now()) , interval -1 day) AND s.str_name LIKE concat('%',#{name},'%'))day_1,
+			(select count(*) from reservation r inner join store s on r.str_number = s.str_number where r.rsv_date = date_add(DATE(now()) , interval -2 day) AND s.str_name LIKE concat('%',#{name},'%'))day_2,
+			(select count(*) from reservation r inner join store s on r.str_number = s.str_number where r.rsv_date = date_add(DATE(now()) , interval -3 day) AND s.str_name LIKE concat('%',#{name},'%'))day_3,
+			(select count(*) from reservation r inner join store s on r.str_number = s.str_number where r.rsv_date = date_add(DATE(now()) , interval -4 day) AND s.str_name LIKE concat('%',#{name},'%'))day_4,
+			(select count(*) from reservation r inner join store s on r.str_number = s.str_number where r.rsv_date = date_add(DATE(now()) , interval -5 day) AND s.str_name LIKE concat('%',#{name},'%'))day_5,
+			(select count(*) from reservation r inner join store s on r.str_number = s.str_number where r.rsv_date = date_add(DATE(now()) , interval -6 day) AND s.str_name LIKE concat('%',#{name},'%'))day_6,
+			(select count(*) from reservation r inner join store s on r.str_number = s.str_number where r.rsv_date = date_add(DATE(now()) , interval -7 day) AND s.str_name LIKE concat('%',#{name},'%'))day_7
 	</select>
 	
 	<select id="selectReservationAllCount" resultType="int">
@@ -123,6 +123,6 @@
 	</select>
 	
 	<select id="selectReservationNowCount" resultType="int">
-		select count(*) from reservation where rsv_code = 2 AND rsv_delete = 1
+		select count(*) from reservation where rsv_code = 2
 	</select>
 </mapper>
