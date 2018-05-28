@@ -70,17 +70,17 @@
 			                  <div class="form-group">
 			                     <label class="col-sm-4 control-label">사업자분류</label>
 			                     <div class="col-sm-5">
-			                        <div class="form-inline">
-			                           <input type="radio" id="one" name="company_class"/> 개인
-			                           <input type="radio" id="group" name="company_class"/> 법인
-			                           <form:input type="hidden" path="company_class" id="company_class"/>
+			                        <div class="form-inline"> 
+			                           <input type="radio" id="one" class="company_cl" name="radiock" checked/> 개인
+			                           <input type="radio" id="group" class="company_cl" name="radiock"/> 법인
+			                           <form:input type="hidden" path="company_class" id="company_class" value="개인"/>
 			                        </div>
 			                     </div>
 			                  </div>
 			                  <div class="form-group">
 			                     <label class="col-sm-4 control-label">사업자 등록번호</label>
 			                     <div class="col-sm-5">
-			                        <form:input type="text" class="form-control" id="company_num" path="company_num" placeholder="예)000-00-00000" />
+			                        <form:input type="text" class="form-control" id="company_num" path="company_num" placeholder="예)0000000000" />
 			                     </div>
 			                     	<font id="numfont" style="font-size:12px;color:red" ></font>
 			                  </div>
@@ -218,6 +218,16 @@
    <script src="resources/js/bootstrap-filestyle.min.js"> </script>
    <script>
    	$(function(){
+   		
+   		$('.company_cl').click(function(){
+			if($('#one:checked').length == 1){
+				$('#company_class').val("개인");
+			}
+			else{
+				$('#company_class').val("법인");
+			}
+   		});
+   		
    		$("#business_file").filestyle({btnClass: "btn-primary"},{placeholder: "No file"},{text: "Find file"});
    		var sel_file;
    		
@@ -232,6 +242,7 @@
    		 	 $(this).val($(this).val().replace(/^[ㄱ-ㅎ|가-힣|a-z|A-Z|\*]+$/,""));
    		 		var num = $('#company_num').val();
    		 		$.post('ajax_companynum',{"num":num},function(ret){
+   		 			console.log(ret);
    		 			if(ret != 0){
    		 				$('#numfont').text('데이터베이스에 해당 테스트 값이 이미 존재합니다');
    		 			}
@@ -469,14 +480,7 @@
         			return null;
         		}
         	}
-           var name = $('#company_name').val();
-  			var company_class = null;
-  			if($('#one:checked').length == 1){
-  				$('#company_class').val("개인");
-  			}
-  			else{
-  				$('#company_class').val("법인");
-  			}
+        	var name = $('#company_name').val();
   			var company_num = $('#company_num').val();
   			var company_conditions = $('#company_conditions').val();
   			var company_event = $('#company_event').val();
