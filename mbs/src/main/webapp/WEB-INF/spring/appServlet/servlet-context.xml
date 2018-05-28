@@ -29,6 +29,12 @@
 			<exclude-mapping path="/eventImg**"/>
 			<exclude-mapping path="/index.do**"/>
 			<exclude-mapping path="/emailAuth.do"/>
+			<exclude-mapping path="/event.do"/>
+			<exclude-mapping path="/event_content.do"/>
+			<exclude-mapping path="/notice.do"/>
+			<exclude-mapping path="/notice_content.do"/>
+			<exclude-mapping path="/fna.do"/>
+			<exclude-mapping path="/service_main.do"/>
 			<beans:bean class="com.mbs.mvc.interceptor.UserLoginInterceptor"/>
 		</interceptor>
 	</interceptors>

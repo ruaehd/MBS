@@ -6,7 +6,7 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>공지 관리</title>
+	<title>공지사항</title>
 	<link rel="stylesheet" href="resources/css/bootstrap.css" />
 	<link rel="stylesheet" href="resources/css/v1_adminside.css" />
 	<link rel="stylesheet" href="resources/css/w3.css" />
@@ -41,7 +41,7 @@
     <jsp:include page="v1_admin_header.jsp"></jsp:include>
     <div class="container-fluid">
         <div class="side-body">
-        <div class="title">공지관리</div>
+        <div class="title">공지사항</div>
             <div class="row">
            <div class="col-md-2">
               <button type="button" class="btn btn-primary btn_add" id="btn_insert">추가하기</button>
