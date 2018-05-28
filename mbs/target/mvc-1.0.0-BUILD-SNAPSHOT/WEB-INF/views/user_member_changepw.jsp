@@ -6,7 +6,7 @@
 <html>
 <head>
 	<meta charset="UTF-8" />
-	<title>Google Nexus Website Menu</title>
+	<title>비밀번호변경</title>
 	<link rel="shortcut icon" href="../favicon.ico">
 	<link rel="stylesheet" type="text/css" href="resources/css/normalize.css" />
 	<link rel="stylesheet" type="text/css" href="resources/css/demo.css" />
@@ -34,7 +34,7 @@
 			      <div class="w3-display-container" style="height:200px;">
 			         <div class="w3-display-middle" align="center">
 			            <img src="resources/imgs/sou.jpg" style="width:200px; height:100%"/><br/>
-			            <h1>비밀번호 변경</h1>
+			            <h1>비밀번호변경</h1>
 			         </div>
 			      </div>
 			      <div class="container" style="width:80%;height:100px;margin-top:40px">

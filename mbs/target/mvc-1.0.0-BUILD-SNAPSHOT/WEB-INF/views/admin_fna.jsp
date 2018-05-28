@@ -42,7 +42,7 @@
     <jsp:include page="v1_admin_header.jsp"></jsp:include>
     <div class="container-fluid">
         <div class="side-body">
-        <div class="title"> 자주하는질문 </div>
+        <div class="title">자주하는질문</div>
             <div class="row">
            <div class="col-md-2">
               <button type="button" class="btn btn-primary btn_add" id="btn_insert">추가하기</button>
@@ -103,7 +103,7 @@
                     </td>
                     <td>${vo.fna_date}</td>
                     <td>
-                    <a href="#" class="btn btn-xs btn-warning">공지수정</a>
+                    <a href="#" class="btn btn-xs btn-warning">질문수정</a>
                     <c:if test="${vo.fna_delete==1}">
                     <a href="#" class="btn btn-xs btn-danger btn-change">비공개전환</a>
                     </c:if>
