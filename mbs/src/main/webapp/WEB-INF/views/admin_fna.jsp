@@ -103,7 +103,7 @@
                     </td>
                     <td>${vo.fna_date}</td>
                     <td>
-                    <a href="#" class="btn btn-xs btn-warning">공지수정</a>
+                    <a href="#" class="btn btn-xs btn-warning">질문수정</a>
                     <c:if test="${vo.fna_delete==1}">
                     <a href="#" class="btn btn-xs btn-danger btn-change">비공개전환</a>
                     </c:if>
