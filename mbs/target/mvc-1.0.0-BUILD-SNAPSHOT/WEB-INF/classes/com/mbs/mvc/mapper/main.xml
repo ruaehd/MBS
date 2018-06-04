@@ -26,6 +26,8 @@
        str_menu sm 
     WHERE
         sm.mn_price BETWEEN  #{price_start} AND #{price_end} AND
+         s.str_lat BETWEEN #{so} AND #{no} AND 
+         s.str_lng BETWEEN #{we} AND #{ea} AND 
       CASE
     	WHEN #{category} =1 
     	THEN s.str_category = 1

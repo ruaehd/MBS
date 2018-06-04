@@ -6,7 +6,7 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>관광지 수정</title>
+	<title>업체 수정</title>
 	<link rel="shortcut icon" href="../favicon.ico">
 	<link rel="stylesheet" type="text/css" href="resources/css/normalize.css" />
 	<link rel="stylesheet" type="text/css" href="resources/css/demo.css" />
@@ -34,7 +34,7 @@
 		      <div class="col-xs-12">
 		      <div align="center" style="margin-bottom:50px">
 					<h1 style="font-size:56px">
-						<b>관광지 수정</b>
+						<b>업체 수정</b>
 					</h1>
 				</div>
 		               <ul class="nav nav-pills nav-justified thumbnail setup-panel">
