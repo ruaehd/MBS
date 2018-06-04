@@ -178,7 +178,7 @@
 						<div class="form-group">
 							<c:forEach var="vo1" items="${mlist}" varStatus="i">
 								<div id="menu_detail" class="form-inline">
-									<label>${vo1.mn_name}</label>
+									<label style="width:150px">${vo1.mn_name}</label>
 									${vo1.mn_price}
 								</div>
 							</c:forEach>
