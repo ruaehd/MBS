@@ -27,6 +27,11 @@ public class MainController {
 		return "index";
 	}
 	
+	@RequestMapping(value="/", method= RequestMethod.GET)
+	public String home() {
+		return "redirect:index.do";
+	}
+	
 	@RequestMapping(value="/map_main.do", method= RequestMethod.GET)
 	public String map_main(HttpSession httpsession) {
 		return "map_main";

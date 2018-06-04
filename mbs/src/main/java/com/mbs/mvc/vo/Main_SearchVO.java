@@ -18,8 +18,6 @@ public class Main_SearchVO {
 	private String no = null;
 	private String ea = null;
 	
-	
-	
 	public String getSo() {
 		return so;
 	}

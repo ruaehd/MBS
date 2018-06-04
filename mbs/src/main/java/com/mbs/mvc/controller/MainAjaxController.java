@@ -43,14 +43,20 @@ public class MainAjaxController {
 			@RequestParam(value="date",required=false) String date,
 			@RequestParam(value="ps",required=false) int prices,
 			@RequestParam(value="pe",required=false) int pricee,
+			@RequestParam(value="so",required=false) String so,
+			@RequestParam(value="we",required=false) String we,
+			@RequestParam(value="no",required=false) String no,
+			@RequestParam(value="ea",required=false) String ea,
 			Main_SearchVO vo
 			){
 		vo.setCategory(travel+food);
-		System.out.println(vo.getCategory());
 		vo.setDate(date);
 		vo.setPrice_start(prices);
 		vo.setPrice_end(pricee);
-		
+		vo.setSo(so);
+		vo.setWe(we);
+		vo.setNo(no);
+		vo.setEa(ea);
 		List<Map_ListVO> list = maDAO.selectContentList(vo);
 		return list;
 	}
@@ -69,7 +75,6 @@ public class MainAjaxController {
 			Main_SearchVO vo
 			){
 		vo.setCategory(travel+food);
-		System.out.println(vo.getCategory());
 		vo.setDate(date);
 		vo.setPrice_start(prices);
 		vo.setPrice_end(pricee);
@@ -103,8 +108,6 @@ public class MainAjaxController {
 		vo.setLat(lat);
 		vo.setLng(lng);
 		vo.setRange(ra);
-		System.out.println(vo.getRange());
-		System.out.println(vo.getCategory());
 		List<Web_ListVO> list = maDAO.selectWebContentList(vo);
 		return list;
 		}
