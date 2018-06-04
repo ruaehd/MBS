@@ -35,6 +35,7 @@
 			<exclude-mapping path="/notice_content.do"/>
 			<exclude-mapping path="/fna.do"/>
 			<exclude-mapping path="/service_main.do"/>
+			<exclude-mapping path="/usr_content.do"/>
 			<beans:bean class="com.mbs.mvc.interceptor.UserLoginInterceptor"/>
 		</interceptor>
 	</interceptors>
