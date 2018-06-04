@@ -259,6 +259,20 @@
 						pe = pe.substring(0,pe.length-1);
 					}
 				}
+				var bounds = map.getBounds();
+				 // 영역정보의 남서쪽 정보를 얻어옵니다 
+			    var swLatlng = bounds.getSouthWest();
+			    var swlalg = swLatlng.toString().substring(1,swLatlng.toString().length-1);
+			    var sw = swlalg.toString().split(", ");
+			    var so = sw[0];
+			    var we = sw[1];
+			    // 영역정보의 북동쪽 정보를 얻어옵니다 
+			    var neLatlng = bounds.getNorthEast();
+			    var nelalg = neLatlng.toString().substring(1,neLatlng.toString().length-1);
+			    var ne = nelalg.toString().split(", ");
+			    var no = ne[0];
+			    var ea = ne[1];
+			    
 				 if ($('#travel').hasClass('w3-white') &&  $('#food').hasClass('w3-white') && date == "" && ps == "0" && pe == "200000"){
 						of = 0
 						alert("검색옵션을 설정해주세요 !");
@@ -287,7 +301,7 @@
 			    
 			    //검색을 했을시 실실적으로 동작하는 ajax 내용추가는 위와 동일 ,
 				$.ajaxSettings.traditional = true;
-				$.post("ajax_main_search.do",	{"tr":tr,"fo":fo,"date":date,"ps":ps,"pe":pe},function(datalist){
+				$.post("ajax_main_search.do",	{"tr":tr,"fo":fo,"date":date,"ps":ps,"pe":pe,"so":so,"we":we,"no":no,"ea":ea},function(datalist){
 					var listEl = document.getElementById('content'),
 					fragment = document.createDocumentFragment(),
 					bounds = new daum.maps.LatLngBounds();
