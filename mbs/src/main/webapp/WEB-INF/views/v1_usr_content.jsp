@@ -447,7 +447,7 @@
 		        });
 		
 		        var infowindow = new daum.maps.InfoWindow({
-		            content: '<div style="text-align:center;padding:6px 0;">${vo.str_name}</div>'
+		            content: '<div align="center" style="width:150px"><p><b>${vo.str_name}</b></p></div>'
 		        });
 		        infowindow.open(map, marker);
 		
