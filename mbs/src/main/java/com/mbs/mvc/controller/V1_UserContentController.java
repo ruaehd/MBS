@@ -136,7 +136,7 @@ public class V1_UserContentController {
 				int chk = reDAO.selectTourReviewChk(vo1);
 				
 				model.addAttribute("vo", vo);	
-				model.addAttribute("cnt", cnt);
+				model.addAttribute("cnt", cnt-1);
 				model.addAttribute("chk", chk);
 				model.addAttribute("recnt", tot);
 				model.addAttribute("totPage", (tot-1)/5+1);
