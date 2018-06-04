@@ -78,10 +78,10 @@ public class V1_ReservationController {
 			
 			String rsv_email = vo.getRsv_sub_email();
 			String rsv_title = "예약완료";
-			String rsv_text = "확인하셈";
+			String rsv_text = "요청하신 예약이 완료되었습니다.";
 			
 			String str_title = "신규예약";
-			String str_text = "확인ㄱㄱ";
+			String str_text = "신규예약이 접수되었습니다.";
 			
 			V1_EmailConfigure.sendEmail(rsv_email.toString(), rsv_title, rsv_text);	//예약자
 			V1_EmailConfigure.sendEmail(str_email.toString(), str_title, str_text);	//사업자
