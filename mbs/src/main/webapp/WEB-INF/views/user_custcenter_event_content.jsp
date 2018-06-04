@@ -8,7 +8,7 @@
 			<div class="form-group" style="width: 90%">지금 참여할 수 있는 이벤트를 놓치지 마세요.
 			</div>
 			<div class="form-group" align="right">
-				<a href="user_custcenter_main.do">고객센터</a>
+				<a href="service_main.do">고객센터</a>
 			</div>
 		</div>
 		<hr/>

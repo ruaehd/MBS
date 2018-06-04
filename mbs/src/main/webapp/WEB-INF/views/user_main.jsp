@@ -37,7 +37,7 @@
 				<div style="margin-top:80px">
 					<h1 style="margin-left:100px">내가 문의한 항목이 존재하지 않습니다</h1>
 					<div style="margin-top:50px">
-					<a href="question.do" style="margin-left:350px"><button class="btn btn-default">문의하러 가기</button></a>
+					<a href="qna.do" style="margin-left:350px"><button class="btn btn-default">문의하러 가기</button></a>
 					</div>
 					</div>
 				</c:if>

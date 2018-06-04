@@ -168,7 +168,8 @@ body{
 	background-color:#eeeeee
 }
 </style>
-<div style="margin: 68px auto; width: 80%" class="row">
+<div style="background:#cccccc; height: 1200px">
+<div style="margin: 68px auto; width: 80%;" class="row">
 	<div class="col-md-4">
 		<div class="w3-dark-gray w3-white w3-border-black" style="padding:10px">
 		<div align="center">
@@ -247,7 +248,7 @@ body{
 	
 	</div>
 </div>
-
+</div>
 <script>
 	function sample4_execDaumPostcode() {
 		$('#sample4_roadAddress').val("");
